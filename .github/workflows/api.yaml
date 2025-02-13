@@ -1,0 +1,11 @@
+name: Api workflow
+on: push
+jobs:
+    echo:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get repository code
+              uses: actions/checkout@
+            - name: echo
+              run: echo "Hello"
+              working-directory: ./api
