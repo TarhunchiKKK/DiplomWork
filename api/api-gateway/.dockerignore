@@ -1,0 +1,13 @@
+node_modules
+test
+dist
+.env.example
+.eslintignore
+.eslintrc.js
+.gitignore
+.prettierignore
+.prettierrc
+knip.json
+*.log
+*.md
+.git

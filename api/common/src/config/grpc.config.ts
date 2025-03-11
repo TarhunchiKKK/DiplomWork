@@ -1,6 +1,6 @@
 import { ConfigService } from "@nestjs/config";
-import { GrpcInfo } from "../constants";
 import { ClientProviderOptions, Transport } from "@nestjs/microservices";
+import { GrpcInfo } from "../grpc";
 
 interface Options {
     configService: ConfigService;

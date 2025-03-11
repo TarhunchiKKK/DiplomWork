@@ -1,1 +1,74 @@
 version: "3.7"
+
+services:
+  # common: 
+  #   container_name: common
+  #   build: 
+  #     context: ./common
+  #     dockerfile: Dockerfile 
+  #   ports:
+  #     - ${COMMON_PORT}:4873
+  #   networks:
+  #     - common-network
+
+  api-gateway:
+    container_name: api-gateway
+    build: 
+      context: ./api-gateway
+      dockerfile: Dockerfile 
+    ports:
+      - ${API_GATEWAY_PORT}:3000
+    networks:
+      - api-gateway-network
+    depends_on:
+      - common
+  
+  authentication-microservice:
+    container_name: authentication-microservice
+    build: 
+      context: ./authentication-microservice
+      dockerfile: Dockerfile
+    ports:
+      - ${AUTHENTICATION_MICROSERVICE_PORT}:3000
+    networks:
+      - authentication-microservice-network
+    depends_on:
+      - common
+
+  users-management-microservice:
+    container_name: users-management-microservice
+    build: 
+      context: ./users-managenent-microservice
+      dockerfile: Dockerfile
+    ports:
+      - ${USERS_MANAGEMENT_MICROSERVICE_PORT}:3000
+    networks:
+      - users-management-microservice-network
+    depends_on:
+      - common
+
+  users-management-microservice-db:
+    container_name: users-management-microservice-db
+    image: postgres:15.2
+    restart: always
+    environment:
+        - POSTGRES_DB=${USERS_MANAGEMENT_DB_NAME}
+        - POSTGRES_USER=${USERS_MANAGEMENT_DB_USER}
+        - POSTGRES_PASSWORD=${USERS_MANAGEMENT_DB_PASSWORD}
+    ports:
+        - ${USERS_MANAGEMENT_DB_PORT}:5432
+    volumes:
+        - postgres_data:/var/lib/postgresql/data
+    networks:
+        - users-management-microservice-network
+    depends_on:
+      - common
+
+volumes:
+  postgres_data:
+
+networks:
+  common-network:
+  api-gateway-network:
+  authentication-microservice-network:
+  users-management-microservice-network:
