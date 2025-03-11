@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+package workflowsManagement;
+
+service WorkflowsManagementService {
+    rpc Create (CreateWorkflowDto) returns (Workflow) {}
+
+    rpc FindByDocumentId (FindWorkflowByDocumentIdDto) returns (Workflow) {}
+
+    rpc UpdateParticipants (UpdateWorkflowParticipantsDto) returns (google.protobuf.Empty) {}
+
+    rpc Delete (DeleteWorkflowDto) returns (google.protobuf.Empty) {}
+}
+
+message Workflow {
+    string id = 1;
+
+    string status = 2;
+
+    string creatorId = 3;
+
+    string documentId = 4;
+
+    repeated Participant participants = 5;
+
+    google.protobuf.Timestamp createdAt = 6;
+
+    google.protobuf.Timestamp completedAt = 7;
+}
+
+message Participant {
+    string id = 1;
+
+    string userId = 2;
+}
+
+message CreateWorkflowDto {
+    string creatorId = 1;
+
+    string documentId = 2;
+}
+
+message FindWorkflowByDocumentIdDto {
+    string documentId = 1;
+}
+
+message UpdateWorkflowParticipantsDto {
+    string workflowId = 1;
+    
+    repeated Participant participants = 2;
+}
+
+message DeleteWorkflowDto {
+    string workflowId = 1;
+}

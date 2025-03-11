@@ -1,0 +1,188 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+package organizationsManagement;
+
+service OrganizationsManagementService {
+    rpc Create (CreateOrganizationDto) returns (Organization) {}
+
+    rpc CreateOrganizationDivision (CreateOrganizationDivisionDto) returns (google.protobuf.StringValue) {}
+
+    rpc FindOrganizationDivisions (FindOrganizationDivisionsDto) returns (FindOrganizationDivisionsResponse) {}
+
+    rpc UpdateOrganizationDivision (UpdateOrganizationDivisionDto) returns (google.protobuf.Empty) {}
+
+    rpc DeleteOrganizationDivision (DeleteOrganizationDivisionDto) returns (google.protobuf.Empty) {}
+
+    rpc CreateOrganizationPost (CreateOrganizationPostDto) returns (OrganizationPost) {}
+
+    rpc FindOrganizationPosts (FindOrganizationPostsDto) returns (FindOrganizationPostsResponse) {}
+
+    rpc UpdateOrganizationPost (UpdateOrganizationPostDto) returns (google.protobuf.Empty) {}
+
+    rpc DeleteOrganizationPost (DeleteOrganizationPostDto) returns (google.protobuf.Empty) {}
+
+    rpc CreateDocumentAim (CreateDocumentAimDto) returns (google.protobuf.StringValue) {}
+
+    rpc FindDocumentAims (FindDocumentAimsDto) returns (FindDocumentAimsResponse) {}
+
+    rpc UpdateDocumentAim (UpdateDocumentAimDto) returns (google.protobuf.Empty) {}
+
+    rpc DeleteDocumentAim (DeleteDocumentAimDto) returns (google.protobuf.Empty) {}
+
+    rpc CrateDocumentType (CreateDocumentTypeDto) returns (google.protobuf.StringValue) {}
+
+    rpc FindDocumentTypes (FindDocumentTypesDto) returns (FindDocumentTypesResponse) {}
+
+    rpc UpdateDocumentType (UpdateDocumentTypeDto) returns (google.protobuf.Empty) {}
+
+    rpc DeleteDocumentType (DeleteDocumentTypeDto) returns (google.protobuf.Empty) {}
+
+    rpc UpdateUrgencyInterval (UpdateUrgencyIntervalDto) returns (google.protobuf.Empty) {}
+}
+
+message Organization {
+    string id = 1;
+
+    OrganizationSettings settings = 2;
+}
+
+message OrganizationSettings {
+    uint64 urgencyInterval = 1;
+
+    repeated string documentTypes = 2;
+
+    repeated OrganizationDivision OrganizationDivisions = 3;
+
+    repeated string OrganizationPosts = 4;
+
+    repeated string documentAims = 5;
+}
+
+message CreateOrganizationDto {}
+
+message OrganizationDivision {
+    string id = 1;
+
+    string value = 2;
+}
+
+message CreateOrganizationDivisionDto {
+    string organizationId = 1;
+
+    string value = 2;
+}
+
+message FindOrganizationDivisionsDto {
+    string organizationId = 1;
+}
+
+message FindOrganizationDivisionsResponse {
+    repeated OrganizationDivision OrganizationDivisions = 1;
+}
+
+message UpdateOrganizationDivisionDto {
+    string OrganizationDivisionId = 1;
+
+    string value = 2;
+}
+
+message DeleteOrganizationDivisionDto {
+    string OrganizationDivisionId = 1;
+}
+
+message OrganizationPost {
+    string id = 1;
+
+    string value = 2;
+}
+
+message CreateOrganizationPostDto {
+    string organizationId = 1;
+
+    string value = 2;
+}
+
+message FindOrganizationPostsDto {
+    string organizationId = 1;
+}
+
+message FindOrganizationPostsResponse {
+    repeated OrganizationPost OrganizationPosts = 1;
+}
+
+message UpdateOrganizationPostDto {
+    string OrganizationPostId = 1;
+
+    string value = 2;
+}
+
+message DeleteOrganizationPostDto {
+    string OrganizationPostId = 1;
+}
+
+message DocumentAim {
+    string id = 1;
+
+    string value = 2;
+}
+
+message CreateDocumentAimDto {
+    string organizationId = 1;
+
+    string value = 2;
+}
+
+message FindDocumentAimsDto {
+    string organizationId = 1;
+}
+
+message FindDocumentAimsResponse {
+    repeated DocumentAim documentAims = 1;
+}
+
+message UpdateDocumentAimDto {
+    string documentAimId = 1;
+
+    string value = 2;
+}
+
+message DeleteDocumentAimDto {
+    string documentAimId = 1;
+}
+
+message DocumentType {
+    string id = 1;
+
+    string value = 2;
+}
+
+message CreateDocumentTypeDto {
+    string organizationId = 1;
+
+    string value = 2;
+}
+
+message FindDocumentTypesDto {
+    string organizationId = 1;
+}
+
+message FindDocumentTypesResponse {
+    repeated DocumentType documentTypes = 1;
+}
+
+message UpdateDocumentTypeDto {
+    string documentTypeId = 1;
+
+    string value = 2;
+}
+
+message DeleteDocumentTypeDto {
+    string documentTypeId = 1;
+}
+
+message UpdateUrgencyIntervalDto {
+    uint64 urgencyInterval = 1;
+}

@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+package usersManagement;
+
+service UsersManagementService {
+    rpc Create (CreateUserDto) returns (User) {}
+
+    rpc Update (UpdateUserDto) returns (google.protobuf.Empty) {}
+    
+    rpc Delete (DeleteUserDto) returns (google.protobuf.Empty) {}
+    
+    rpc FindOneById (FindOneUserByIdDto) returns (User) {}
+    
+    rpc FindOneByEmail (FindOneUserByEmailDto) returns (User) {}
+    
+    rpc FindOneByUsername (FindOneUserByUsernameDto) returns (User) {}
+    
+    rpc FindAll (FindAllUsersDto) returns (FindUsersResponse) {}
+
+    rpc FindAllByIds (FindAllUsersByIdsDto) returns (FindUsersResponse) {}
+
+    rpc AddDocumentAccessToken (AddDocumentAccessTokenDto) returns (google.protobuf.Empty) {}
+
+    rpc DeleteDocumentAccessToken (DeleteDocumentAccessTokenDto) returns (google.protobuf.Empty) {}
+}
+
+message CreateUserDto {
+    string username = 1;
+
+    string email = 2;
+
+    string password = 3;
+
+    string role = 4;
+
+    string organizationId = 5;
+}
+
+message UpdateUserDto {
+    string jwt = 1;
+    
+    google.protobuf.StringValue username = 2;
+}
+
+message DeleteUserDto {
+    string jwt = 1;
+}
+
+message FindOneUserByIdDto {
+    string userId = 1;
+} 
+
+message FindOneUserByEmailDto {
+    string email = 1;
+
+    string organizationId = 2;
+}
+
+message FindOneUserByUsernameDto {
+    string username = 1;
+
+    string organizationId = 2;
+}
+
+message FindAllUsersDto {
+    string organizationId = 1;
+}
+
+message FindAllUsersByIdsDto {
+    repeated string ids = 1;
+}
+
+message AddDocumentAccessTokenDto {
+    string userId = 1;
+
+    string token = 2;
+}
+
+message DeleteDocumentAccessTokenDto {
+    string userId = 1;
+
+    string token = 2;
+}
+
+message User {
+    string id = 1;
+
+    string username = 2;
+
+    string email = 3;
+
+    string role = 4;
+
+    google.protobuf.Timestamp created_at = 5;
+
+    bool isTwoFactorEnabled = 6;
+
+    bool isDeactivated = 7;
+
+    Post post = 8;
+}
+
+message Post {
+    string id  = 1;
+
+    string division = 2;
+
+    string post = 3;
+}
+
+message FindUsersResponse {
+    repeated User users = 1;
+}
