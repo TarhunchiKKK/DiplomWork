@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
-import { AuthenticationGrpcService } from "./services";
+import { RegisterAdminDto } from "common/grpc";
+import { AuthenticationGrpcService } from "./services/authentication.grpc-service";
 
 @Controller()
 export class ApiGatewayController {
@@ -11,7 +12,7 @@ export class ApiGatewayController {
     }
 
     @Post("/auth/register/admin")
-    public registerAdmin(@Body() dto) {
+    public registerAdmin(@Body() dto: RegisterAdminDto) {
         return this.authenticationGrpcService.registerAdmin(dto);
     }
 }

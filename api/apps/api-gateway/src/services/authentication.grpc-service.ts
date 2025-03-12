@@ -6,7 +6,7 @@ import {
     AuthenticationServiceClient,
     RegisterAdminDto
 } from "common/grpc";
-import { BaseGrpcService } from "common/services";
+import { BaseGrpcService } from "../../../../common/grpc/classes/base.grpc-service";
 
 @Injectable()
 export class AuthenticationGrpcService extends BaseGrpcService<AuthenticationServiceClient> {
@@ -14,7 +14,7 @@ export class AuthenticationGrpcService extends BaseGrpcService<AuthenticationSer
         super(clientGrpc, AUTHENTICATION_SERVICE_NAME);
     }
 
-    public registerAdmin(dto: unknown) {
-        return this.serviceClient.registerAdmin(dto as RegisterAdminDto);
+    public registerAdmin(dto: RegisterAdminDto) {
+        return this.serviceClient.registerAdmin(dto);
     }
 }

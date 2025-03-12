@@ -1,5 +1,5 @@
 import { Controller } from "@nestjs/common";
-import { AuthenticationService } from "./authentication.service";
+import { AuthenticationService } from "./services/authentication.service";
 import { RegisterAdminDto } from "common/grpc";
 import { GrpcMethod } from "@nestjs/microservices";
 import { SERVICE_NAME } from "./constants";
