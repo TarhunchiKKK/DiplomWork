@@ -1,0 +1,95 @@
+{
+    "$schema": "https://json.schemastore.org/nest-cli",
+    "collection": "@nestjs/schematics",
+    "sourceRoot": "apps/api/src",
+    "compilerOptions": {
+        "deleteOutDir": true,
+        "webpack": true,
+        "tsConfigPath": "apps/api/tsconfig.app.json"
+    },
+    "monorepo": true,
+    "root": "apps/api",
+    "projects": {
+        "api": {
+            "type": "application",
+            "root": "apps/api",
+            "entryFile": "main",
+            "sourceRoot": "apps/api/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/api/tsconfig.app.json"
+            }
+        },
+        "api-gateway": {
+            "type": "application",
+            "root": "apps/api-gateway",
+            "entryFile": "main",
+            "sourceRoot": "apps/api-gateway/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+            }
+        },
+        "authentication-microservice": {
+            "type": "application",
+            "root": "apps/authentication-microservice",
+            "entryFile": "main",
+            "sourceRoot": "apps/authentication-microservice/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/authentication-microservice/tsconfig.app.json"
+            }
+        },
+        "documents-management": {
+            "type": "application",
+            "root": "apps/documents-management",
+            "entryFile": "main",
+            "sourceRoot": "apps/documents-management/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/documents-management/tsconfig.app.json"
+            }
+        },
+        "notifications": {
+            "type": "application",
+            "root": "apps/notifications",
+            "entryFile": "main",
+            "sourceRoot": "apps/notifications/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/notifications/tsconfig.app.json"
+            }
+        },
+        "organizations-management": {
+            "type": "application",
+            "root": "apps/organizations-management",
+            "entryFile": "main",
+            "sourceRoot": "apps/organizations-management/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/organizations-management/tsconfig.app.json"
+            }
+        },
+        "users-management": {
+            "type": "application",
+            "root": "apps/users-management",
+            "entryFile": "main",
+            "sourceRoot": "apps/users-management/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/users-management/tsconfig.app.json"
+            }
+        },
+        "workflows-management": {
+            "type": "application",
+            "root": "apps/workflows-management",
+            "entryFile": "main",
+            "sourceRoot": "apps/workflows-management/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/workflows-management/tsconfig.app.json"
+            }
+        },
+        "authentication": {
+            "type": "application",
+            "root": "apps/authentication",
+            "entryFile": "main",
+            "sourceRoot": "apps/authentication/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/authentication/tsconfig.app.json"
+            }
+        }
+    }
+}

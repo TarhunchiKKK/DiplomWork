@@ -1,0 +1,30 @@
+{
+    "$schema": "https://unpkg.com/knip@5/schema.json",
+    "entry": [
+        "apps/api-gateway/src/main.ts",
+        "apps/authentication/src/main.ts",
+        "apps/documents-management/src/main.ts",
+        "apps/notifications/src/main.ts",
+        "apps/organizations-management/src/main.ts",
+        "apps/users-management/src/main.ts",
+        "apps/workflows-management/src/main.ts",
+        "common/**/*.ts"
+    ],
+    "project": ["apps/**/*.ts"],
+    "rules": {
+        "files": "error",
+        "classMembers": "error",
+        "types": "error",
+        "dependencies": "warn",
+        "devDependencies": "warn"
+    },
+    "ignore": ["apps/**/*.enum.ts", "apps/**/*.spec.ts", "apps/**/*.e2e-spec.ts"],
+    "ignoreDependencies": [
+        "ts-proto",
+        "ts-loader",
+        "source-map-support",
+        "eslint-config-prettier",
+        "eslint-plugin-prettier"
+    ],
+    "ignoreBinaries": ["protoc"]
+}

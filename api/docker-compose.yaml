@@ -1,16 +1,6 @@
 version: "3.7"
 
 services:
-  # common: 
-  #   container_name: common
-  #   build: 
-  #     context: ./common
-  #     dockerfile: Dockerfile 
-  #   ports:
-  #     - ${COMMON_PORT}:4873
-  #   networks:
-  #     - common-network
-
   api-gateway:
     container_name: api-gateway
     build: 
