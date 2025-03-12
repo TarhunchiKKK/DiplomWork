@@ -1,3 +1,3 @@
-export { getConfigModuleConfig } from "./config-module.config.js";
-export { getGrpcConfig, getGrpcMicroserviceConfig } from "./grpc.config.js";
-export { getJwtConfig } from "./jwt.config.js";
+export { getConfigModuleConfig } from "./config-module.config";
+export { getGrpcConfig } from "./grpc.config";
+export { getJwtConfig } from "./jwt.config";

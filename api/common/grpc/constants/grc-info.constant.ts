@@ -14,28 +14,40 @@ import {
 } from "../generated";
 
 export const GrpcInfo = {
-    authentication: {
-        SERVICE_NAME: AUTHENTICATION_SERVICE_NAME,
-        PACKAGE_NAME: AUTHENTICATION_PACKAGE_NAME
+    [AUTHENTICATION_PACKAGE_NAME]: {
+        serviceName: AUTHENTICATION_SERVICE_NAME,
+        packageName: AUTHENTICATION_PACKAGE_NAME,
+        urlEnvVariable: "AUTHENTICATION_MICROSERVICE_GRPC_URL",
+        protoFile: "authentication.proto"
     },
-    documents_management: {
-        SERVICE_NAME: DOCUMENTS_MANAGEMENT_SERVICE_NAME,
-        PACKAGE_NAME: DOCUMENTS_MANAGEMENT_PACKAGE_NAME
+    [DOCUMENTS_MANAGEMENT_PACKAGE_NAME]: {
+        serviceName: DOCUMENTS_MANAGEMENT_SERVICE_NAME,
+        packageName: DOCUMENTS_MANAGEMENT_PACKAGE_NAME,
+        urlEnvVariable: "DOCUMENTS_MANAGEMENT_MICROSERVICE_GRPC_URL",
+        protoFile: "documents-management.proto"
     },
-    notofications: {
-        SERVICE_NAME: NOTIFICATIONS_SERVICE_NAME,
-        PACKAGE_NAME: NOTIFICATIONS_PACKAGE_NAME
+    [NOTIFICATIONS_PACKAGE_NAME]: {
+        serviceName: NOTIFICATIONS_SERVICE_NAME,
+        packageName: NOTIFICATIONS_PACKAGE_NAME,
+        urlEnvVariable: "NOTIFICATIONS_MICROSERVICE_GRPC_URL",
+        protoFile: "notifications.proto"
     },
-    organizations_management: {
-        SERVICE_NAME: ORGANIZATIONS_MANAGEMENT_SERVICE_NAME,
-        PACKAGE_NAME: ORGANIZATIONS_MANAGEMENT_PACKAGE_NAME
+    [ORGANIZATIONS_MANAGEMENT_PACKAGE_NAME]: {
+        serviceName: ORGANIZATIONS_MANAGEMENT_SERVICE_NAME,
+        packageName: ORGANIZATIONS_MANAGEMENT_PACKAGE_NAME,
+        urlEnvVariable: "ORGANIZATIONS_MANAGEMENT_MICROSERVICE_GRPC_URL",
+        protoFile: "organizations-management.proto"
     },
-    users_management: {
-        SERVICE_NAME: USERS_MANAGEMENT_SERVICE_NAME,
-        PACKAGE_NAME: USERS_MANAGEMENT_PACKAGE_NAME
+    [USERS_MANAGEMENT_PACKAGE_NAME]: {
+        serviceName: USERS_MANAGEMENT_SERVICE_NAME,
+        packageName: USERS_MANAGEMENT_PACKAGE_NAME,
+        urlEnvVariable: "USERS_MANAGEMENT_MICROSERVICE_GRPC_URL",
+        protoFile: "users-management.proto"
     },
-    workflows_management: {
-        SERVICE_NAME: WORKFLOWS_MANAGEMENT_SERVICE_NAME,
-        PACKAGE_NAME: WORKFLOWS_MANAGEMENT_PACKAGE_NAME
+    [WORKFLOWS_MANAGEMENT_PACKAGE_NAME]: {
+        serviceName: WORKFLOWS_MANAGEMENT_SERVICE_NAME,
+        packageName: WORKFLOWS_MANAGEMENT_PACKAGE_NAME,
+        urlEnvVariable: "WORKFLOWS_MICROSERVICE_GRPC_URL",
+        protoFile: "workflows-management.proto"
     }
 };

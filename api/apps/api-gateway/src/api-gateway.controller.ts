@@ -1,12 +1,17 @@
-import { Controller, Get } from "@nestjs/common";
-import { ApiGatewayService } from "./api-gateway.service";
+import { Body, Controller, Get, Post } from "@nestjs/common";
+import { AuthenticationGrpcService } from "./services";
 
 @Controller()
 export class ApiGatewayController {
-    constructor(private readonly apiGatewayService: ApiGatewayService) {}
+    public constructor(private readonly authenticationGrpcService: AuthenticationGrpcService) {}
 
     @Get()
-    getHello(): string {
-        return this.apiGatewayService.getHello();
+    public hello() {
+        return "Hello World!";
+    }
+
+    @Post("/auth/register/admin")
+    public registerAdmin(@Body() dto) {
+        return this.authenticationGrpcService.registerAdmin(dto);
     }
 }

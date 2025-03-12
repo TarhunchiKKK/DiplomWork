@@ -1,5 +1,4 @@
 import { OnModuleDestroy, OnModuleInit } from "@nestjs/common";
-import {} from "prisma";
 
 type ClassConstructor<T> = new (...args: any[]) => T;
 

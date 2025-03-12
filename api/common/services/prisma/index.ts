@@ -1,1 +1,1 @@
-export { withPrismaService } from "./with-prisma-service.mixin.js";
+export { withPrismaService } from "./with-prisma-service.mixin";

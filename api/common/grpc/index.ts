@@ -1,2 +1,2 @@
-export * from "./generated/index.js";
-export * from "./constants/index.js";
+export * from "./generated/index";
+export * from "./constants/index";

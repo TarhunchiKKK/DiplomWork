@@ -1,12 +1,15 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import { AuthenticationService } from "./authentication.service";
+import { RegisterAdminDto } from "common/grpc";
+import { GrpcMethod } from "@nestjs/microservices";
+import { SERVICE_NAME } from "./constants";
 
 @Controller()
 export class AuthenticationController {
-    constructor(private readonly authenticationService: AuthenticationService) {}
+    public constructor(private readonly authenticationService: AuthenticationService) {}
 
-    @Get()
-    getHello(): string {
-        return this.authenticationService.getHello();
+    @GrpcMethod(SERVICE_NAME, "RegisterAdmin")
+    public registerAdmin(dto: RegisterAdminDto) {
+        return this.authenticationService.registerAdmin(dto);
     }
 }

@@ -4,11 +4,12 @@ services:
   api-gateway:
     container_name: api-gateway
     build: 
-      context: ./api-gateway
-      dockerfile: Dockerfile 
+      context: ./docker
+      dockerfile: api-gateway 
     ports:
       - ${API_GATEWAY_PORT}:3000
     networks:
+      - api
       - api-gateway-network
     depends_on:
       - common
@@ -16,11 +17,12 @@ services:
   authentication-microservice:
     container_name: authentication-microservice
     build: 
-      context: ./authentication-microservice
-      dockerfile: Dockerfile
+      context: ./docker
+      dockerfile: authentication-microservice
     ports:
       - ${AUTHENTICATION_MICROSERVICE_PORT}:3000
     networks:
+      - api
       - authentication-microservice-network
     depends_on:
       - common
@@ -28,11 +30,12 @@ services:
   users-management-microservice:
     container_name: users-management-microservice
     build: 
-      context: ./users-managenent-microservice
-      dockerfile: Dockerfile
+      context: ./docker
+      dockerfile: users-management-microservice
     ports:
       - ${USERS_MANAGEMENT_MICROSERVICE_PORT}:3000
     networks:
+      - api
       - users-management-microservice-network
     depends_on:
       - common
@@ -48,17 +51,17 @@ services:
     ports:
         - ${USERS_MANAGEMENT_DB_PORT}:5432
     volumes:
-        - postgres_data:/var/lib/postgresql/data
+        - users-management-microservice-postgres_data:/var/lib/postgresql/data
     networks:
         - users-management-microservice-network
     depends_on:
       - common
 
 volumes:
-  postgres_data:
+  users-management-microservice-postgres_data:
 
 networks:
-  common-network:
+  api:
   api-gateway-network:
   authentication-microservice-network:
   users-management-microservice-network:

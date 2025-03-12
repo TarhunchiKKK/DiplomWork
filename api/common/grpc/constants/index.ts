@@ -1,1 +1,1 @@
-export { GrpcInfo } from "./grc-info.constant.js";
+export { GrpcInfo } from "./grc-info.constant";

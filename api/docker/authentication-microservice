@@ -12,8 +12,8 @@ RUN pnpm install
 
 COPY . .
 
-RUN pnpm build
+RUN pnpm build authentication
 
 EXPOSE 3000
 
-CMD ["node", "dist/main"]
+CMD ["node", "dist/apps/authentication/main"]

@@ -1,2 +1,3 @@
-export * from "./prisma/index.js";
-export * from "./redis/index.js";
+export * from "./prisma/index";
+export * from "./redis/index";
+export * from "./grpc-service";
