@@ -45,11 +45,11 @@ services:
     image: postgres:15.2
     restart: always
     environment:
-        - POSTGRES_DB=${USERS_MANAGEMENT_DB_NAME}
-        - POSTGRES_USER=${USERS_MANAGEMENT_DB_USER}
-        - POSTGRES_PASSWORD=${USERS_MANAGEMENT_DB_PASSWORD}
+        - POSTGRES_DB=${USERS_MANAGEMENT_MICROSERVICE_DB_NAME}
+        - POSTGRES_USER=${USERS_MANAGEMENT_MICROSERVICE_DB_USER}
+        - POSTGRES_PASSWORD=${USERS_MANAGEMENT_MICROSERVICE_DB_PASSWORD}
     ports:
-        - ${USERS_MANAGEMENT_DB_PORT}:5432
+        - ${USERS_MANAGEMENT_MICROSERVICE_DB_PORT}:5432
     volumes:
         - users-management-microservice-postgres_data:/var/lib/postgresql/data
     networks:

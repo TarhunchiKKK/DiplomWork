@@ -1,15 +1,13 @@
 import { Controller } from "@nestjs/common";
-import { UsersManagementService } from "./services/users-management.service";
-import { GrpcMethod } from "@nestjs/microservices";
-import { SERVICE_NAME } from "./constants";
-import { CreateUserDto } from "common/grpc";
+import { CreateUserDto, UsersManagementServiceController, UsersManagementServiceControllerMethods } from "common/grpc";
+import { UsersService } from "./users/users.service";
 
 @Controller()
-export class UsersManagementController {
-    public constructor(private readonly usersManagementService: UsersManagementService) {}
+@UsersManagementServiceControllerMethods()
+export class UsersManagementController implements UsersManagementServiceController {
+    public constructor(private readonly usersService: UsersService) {}
 
-    @GrpcMethod(SERVICE_NAME, "Create")
     public async create(dto: CreateUserDto) {
-        return await this.usersManagementService.create(dto);
+        return await this.usersService.create(dto);
     }
 }

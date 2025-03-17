@@ -1,15 +1,14 @@
 import { Module } from "@nestjs/common";
 import { UsersManagementController } from "./users-management.controller";
-import { UsersManagementService } from "./services/users-management.service";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { getConfigModuleConfig, getJwtConfig } from "common/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { User } from "./modules/users/entities/user.entity";
-import { Token } from "./modules/tokens/entities/token.entity";
-import { UsersModule } from "./modules/users/users.module";
-import { TokensModule } from "./modules/tokens/tokens.module";
-import { PostsModule } from "./modules/posts/posts.module";
-import { Post } from "./modules/posts/entities/post.entity";
+import { User } from "./users/entities/user.entity";
+import { Token } from "./tokens/entities/token.entity";
+import { UsersModule } from "./users/users.module";
+import { TokensModule } from "./tokens/tokens.module";
+import { PostsModule } from "./posts/posts.module";
+import { Post } from "./posts/entities/post.entity";
 import { JwtModule } from "@nestjs/jwt";
 
 @Module({
@@ -38,7 +37,6 @@ import { JwtModule } from "@nestjs/jwt";
         TokensModule,
         PostsModule
     ],
-    controllers: [UsersManagementController],
-    providers: [UsersManagementService]
+    controllers: [UsersManagementController]
 })
 export class UsersManagementModule {}

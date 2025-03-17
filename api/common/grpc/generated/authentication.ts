@@ -7,7 +7,6 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { Empty } from "./google/protobuf/empty";
 
 export interface Profile {
     id: string;
@@ -25,125 +24,24 @@ export interface RegisterAdminDto {
     password: string;
 }
 
-export interface RegisterUserDto {
-    username: string;
-    password: string;
-    token: string;
-}
-
-export interface LoginDto {
-    email: string;
-    password: string;
-}
-
 export interface AuthResponse {
     profile: Profile | undefined;
     token: string;
-}
-
-export interface FindProfileDto {
-    jwt: string;
-}
-
-export interface ActivateAccountDto {
-    jwt: string;
-    pin: string;
-}
-
-export interface DeactivateAccountDto {
-    jwt: string;
-    pin: string;
-}
-
-export interface GenerateTOTPDto {
-    jwt: string;
-}
-
-export interface EnableTOTPDto {
-    jwt: string;
-    secret: string;
-    pin: string;
-}
-
-export interface DisableTOTPDto {
-    jwt: string;
-}
-
-export interface ResetPasswordDto {
-    jwt: string;
-}
-
-export interface ChangePasswordDto {
-    resetToken: string;
-    password: string;
-    newPassword: string;
 }
 
 export const AUTHENTICATION_PACKAGE_NAME = "authentication";
 
 export interface AuthenticationServiceClient {
     registerAdmin(request: RegisterAdminDto): Observable<AuthResponse>;
-
-    registerUser(request: RegisterUserDto): Observable<AuthResponse>;
-
-    login(request: LoginDto): Observable<AuthResponse>;
-
-    findProfile(request: FindProfileDto): Observable<Profile>;
-
-    activateAccount(request: ActivateAccountDto): Observable<Empty>;
-
-    deactivateAccount(request: DeactivateAccountDto): Observable<Empty>;
-
-    generateTotp(request: GenerateTOTPDto): Observable<Empty>;
-
-    enableTotp(request: EnableTOTPDto): Observable<Empty>;
-
-    disableTotp(request: DisableTOTPDto): Observable<Empty>;
-
-    resetPassword(request: ResetPasswordDto): Observable<Empty>;
-
-    changePassword(request: ChangePasswordDto): Observable<Empty>;
 }
 
 export interface AuthenticationServiceController {
     registerAdmin(request: RegisterAdminDto): Promise<AuthResponse> | Observable<AuthResponse> | AuthResponse;
-
-    registerUser(request: RegisterUserDto): Promise<AuthResponse> | Observable<AuthResponse> | AuthResponse;
-
-    login(request: LoginDto): Promise<AuthResponse> | Observable<AuthResponse> | AuthResponse;
-
-    findProfile(request: FindProfileDto): Promise<Profile> | Observable<Profile> | Profile;
-
-    activateAccount(request: ActivateAccountDto): void;
-
-    deactivateAccount(request: DeactivateAccountDto): void;
-
-    generateTotp(request: GenerateTOTPDto): void;
-
-    enableTotp(request: EnableTOTPDto): void;
-
-    disableTotp(request: DisableTOTPDto): void;
-
-    resetPassword(request: ResetPasswordDto): void;
-
-    changePassword(request: ChangePasswordDto): void;
 }
 
 export function AuthenticationServiceControllerMethods() {
     return function (constructor: Function) {
-        const grpcMethods: string[] = [
-            "registerAdmin",
-            "registerUser",
-            "login",
-            "findProfile",
-            "activateAccount",
-            "deactivateAccount",
-            "generateTotp",
-            "enableTotp",
-            "disableTotp",
-            "resetPassword",
-            "changePassword"
-        ];
+        const grpcMethods: string[] = ["registerAdmin"];
         for (const method of grpcMethods) {
             const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
             GrpcMethod("AuthenticationService", method)(constructor.prototype[method], method, descriptor);

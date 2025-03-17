@@ -2,30 +2,30 @@
 // versions:
 //   protoc-gen-ts_proto  v2.6.1
 //   protoc               v3.14.0
-// source: workflows-management.proto
+// source: notifications.proto
 
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 
-export const WORKFLOWS_MANAGEMENT_PACKAGE_NAME = "workflowsManagement";
+export const NOTIFICATIONS_PACKAGE_NAME = "notifications";
 
-export interface WorkflowsManagementServiceClient {}
+export interface NotificationsServiceClient {}
 
-export interface WorkflowsManagementServiceController {}
+export interface NotificationsServiceController {}
 
-export function WorkflowsManagementServiceControllerMethods() {
+export function NotificationsServiceControllerMethods() {
     return function (constructor: Function) {
         const grpcMethods: string[] = [];
         for (const method of grpcMethods) {
             const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcMethod("WorkflowsManagementService", method)(constructor.prototype[method], method, descriptor);
+            GrpcMethod("NotificationsService", method)(constructor.prototype[method], method, descriptor);
         }
         const grpcStreamMethods: string[] = [];
         for (const method of grpcStreamMethods) {
             const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcStreamMethod("WorkflowsManagementService", method)(constructor.prototype[method], method, descriptor);
+            GrpcStreamMethod("NotificationsService", method)(constructor.prototype[method], method, descriptor);
         }
     };
 }
 
-export const WORKFLOWS_MANAGEMENT_SERVICE_NAME = "WorkflowsManagementService";
+export const NOTIFICATIONS_SERVICE_NAME = "NotificationsService";

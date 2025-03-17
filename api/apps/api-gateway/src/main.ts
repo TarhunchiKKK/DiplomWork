@@ -2,6 +2,7 @@ import { NestFactory } from "@nestjs/core";
 import { ApiGatewayModule } from "./api-gateway.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { INestApplication } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 function setupSwagger(app: INestApplication) {
     const config = new DocumentBuilder()
@@ -18,8 +19,10 @@ function setupSwagger(app: INestApplication) {
 async function bootstrap() {
     const app = await NestFactory.create(ApiGatewayModule);
 
+    const configService = app.get(ConfigService);
+
     setupSwagger(app);
 
-    await app.listen(process.env.port ?? 3000);
+    await app.listen(configService.getOrThrow<number>("API_GATEWAY_PORT"));
 }
 bootstrap();

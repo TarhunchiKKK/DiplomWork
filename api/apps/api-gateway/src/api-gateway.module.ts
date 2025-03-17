@@ -1,24 +1,11 @@
 import { Module } from "@nestjs/common";
-import { ApiGatewayController } from "./api-gateway.controller";
-import { ClientsModule } from "@nestjs/microservices";
-import { AuthenticationGrpcService } from "./services";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { getConfigModuleConfig, getGrpcConfig } from "common/config";
-import { AUTHENTICATION_PACKAGE_NAME } from "common/grpc";
+import { ConfigModule } from "@nestjs/config";
+import { getConfigModuleConfig } from "common/config";
+import { AuthenticationModule } from "./authentication/authentication.module";
+import { UsersManagementModule } from "./users-management/users-management.module";
 
 @Module({
-    imports: [
-        ConfigModule.forRoot(getConfigModuleConfig()),
-        ClientsModule.registerAsync([
-            {
-                name: AUTHENTICATION_PACKAGE_NAME,
-                imports: [ConfigModule],
-                inject: [ConfigService],
-                useFactory: (configService: ConfigService) => getGrpcConfig(configService, AUTHENTICATION_PACKAGE_NAME)
-            }
-        ])
-    ],
-    controllers: [ApiGatewayController],
-    providers: [AuthenticationGrpcService]
+    imports: [ConfigModule.forRoot(getConfigModuleConfig()), AuthenticationModule, UsersManagementModule],
+    controllers: []
 })
 export class ApiGatewayModule {}

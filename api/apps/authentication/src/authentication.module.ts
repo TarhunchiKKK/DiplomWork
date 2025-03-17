@@ -1,12 +1,10 @@
 import { Module } from "@nestjs/common";
 import { AuthenticationController } from "./authentication.controller";
-import { AuthenticationService } from "./services/authentication.service";
+import { AuthenticationService } from "./authentication.service";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { getConfigModuleConfig, getGrpcConfig, getJwtConfig } from "common/config";
-import { ClientsModule } from "@nestjs/microservices";
-import { USERS_MANAGEMENT_PACKAGE_NAME } from "common/grpc";
+import { getConfigModuleConfig, getJwtConfig } from "common/config";
 import { JwtModule } from "@nestjs/jwt";
-import { UsersManagementGrpcService } from "./services/users-management.grpc-service";
+import { UsersManagementGrpcModule } from "./users-management/users-management.grpc-module";
 
 @Module({
     imports: [
@@ -16,17 +14,9 @@ import { UsersManagementGrpcService } from "./services/users-management.grpc-ser
             inject: [ConfigService],
             useFactory: getJwtConfig
         }),
-        ClientsModule.registerAsync([
-            {
-                name: USERS_MANAGEMENT_PACKAGE_NAME,
-                imports: [ConfigModule],
-                inject: [ConfigService],
-                useFactory: (configService: ConfigService) =>
-                    getGrpcConfig(configService, USERS_MANAGEMENT_PACKAGE_NAME)
-            }
-        ])
+        UsersManagementGrpcModule
     ],
     controllers: [AuthenticationController],
-    providers: [AuthenticationService, UsersManagementGrpcService]
+    providers: [AuthenticationService]
 })
 export class AuthenticationModule {}

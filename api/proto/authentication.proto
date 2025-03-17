@@ -1,31 +1,9 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto";
-
 package authentication;
 
 service AuthenticationService {
     rpc RegisterAdmin (RegisterAdminDto) returns (AuthResponse) {}
-
-    rpc RegisterUser (RegisterUserDto) returns (AuthResponse) {}
-
-    rpc Login (LoginDto) returns (AuthResponse) {}
-
-    rpc FindProfile (FindProfileDto) returns (Profile) {}
-
-    rpc ActivateAccount (ActivateAccountDto) returns (google.protobuf.Empty) {}
-
-    rpc DeactivateAccount (DeactivateAccountDto) returns (google.protobuf.Empty) {}
-
-    rpc GenerateTOTP (GenerateTOTPDto) returns (google.protobuf.Empty) {}
-
-    rpc EnableTOTP (EnableTOTPDto) returns (google.protobuf.Empty) {}
-
-    rpc DisableTOTP (DisableTOTPDto) returns (google.protobuf.Empty) {}
-
-    rpc ResetPassword (ResetPasswordDto) returns (google.protobuf.Empty) {}
-
-    rpc ChangePassword (ChangePasswordDto) returns (google.protobuf.Empty) {}
 }
 
 message Profile {
@@ -52,66 +30,8 @@ message RegisterAdminDto {
     string password = 3;
 }
 
-message RegisterUserDto {
-    string username = 1;
-
-    string password = 2;
-
-    string token = 3;
-}
-
-message LoginDto {
-    string email = 1;
-
-    string password = 2;
-}
-
 message AuthResponse {
     Profile profile = 1;
 
     string token = 2;
-}
-
-message FindProfileDto {
-    string jwt = 1;
-}
-
-message ActivateAccountDto {
-    string jwt = 1;
-
-    string pin = 2;
-}
-
-message DeactivateAccountDto {
-    string jwt = 1;
-
-    string pin = 2;
-}
-
-message GenerateTOTPDto {
-    string jwt = 1;
-} 
-
-message EnableTOTPDto {
-    string jwt = 1;
-    
-    string secret = 2;
-
-    string pin = 3;
-}
-
-message DisableTOTPDto {
-    string jwt = 1;
-}
-
-message ResetPasswordDto {
-    string jwt = 1;
-}
-
-message ChangePasswordDto {
-    string resetToken = 1;
-
-    string password = 2;
-
-    string newPassword = 3;
 }
