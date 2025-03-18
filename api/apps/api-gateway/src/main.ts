@@ -24,5 +24,8 @@ async function bootstrap() {
     setupSwagger(app);
 
     await app.listen(configService.getOrThrow<number>("API_GATEWAY_PORT"));
+
+    console.info(`API Gateway is running on: ${await app.getUrl()}`);
 }
+
 bootstrap();
