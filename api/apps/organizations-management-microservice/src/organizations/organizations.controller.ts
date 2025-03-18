@@ -1,18 +1,19 @@
-import { Controller, Post } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import { OrganizationsService } from "./organizations.service";
+import {
+    ICreateOrganizationReponse,
+    OrganizationsManagementServiceController,
+    OrganizationsManagementServiceControllerMethods
+} from "common/grpc";
+import { defaulttOrganization } from "./constants/organization.constants";
 
 @Controller("organizations")
-export class OrganizationsController {
+@OrganizationsManagementServiceControllerMethods()
+export class OrganizationsController implements OrganizationsManagementServiceController {
     public constructor(private readonly organizationsService: OrganizationsService) {}
 
-    @Post("/test")
-    public test() {
-        return this.organizationsService.create({
-            settings: {
-                urgencyInterval: 100,
-                documentStatuses: [],
-                documentTypes: []
-            }
-        });
+    public async createDefault() {
+        const organization = await this.organizationsService.create(defaulttOrganization);
+        return organization as unknown as ICreateOrganizationReponse;
     }
 }

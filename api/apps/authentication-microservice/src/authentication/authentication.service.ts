@@ -1,32 +1,33 @@
 import { Injectable } from "@nestjs/common";
-import { AuthResponse, RegisterAdminDto } from "common/grpc";
+import { IRegisterAdminDto } from "common/grpc";
 import { UsersManagementGrpcService } from "../grpc/users-management/users-management.grpc-service";
-import { firstValueFrom } from "rxjs";
 import { Role } from "common/enums";
+import { OrganizationsManagementGrpcService } from "../grpc/organizations-management/organizations-management.grpc-service";
+import { allObservables } from "common/utils";
 
 @Injectable()
 export class AuthenticationService {
-    public constructor(private readonly usersManagementGrpcService: UsersManagementGrpcService) {}
+    public constructor(
+        private readonly usersManagementGrpcService: UsersManagementGrpcService,
+        private readonly organizationsManagementGrpcService: OrganizationsManagementGrpcService
+    ) {}
 
-    public async registerAdmin(dto: RegisterAdminDto): Promise<AuthResponse> {
-        const user = await firstValueFrom(
+    public async registerAdmin(dto: IRegisterAdminDto) {
+        const [user, organization] = await allObservables(
             this.usersManagementGrpcService.create({
                 ...dto,
                 organizationId: "1",
                 role: Role.ADMIN
-            })
+            }),
+            this.organizationsManagementGrpcService.createDefault()
         );
 
         return {
-            profile: {
-                id: user.id,
-                username: user.username,
-                email: user.email,
-                role: user.role,
-                isTwoFactorEnabled: false,
-                isDeactivated: false,
-                post: null
-            },
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            role: user.role,
+            organizationId: organization._id,
             token: "token"
         };
     }

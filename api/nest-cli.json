@@ -30,7 +30,7 @@
             "sourceRoot": "./",
             "compilerOptions": {
                 "tsConfigPath": "apps/authentication-microservice/tsconfig.app.json",
-                "assets": ["proto/authentication.proto", "proto/users-management.proto"],
+                "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         },
@@ -41,7 +41,7 @@
             "sourceRoot": "./",
             "compilerOptions": {
                 "tsConfigPath": "apps/documents-management-microservice/tsconfig.app.json",
-                "assets": ["proto/documents-management.proto"],
+                "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         },
@@ -52,7 +52,7 @@
             "sourceRoot": "./",
             "compilerOptions": {
                 "tsConfigPath": "apps/notifications-microservice/tsconfig.app.json",
-                "assets": ["proto/notifications.proto"],
+                "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         },
@@ -63,7 +63,7 @@
             "sourceRoot": "./",
             "compilerOptions": {
                 "tsConfigPath": "apps/organizations-management-microservice/tsconfig.app.json",
-                "assets": ["proto/organizations-management.proto"],
+                "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         },
@@ -74,7 +74,7 @@
             "sourceRoot": "./",
             "compilerOptions": {
                 "tsConfigPath": "apps/users-management-microservice/tsconfig.app.json",
-                "assets": ["proto/users-management.proto"],
+                "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         },
@@ -85,7 +85,7 @@
             "sourceRoot": "./",
             "compilerOptions": {
                 "tsConfigPath": "apps/workflows-management-microservice/tsconfig.app.json",
-                "assets": ["proto/workflows-management.proto"],
+                "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         }

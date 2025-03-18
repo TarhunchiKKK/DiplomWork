@@ -8,35 +8,29 @@
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
-export interface Profile {
-    id: string;
-    username: string;
-    email: string;
-    role: string;
-    isTwoFactorEnabled: boolean;
-    isDeactivated: boolean;
-    post: string;
-}
-
-export interface RegisterAdminDto {
+export interface IRegisterAdminDto {
     username: string;
     email: string;
     password: string;
 }
 
-export interface AuthResponse {
-    profile: Profile | undefined;
+export interface IAuthResponse {
+    id: string;
+    username: string;
+    email: string;
+    role: string;
+    organizationId: string;
     token: string;
 }
 
 export const AUTHENTICATION_PACKAGE_NAME = "authentication";
 
 export interface AuthenticationServiceClient {
-    registerAdmin(request: RegisterAdminDto): Observable<AuthResponse>;
+    registerAdmin(request: IRegisterAdminDto): Observable<IAuthResponse>;
 }
 
 export interface AuthenticationServiceController {
-    registerAdmin(request: RegisterAdminDto): Promise<AuthResponse> | Observable<AuthResponse> | AuthResponse;
+    registerAdmin(request: IRegisterAdminDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 }
 
 export function AuthenticationServiceControllerMethods() {

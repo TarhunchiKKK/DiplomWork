@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { DocumentStatus, DocumentStatusSchema } from "./document-status.schema";
-import { DocumentTypeSchema } from "./document-type.schema";
+import { DocumentTypeSchema, DocumentType } from "./document-type.schema";
 
 @Schema()
 export class Settings {

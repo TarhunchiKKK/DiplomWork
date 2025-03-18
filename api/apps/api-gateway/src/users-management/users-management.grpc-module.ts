@@ -22,4 +22,4 @@ import { UsersManagementGrpcController } from "./users-management.grpc-controlle
     providers: [UsersManagementGrpcService],
     exports: [UsersManagementGrpcService]
 })
-export class UsersManagementModule {}
+export class UsersManagementGrpcModule {}

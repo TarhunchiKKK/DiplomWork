@@ -2,14 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { CreateUserDto, CreateUserResponse } from "common/grpc";
+import { ICreateUserDto, ICreateUserResponse } from "common/grpc";
 import { Role } from "common/enums/role.enums";
 
 @Injectable()
 export class UsersService {
     public constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>) {}
 
-    public async create(dto: CreateUserDto): Promise<CreateUserResponse> {
+    public async create(dto: ICreateUserDto): Promise<ICreateUserResponse> {
         const user = await this.usersRepository.save({
             ...dto,
             role: dto.role as Role,

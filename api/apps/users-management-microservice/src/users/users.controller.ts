@@ -1,5 +1,5 @@
 import { Controller } from "@nestjs/common";
-import { CreateUserDto, UsersManagementServiceController, UsersManagementServiceControllerMethods } from "common/grpc";
+import { ICreateUserDto, UsersManagementServiceController, UsersManagementServiceControllerMethods } from "common/grpc";
 import { UsersService } from "./users.service";
 
 @Controller()
@@ -7,7 +7,7 @@ import { UsersService } from "./users.service";
 export class UsersController implements UsersManagementServiceController {
     public constructor(private readonly usersService: UsersService) {}
 
-    public async create(dto: CreateUserDto) {
+    public async create(dto: ICreateUserDto) {
         return await this.usersService.create(dto);
     }
 }

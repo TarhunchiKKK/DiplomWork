@@ -1,11 +1,18 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { getConfigModuleConfig } from "common/config";
-import { AuthenticationModule } from "./authentication/authentication.module";
-import { UsersManagementModule } from "./users-management/users-management.module";
+import { AuthenticationGrpcModule } from "./authentication/authentication.grpc-module";
+import { UsersManagementGrpcModule } from "./users-management/users-management.grpc-module";
+import { OrganizationsManagementGrpcModule } from "./organizations-management/organizations-management.grpc-module";
 
 @Module({
-    imports: [ConfigModule.forRoot(getConfigModuleConfig()), AuthenticationModule, UsersManagementModule],
+    imports: [
+        ConfigModule.forRoot({
+            isGlobal: true
+        }),
+        AuthenticationGrpcModule,
+        OrganizationsManagementGrpcModule,
+        UsersManagementGrpcModule
+    ],
     controllers: []
 })
 export class ApiGatewayModule {}

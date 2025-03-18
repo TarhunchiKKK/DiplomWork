@@ -1,13 +1,12 @@
 syntax = "proto3";
 
-
 package usersManagement;
 
 service UsersManagementService {
-    rpc Create (CreateUserDto) returns (CreateUserResponse) {}
+    rpc Create (ICreateUserDto) returns (ICreateUserResponse) {}
 }
 
-message CreateUserDto {
+message ICreateUserDto {
     string username = 1;
 
     string email = 2;
@@ -19,7 +18,7 @@ message CreateUserDto {
     string organizationId = 5;
 }
 
-message CreateUserResponse {
+message ICreateUserResponse {
     string id = 1;
 
     string username = 2;

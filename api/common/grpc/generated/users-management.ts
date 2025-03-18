@@ -8,7 +8,7 @@
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
-export interface CreateUserDto {
+export interface ICreateUserDto {
     username: string;
     email: string;
     password: string;
@@ -16,7 +16,7 @@ export interface CreateUserDto {
     organizationId: string;
 }
 
-export interface CreateUserResponse {
+export interface ICreateUserResponse {
     id: string;
     username: string;
     email: string;
@@ -29,11 +29,13 @@ export interface CreateUserResponse {
 export const USERS_MANAGEMENT_PACKAGE_NAME = "usersManagement";
 
 export interface UsersManagementServiceClient {
-    create(request: CreateUserDto): Observable<CreateUserResponse>;
+    create(request: ICreateUserDto): Observable<ICreateUserResponse>;
 }
 
 export interface UsersManagementServiceController {
-    create(request: CreateUserDto): Promise<CreateUserResponse> | Observable<CreateUserResponse> | CreateUserResponse;
+    create(
+        request: ICreateUserDto
+    ): Promise<ICreateUserResponse> | Observable<ICreateUserResponse> | ICreateUserResponse;
 }
 
 export function UsersManagementServiceControllerMethods() {

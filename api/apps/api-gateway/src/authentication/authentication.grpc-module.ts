@@ -21,4 +21,4 @@ import { AuthenticationGrpcController } from "./authentication.grpc-controller";
     providers: [AuthenticationGrpcService],
     exports: [AuthenticationGrpcService]
 })
-export class AuthenticationModule {}
+export class AuthenticationGrpcModule {}
