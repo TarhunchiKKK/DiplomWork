@@ -17,8 +17,6 @@ export class UsersService {
             privateKey: ""
         });
 
-        console.log(user);
-
         return {
             id: user.id,
             username: user.username,

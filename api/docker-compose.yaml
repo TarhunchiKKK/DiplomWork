@@ -40,6 +40,17 @@ services:
   #   depends_on:
   #     - common
 
+  organizations-management-microservice-db:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE=${ORGANIZATIONS_MANAGEMENT_DB_NAME}
+      - MONGO_INITDB_ROOT_USERNAME=${ORGANIZATIONS_MANAGEMENT_DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${ORGANIZATIONS_MANAGEMENT_DB_PASSWORD}
+    ports:
+        - 27017:27017
+    networks:
+      - organizations-management-microservice-network
+
   users-management-microservice-db:
     container_name: users-management-microservice-db
     image: postgres:15.2
@@ -56,10 +67,11 @@ services:
         - users-management-microservice-network
 
 volumes:
+  organizations-management-microservice-mongo_data:
   users-management-microservice-postgres_data:
 
 networks:
   api:
   api-gateway-network:
-  authentication-microservice-network:
+  organizations-management-microservice-network:
   users-management-microservice-network:

@@ -1,10 +1,21 @@
 import { Module } from "@nestjs/common";
-import { OrganizationsManagementController } from "./organizations-management.controller";
-import { OrganizationsManagementService } from "./organizations-management.service";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { MongooseModule } from "@nestjs/mongoose";
 
 @Module({
-    imports: [],
-    controllers: [OrganizationsManagementController],
-    providers: [OrganizationsManagementService]
+    imports: [
+        ConfigModule.forRoot({
+            isGlobal: true
+        }),
+        MongooseModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (configService: ConfigService) => ({
+                uri: configService.getOrThrow<string>("ORGANIZATIONS_MANAGEMENT_DB_URI")
+            })
+        })
+    ],
+    controllers: [],
+    providers: []
 })
 export class OrganizationsManagementModule {}
