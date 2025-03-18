@@ -1,8 +1,13 @@
 import { NestFactory } from "@nestjs/core";
 import { OrganizationsManagementModule } from "./organizations-management.module";
+import { ConfigService } from "@nestjs/config";
 
 async function bootstrap() {
     const app = await NestFactory.create(OrganizationsManagementModule);
-    await app.listen(process.env.port ?? 3000);
+
+    const configService = app.get(ConfigService);
+
+    await app.listen(configService.getOrThrow<number>("ORGANIZATIONS_MANAGEMENT_MICROSERVICE_PORT"));
 }
+
 bootstrap();

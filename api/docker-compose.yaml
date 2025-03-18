@@ -1,53 +1,12 @@
 version: "3.7"
 
 services:
-  # api-gateway:
-  #   container_name: api-gateway
-  #   build: 
-  #     context: ./docker
-  #     dockerfile: api-gateway 
-  #   ports:
-  #     - ${API_GATEWAY_PORT}:3000
-  #   networks:
-  #     - api
-  #     - api-gateway-network
-  #   depends_on:
-  #     - common
-  
-  # authentication-microservice:
-  #   container_name: authentication-microservice
-  #   build: 
-  #     context: ./docker
-  #     dockerfile: authentication-microservice
-  #   ports:
-  #     - ${AUTHENTICATION_MICROSERVICE_PORT}:3000
-  #   networks:
-  #     - api
-  #     - authentication-microservice-network
-  #   depends_on:
-  #     - common
-
-  # users-management-microservice:
-  #   container_name: users-management-microservice
-  #   build: 
-  #     context: ./docker
-  #     dockerfile: users-management-microservice
-  #   ports:
-  #     - ${USERS_MANAGEMENT_MICROSERVICE_PORT}:3000
-  #   networks:
-  #     - api
-  #     - users-management-microservice-network
-  #   depends_on:
-  #     - common
-
   organizations-management-microservice-db:
     image: mongo:latest
     environment:
       - MONGO_INITDB_DATABASE=${ORGANIZATIONS_MANAGEMENT_DB_NAME}
-      - MONGO_INITDB_ROOT_USERNAME=${ORGANIZATIONS_MANAGEMENT_DB_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${ORGANIZATIONS_MANAGEMENT_DB_PASSWORD}
     ports:
-        - 27017:27017
+      - ${ORGANIZATIONS_MANAGEMENT_DB_PORT}:27017
     networks:
       - organizations-management-microservice-network
 
@@ -67,11 +26,8 @@ services:
         - users-management-microservice-network
 
 volumes:
-  organizations-management-microservice-mongo_data:
   users-management-microservice-postgres_data:
 
 networks:
-  api:
-  api-gateway-network:
   organizations-management-microservice-network:
   users-management-microservice-network:

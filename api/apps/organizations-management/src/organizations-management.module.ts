@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
+import { OrganizationsModule } from "./organizations/organizations.module";
 
 @Module({
     imports: [
@@ -13,9 +14,8 @@ import { MongooseModule } from "@nestjs/mongoose";
             useFactory: (configService: ConfigService) => ({
                 uri: configService.getOrThrow<string>("ORGANIZATIONS_MANAGEMENT_DB_URI")
             })
-        })
-    ],
-    controllers: [],
-    providers: []
+        }),
+        OrganizationsModule
+    ]
 })
 export class OrganizationsManagementModule {}
