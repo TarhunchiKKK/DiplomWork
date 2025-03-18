@@ -7,25 +7,29 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 
+const protobufPackage = "notifications";
+
 export const NOTIFICATIONS_PACKAGE_NAME = "notifications";
 
-export interface NotificationsServiceClient {}
-
-export interface NotificationsServiceController {}
-
-export function NotificationsServiceControllerMethods() {
-    return function (constructor: Function) {
-        const grpcMethods: string[] = [];
-        for (const method of grpcMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcMethod("NotificationsService", method)(constructor.prototype[method], method, descriptor);
-        }
-        const grpcStreamMethods: string[] = [];
-        for (const method of grpcStreamMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcStreamMethod("NotificationsService", method)(constructor.prototype[method], method, descriptor);
-        }
-    };
+export interface NotificationsServiceClient {
 }
 
-export const NOTIFICATIONS_SERVICE_NAME = "NotificationsService";
+export interface NotificationsServiceController {
+}
+
+export function NotificationsServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = [];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("NotificationsService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("NotificationsService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const NOTIFICATIONS_SER__vICE_NAME = "NotificationsService";

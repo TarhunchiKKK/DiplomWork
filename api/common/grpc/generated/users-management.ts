@@ -8,49 +8,49 @@
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
+const protobufPackage = "usersManagement";
+
 export interface ICreateUserDto {
-    username: string;
-    email: string;
-    password: string;
-    role: string;
-    organizationId: string;
+  username: string;
+  email: string;
+  password: string;
+  role: string;
+  organization_id: string;
 }
 
 export interface ICreateUserResponse {
-    id: string;
-    username: string;
-    email: string;
-    password: string;
-    role: string;
-    organizationId: string;
-    createdAt: string;
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  role: string;
+  organization_id: string;
+  createdAt: string;
 }
 
 export const USERS_MANAGEMENT_PACKAGE_NAME = "usersManagement";
 
 export interface UsersManagementServiceClient {
-    create(request: ICreateUserDto): Observable<ICreateUserResponse>;
+  create(request: ICreateUserDto): Observable<ICreateUserResponse>;
 }
 
 export interface UsersManagementServiceController {
-    create(
-        request: ICreateUserDto
-    ): Promise<ICreateUserResponse> | Observable<ICreateUserResponse> | ICreateUserResponse;
+  create(request: ICreateUserDto): Promise<ICreateUserResponse> | Observable<ICreateUserResponse> | ICreateUserResponse;
 }
 
 export function UsersManagementServiceControllerMethods() {
-    return function (constructor: Function) {
-        const grpcMethods: string[] = ["create"];
-        for (const method of grpcMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcMethod("UsersManagementService", method)(constructor.prototype[method], method, descriptor);
-        }
-        const grpcStreamMethods: string[] = [];
-        for (const method of grpcStreamMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcStreamMethod("UsersManagementService", method)(constructor.prototype[method], method, descriptor);
-        }
-    };
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["create"];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("UsersManagementService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("UsersManagementService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
 }
 
-export const USERS_MANAGEMENT_SERVICE_NAME = "UsersManagementService";
+export const USERS_MANAGEMENT_SER__vICE_NAME = "UsersManagementService";

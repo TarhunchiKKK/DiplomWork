@@ -9,61 +9,59 @@ import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 import { Empty } from "./google/protobuf/empty";
 
+const protobufPackage = "organizationsManagement";
+
 export interface ICreateOrganizationReponse {
-    _id: string;
-    __v: number;
-    settings: ISettings | undefined;
+  _id: string;
+  __v: number;
+  settings: ISettings | undefined;
 }
 
 export interface ISettings {
-    Id: string;
-    V: number;
-    urgencyInterval: number;
-    documentTypes: IDocumentType[];
-    documentStatuses: IDocumentStatus[];
+  _id: string;
+  __v: number;
+  urgencyInterval: number;
+  documentTypes: IDocumentType[];
+  documentStatuses: IDocumentStatus[];
 }
 
 export interface IDocumentType {
-    Id: string;
-    V: number;
-    value: string;
+  _id: string;
+  __v: number;
+  value: string;
 }
 
 export interface IDocumentStatus {
-    Id: string;
-    V: number;
-    value: string;
+  _id: string;
+  __v: number;
+  value: string;
 }
 
 export const ORGANIZATIONS_MANAGEMENT_PACKAGE_NAME = "organizationsManagement";
 
 export interface OrganizationsManagementServiceClient {
-    createDefault(request: Empty): Observable<ICreateOrganizationReponse>;
+  createDefault(request: Empty): Observable<ICreateOrganizationReponse>;
 }
 
 export interface OrganizationsManagementServiceController {
-    createDefault(
-        request: Empty
-    ): Promise<ICreateOrganizationReponse> | Observable<ICreateOrganizationReponse> | ICreateOrganizationReponse;
+  createDefault(
+    request: Empty,
+  ): Promise<ICreateOrganizationReponse> | Observable<ICreateOrganizationReponse> | ICreateOrganizationReponse;
 }
 
 export function OrganizationsManagementServiceControllerMethods() {
-    return function (constructor: Function) {
-        const grpcMethods: string[] = ["createDefault"];
-        for (const method of grpcMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcMethod("OrganizationsManagementService", method)(constructor.prototype[method], method, descriptor);
-        }
-        const grpcStreamMethods: string[] = [];
-        for (const method of grpcStreamMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcStreamMethod("OrganizationsManagementService", method)(
-                constructor.prototype[method],
-                method,
-                descriptor
-            );
-        }
-    };
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["createDefault"];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("OrganizationsManagementService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("OrganizationsManagementService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
 }
 
-export const ORGANIZATIONS_MANAGEMENT_SERVICE_NAME = "OrganizationsManagementService";
+export const ORGANIZATIONS_MANAGEMENT_SER__vICE_NAME = "OrganizationsManagementService";

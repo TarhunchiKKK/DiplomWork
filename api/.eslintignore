@@ -32,3 +32,5 @@ node_modules
 assets/
 public/
 /**/*.d.ts
+
+scripts/

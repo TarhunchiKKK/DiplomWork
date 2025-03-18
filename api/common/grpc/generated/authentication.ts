@@ -8,44 +8,46 @@
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
+const protobufPackage = "authentication";
+
 export interface IRegisterAdminDto {
-    username: string;
-    email: string;
-    password: string;
+  username: string;
+  email: string;
+  password: string;
 }
 
 export interface IAuthResponse {
-    id: string;
-    username: string;
-    email: string;
-    role: string;
-    organizationId: string;
-    token: string;
+  id: string;
+  username: string;
+  email: string;
+  role: string;
+  organization_id: string;
+  token: string;
 }
 
 export const AUTHENTICATION_PACKAGE_NAME = "authentication";
 
 export interface AuthenticationServiceClient {
-    registerAdmin(request: IRegisterAdminDto): Observable<IAuthResponse>;
+  registerAdmin(request: IRegisterAdminDto): Observable<IAuthResponse>;
 }
 
 export interface AuthenticationServiceController {
-    registerAdmin(request: IRegisterAdminDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
+  registerAdmin(request: IRegisterAdminDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 }
 
 export function AuthenticationServiceControllerMethods() {
-    return function (constructor: Function) {
-        const grpcMethods: string[] = ["registerAdmin"];
-        for (const method of grpcMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcMethod("AuthenticationService", method)(constructor.prototype[method], method, descriptor);
-        }
-        const grpcStreamMethods: string[] = [];
-        for (const method of grpcStreamMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcStreamMethod("AuthenticationService", method)(constructor.prototype[method], method, descriptor);
-        }
-    };
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["registerAdmin"];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("AuthenticationService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("AuthenticationService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
 }
 
-export const AUTHENTICATION_SERVICE_NAME = "AuthenticationService";
+export const AUTHENTICATION_SER__vICE_NAME = "AuthenticationService";

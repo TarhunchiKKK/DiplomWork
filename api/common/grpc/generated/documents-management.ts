@@ -7,25 +7,29 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 
+const protobufPackage = "documentsManagement";
+
 export const DOCUMENTS_MANAGEMENT_PACKAGE_NAME = "documentsManagement";
 
-export interface DocumentsManagementServiceClient {}
-
-export interface DocumentsManagementServiceController {}
-
-export function DocumentsManagementServiceControllerMethods() {
-    return function (constructor: Function) {
-        const grpcMethods: string[] = [];
-        for (const method of grpcMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcMethod("DocumentsManagementService", method)(constructor.prototype[method], method, descriptor);
-        }
-        const grpcStreamMethods: string[] = [];
-        for (const method of grpcStreamMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcStreamMethod("DocumentsManagementService", method)(constructor.prototype[method], method, descriptor);
-        }
-    };
+export interface DocumentsManagementServiceClient {
 }
 
-export const DOCUMENTS_MANAGEMENT_SERVICE_NAME = "DocumentsManagementService";
+export interface DocumentsManagementServiceController {
+}
+
+export function DocumentsManagementServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = [];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("DocumentsManagementService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("DocumentsManagementService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const DOCUMENTS_MANAGEMENT_SER__vICE_NAME = "DocumentsManagementService";

@@ -7,25 +7,29 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 
+const protobufPackage = "workflowsManagement";
+
 export const WORKFLOWS_MANAGEMENT_PACKAGE_NAME = "workflowsManagement";
 
-export interface WorkflowsManagementServiceClient {}
-
-export interface WorkflowsManagementServiceController {}
-
-export function WorkflowsManagementServiceControllerMethods() {
-    return function (constructor: Function) {
-        const grpcMethods: string[] = [];
-        for (const method of grpcMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcMethod("WorkflowsManagementService", method)(constructor.prototype[method], method, descriptor);
-        }
-        const grpcStreamMethods: string[] = [];
-        for (const method of grpcStreamMethods) {
-            const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-            GrpcStreamMethod("WorkflowsManagementService", method)(constructor.prototype[method], method, descriptor);
-        }
-    };
+export interface WorkflowsManagementServiceClient {
 }
 
-export const WORKFLOWS_MANAGEMENT_SERVICE_NAME = "WorkflowsManagementService";
+export interface WorkflowsManagementServiceController {
+}
+
+export function WorkflowsManagementServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = [];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("WorkflowsManagementService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("WorkflowsManagementService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const WORKFLOWS_MANAGEMENT_SER__vICE_NAME = "WorkflowsManagementService";

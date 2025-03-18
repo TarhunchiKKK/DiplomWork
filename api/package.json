@@ -20,7 +20,7 @@
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./apps/api/test/jest-e2e.json",
-        "protoc": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./common/grpc/generated --proto_path=proto proto/*.proto --ts_proto_opt=nestJs=true"
+        "protoc": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./common/grpc/generated --proto_path=proto proto/*.proto --ts_proto_opt=nestJs=true; node scripts/fix-protoc.js"
     },
     "dependencies": {
         "@grpc/grpc-js": "^1.13.0",
