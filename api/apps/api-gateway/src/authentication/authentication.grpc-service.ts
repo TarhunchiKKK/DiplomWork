@@ -15,6 +15,10 @@ export class AuthenticationGrpcService extends BaseGrpcService<AuthenticationSer
     }
 
     public registerAdmin(dto: IRegisterAdminDto) {
-        return this.serviceClient.registerAdmin(dto);
+        try {
+            return this.serviceClient.registerAdmin(dto);
+        } catch (error) {
+            throw error;
+        }
     }
 }

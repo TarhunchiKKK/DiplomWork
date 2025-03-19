@@ -2,12 +2,12 @@
     "$schema": "https://unpkg.com/knip@5/schema.json",
     "entry": [
         "apps/api-gateway/src/main.ts",
-        "apps/authentication/src/main.ts",
-        "apps/documents-management/src/main.ts",
-        "apps/notifications/src/main.ts",
-        "apps/organizations-management/src/main.ts",
-        "apps/users-management/src/main.ts",
-        "apps/workflows-management/src/main.ts",
+        "apps/authentication-microservice/src/main.ts",
+        "apps/documents-management-microservice/src/main.ts",
+        "apps/notifications-microservice/src/main.ts",
+        "apps/organizations-management-microservice/src/main.ts",
+        "apps/users-management-microservice/src/main.ts",
+        "apps/workflows-management-microservice/src/main.ts",
         "common/**/*.ts"
     ],
     "project": ["apps/**/*.ts"],
@@ -21,6 +21,7 @@
     "ignore": ["apps/**/*.enum.ts", "apps/**/*.spec.ts", "apps/**/*.e2e-spec.ts"],
     "ignoreDependencies": [
         "ts-proto",
+        "@grpc/proto-loader",
         "ts-loader",
         "source-map-support",
         "eslint-config-prettier",

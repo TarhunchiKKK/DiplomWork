@@ -1,14 +1,14 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication } from "@nestjs/common";
 import * as request from "supertest";
-import { OrganizationsManagementModule } from "../src/organizations-management-microservice.module";
+import { OrganizationsManagementMicroserviceModule } from "../src/organizations-management-microservice.module";
 
 describe("OrganizationsManagementController (e2e)", () => {
     let app: INestApplication;
 
     beforeEach(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
-            imports: [OrganizationsManagementModule]
+            imports: [OrganizationsManagementMicroserviceModule]
         }).compile();
 
         app = moduleFixture.createNestApplication();
