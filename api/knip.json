@@ -11,6 +11,7 @@
         "common/**/*.ts"
     ],
     "project": ["apps/**/*.ts"],
+    "ignore": ["apps/**/*.enum.ts"],
     "rules": {
         "files": "error",
         "classMembers": "error",
@@ -18,14 +19,14 @@
         "dependencies": "warn",
         "devDependencies": "warn"
     },
-    "ignore": ["apps/**/*.enum.ts", "apps/**/*.spec.ts", "apps/**/*.e2e-spec.ts"],
     "ignoreDependencies": [
         "ts-proto",
         "@grpc/proto-loader",
         "ts-loader",
         "source-map-support",
         "eslint-config-prettier",
-        "eslint-plugin-prettier"
+        "eslint-plugin-prettier",
+        "tsconfig-paths"
     ],
     "ignoreBinaries": ["protoc"]
 }

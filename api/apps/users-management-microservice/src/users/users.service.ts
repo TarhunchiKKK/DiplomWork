@@ -2,9 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { ICreateUserDto, ICreateUserResponse } from "common/grpc";
+import { ICreateUserResponse } from "common/grpc";
 import { Role } from "common/enums/role.enums";
 import { CryptoService } from "common/core";
+import { CreateUserDto } from "./dto/create-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -14,7 +15,7 @@ export class UsersService {
         private readonly cryptoService: CryptoService
     ) {}
 
-    public async create(dto: ICreateUserDto): Promise<ICreateUserResponse> {
+    public async create(dto: CreateUserDto): Promise<ICreateUserResponse> {
         const keys = this.cryptoService.generateAssymetricKeys();
 
         const user = await this.usersRepository.save({
