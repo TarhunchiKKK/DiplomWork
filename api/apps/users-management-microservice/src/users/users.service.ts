@@ -4,17 +4,23 @@ import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
 import { ICreateUserDto, ICreateUserResponse } from "common/grpc";
 import { Role } from "common/enums/role.enums";
+import { CryptoService } from "common/core";
 
 @Injectable()
 export class UsersService {
-    public constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>) {}
+    public constructor(
+        @InjectRepository(User) private readonly usersRepository: Repository<User>,
+
+        private readonly cryptoService: CryptoService
+    ) {}
 
     public async create(dto: ICreateUserDto): Promise<ICreateUserResponse> {
+        const keys = this.cryptoService.generateAssymetricKeys();
+
         const user = await this.usersRepository.save({
             ...dto,
             role: dto.role as Role,
-            publicKey: "",
-            privateKey: ""
+            ...keys
         });
 
         return {

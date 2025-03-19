@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { getConfigModuleConfig, getJwtConfig } from "common/config";
+import { getJwtConfig } from "common/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./users/entities/user.entity";
 import { Token } from "./tokens/entities/token.entity";
@@ -12,7 +12,9 @@ import { JwtModule } from "@nestjs/jwt";
 
 @Module({
     imports: [
-        ConfigModule.forRoot(getConfigModuleConfig()),
+        ConfigModule.forRoot({
+            isGlobal: true
+        }),
         JwtModule.registerAsync({
             imports: [ConfigModule],
             inject: [ConfigService],

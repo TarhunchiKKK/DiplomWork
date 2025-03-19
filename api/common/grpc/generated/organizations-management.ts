@@ -64,4 +64,4 @@ export function OrganizationsManagementServiceControllerMethods() {
   };
 }
 
-export const ORGANIZATIONS_MANAGEMENT_SER__vICE_NAME = "OrganizationsManagementService";
+export const ORGANIZATIONS_MANAGEMENT_SERVICE_NAME = "OrganizationsManagementService";

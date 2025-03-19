@@ -21,7 +21,7 @@ export interface IAuthResponse {
   username: string;
   email: string;
   role: string;
-  organization_id: string;
+  organizationId: string;
   token: string;
 }
 
@@ -50,4 +50,4 @@ export function AuthenticationServiceControllerMethods() {
   };
 }
 
-export const AUTHENTICATION_SER__vICE_NAME = "AuthenticationService";
+export const AUTHENTICATION_SERVICE_NAME = "AuthenticationService";

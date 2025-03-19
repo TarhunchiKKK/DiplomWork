@@ -15,7 +15,7 @@ export interface ICreateUserDto {
   email: string;
   password: string;
   role: string;
-  organization_id: string;
+  organizationId: string;
 }
 
 export interface ICreateUserResponse {
@@ -24,7 +24,7 @@ export interface ICreateUserResponse {
   email: string;
   password: string;
   role: string;
-  organization_id: string;
+  organizationId: string;
   createdAt: string;
 }
 
@@ -53,4 +53,4 @@ export function UsersManagementServiceControllerMethods() {
   };
 }
 
-export const USERS_MANAGEMENT_SER__vICE_NAME = "UsersManagementService";
+export const USERS_MANAGEMENT_SERVICE_NAME = "UsersManagementService";

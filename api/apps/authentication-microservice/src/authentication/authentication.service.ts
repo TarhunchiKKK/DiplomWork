@@ -3,7 +3,7 @@ import { IRegisterAdminDto } from "common/grpc";
 import { UsersManagementGrpcService } from "../grpc/users-management/users-management.grpc-service";
 import { Role } from "common/enums";
 import { OrganizationsManagementGrpcService } from "../grpc/organizations-management/organizations-management.grpc-service";
-import { allObservables } from "common/utils";
+import { firstValueFrom } from "rxjs";
 
 @Injectable()
 export class AuthenticationService {
@@ -13,13 +13,14 @@ export class AuthenticationService {
     ) {}
 
     public async registerAdmin(dto: IRegisterAdminDto) {
-        const [user, organization] = await allObservables(
+        const organization = await firstValueFrom(this.organizationsManagementGrpcService.createDefault());
+
+        const user = await firstValueFrom(
             this.usersManagementGrpcService.create({
                 ...dto,
-                organizationId: "1",
+                organizationId: organization._id,
                 role: Role.ADMIN
-            }),
-            this.organizationsManagementGrpcService.createDefault()
+            })
         );
 
         return {
@@ -27,7 +28,7 @@ export class AuthenticationService {
             username: user.username,
             email: user.email,
             role: user.role,
-            organizationId: organization._id,
+            organizationId: user.id,
             token: "token"
         };
     }

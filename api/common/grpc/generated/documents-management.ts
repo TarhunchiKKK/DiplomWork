@@ -32,4 +32,4 @@ export function DocumentsManagementServiceControllerMethods() {
   };
 }
 
-export const DOCUMENTS_MANAGEMENT_SER__vICE_NAME = "DocumentsManagementService";
+export const DOCUMENTS_MANAGEMENT_SERVICE_NAME = "DocumentsManagementService";

@@ -32,4 +32,4 @@ export function WorkflowsManagementServiceControllerMethods() {
   };
 }
 
-export const WORKFLOWS_MANAGEMENT_SER__vICE_NAME = "WorkflowsManagementService";
+export const WORKFLOWS_MANAGEMENT_SERVICE_NAME = "WorkflowsManagementService";

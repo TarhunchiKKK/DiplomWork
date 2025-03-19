@@ -32,4 +32,4 @@ export function NotificationsServiceControllerMethods() {
   };
 }
 
-export const NOTIFICATIONS_SER__vICE_NAME = "NotificationsService";
+export const NOTIFICATIONS_SERVICE_NAME = "NotificationsService";
