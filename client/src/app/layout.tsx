@@ -1,13 +1,16 @@
-import "./globals.css";
+"use client";
 
-export default function RootLayout({
-    children
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
+import "./globals.css";
+import { queryClient } from "@/shared/api";
+import { PropsWithChildren } from "react";
+import { QueryClientProvider } from "@tanstack/react-query";
+
+export default function RootLayout({ children }: PropsWithChildren) {
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body>
+                <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+            </body>
         </html>
     );
 }
