@@ -6,7 +6,7 @@
     "private": true,
     "license": "MIT",
     "scripts": {
-        "test": "playwright test; rm -rf playwright-tests; pnpm clean;",
+        "test": "playwright test --project=chromium; pnpm clean;",
         "format": "prettier --write \"tests/**/*.ts\"",
         "lint": "eslint tests/**/*.spec.ts --fix",
         "knip": "knip",
