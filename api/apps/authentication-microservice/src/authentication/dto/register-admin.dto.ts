@@ -7,8 +7,8 @@ export class RegisterAdminDto implements IRegisterAdminDto {
     @IsString({ message: "Имя пользователя должно быть строкой" })
     username: string;
 
-    @IsNotEmpty({ message: "Некорректынй формат" })
-    @Matches(EMAIL_REGEX, { message: "Некорректный формат" })
+    @IsNotEmpty({ message: "Введите email" })
+    @Matches(EMAIL_REGEX, { message: "Некорректный формат email" })
     email: string;
 
     @IsNotEmpty({ message: "Введите пароль" })

@@ -19,6 +19,8 @@ function setupSwagger(app: INestApplication) {
 async function bootstrap() {
     const app = await NestFactory.create(ApiGatewayModule);
 
+    app.enableCors();
+
     const configService = app.get(ConfigService);
 
     setupSwagger(app);

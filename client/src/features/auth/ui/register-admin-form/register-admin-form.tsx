@@ -7,7 +7,6 @@ import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input } from
 import { routes } from "@/shared/routing";
 import { Wrapper } from "../wrapper";
 
-// TODO: Add FormDescription for validation errors
 export function RegisterAdminForm() {
     const form = useForm<TRegisterAdminDto>({
         defaultValues: defaultValues
@@ -44,12 +43,6 @@ export function RegisterAdminForm() {
                             )}
                         ></FormField>
                     ))}
-
-                    {/* {error?.response?.data.message && (
-                        <FormDescription className="text-red-400">
-                            {error.response?.data[formField.name]}
-                        </FormDescription>
-                    )} */}
 
                     <Button type="submit" disabled={isPending} className="w-full">
                         Зарегистрироваться
