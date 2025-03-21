@@ -1,5 +1,5 @@
-import { Controller, Post } from "@nestjs/common";
-import { OrganizationsManagementGrpcService } from "common/grpc";
+import { Controller, Get, Param, Post, UseInterceptors } from "@nestjs/common";
+import { ExtractDataInterceptor, OrganizationsManagementGrpcService } from "common/grpc";
 
 @Controller("organizations")
 export class OrganizationsManagementController {
@@ -8,5 +8,11 @@ export class OrganizationsManagementController {
     @Post("/test")
     public async create() {
         return this.organizationsManagementGrpcService.createDefault();
+    }
+
+    @Get(":id")
+    @UseInterceptors(ExtractDataInterceptor)
+    public async findOneById(@Param("id") organizationId: string) {
+        return this.organizationsManagementGrpcService.findOneById(organizationId);
     }
 }

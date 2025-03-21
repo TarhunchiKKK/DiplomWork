@@ -15,7 +15,10 @@ const files = [
     path.join(__dirname, "../common/grpc/generated/notifications.ts"),
     path.join(__dirname, "../common/grpc/generated/organizations-management.ts"),
     path.join(__dirname, "../common/grpc/generated/users-management.ts"),
-    path.join(__dirname, "../common/grpc/generated/workflows-management.ts")
+    path.join(__dirname, "../common/grpc/generated/workflows-management.ts"),
+    path.join(__dirname, "../common/grpc/generated/google/protobuf/empty.ts"),
+    path.join(__dirname, "../common/grpc/generated/google/protobuf/timestamp.ts"),
+    path.join(__dirname, "../common/grpc/generated/google/protobuf/wrappers.ts")
 ];
 
 const replacements = [
@@ -38,6 +41,10 @@ const replacements = [
     {
         from: "organization_id",
         to: "organizationId"
+    },
+    {
+        from: "export const GOOGLE_PROTOBUF_PACKAGE_NAME",
+        to: "const GOOGLE_PROTOBUF_PACKAGE_NAME"
     }
 ];
 

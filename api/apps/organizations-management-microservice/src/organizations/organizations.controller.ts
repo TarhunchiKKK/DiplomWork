@@ -1,11 +1,14 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseInterceptors } from "@nestjs/common";
 import { OrganizationsService } from "./organizations.service";
 import {
-    ICreateOrganizationReponse,
+    GrpcNotFoundInterceptor,
+    IOrganization,
     OrganizationsManagementServiceController,
-    OrganizationsManagementServiceControllerMethods
+    OrganizationsManagementServiceControllerMethods,
+    StringValue
 } from "common/grpc";
-import { defaulttOrganization } from "./constants/organization.constants";
+import { defaultOrganization } from "./constants/organization.constants";
+import { asType } from "common/types";
 
 @Controller("organizations")
 @OrganizationsManagementServiceControllerMethods()
@@ -13,7 +16,13 @@ export class OrganizationsController implements OrganizationsManagementServiceCo
     public constructor(private readonly organizationsService: OrganizationsService) {}
 
     public async createDefault() {
-        const organization = await this.organizationsService.create(defaulttOrganization);
-        return organization as unknown as ICreateOrganizationReponse;
+        const organization = await this.organizationsService.create(defaultOrganization);
+        return asType<IOrganization>(organization);
+    }
+
+    @UseInterceptors(GrpcNotFoundInterceptor)
+    public async findOneById(dto: StringValue) {
+        const organization = await this.organizationsService.findOneById(dto.value);
+        return asType<{ data: IOrganization[] }>(organization);
     }
 }

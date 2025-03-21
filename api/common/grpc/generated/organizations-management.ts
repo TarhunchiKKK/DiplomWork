@@ -8,21 +8,29 @@
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 import { Empty } from "./google/protobuf/empty";
+import { StringValue } from "./google/protobuf/wrappers";
 
 const protobufPackage = "organizationsManagement";
 
-export interface ICreateOrganizationReponse {
+export interface IOrganization {
   _id: string;
   __v: number;
-  settings: ISettings | undefined;
+  settings: IOrganizationSettings | undefined;
 }
 
-export interface ISettings {
+export interface IOrganizationSettings {
   _id: string;
   __v: number;
   urgencyInterval: number;
+  documentStatuses: IDocumentAim[];
   documentTypes: IDocumentType[];
-  documentStatuses: IDocumentStatus[];
+  administrativeDivisions: IAdministrativeDivision[];
+}
+
+export interface IDocumentAim {
+  _id: string;
+  __v: number;
+  value: string;
 }
 
 export interface IDocumentType {
@@ -31,27 +39,62 @@ export interface IDocumentType {
   value: string;
 }
 
-export interface IDocumentStatus {
+export interface IAdministrativeDivision {
   _id: string;
   __v: number;
-  value: string;
+  title: string;
+  posts: IPost[];
+}
+
+export interface IPost {
+  _id: string;
+  __v: number;
+  title: string;
+}
+
+export interface IFindOneOrganizationResponse {
+  data: IOrganization[];
+}
+
+export interface IUpdateUrgencyIntervalDto {
+  organizationId: string;
+  urgencyInterval: number;
+}
+
+export interface IUpdateDocumentAimsDto {
+  organizationId: string;
+  documentAims: IDocumentAim[];
+}
+
+export interface IUpdateDocumentTypesDto {
+  organizationId: string;
+  documentTypes: IDocumentType[];
+}
+
+export interface IUpdateAdministrativeDivisionsDto {
+  organizationId: string;
+  administrativeDivisions: IAdministrativeDivision[];
 }
 
 export const ORGANIZATIONS_MANAGEMENT_PACKAGE_NAME = "organizationsManagement";
 
 export interface OrganizationsManagementServiceClient {
-  createDefault(request: Empty): Observable<ICreateOrganizationReponse>;
+  createDefault(request: Empty): Observable<IOrganization>;
+
+  findOneById(request: StringValue): Observable<IFindOneOrganizationResponse>;
 }
 
 export interface OrganizationsManagementServiceController {
-  createDefault(
-    request: Empty,
-  ): Promise<ICreateOrganizationReponse> | Observable<ICreateOrganizationReponse> | ICreateOrganizationReponse;
+  createDefault(request: Empty): Promise<IOrganization> | Observable<IOrganization> | IOrganization;
+
+  findOneById(
+    request: StringValue,
+  ): Promise<IFindOneOrganizationResponse> | Observable<IFindOneOrganizationResponse> | IFindOneOrganizationResponse;
 }
 
 export function OrganizationsManagementServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["createDefault"];
+    const grpcMethods: string[] = ["createDefault", "findOneById"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("OrganizationsManagementService", method)(constructor.prototype[method], method, descriptor);

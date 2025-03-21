@@ -16,4 +16,8 @@ export class OrganizationsManagementGrpcService extends BaseGrpcService<Organiza
     public createDefault() {
         return this.serviceClient.createDefault({});
     }
+
+    public findOneById(id: string) {
+        return this.serviceClient.findOneById({ value: id });
+    }
 }

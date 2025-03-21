@@ -1,10 +1,10 @@
-import { Organization } from "../schemas/organization.schema";
+import { CreateOrganizationDto } from "../dto/create-organization.dto";
 import { defaultDocumentAims } from "./document-aims.constants";
 import { defaultDocumentTypes } from "./document-types.constants";
 
 const defaultUrgencyInterval = 10 * 24 * 60 * 60 * 60;
 
-export const defaulttOrganization: Organization = {
+export const defaultOrganization: CreateOrganizationDto = {
     settings: {
         urgencyInterval: defaultUrgencyInterval,
 
