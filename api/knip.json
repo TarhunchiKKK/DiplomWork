@@ -1,13 +1,32 @@
 {
     "$schema": "https://unpkg.com/knip@5/schema.json",
-    "ignore": ["src/**/*.enum.ts"],
-    "entry": ["src/main.ts"],
-    "project": ["src/**/*.ts"],
+    "entry": [
+        "apps/api-gateway/src/main.ts",
+        "apps/authentication-microservice/src/main.ts",
+        "apps/documents-management-microservice/src/main.ts",
+        "apps/notifications-microservice/src/main.ts",
+        "apps/organizations-management-microservice/src/main.ts",
+        "apps/users-management-microservice/src/main.ts",
+        "apps/workflows-management-microservice/src/main.ts",
+        "common/**/*.ts"
+    ],
+    "project": ["apps/**/*.ts"],
+    "ignore": ["apps/**/*.enum.ts"],
     "rules": {
         "files": "error",
         "classMembers": "error",
         "types": "error",
         "dependencies": "warn",
         "devDependencies": "warn"
-    }
+    },
+    "ignoreDependencies": [
+        "ts-proto",
+        "@grpc/proto-loader",
+        "ts-loader",
+        "source-map-support",
+        "eslint-config-prettier",
+        "eslint-plugin-prettier",
+        "tsconfig-paths"
+    ],
+    "ignoreBinaries": ["protoc"]
 }

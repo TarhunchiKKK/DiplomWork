@@ -1,8 +1,93 @@
 {
     "$schema": "https://json.schemastore.org/nest-cli",
     "collection": "@nestjs/schematics",
-    "sourceRoot": "src",
+    "sourceRoot": "apps/api-gateway/src",
     "compilerOptions": {
-        "deleteOutDir": true
+        "deleteOutDir": true,
+        "webpack": true,
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json",
+        "assets": ["proto/*.proto"],
+        "watchAssets": true
+    },
+    "monorepo": true,
+    "root": "apps/api-gateway",
+    "projects": {
+        "api-gateway": {
+            "type": "application",
+            "root": "apps/api-gateway",
+            "entryFile": "src/main",
+            "sourceRoot": "./",
+            "compilerOptions": {
+                "tsConfigPath": "apps/api-gateway/tsconfig.app.json",
+                "assets": ["proto/*.proto"],
+                "watchAssets": true
+            }
+        },
+        "authentication": {
+            "type": "application",
+            "root": "apps/authentication-microservice",
+            "entryFile": "src/main",
+            "sourceRoot": "./",
+            "compilerOptions": {
+                "tsConfigPath": "apps/authentication-microservice/tsconfig.app.json",
+                "assets": ["proto/*.proto"],
+                "watchAssets": true
+            }
+        },
+        "documents": {
+            "type": "application",
+            "root": "apps/documents-management-microservice",
+            "entryFile": "src/main",
+            "sourceRoot": "./",
+            "compilerOptions": {
+                "tsConfigPath": "apps/documents-management-microservice/tsconfig.app.json",
+                "assets": ["proto/*.proto"],
+                "watchAssets": true
+            }
+        },
+        "notifications": {
+            "type": "application",
+            "root": "apps/notifications-microservice",
+            "entryFile": "src/main",
+            "sourceRoot": "./",
+            "compilerOptions": {
+                "tsConfigPath": "apps/notifications-microservice/tsconfig.app.json",
+                "assets": ["proto/*.proto"],
+                "watchAssets": true
+            }
+        },
+        "organizations": {
+            "type": "application",
+            "root": "apps/organizations-management-microservice",
+            "entryFile": "src/main",
+            "sourceRoot": "./",
+            "compilerOptions": {
+                "tsConfigPath": "apps/organizations-management-microservice/tsconfig.app.json",
+                "assets": ["proto/*.proto"],
+                "watchAssets": true
+            }
+        },
+        "users": {
+            "type": "application",
+            "root": "apps/users-management-microservice",
+            "entryFile": "src/main",
+            "sourceRoot": "./",
+            "compilerOptions": {
+                "tsConfigPath": "apps/users-management-microservice/tsconfig.app.json",
+                "assets": ["proto/*.proto"],
+                "watchAssets": true
+            }
+        },
+        "workflows": {
+            "type": "application",
+            "root": "apps/workflows-management-microservice",
+            "entryFile": "src/main",
+            "sourceRoot": "./",
+            "compilerOptions": {
+                "tsConfigPath": "apps/workflows-management-microservice/tsconfig.app.json",
+                "assets": ["proto/*.proto"],
+                "watchAssets": true
+            }
+        }
     }
 }

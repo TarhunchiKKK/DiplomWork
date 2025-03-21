@@ -1,3 +1,5 @@
+import { Button } from "@/shared/ui/generated/button";
+
 export default function Home() {
-    return <></>;
+    return <Button>AAAAA</Button>;
 }

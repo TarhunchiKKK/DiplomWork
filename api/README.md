@@ -1,1 +1,1 @@
-# Server application for my diplom work
+# Server application

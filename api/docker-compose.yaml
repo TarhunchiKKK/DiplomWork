@@ -1,18 +1,33 @@
 version: "3.7"
 
 services:
-    db:
-        container_name: database
-        image: postgres:15.2
-        restart: always
-        environment:
-            - POSTGRES_USER=${DB_USER}
-            - POSTGRES_PASSWORD=${DB_PASSWORD}
-            - POSTGRES_DB=${DB_NAME}
-        ports:
-            - ${DB_PORT}:5432
-        volumes:
-            - postgres_data:/var/lib/postgresql/data
+  organizations-management-microservice-db:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE=${ORGANIZATIONS_MANAGEMENT_DB_NAME}
+    ports:
+      - ${ORGANIZATIONS_MANAGEMENT_DB_PORT}:27017
+    networks:
+      - organizations-management-microservice-network
+
+  users-management-microservice-db:
+    container_name: users-management-microservice-db
+    image: postgres:15.2
+    restart: always
+    environment:
+        - POSTGRES_DB=${USERS_MANAGEMENT_MICROSERVICE_DB_NAME}
+        - POSTGRES_USER=${USERS_MANAGEMENT_MICROSERVICE_DB_USER}
+        - POSTGRES_PASSWORD=${USERS_MANAGEMENT_MICROSERVICE_DB_PASSWORD}
+    ports:
+        - ${USERS_MANAGEMENT_MICROSERVICE_DB_PORT}:5432
+    volumes:
+        - users-management-microservice-postgres_data:/var/lib/postgresql/data
+    networks:
+        - users-management-microservice-network
 
 volumes:
-    postgres_data:
+  users-management-microservice-postgres_data:
+
+networks:
+  organizations-management-microservice-network:
+  users-management-microservice-network:

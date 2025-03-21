@@ -1,8 +1,9 @@
 {
     "$schema": "https://unpkg.com/knip@5/schema.json",
-    "ignoreDependencies": ["postcss-load-config "],
+    "ignore": ["src/shared/ui/generated/*.ts", "src/shared/ui/generated/*.tsx"],
     "entry": ["src/app/layout.tsx"],
     "project": ["src/**/*.{ts,tsx}"],
+    "ignoreDependencies": ["postcss-load-config", "eslint", "eslint-config-next", "tailwindcss"],
     "rules": {
         "files": "error",
         "classMembers": "error",
