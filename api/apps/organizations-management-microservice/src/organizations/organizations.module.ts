@@ -3,7 +3,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { Organization, OrganizationSchema } from "./schemas/organization.schema";
 import { Settings, SettingsSchema } from "./schemas/settings.schema";
 import { DocumentType, DocumentTypeSchema } from "./schemas/document-type.schema";
-import { DocumentStatus, DocumentStatusSchema } from "./schemas/document-status.schema";
+import { DocumentAim, DocumentAimSchema } from "./schemas/document-aim.schema";
 import { OrganizationsController } from "./organizations.controller";
 import { OrganizationsService } from "./organizations.service";
 
@@ -19,12 +19,12 @@ import { OrganizationsService } from "./organizations.service";
                 schema: SettingsSchema
             },
             {
-                name: DocumentType.name,
-                schema: DocumentTypeSchema
+                name: DocumentAim.name,
+                schema: DocumentAimSchema
             },
             {
-                name: DocumentStatus.name,
-                schema: DocumentStatusSchema
+                name: DocumentType.name,
+                schema: DocumentTypeSchema
             }
         ])
     ],

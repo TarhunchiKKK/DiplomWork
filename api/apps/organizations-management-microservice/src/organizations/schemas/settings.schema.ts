@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { DocumentStatus, DocumentStatusSchema } from "./document-status.schema";
+import { DocumentAim, DocumentAimSchema } from "./document-aim.schema";
 import { DocumentTypeSchema, DocumentType } from "./document-type.schema";
 
 @Schema()
@@ -7,11 +7,11 @@ export class Settings {
     @Prop()
     urgencyInterval: number;
 
+    @Prop([DocumentAimSchema])
+    documentAims: DocumentAim[];
+
     @Prop([DocumentTypeSchema])
     documentTypes: DocumentType[];
-
-    @Prop([DocumentStatusSchema])
-    documentStatuses: DocumentStatus[];
 }
 
 export const SettingsSchema = SchemaFactory.createForClass(Settings);

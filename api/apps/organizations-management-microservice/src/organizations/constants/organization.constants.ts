@@ -1,19 +1,19 @@
 import { Organization } from "../schemas/organization.schema";
+import { defaultDocumentAims } from "./document-aims.constants";
+import { defaultDocumentTypes } from "./document-types.constants";
 
-export const defaultUrgencyInterval = 10 * 24 * 60 * 60 * 60;
+const defaultUrgencyInterval = 10 * 24 * 60 * 60 * 60;
 
 export const defaulttOrganization: Organization = {
     settings: {
-        documentStatuses: [
-            {
-                value: "aaa"
-            }
-        ],
-        documentTypes: [
-            {
-                value: "bbb"
-            }
-        ],
-        urgencyInterval: defaultUrgencyInterval
+        urgencyInterval: defaultUrgencyInterval,
+
+        documentAims: defaultDocumentAims.map(value => ({
+            value
+        })),
+
+        documentTypes: defaultDocumentTypes.map(value => ({
+            value
+        }))
     }
 };

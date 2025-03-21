@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 @Schema()
-export class DocumentStatus {
+export class DocumentAim {
     @Prop(String)
     value: string;
 }
 
-export const DocumentStatusSchema = SchemaFactory.createForClass(DocumentStatus);
+export const DocumentAimSchema = SchemaFactory.createForClass(DocumentAim);

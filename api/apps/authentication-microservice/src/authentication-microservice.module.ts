@@ -3,10 +3,9 @@ import { AuthenticationController } from "./authentication/authentication.contro
 import { AuthenticationService } from "./authentication/authentication.service";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AuthenticationModule } from "./authentication/authentication.module";
-import { UsersManagementGrpcModule } from "./grpc/users-management/users-management.grpc-module";
-import { OrganizationsManagementGrpcModule } from "./grpc/organizations-management/organizations-management.grpc-module";
 import { JwtModule } from "@nestjs/jwt";
 import { getJwtConfig } from "common/config";
+import { OrganizationsManagementGrpcModule, UsersManagementGrpcModule } from "common/grpc";
 
 @Module({
     imports: [

@@ -4,7 +4,6 @@ import { ClientsModule } from "@nestjs/microservices";
 import { getGrpcConfig } from "common/config";
 import { AUTHENTICATION_PACKAGE_NAME } from "common/grpc";
 import { AuthenticationGrpcService } from "./authentication.grpc-service";
-import { AuthenticationGrpcController } from "./authentication.grpc-controller";
 
 @Module({
     imports: [
@@ -17,7 +16,6 @@ import { AuthenticationGrpcController } from "./authentication.grpc-controller";
             }
         ])
     ],
-    controllers: [AuthenticationGrpcController],
     providers: [AuthenticationGrpcService],
     exports: [AuthenticationGrpcService]
 })

@@ -1,12 +1,12 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientGrpc } from "@nestjs/microservices";
 import {
+    AuthenticationServiceClient,
     AUTHENTICATION_PACKAGE_NAME,
     AUTHENTICATION_SERVICE_NAME,
-    AuthenticationServiceClient,
-    BaseGrpcService,
     IRegisterAdminDto
-} from "common/grpc";
+} from "common/grpc/generated";
+import { BaseGrpcService } from "../base.grpc-service";
 
 @Injectable()
 export class AuthenticationGrpcService extends BaseGrpcService<AuthenticationServiceClient> {

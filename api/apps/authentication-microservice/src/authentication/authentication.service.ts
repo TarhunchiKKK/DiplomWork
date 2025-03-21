@@ -1,8 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { IRegisterAdminDto } from "common/grpc";
-import { UsersManagementGrpcService } from "../grpc/users-management/users-management.grpc-service";
+import { IRegisterAdminDto, OrganizationsManagementGrpcService, UsersManagementGrpcService } from "common/grpc";
 import { Role } from "common/enums";
-import { OrganizationsManagementGrpcService } from "../grpc/organizations-management/organizations-management.grpc-service";
 import { firstValueFrom } from "rxjs";
 import { JwtService } from "@nestjs/jwt";
 import { GenerateJwtDto } from "./dto/generate-jwt.dto";
@@ -11,7 +9,9 @@ import { GenerateJwtDto } from "./dto/generate-jwt.dto";
 export class AuthenticationService {
     public constructor(
         private readonly usersManagementGrpcService: UsersManagementGrpcService,
+
         private readonly organizationsManagementGrpcService: OrganizationsManagementGrpcService,
+
         private readonly jwtService: JwtService
     ) {}
 

@@ -1,3 +1,3 @@
 export * from "./generated/index";
 export * from "./constants/index";
-export * from "./classes";
+export * from "./services";

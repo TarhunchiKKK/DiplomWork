@@ -1,8 +1,8 @@
 import { Controller, Post } from "@nestjs/common";
-import { OrganizationsManagementGrpcService } from "./organizations-management.grpc-service";
+import { OrganizationsManagementGrpcService } from "common/grpc";
 
 @Controller("organizations")
-export class OrganizationsManagementGrpcController {
+export class OrganizationsManagementController {
     public constructor(private readonly organizationsManagementGrpcService: OrganizationsManagementGrpcService) {}
 
     @Post("/test")

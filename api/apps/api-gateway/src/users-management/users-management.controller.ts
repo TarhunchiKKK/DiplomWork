@@ -1,7 +1,7 @@
 import { Controller } from "@nestjs/common";
-import { UsersManagementGrpcService } from "./users-management.grpc-service";
+import { UsersManagementGrpcService } from "common/grpc";
 
 @Controller("users")
-export class UsersManagementGrpcController {
+export class UsersManagementController {
     public constructor(private readonly usersManagementGrpcService: UsersManagementGrpcService) {}
 }

@@ -1,11 +1,11 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientGrpc } from "@nestjs/microservices";
 import {
-    BaseGrpcService,
+    OrganizationsManagementServiceClient,
     ORGANIZATIONS_MANAGEMENT_PACKAGE_NAME,
-    ORGANIZATIONS_MANAGEMENT_SERVICE_NAME,
-    OrganizationsManagementServiceClient
-} from "common/grpc";
+    ORGANIZATIONS_MANAGEMENT_SERVICE_NAME
+} from "common/grpc/generated";
+import { BaseGrpcService } from "../base.grpc-service";
 
 @Injectable()
 export class OrganizationsManagementGrpcService extends BaseGrpcService<OrganizationsManagementServiceClient> {

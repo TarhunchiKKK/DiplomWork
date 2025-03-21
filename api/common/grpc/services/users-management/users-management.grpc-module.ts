@@ -4,7 +4,6 @@ import { ClientsModule } from "@nestjs/microservices";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { getGrpcConfig } from "common/config";
 import { USERS_MANAGEMENT_PACKAGE_NAME } from "common/grpc";
-import { UsersManagementGrpcController } from "./users-management.grpc-controller";
 
 @Module({
     imports: [
@@ -18,7 +17,6 @@ import { UsersManagementGrpcController } from "./users-management.grpc-controlle
             }
         ])
     ],
-    controllers: [UsersManagementGrpcController],
     providers: [UsersManagementGrpcService],
     exports: [UsersManagementGrpcService]
 })
