@@ -1,4 +1,5 @@
 export const environment = {
     apiUrl: process.env.API_URL!,
-    jwtLocalStorageKey: process.env.LOCAL_STORAGE_JWT_KEY!
+    jwtLocalStorageKey: process.env.LOCAL_STORAGE_JWT_KEY!,
+    themeLocalStorageKey: process.env.LOCAL_STORAGE_THEME_KEY!
 };
