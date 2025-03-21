@@ -24,4 +24,4 @@ import { OrganizationsManagementGrpcModule, UsersManagementGrpcModule } from "co
     controllers: [AuthenticationController],
     providers: [AuthenticationService]
 })
-export class AuthenticationMicroserviceModule {}
+export class AppModule {}

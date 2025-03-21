@@ -1,7 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 
 @Controller()
-export class ApigatewayController {
+export class AppController {
     @Get()
     public hello() {
         return "Hello";

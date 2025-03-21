@@ -39,4 +39,4 @@ import { JwtModule } from "@nestjs/jwt";
         PostsModule
     ]
 })
-export class UsersManagementMicroserviceModule {}
+export class AppModule {}

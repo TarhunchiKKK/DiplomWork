@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { DocumentAim, DocumentAimSchema } from "./document-aim.schema";
 import { DocumentTypeSchema, DocumentType } from "./document-type.schema";
+import { AdministrativeDivision, AdministrativeDivisionSchema } from "./administrative-division.schema";
 
 @Schema()
-export class Settings {
+export class OrganiationSettings {
     @Prop()
     urgencyInterval: number;
 
@@ -12,6 +13,9 @@ export class Settings {
 
     @Prop([DocumentTypeSchema])
     documentTypes: DocumentType[];
+
+    @Prop([AdministrativeDivisionSchema])
+    administrativeDivisions: AdministrativeDivision[];
 }
 
-export const SettingsSchema = SchemaFactory.createForClass(Settings);
+export const OrganiationSettingsSchema = SchemaFactory.createForClass(OrganiationSettings);

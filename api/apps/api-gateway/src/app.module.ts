@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { AuthenticationModule } from "./authentication/authentication.module";
 import { UsersManagementModule } from "./users-management/users-management.module";
 import { OrganizationsManagementModule } from "./organizations-management/organizations-management.module";
-import { ApigatewayController } from "./api-gateway.controller";
+import { AppController } from "./app.controller";
 
 @Module({
     imports: [
@@ -14,6 +14,6 @@ import { ApigatewayController } from "./api-gateway.controller";
         OrganizationsManagementModule,
         UsersManagementModule
     ],
-    controllers: [ApigatewayController]
+    controllers: [AppController]
 })
-export class ApiGatewayModule {}
+export class AppModule {}

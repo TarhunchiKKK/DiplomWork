@@ -14,6 +14,7 @@ export const defaulttOrganization: Organization = {
 
         documentTypes: defaultDocumentTypes.map(value => ({
             value
-        }))
+        })),
+        administrativeDivisions: []
     }
 };

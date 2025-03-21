@@ -8,4 +8,4 @@ import { ConfigModule } from "@nestjs/config";
         })
     ]
 })
-export class WorkflowsManagementMicroserviceModule {}
+export class AppModule {}

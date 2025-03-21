@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Organization } from "./schemas/organization.schema";
 import { Model } from "mongoose";
-import { Settings } from "./schemas/settings.schema";
+import { Settings } from "./schemas/organization-settings.schema";
 
 @Injectable()
 export class OrganizationsService {

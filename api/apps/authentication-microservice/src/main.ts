@@ -1,12 +1,12 @@
 import { NestFactory } from "@nestjs/core";
-import { AuthenticationMicroserviceModule } from "./authentication-microservice.module";
+import { AppModule } from "./app.module";
 import { MicroserviceOptions } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 import { getGrpcConfig } from "common/config";
 import { AUTHENTICATION_PACKAGE_NAME } from "common/grpc";
 
 async function bootstrap() {
-    const app = await NestFactory.create(AuthenticationMicroserviceModule);
+    const app = await NestFactory.create(AppModule);
 
     const configService = app.get(ConfigService);
 

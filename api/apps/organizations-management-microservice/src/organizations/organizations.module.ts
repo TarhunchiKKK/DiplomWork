@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { Organization, OrganizationSchema } from "./schemas/organization.schema";
-import { Settings, SettingsSchema } from "./schemas/settings.schema";
+import { Settings, SettingsSchema } from "./schemas/organization-settings.schema";
 import { DocumentType, DocumentTypeSchema } from "./schemas/document-type.schema";
 import { DocumentAim, DocumentAimSchema } from "./schemas/document-aim.schema";
 import { OrganizationsController } from "./organizations.controller";

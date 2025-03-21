@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Settings, SettingsSchema } from "./settings.schema";
+import { OrganiationSettings, OrganiationSettingsSchema } from "./organization-settings.schema";
 
 @Schema()
 export class Organization {
-    @Prop({ type: SettingsSchema })
-    settings: Settings;
+    @Prop({ type: OrganiationSettingsSchema })
+    settings: OrganiationSettings;
 }
 
 export const OrganizationSchema = SchemaFactory.createForClass(Organization);

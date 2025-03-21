@@ -18,4 +18,4 @@ import { OrganizationsModule } from "./organizations/organizations.module";
         OrganizationsModule
     ]
 })
-export class OrganizationsManagementMicroserviceModule {}
+export class AppModule {}
