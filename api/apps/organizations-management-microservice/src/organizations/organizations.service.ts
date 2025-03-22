@@ -6,6 +6,7 @@ import { CreateOrganizationDto } from "./dto/create-organization.dto";
 import { UpdateDocumentAimsDto } from "./dto/update-document-aims.dto";
 import { UpdateDocumentTypesDto } from "./dto/update-document-types.dto";
 import { UpdateAdministrativeDivisionsDto } from "./dto/update-administrative-divisions.dto";
+import { UpdateUrgencyIntervalDto } from "./dto/update-urgency-interval.dto";
 
 @Injectable()
 export class OrganizationsService {
@@ -17,6 +18,16 @@ export class OrganizationsService {
 
     public async findOneById(organizationId: string) {
         return await this.organizationModel.findById(organizationId);
+    }
+
+    public async updateUrgencyInterval(dto: UpdateUrgencyIntervalDto) {
+        const organization = await this.findOneById(dto.organizationId);
+
+        if (organization) {
+            organization.urgencyInterval = dto.urgencyInterval;
+
+            await organization.save();
+        }
     }
 
     public async updateDocumentAims(dto: UpdateDocumentAimsDto) {

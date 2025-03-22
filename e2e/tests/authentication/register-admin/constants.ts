@@ -2,12 +2,6 @@ const validUsername = "username";
 const validEmail = "test@gmail.com";
 const validPassword = "password123!";
 
-export const validDto = {
-    username: validUsername,
-    email: validEmail,
-    password: validPassword
-};
-
 export const invalidTestCases = [
     {
         title: "Test with empty username",

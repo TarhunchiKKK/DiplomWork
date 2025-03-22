@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsPositive, IsString } from "class-validator";
 import { IUpdateUrgencyIntervalDto } from "common/grpc";
 
-export class UpdateUrgencyIntevalDto implements IUpdateUrgencyIntervalDto {
+export class UpdateUrgencyIntervalDto implements IUpdateUrgencyIntervalDto {
     @IsNotEmpty({ message: "Идентификатор организации не указан" })
     @IsString({ message: "Идентификатор организации должен быть строкой" })
     organizationId: string;

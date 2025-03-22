@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Patch, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { UpdateAdministrativeDivisionsDto } from "apps/organizations-management-microservice/src/organizations/dto/update-administrative-divisions.dto";
 import { UpdateDocumentAimsDto } from "apps/organizations-management-microservice/src/organizations/dto/update-document-aims.dto";
 import { UpdateDocumentTypesDto } from "apps/organizations-management-microservice/src/organizations/dto/update-document-types.dto";
+import { UpdateUrgencyIntervalDto } from "apps/organizations-management-microservice/src/organizations/dto/update-urgency-interval.dto";
 import { ExtractDataInterceptor, OrganizationsManagementGrpcService } from "common/grpc";
 
 @Controller("organizations")
@@ -14,17 +15,26 @@ export class OrganizationsManagementController {
         return this.organizationsManagementGrpcService.findOneById(organizationId);
     }
 
+    @Patch("urgency-interval")
+    @UsePipes(ValidationPipe)
+    public async updateUrgencyInterval(@Body() dto: UpdateUrgencyIntervalDto) {
+        return this.organizationsManagementGrpcService.updateUrgencyInterval(dto);
+    }
+
     @Patch("document-aims")
+    @UsePipes(ValidationPipe)
     public async updateDocumentAims(@Body() dto: UpdateDocumentAimsDto) {
         return this.organizationsManagementGrpcService.updateDocumentAims(dto);
     }
 
     @Patch("document-types")
-    public async updateDocumenttypes(@Body() dto: UpdateDocumentTypesDto) {
+    @UsePipes(ValidationPipe)
+    public async updateDocumentTypes(@Body() dto: UpdateDocumentTypesDto) {
         return this.organizationsManagementGrpcService.updateDocumenttypes(dto);
     }
 
     @Patch("administrative-divisions")
+    @UsePipes(ValidationPipe)
     public async updateAdministrativeDivisions(@Body() dto: UpdateAdministrativeDivisionsDto) {
         return this.organizationsManagementGrpcService.updateAdministrativeDivisions(dto);
     }

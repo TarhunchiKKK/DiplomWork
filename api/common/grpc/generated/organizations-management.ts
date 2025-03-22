@@ -77,6 +77,8 @@ export interface OrganizationsManagementServiceClient {
 
   findOneById(request: StringValue): Observable<IFindOneOrganizationResponse>;
 
+  updateUrgencyInterval(request: IUpdateUrgencyIntervalDto): Observable<Empty>;
+
   updateDocumentAims(request: IUpdateDocumentAimsDto): Observable<Empty>;
 
   updateDocumentTypes(request: IUpdateDocumentTypesDto): Observable<Empty>;
@@ -91,6 +93,8 @@ export interface OrganizationsManagementServiceController {
     request: StringValue,
   ): Promise<IFindOneOrganizationResponse> | Observable<IFindOneOrganizationResponse> | IFindOneOrganizationResponse;
 
+  updateUrgencyInterval(request: IUpdateUrgencyIntervalDto): void;
+
   updateDocumentAims(request: IUpdateDocumentAimsDto): void;
 
   updateDocumentTypes(request: IUpdateDocumentTypesDto): void;
@@ -103,6 +107,7 @@ export function OrganizationsManagementServiceControllerMethods() {
     const grpcMethods: string[] = [
       "createDefault",
       "findOneById",
+      "updateUrgencyInterval",
       "updateDocumentAims",
       "updateDocumentTypes",
       "updateAdministrativeDivisions",

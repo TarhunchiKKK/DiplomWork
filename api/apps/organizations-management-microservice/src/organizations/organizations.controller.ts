@@ -12,6 +12,7 @@ import {
 } from "common/grpc";
 import { defaultOrganization } from "./constants/organization.constants";
 import { asType } from "common/types";
+import { UpdateUrgencyIntervalDto } from "./dto/update-urgency-interval.dto";
 
 @Controller()
 @OrganizationsManagementServiceControllerMethods()
@@ -20,7 +21,6 @@ export class OrganizationsController implements OrganizationsManagementServiceCo
 
     public async createDefault() {
         const organization = await this.organizationsService.create(defaultOrganization);
-        console.log(organization);
         return asType<IOrganization>(organization);
     }
 
@@ -28,6 +28,10 @@ export class OrganizationsController implements OrganizationsManagementServiceCo
     public async findOneById(dto: StringValue) {
         const organization = await this.organizationsService.findOneById(dto.value);
         return asType<{ data: IOrganization[] }>(organization);
+    }
+
+    public async updateUrgencyInterval(dto: UpdateUrgencyIntervalDto) {
+        await this.organizationsService.updateUrgencyInterval(dto);
     }
 
     public async updateDocumentAims(dto: IUpdateDocumentAimsDto) {

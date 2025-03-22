@@ -8,8 +8,10 @@ export class CreateOrganizationDto {
     administrativeDivisions: {
         title: string;
 
-        posts: {
-            title: string;
-        };
+        posts: [
+            {
+                title: string;
+            }
+        ];
     }[];
 }

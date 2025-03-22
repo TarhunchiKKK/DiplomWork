@@ -6,7 +6,8 @@ import {
     ORGANIZATIONS_MANAGEMENT_SERVICE_NAME,
     IUpdateDocumentAimsDto,
     IUpdateDocumentTypesDto,
-    IUpdateAdministrativeDivisionsDto
+    IUpdateAdministrativeDivisionsDto,
+    IUpdateUrgencyIntervalDto
 } from "common/grpc/generated";
 import { BaseGrpcService } from "../base.grpc-service";
 
@@ -22,6 +23,10 @@ export class OrganizationsManagementGrpcService extends BaseGrpcService<Organiza
 
     public findOneById(id: string) {
         return this.serviceClient.findOneById({ value: id });
+    }
+
+    public updateUrgencyInterval(dto: IUpdateUrgencyIntervalDto) {
+        return this.serviceClient.updateUrgencyInterval(dto);
     }
 
     public updateDocumentAims(dto: IUpdateDocumentAimsDto) {

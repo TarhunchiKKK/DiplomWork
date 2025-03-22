@@ -10,6 +10,8 @@ service OrganizationsManagementService {
 
     rpc FindOneById(google.protobuf.StringValue) returns (IFindOneOrganizationResponse) {}
 
+    rpc UpdateUrgencyInterval(IUpdateUrgencyIntervalDto) returns (google.protobuf.Empty) {}
+
     rpc UpdateDocumentAims(IUpdateDocumentAimsDto) returns (google.protobuf.Empty) {}
 
     rpc UpdateDocumentTypes(IUpdateDocumentTypesDto) returns (google.protobuf.Empty) {}
