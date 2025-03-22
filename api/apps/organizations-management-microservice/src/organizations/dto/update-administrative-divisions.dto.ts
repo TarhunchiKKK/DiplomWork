@@ -4,7 +4,7 @@ import { AdministrativeDivision } from "../schemas/administrative-division.schem
 import { IsNotEmpty, IsString, IsArray } from "class-validator";
 import { Post } from "../schemas/post.schema";
 
-export class UpdateAdministrativeDivisions implements IUpdateAdministrativeDivisionsDto {
+export class UpdateAdministrativeDivisionsDto implements IUpdateAdministrativeDivisionsDto {
     @IsNotEmpty({ message: "Идентификатор организации не указан" })
     @IsString({ message: "Идентификатор организации должен быть строкой" })
     organizationId: string;

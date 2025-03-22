@@ -4,6 +4,8 @@ import { Organization } from "./schemas/organization.schema";
 import { Model } from "mongoose";
 import { CreateOrganizationDto } from "./dto/create-organization.dto";
 import { UpdateDocumentAimsDto } from "./dto/update-document-aims.dto";
+import { UpdateDocumentTypesDto } from "./dto/update-document-types.dto";
+import { UpdateAdministrativeDivisionsDto } from "./dto/update-administrative-divisions.dto";
 
 @Injectable()
 export class OrganizationsService {
@@ -20,8 +22,30 @@ export class OrganizationsService {
     public async updateDocumentAims(dto: UpdateDocumentAimsDto) {
         const organization = await this.findOneById(dto.organizationId);
 
-        organization.settings.documentAims = dto.documentAims;
+        if (organization) {
+            organization.documentAims = dto.documentAims;
 
-        await organization.save();
+            await organization.save();
+        }
+    }
+
+    public async updateDocumentTypes(dto: UpdateDocumentTypesDto) {
+        const organization = await this.findOneById(dto.organizationId);
+
+        if (organization) {
+            // organization.documentTypes = dto.documentTypes;
+
+            await organization.save();
+        }
+    }
+
+    public async updateAdministrativeDivisions(dto: UpdateAdministrativeDivisionsDto) {
+        const organization = await this.findOneById(dto.organizationId);
+
+        if (organization) {
+            organization.administrativeDivisions = dto.administrativeDivisions;
+
+            await organization.save();
+        }
     }
 }

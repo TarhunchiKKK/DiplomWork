@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { Organization, OrganizationSchema } from "./schemas/organization.schema";
-import { OrganiationSettings, OrganiationSettingsSchema } from "./schemas/organization-settings.schema";
 import { DocumentType, DocumentTypeSchema } from "./schemas/document-type.schema";
 import { DocumentAim, DocumentAimSchema } from "./schemas/document-aim.schema";
 import { OrganizationsController } from "./organizations.controller";
@@ -15,10 +14,6 @@ import { Post, PostSchema } from "./schemas/post.schema";
             {
                 name: Organization.name,
                 schema: OrganizationSchema
-            },
-            {
-                name: OrganiationSettings.name,
-                schema: OrganiationSettingsSchema
             },
             {
                 name: DocumentAim.name,

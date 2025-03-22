@@ -9,6 +9,12 @@ service OrganizationsManagementService {
     rpc CreateDefault(google.protobuf.Empty) returns (IOrganization) {}
 
     rpc FindOneById(google.protobuf.StringValue) returns (IFindOneOrganizationResponse) {}
+
+    rpc UpdateDocumentAims(IUpdateDocumentAimsDto) returns (google.protobuf.Empty) {}
+
+    rpc UpdateDocumentTypes(IUpdateDocumentTypesDto) returns (google.protobuf.Empty) {}
+
+    rpc UpdateAdministrativeDivisions(IUpdateAdministrativeDivisionsDto) returns (google.protobuf.Empty) {}
 }
 
 message IOrganization {
@@ -16,17 +22,9 @@ message IOrganization {
 
     int32 __v = 2;
 
-    IOrganizationSettings settings = 3;
-}
-
-message IOrganizationSettings {
-    string _id = 1;
-    
-    int32 __v = 2;
-
     int64 urgencyInterval = 3;
 
-    repeated IDocumentAim documentStatuses = 4;
+    repeated IDocumentAim documentAims = 4;
 
     repeated IDocumentType documentTypes = 5;
 

@@ -1,17 +1,15 @@
 export class CreateOrganizationDto {
-    settings: {
-        urgencyInterval: number;
+    urgencyInterval: number;
 
-        documentAims: { value: string }[];
+    documentAims: { value: string }[];
 
-        documentTypes: { value: string }[];
+    documentTypes: { value: string }[];
 
-        administrativeDivisions: {
+    administrativeDivisions: {
+        title: string;
+
+        posts: {
             title: string;
-
-            posts: {
-                title: string;
-            };
-        }[];
-    };
+        };
+    }[];
 }

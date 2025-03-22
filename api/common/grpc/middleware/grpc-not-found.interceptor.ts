@@ -8,6 +8,7 @@ export class GrpcNotFoundInterceptor implements NestInterceptor {
     }
 
     private transformResponse<T>(value: T): { data: T[] } {
+        console.log(value);
         return value === null || value === undefined ? { data: [] } : { data: [value] };
     }
 }

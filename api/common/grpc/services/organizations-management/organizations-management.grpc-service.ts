@@ -3,7 +3,10 @@ import { ClientGrpc } from "@nestjs/microservices";
 import {
     OrganizationsManagementServiceClient,
     ORGANIZATIONS_MANAGEMENT_PACKAGE_NAME,
-    ORGANIZATIONS_MANAGEMENT_SERVICE_NAME
+    ORGANIZATIONS_MANAGEMENT_SERVICE_NAME,
+    IUpdateDocumentAimsDto,
+    IUpdateDocumentTypesDto,
+    IUpdateAdministrativeDivisionsDto
 } from "common/grpc/generated";
 import { BaseGrpcService } from "../base.grpc-service";
 
@@ -19,5 +22,17 @@ export class OrganizationsManagementGrpcService extends BaseGrpcService<Organiza
 
     public findOneById(id: string) {
         return this.serviceClient.findOneById({ value: id });
+    }
+
+    public updateDocumentAims(dto: IUpdateDocumentAimsDto) {
+        return this.serviceClient.updateDocumentAims(dto);
+    }
+
+    public updateDocumenttypes(dto: IUpdateDocumentTypesDto) {
+        return this.serviceClient.updateDocumentTypes(dto);
+    }
+
+    public updateAdministrativeDivisions(dto: IUpdateAdministrativeDivisionsDto) {
+        return this.serviceClient.updateAdministrativeDivisions(dto);
     }
 }

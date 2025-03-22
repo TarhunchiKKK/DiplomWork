@@ -15,14 +15,8 @@ const protobufPackage = "organizationsManagement";
 export interface IOrganization {
   _id: string;
   __v: number;
-  settings: IOrganizationSettings | undefined;
-}
-
-export interface IOrganizationSettings {
-  _id: string;
-  __v: number;
   urgencyInterval: number;
-  documentStatuses: IDocumentAim[];
+  documentAims: IDocumentAim[];
   documentTypes: IDocumentType[];
   administrativeDivisions: IAdministrativeDivision[];
 }
@@ -82,6 +76,12 @@ export interface OrganizationsManagementServiceClient {
   createDefault(request: Empty): Observable<IOrganization>;
 
   findOneById(request: StringValue): Observable<IFindOneOrganizationResponse>;
+
+  updateDocumentAims(request: IUpdateDocumentAimsDto): Observable<Empty>;
+
+  updateDocumentTypes(request: IUpdateDocumentTypesDto): Observable<Empty>;
+
+  updateAdministrativeDivisions(request: IUpdateAdministrativeDivisionsDto): Observable<Empty>;
 }
 
 export interface OrganizationsManagementServiceController {
@@ -90,11 +90,23 @@ export interface OrganizationsManagementServiceController {
   findOneById(
     request: StringValue,
   ): Promise<IFindOneOrganizationResponse> | Observable<IFindOneOrganizationResponse> | IFindOneOrganizationResponse;
+
+  updateDocumentAims(request: IUpdateDocumentAimsDto): void;
+
+  updateDocumentTypes(request: IUpdateDocumentTypesDto): void;
+
+  updateAdministrativeDivisions(request: IUpdateAdministrativeDivisionsDto): void;
 }
 
 export function OrganizationsManagementServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["createDefault", "findOneById"];
+    const grpcMethods: string[] = [
+      "createDefault",
+      "findOneById",
+      "updateDocumentAims",
+      "updateDocumentTypes",
+      "updateAdministrativeDivisions",
+    ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("OrganizationsManagementService", method)(constructor.prototype[method], method, descriptor);
