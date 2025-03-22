@@ -33,7 +33,7 @@ export class OrganizationsService {
         const organization = await this.findOneById(dto.organizationId);
 
         if (organization) {
-            // organization.documentTypes = dto.documentTypes;
+            organization.documentTypes = dto.documentTypes;
 
             await organization.save();
         }
