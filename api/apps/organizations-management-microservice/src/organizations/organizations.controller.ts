@@ -37,9 +37,11 @@ export class OrganizationsController implements OrganizationsManagementServiceCo
     public async updateDocumentAims(dto: IUpdateDocumentAimsDto) {
         await this.organizationsService.updateDocumentAims(dto);
     }
+
     public async updateDocumentTypes(dto: IUpdateDocumentTypesDto) {
         await this.organizationsService.updateDocumentTypes(dto);
     }
+
     public async updateAdministrativeDivisions(dto: IUpdateAdministrativeDivisionsDto) {
         await this.organizationsService.updateAdministrativeDivisions(dto);
     }

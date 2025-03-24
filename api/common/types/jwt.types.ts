@@ -1,6 +1,6 @@
 import { Role } from "common/enums";
 
-export class GenerateJwtDto {
+export type TJwtInfo = {
     id: string;
 
     email: string;
@@ -8,4 +8,4 @@ export class GenerateJwtDto {
     role: Role;
 
     organizationId: string;
-}
+};

@@ -3,7 +3,7 @@ import { IRegisterAdminDto, OrganizationsManagementGrpcService, UsersManagementG
 import { Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { JwtService } from "@nestjs/jwt";
-import { GenerateJwtDto } from "./dto/generate-jwt.dto";
+import { TJwtInfo } from "common/types";
 
 @Injectable()
 export class AuthenticationService {
@@ -15,7 +15,7 @@ export class AuthenticationService {
         private readonly jwtService: JwtService
     ) {}
 
-    private generateJwt(dto: GenerateJwtDto) {
+    private generateJwt(dto: TJwtInfo) {
         return this.jwtService.sign({
             id: dto.id,
             email: dto.email,
