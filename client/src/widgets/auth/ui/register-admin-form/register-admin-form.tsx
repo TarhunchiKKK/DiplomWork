@@ -2,21 +2,22 @@
 
 import { useForm } from "react-hook-form";
 import { defaultValues, formFields } from "./constants";
-import { TRegisterAdminDto, useRegisterAdmin } from "../../api";
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input } from "@/shared/ui";
 import { routes } from "@/shared/routing";
 import { Wrapper } from "../wrapper";
+import { TRegisterDto } from "./types";
+import { useRegister } from "./hooks";
 
 export function RegisterAdminForm() {
-    const form = useForm<TRegisterAdminDto>({
+    const form = useForm<TRegisterDto>({
         defaultValues: defaultValues
     });
 
-    const onSubmit = (values: TRegisterAdminDto) => {
+    const onSubmit = (values: TRegisterDto) => {
         register(values);
     };
 
-    const { register, isPending } = useRegisterAdmin();
+    const { register, isPending } = useRegister();
 
     return (
         <Wrapper

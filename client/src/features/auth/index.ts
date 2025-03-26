@@ -1,2 +1,3 @@
+export type { TProfile } from "./types";
 export { useProfileStore } from "./lib";
-export { RegisterAdminForm } from "./ui";
+export { authLocalStorageService } from "./utils";

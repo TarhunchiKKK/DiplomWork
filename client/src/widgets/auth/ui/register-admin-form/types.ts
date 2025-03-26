@@ -1,6 +1,6 @@
 import { Role } from "@/entities/users";
 
-export type TRegisterAdminDto = {
+export type TRegisterDto = {
     username: string;
 
     email: string;
@@ -8,7 +8,7 @@ export type TRegisterAdminDto = {
     password: string;
 };
 
-export type TRegisterAdmiResponse = {
+export type TRegisterResponse = {
     id: string;
 
     username: string;

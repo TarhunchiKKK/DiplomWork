@@ -1,26 +1,23 @@
 import axios, { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { TRegisterAdminDto, TRegisterAdmiResponse } from "./types";
 import { queryUrls } from "@/shared/api";
-import { mutationKeys } from "./constants";
-import { localStorageService } from "@/shared/utils";
-import { useProfileStore } from "../lib";
 import { toast } from "sonner";
 import { extractValidationMessages, TValidationError } from "@/shared/validation";
+import { TRegisterDto, TRegisterResponse } from "./types";
+import { authLocalStorageService, useProfileStore } from "@/features/auth";
 
-export function useRegisterAdmin() {
-    const setProfile = useProfileStore(satte => satte.setProfile);
+export function useRegister() {
+    const setProfile = useProfileStore(state => state.setProfile);
 
     const { mutate, isPending } = useMutation({
-        mutationKey: mutationKeys.registerAdmin,
-        mutationFn: async (dto: TRegisterAdminDto) => {
-            const response = await axios.post<TRegisterAdmiResponse>(queryUrls.auth.registerAdmin, dto);
+        mutationFn: async (dto: TRegisterDto) => {
+            const response = await axios.post<TRegisterResponse>(queryUrls.auth.registerAdmin, dto);
             return response.data;
         },
-        onSuccess: (response: TRegisterAdmiResponse) => {
+        onSuccess: response => {
             toast.success("Успешный вход");
 
-            localStorageService.token.set(response.token);
+            authLocalStorageService.jwt.set(response.token);
 
             setProfile({
                 id: response.id,

@@ -3,5 +3,6 @@ export const routes = {
         registerAdmin: "/auth/register/admin",
         registerUser: "/auth/register/user",
         login: "/auth/login"
-    }
+    },
+    settings: "/settings"
 };

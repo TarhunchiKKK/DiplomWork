@@ -1,15 +1,5 @@
-import { Role } from "@/entities/users";
 import { create } from "zustand";
-
-type TProfile = {
-    id: string;
-
-    username?: string;
-
-    email: string;
-
-    role: Role;
-};
+import { TProfile } from "../types";
 
 type TStore = {
     profile: TProfile | null;

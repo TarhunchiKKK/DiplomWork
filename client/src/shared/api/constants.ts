@@ -4,8 +4,8 @@ import { environment } from "../config";
 export const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            staleTime: 1 * 60 * 1000,
-            gcTime: 24 * 60 * 60 * 1000
+            staleTime: environment.staleTime * 60 * 1000,
+            gcTime: environment.gcTime * 60 * 1000
         }
     }
 });

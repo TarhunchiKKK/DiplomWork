@@ -2,11 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TUpdateDto } from "./types";
 import axios, { AxiosError } from "axios";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
-import { localStorageService } from "@/shared/utils";
 import { toast } from "sonner";
 import { extractValidationMessages, TValidationError } from "@/shared/validation";
 import { TOrganization, useOrganizationStore } from "@/entities/organizations";
 import { useForm } from "react-hook-form";
+import { authLocalStorageService } from "@/features/auth";
 
 export function useUpdate() {
     const setUrgencyInterval = useOrganizationStore(state => state.setUrgencyInterval);
@@ -15,7 +15,7 @@ export function useUpdate() {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async (dto: TUpdateDto) => {
-            const jwtToken = localStorageService.token.get();
+            const jwtToken = authLocalStorageService.jwt.get();
 
             await axios.patch(queryUrls.organizations.updateUrgencyInterval, dto, {
                 headers: new HttpHeadersBuilder().setBearerToken(jwtToken).get()
