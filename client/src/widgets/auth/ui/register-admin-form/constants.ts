@@ -1,13 +1,13 @@
-import { TFormField } from "@/shared/ui";
-import { TRegisterAdminDto } from "../../api";
+import { TFormField } from "@/shared/types";
+import { TRegisterDto } from "./types";
 
-export const defaultValues: TRegisterAdminDto = {
+export const defaultValues: TRegisterDto = {
     username: "",
     email: "",
     password: ""
 };
 
-export const formFields: TFormField<TRegisterAdminDto>[] = [
+export const formFields: TFormField<TRegisterDto>[] = [
     {
         name: "username",
         label: "Отображаемое имя",

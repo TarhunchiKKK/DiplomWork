@@ -1,19 +1,19 @@
 "use client";
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, TagsCloud } from "@/shared/ui";
+import { removeTempId } from "../../helpers";
 import { useFormState, useUpdate } from "./hooks";
 import { getTagRenderer } from "./ui";
-import { removeTempId } from "../../helpers";
 
-export function DocumentTypesForm() {
+export function DocumentAimsForm() {
     const { update, isPending } = useUpdate();
 
-    const { documentTypes, form, onSubmit, organization } = useFormState();
+    const { documentAims, form, onSubmit, organization } = useFormState();
 
     const handleUpdate = () => {
         update({
             organizationId: organization._id,
-            documentTypes: documentTypes.data.map(removeTempId)
+            documentAims: documentAims.data.map(removeTempId)
         });
     };
 
@@ -26,7 +26,7 @@ export function DocumentTypesForm() {
                         name="value"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-lg">Типы документов</FormLabel>
+                                <FormLabel className="text-lg">Цели документов</FormLabel>
 
                                 <FormControl>
                                     <Input {...field} type="text" disabled={isPending} />
@@ -38,8 +38,8 @@ export function DocumentTypesForm() {
             </Form>
 
             <TagsCloud
-                items={documentTypes.data}
-                renderItem={getTagRenderer(documentTypes.remove)}
+                items={documentAims.data}
+                renderItem={getTagRenderer(documentAims.remove)}
                 className="w-[800px] mb-4"
             />
 

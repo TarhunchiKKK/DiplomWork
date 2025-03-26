@@ -1,14 +1,14 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { TFormState, TUpdateDto, TUpdateItemDto } from "./types";
 import { authCredentialsManager } from "@/features/auth";
+import { queryUrls, HttpHeadersBuilder, queryKeys } from "@/shared/api";
+import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { toast } from "sonner";
-import { extractValidationMessages, TValidationError } from "@/shared/validation";
-import { TOrganization, useOrganizationStore } from "@/entities/organizations";
-import { useForm } from "react-hook-form";
+import { TFormState, TUpdateDto, TUpdateItemDto } from "./types";
+import { useOrganizationStore, TOrganization } from "@/entities/organizations";
 import { useState } from "react";
-import { addTempId, TWithTempId } from "../../helpers";
+import { useForm } from "react-hook-form";
+import { TWithTempId, addTempId } from "../../helpers";
 
 export function useUpdate() {
     const queryClient = useQueryClient();
@@ -17,7 +17,7 @@ export function useUpdate() {
         mutationFn: async (dto: TUpdateDto) => {
             const jwtToken = authCredentialsManager.jwt.get();
 
-            await axios.patch(queryUrls.organizations.updateDocumentTypes, dto, {
+            await axios.patch(queryUrls.organizations.updateDocumentAims, dto, {
                 headers: new HttpHeadersBuilder().setBearerToken(jwtToken).get()
             });
         },
@@ -43,16 +43,16 @@ export function useUpdate() {
 export function useFormState() {
     const organization = useOrganizationStore(state => state.organization) as TOrganization;
 
-    const [documentTypes, setDocumentTypes] = useState<TWithTempId<TUpdateItemDto>[]>(
-        (organization.documentTypes || []).map(addTempId)
+    const [documentAims, setDocumentAims] = useState<TWithTempId<TUpdateItemDto>[]>(
+        (organization.documentAims || []).map(addTempId)
     );
 
-    const addDocumentType = (data: TUpdateItemDto) => {
-        setDocumentTypes([...documentTypes, addTempId(data)]);
+    const addDocumentAim = (data: TUpdateItemDto) => {
+        setDocumentAims([...documentAims, addTempId(data)]);
     };
 
-    const removeDocumentType = (tempId: string) => {
-        setDocumentTypes(documentTypes.filter(documentType => documentType.tempId !== tempId));
+    const removeDocumentAim = (tempId: string) => {
+        setDocumentAims(documentAims.filter(documentAims => documentAims.tempId !== tempId));
     };
 
     const form = useForm<TFormState>({
@@ -63,7 +63,7 @@ export function useFormState() {
 
     const onSubmit = (data: TFormState) => {
         if (form.getValues().value) {
-            addDocumentType(data);
+            addDocumentAim(data);
             form.reset();
         }
     };
@@ -71,10 +71,10 @@ export function useFormState() {
     return {
         form,
         onSubmit,
-        documentTypes: {
-            data: documentTypes,
-            add: addDocumentType,
-            remove: removeDocumentType
+        documentAims: {
+            data: documentAims,
+            add: addDocumentAim,
+            remove: removeDocumentAim
         },
         organization
     };

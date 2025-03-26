@@ -14,7 +14,7 @@ export function UrgencyIntervalForm() {
                     name="urgencyInterval"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Интервал срочности (в днях)</FormLabel>
+                            <FormLabel className="text-lg">Интервал срочности (в днях)</FormLabel>
 
                             <FormControl>
                                 <Input {...field} type="number" disabled={isPending} />

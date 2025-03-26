@@ -6,3 +6,4 @@ export * from "./label";
 export * from "./sonner";
 export * from "./dropdown-menu";
 export * from "./tooltip";
+export * from "./separator";

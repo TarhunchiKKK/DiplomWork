@@ -16,7 +16,8 @@ export const queryUrls = {
     },
     organizations: {
         updateUrgencyInterval: `${environment.apiUrl}/organizations/urgency-interval`,
-        updateDocumentTypes: `${environment.apiUrl}/organizations/document-types`
+        updateDocumentTypes: `${environment.apiUrl}/organizations/document-types`,
+        updateDocumentAims: `${environment.apiUrl}/organizations/document-aims`
     }
 };
 

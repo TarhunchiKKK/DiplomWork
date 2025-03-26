@@ -1,1 +1,1 @@
-export { UrgencyIntervalForm, DocumentTypesForm } from "./ui";
+export { UrgencyIntervalForm, DocumentTypesForm, DocumentAimsForm } from "./ui";

@@ -15,10 +15,10 @@ export const addTempId = <T extends Record<string, unknown>>(data: T): TWithTemp
     };
 };
 
-export const removeTempId = (data: { tempId?: string }) => {
+export const removeTempId = <T extends { tempId?: string }>(data: T) => {
     const copy = { ...data };
 
-    delete data.tempId;
+    delete copy.tempId;
 
-    return data;
+    return copy;
 };

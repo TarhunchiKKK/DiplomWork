@@ -7,7 +7,7 @@ export type TUpdateItemDto = {
 export type TUpdateDto = {
     organizationId: string;
 
-    documentTypes: TUpdateItemDto[];
+    documentAims: TUpdateItemDto[];
 };
 
 export type TFormState = {

@@ -1,11 +1,18 @@
-import { DocumentTypesForm, UrgencyIntervalForm } from "@/widgets/settings";
+import { Separator } from "@/shared/ui";
+import { DocumentAimsForm, DocumentTypesForm, UrgencyIntervalForm } from "@/widgets/settings";
 
 export default function Settings() {
     return (
-        <div className="flex flex-col items-start gap-6">
+        <div>
             <UrgencyIntervalForm />
 
+            <Separator className="my-6" />
+
             <DocumentTypesForm />
+
+            <Separator className="my-6" />
+
+            <DocumentAimsForm />
         </div>
     );
 }
