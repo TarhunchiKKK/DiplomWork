@@ -13,5 +13,15 @@ export const queryClient = new QueryClient({
 export const queryUrls = {
     auth: {
         registerAdmin: `${environment.apiUrl}/auth/register/admin`
+    },
+    organizations: {
+        updateUrgencyInterval: `${environment.apiUrl}/organizations/urgency-interval`
+    }
+};
+
+export const queryKeys = {
+    organizations: {
+        base: ["organizations"],
+        withJwt: (jwt: string) => ["organizations", jwt]
     }
 };

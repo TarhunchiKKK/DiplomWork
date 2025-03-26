@@ -1,11 +1,12 @@
 import axios, { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { TRegisterAdminDto, TRegisterAdmiResponse } from "./types";
-import { queryUrls, TValidationError } from "@/shared/api";
+import { queryUrls } from "@/shared/api";
 import { mutationKeys } from "./constants";
 import { localStorageService } from "@/shared/utils";
 import { useProfileStore } from "../lib";
 import { toast } from "sonner";
+import { extractValidationMessages, TValidationError } from "@/shared/validation";
 
 export function useRegisterAdmin() {
     const setProfile = useProfileStore(satte => satte.setProfile);
@@ -29,7 +30,7 @@ export function useRegisterAdmin() {
             });
         },
         onError: (error: AxiosError<TValidationError>) => {
-            error.response?.data.message.slice(0, 3).forEach(message => {
+            extractValidationMessages(error).forEach(message => {
                 toast.error(message);
             });
         }
