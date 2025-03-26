@@ -1,2 +1,2 @@
 export * from "./generated";
-export { Tag } from "./tag";
+export { Tag, TagsCloud } from "./tags-cloud";

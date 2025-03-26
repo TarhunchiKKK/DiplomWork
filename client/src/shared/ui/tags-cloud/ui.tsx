@@ -1,11 +1,11 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../generated";
-import { TProps } from "./types";
+import { TTagProps } from "./types";
 
-export function Tag({ tooltip, children }: TProps) {
+export function Tag({ tooltip, children }: TTagProps) {
     return (
         <TooltipProvider>
             <Tooltip>
-                <TooltipTrigger>{children}</TooltipTrigger>
+                <TooltipTrigger asChild>{children}</TooltipTrigger>
 
                 <TooltipContent>{tooltip}</TooltipContent>
             </Tooltip>

@@ -1,5 +1,11 @@
-import { UrgencyIntervalForm } from "@/widgets/settings";
+import { DocumentTypesForm, UrgencyIntervalForm } from "@/widgets/settings";
 
 export default function Settings() {
-    return <UrgencyIntervalForm />;
+    return (
+        <div className="flex flex-col items-start gap-6">
+            <UrgencyIntervalForm />
+
+            <DocumentTypesForm />
+        </div>
+    );
 }

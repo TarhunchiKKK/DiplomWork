@@ -4,7 +4,7 @@ import { queryUrls } from "@/shared/api";
 import { toast } from "sonner";
 import { extractValidationMessages, TValidationError } from "@/shared/validation";
 import { TRegisterDto, TRegisterResponse } from "./types";
-import { authLocalStorageService, useProfileStore } from "@/features/auth";
+import { authCredentialsManager, useProfileStore } from "@/features/auth";
 
 export function useRegister() {
     const setProfile = useProfileStore(state => state.setProfile);
@@ -17,7 +17,7 @@ export function useRegister() {
         onSuccess: response => {
             toast.success("Успешный вход");
 
-            authLocalStorageService.jwt.set(response.token);
+            authCredentialsManager.jwt.set(response.token);
 
             setProfile({
                 id: response.id,

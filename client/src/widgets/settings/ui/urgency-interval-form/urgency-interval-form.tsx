@@ -17,7 +17,7 @@ export function UrgencyIntervalForm() {
                             <FormLabel>Интервал срочности (в днях)</FormLabel>
 
                             <FormControl>
-                                <Input {...field} className="appearance-none" type="number" disabled={isPending} />
+                                <Input {...field} type="number" disabled={isPending} />
                             </FormControl>
                         </FormItem>
                     )}

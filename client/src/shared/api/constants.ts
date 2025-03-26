@@ -15,7 +15,8 @@ export const queryUrls = {
         registerAdmin: `${environment.apiUrl}/auth/register/admin`
     },
     organizations: {
-        updateUrgencyInterval: `${environment.apiUrl}/organizations/urgency-interval`
+        updateUrgencyInterval: `${environment.apiUrl}/organizations/urgency-interval`,
+        updateDocumentTypes: `${environment.apiUrl}/organizations/document-types`
     }
 };
 
