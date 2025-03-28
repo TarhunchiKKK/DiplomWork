@@ -1,7 +1,7 @@
 import { Separator } from "@/shared/ui";
 import { DocumentAimsForm, DocumentTypesForm, UrgencyIntervalForm } from "@/widgets/settings";
 
-export default function Settings() {
+export default function DocumentsSettings() {
     return (
         <div>
             <UrgencyIntervalForm />

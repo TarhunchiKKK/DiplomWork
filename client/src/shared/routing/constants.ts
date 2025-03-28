@@ -4,5 +4,8 @@ export const routes = {
         registerUser: "/auth/register/user",
         login: "/auth/login"
     },
-    settings: "/settings"
+    settings: {
+        documents: "/settings/documents",
+        organization: "/settings/organization"
+    }
 };
