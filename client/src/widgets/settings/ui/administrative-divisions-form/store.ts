@@ -1,13 +1,16 @@
 import { create } from "zustand";
 import { TWithTempId } from "../../helpers";
 import { TUpdateItemDto, TUpdatePostDto } from "./types";
-import { generateTempId } from "../../helpers/temp-id";
+import { addTempId, generateTempId } from "../../helpers/temp-id";
 import { generateDivisionTitle } from "./helpers";
+import { TOrganization } from "@/entities/organizations";
 
 type TPosts = TWithTempId<TUpdatePostDto>[];
 
 export type TStore = {
     data: TWithTempId<Omit<TUpdateItemDto, "posts"> & { posts: TPosts }>[];
+
+    setData: (data: TOrganization["administrativeDivisions"]) => void;
 
     divisions: {
         add: () => void;
@@ -28,6 +31,18 @@ export type TStore = {
 
 export const useDivisionsStore = create<TStore>(set => ({
     data: [],
+
+    setData: data => {
+        set({
+            data: data.map(data =>
+                addTempId({
+                    ...data,
+                    posts: data.posts.map(addTempId)
+                })
+            )
+        });
+    },
+
     divisions: {
         add: () => {
             set(state => ({

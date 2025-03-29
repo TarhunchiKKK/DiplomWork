@@ -4,9 +4,11 @@ import { SingleDivisionForm } from "./single-division-form";
 import { AddDivisionButton } from "./add-division-button";
 import { useDivisionsStore } from "./store";
 import { Button } from "@/shared/ui";
-import { useUpdate } from "./hooks";
+import { useSetup, useUpdate } from "./hooks";
 
 export function AdministrativeDivisionsForm() {
+    useSetup();
+
     const divisions = useDivisionsStore(state => state.data);
 
     const { update, isPending } = useUpdate();
