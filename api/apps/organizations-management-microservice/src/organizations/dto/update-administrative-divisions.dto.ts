@@ -1,0 +1,44 @@
+import { IUpdateAdministrativeDivisionsDto } from "common/grpc";
+import { IsNotEmpty, IsString, IsArray, ValidateNested } from "class-validator";
+import { Optional } from "@nestjs/common";
+import { Type } from "class-transformer";
+
+class UpdatePostDto {
+    @Optional()
+    _id: string;
+
+    @Optional()
+    __v: number;
+
+    @IsNotEmpty({ message: "Укажите название должности" })
+    @IsString({ message: "Название должности должно быть строкой" })
+    title: string;
+}
+
+class UpdateAdministrativeDivisionDto {
+    @Optional()
+    _id: string;
+
+    @Optional()
+    __v: number;
+
+    @IsNotEmpty({ message: "Укажите название админисративного подразделения" })
+    @IsString({ message: "Название административного подразделения должно быть строкой" })
+    title: string;
+
+    @IsArray({ message: "Ожидается массив должностей" })
+    @ValidateNested({ each: true })
+    @Type(() => UpdatePostDto)
+    posts: UpdatePostDto[];
+}
+
+export class UpdateAdministrativeDivisionsDto implements IUpdateAdministrativeDivisionsDto {
+    @IsNotEmpty({ message: "Идентификатор организации не указан" })
+    @IsString({ message: "Идентификатор организации должен быть строкой" })
+    organizationId: string;
+
+    @IsArray({ message: "Ожидается массив административных делений" })
+    @ValidateNested({ each: true })
+    @Type(() => UpdateAdministrativeDivisionDto)
+    administrativeDivisions: UpdateAdministrativeDivisionDto[];
+}

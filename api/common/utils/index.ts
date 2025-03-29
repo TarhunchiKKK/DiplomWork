@@ -1,2 +1,3 @@
-export { omit, pick } from "./object";
-export { allObservables } from "./observable";
+export { omit, pick } from "./object.utils";
+export { allObservables } from "./observable.utils";
+export { firstOrDefault } from "./array.utils";

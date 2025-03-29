@@ -1,5 +1,5 @@
 import { NestFactory } from "@nestjs/core";
-import { ApiGatewayModule } from "./api-gateway.module";
+import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { INestApplication } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
@@ -17,7 +17,7 @@ function setupSwagger(app: INestApplication) {
 }
 
 async function bootstrap() {
-    const app = await NestFactory.create(ApiGatewayModule);
+    const app = await NestFactory.create(AppModule);
 
     app.enableCors();
 

@@ -1,11 +1,12 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { Organization, OrganizationSchema } from "./schemas/organization.schema";
-import { Settings, SettingsSchema } from "./schemas/settings.schema";
 import { DocumentType, DocumentTypeSchema } from "./schemas/document-type.schema";
-import { DocumentStatus, DocumentStatusSchema } from "./schemas/document-status.schema";
+import { DocumentAim, DocumentAimSchema } from "./schemas/document-aim.schema";
 import { OrganizationsController } from "./organizations.controller";
 import { OrganizationsService } from "./organizations.service";
+import { AdministrativeDivision, AdministrativeDivisionSchema } from "./schemas/administrative-division.schema";
+import { Post, PostSchema } from "./schemas/post.schema";
 
 @Module({
     imports: [
@@ -15,16 +16,20 @@ import { OrganizationsService } from "./organizations.service";
                 schema: OrganizationSchema
             },
             {
-                name: Settings.name,
-                schema: SettingsSchema
+                name: DocumentAim.name,
+                schema: DocumentAimSchema
             },
             {
                 name: DocumentType.name,
                 schema: DocumentTypeSchema
             },
             {
-                name: DocumentStatus.name,
-                schema: DocumentStatusSchema
+                name: AdministrativeDivision.name,
+                schema: AdministrativeDivisionSchema
+            },
+            {
+                name: Post.name,
+                schema: PostSchema
             }
         ])
     ],

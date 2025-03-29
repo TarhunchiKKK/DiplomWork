@@ -1,12 +1,12 @@
 import { NestFactory } from "@nestjs/core";
-import { OrganizationsManagementMicroserviceModule } from "./organizations-management-microservice.module";
+import { AppModule } from "./app.module";
 import { ConfigService } from "@nestjs/config";
 import { MicroserviceOptions } from "@nestjs/microservices";
 import { getGrpcConfig } from "common/config";
 import { ORGANIZATIONS_MANAGEMENT_PACKAGE_NAME } from "common/grpc";
 
 async function bootstrap() {
-    const app = await NestFactory.create(OrganizationsManagementMicroserviceModule);
+    const app = await NestFactory.create(AppModule);
 
     const configService = app.get(ConfigService);
 

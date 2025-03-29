@@ -1,0 +1,1 @@
+export { RegisterAdminForm } from "./ui";

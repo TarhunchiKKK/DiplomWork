@@ -4,3 +4,6 @@ export * from "./notifications";
 export * from "./organizations-management";
 export * from "./users-management";
 export * from "./workflows-management";
+export * from "./google/protobuf/empty";
+export * from "./google/protobuf/timestamp";
+export * from "./google/protobuf/wrappers";
