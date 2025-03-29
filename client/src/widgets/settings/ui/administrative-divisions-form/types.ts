@@ -5,7 +5,7 @@ export type TUpdatePostDto = {
 };
 
 export type TUpdateItemDto = {
-    _id: string;
+    _id?: string;
 
     title: string;
 
@@ -16,4 +16,10 @@ export type TUpdateDto = {
     organizationId: string;
 
     administrativeDivisions: TUpdateItemDto[];
+};
+
+export type TSingleDivisionState = {
+    title: string;
+
+    posts: TUpdatePostDto[];
 };

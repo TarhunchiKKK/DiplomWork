@@ -2,7 +2,7 @@ import { generate } from "randomstring";
 
 const tempIdLength = 8;
 
-const generateTempId = () => {
+export const generateTempId = () => {
     return generate(tempIdLength);
 };
 
