@@ -25,66 +25,66 @@
         },
         "authentication": {
             "type": "application",
-            "root": "apps/authentication-microservice",
+            "root": "apps/authentication",
             "entryFile": "src/main",
             "sourceRoot": "./",
             "compilerOptions": {
-                "tsConfigPath": "apps/authentication-microservice/tsconfig.app.json",
+                "tsConfigPath": "apps/authentication/tsconfig.app.json",
                 "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         },
         "documents": {
             "type": "application",
-            "root": "apps/documents-management-microservice",
+            "root": "apps/documents",
             "entryFile": "src/main",
             "sourceRoot": "./",
             "compilerOptions": {
-                "tsConfigPath": "apps/documents-management-microservice/tsconfig.app.json",
+                "tsConfigPath": "apps/documents/tsconfig.app.json",
                 "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         },
         "notifications": {
             "type": "application",
-            "root": "apps/notifications-microservice",
+            "root": "apps/notifications",
             "entryFile": "src/main",
             "sourceRoot": "./",
             "compilerOptions": {
-                "tsConfigPath": "apps/notifications-microservice/tsconfig.app.json",
+                "tsConfigPath": "apps/notifications/tsconfig.app.json",
                 "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         },
         "organizations": {
             "type": "application",
-            "root": "apps/organizations-management-microservice",
+            "root": "apps/organizations",
             "entryFile": "src/main",
             "sourceRoot": "./",
             "compilerOptions": {
-                "tsConfigPath": "apps/organizations-management-microservice/tsconfig.app.json",
+                "tsConfigPath": "apps/organizations/tsconfig.app.json",
                 "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         },
         "users": {
             "type": "application",
-            "root": "apps/users-management-microservice",
+            "root": "apps/users",
             "entryFile": "src/main",
             "sourceRoot": "./",
             "compilerOptions": {
-                "tsConfigPath": "apps/users-management-microservice/tsconfig.app.json",
+                "tsConfigPath": "apps/users/tsconfig.app.json",
                 "assets": ["proto/*.proto"],
                 "watchAssets": true
             }
         },
         "workflows": {
             "type": "application",
-            "root": "apps/workflows-management-microservice",
+            "root": "apps/workflows",
             "entryFile": "src/main",
             "sourceRoot": "./",
             "compilerOptions": {
-                "tsConfigPath": "apps/workflows-management-microservice/tsconfig.app.json",
+                "tsConfigPath": "apps/workflows/tsconfig.app.json",
                 "assets": ["proto/*.proto"],
                 "watchAssets": true
             }

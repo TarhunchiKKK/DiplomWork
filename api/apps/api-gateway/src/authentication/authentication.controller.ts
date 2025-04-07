@@ -1,5 +1,5 @@
 import { Body, Controller, Post, UsePipes, ValidationPipe } from "@nestjs/common";
-import { RegisterAdminDto } from "apps/authentication-microservice/src/authentication/dto/register-admin.dto";
+import { RegisterAdminDto } from "apps/authentication/src/authentication/dto/register-admin.dto";
 import { AuthenticationGrpcService } from "common/grpc";
 
 @Controller("auth")

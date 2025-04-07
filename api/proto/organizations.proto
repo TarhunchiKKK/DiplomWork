@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto"; 
+import "google/protobuf/wrappers.proto"; 
+
+package organizations;
+
+service OrganizationsService {
+    rpc CreateDefault(google.protobuf.Empty) returns (IOrganization) {}
+
+    rpc FindOneById(google.protobuf.StringValue) returns (IFindOneOrganizationResponse) {}
+
+    rpc UpdateUrgencyInterval(IUpdateUrgencyIntervalDto) returns (google.protobuf.Empty) {}
+
+    rpc UpdateDocumentAims(IUpdateDocumentAimsDto) returns (google.protobuf.Empty) {}
+
+    rpc UpdateDocumentTypes(IUpdateDocumentTypesDto) returns (google.protobuf.Empty) {}
+
+    rpc UpdateAdministrativeDivisions(IUpdateAdministrativeDivisionsDto) returns (google.protobuf.Empty) {}
+}
+
+message IOrganization {
+    string _id = 1;
+
+    int32 __v = 2;
+
+    int64 urgencyInterval = 3;
+
+    repeated IDocumentAim documentAims = 4;
+
+    repeated IDocumentType documentTypes = 5;
+
+    repeated IAdministrativeDivision administrativeDivisions = 6;
+}
+
+message IDocumentAim {
+    string _id = 1;
+
+    int32 __v = 2;
+
+    string value = 3;
+}
+
+message IDocumentType {
+    string _id = 1;
+    
+    int32 __v = 2;
+
+    string value = 3;
+}
+
+message IAdministrativeDivision {
+    string _id = 1;
+    
+    int32 __v = 2;
+
+    string title = 3;
+
+    repeated IPost posts = 4;
+}
+
+message IPost {
+    string _id = 1;
+    
+    int32 __v = 2;
+
+    string title = 3;
+}
+
+message IFindOneOrganizationResponse {
+    repeated IOrganization data = 1;
+}
+
+message IUpdateUrgencyIntervalDto {
+    string organizationId = 1;
+
+    int64 urgencyInterval = 2;
+}
+
+message IUpdateDocumentAimsDto {
+    string organizationId = 1;
+
+    repeated IDocumentAim documentAims = 2;
+}
+
+message IUpdateDocumentTypesDto {
+    string organizationId = 1;
+
+    repeated IDocumentType documentTypes = 2;
+}
+
+message IUpdateAdministrativeDivisionsDto {
+    string organizationId = 1;
+
+    repeated IAdministrativeDivision administrativeDivisions = 2;
+}

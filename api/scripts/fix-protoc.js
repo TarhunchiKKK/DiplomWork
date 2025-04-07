@@ -11,11 +11,11 @@ const path = require("path");
 
 const files = [
     path.join(__dirname, "../common/grpc/generated/authentication.ts"),
-    path.join(__dirname, "../common/grpc/generated/documents-management.ts"),
+    path.join(__dirname, "../common/grpc/generated/documents.ts"),
     path.join(__dirname, "../common/grpc/generated/notifications.ts"),
-    path.join(__dirname, "../common/grpc/generated/organizations-management.ts"),
-    path.join(__dirname, "../common/grpc/generated/users-management.ts"),
-    path.join(__dirname, "../common/grpc/generated/workflows-management.ts"),
+    path.join(__dirname, "../common/grpc/generated/organizations.ts"),
+    path.join(__dirname, "../common/grpc/generated/users.ts"),
+    path.join(__dirname, "../common/grpc/generated/workflows.ts"),
     path.join(__dirname, "../common/grpc/generated/google/protobuf/empty.ts"),
     path.join(__dirname, "../common/grpc/generated/google/protobuf/timestamp.ts"),
     path.join(__dirname, "../common/grpc/generated/google/protobuf/wrappers.ts")
