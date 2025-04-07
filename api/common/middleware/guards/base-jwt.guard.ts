@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
-import { TJwtInfo } from "common/types";
+import { TJwtInfo } from "common/jwt";
 import { Request } from "express";
 
 export abstract class BaseJwtAuthGuard implements CanActivate {

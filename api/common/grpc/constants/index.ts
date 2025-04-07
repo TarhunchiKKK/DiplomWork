@@ -1,1 +1,1 @@
-export { GrpcInfo } from "./grc-info.constant";
+export { GrpcInfo } from "./grc-info.constants";

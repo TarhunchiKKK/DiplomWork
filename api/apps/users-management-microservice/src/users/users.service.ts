@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
 import { ICreateUserResponse } from "common/grpc";
-import { Role } from "common/enums/role.enums";
-import { CryptoService } from "common/core";
+import { Role } from "common/enums/role.enum";
+import { CryptoService } from "common/modules";
 import { CreateUserDto } from "./dto/create-user.dto";
 
 @Injectable()

@@ -11,8 +11,8 @@ import {
     StringValue
 } from "common/grpc";
 import { defaultOrganization } from "./constants/organization.constants";
-import { asType } from "common/types";
 import { UpdateUrgencyIntervalDto } from "./dto/update-urgency-interval.dto";
+import { asType } from "common/utils";
 
 @Controller()
 @OrganizationsManagementServiceControllerMethods()

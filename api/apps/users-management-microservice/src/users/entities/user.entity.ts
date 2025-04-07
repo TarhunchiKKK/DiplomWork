@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Post } from "../../posts/entities/post.entity";
 import { Token } from "../../tokens/entities/token.entity";
-import { Role } from "../../../../../common/enums/role.enums";
+import { Role } from "../../../../../common/enums/role.enum";
 
 @Entity()
 export class User {

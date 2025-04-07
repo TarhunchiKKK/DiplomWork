@@ -3,7 +3,7 @@ import { IRegisterAdminDto, OrganizationsManagementGrpcService, UsersManagementG
 import { Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { JwtService } from "@nestjs/jwt";
-import { TJwtInfo } from "common/types";
+import { TJwtInfo } from "common/jwt";
 
 @Injectable()
 export class AuthenticationService {
