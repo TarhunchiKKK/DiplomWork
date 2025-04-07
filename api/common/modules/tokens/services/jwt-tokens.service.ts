@@ -1,0 +1,19 @@
+import { Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { TJwtInfo } from "../types/jwt.types";
+
+@Injectable()
+export class JwtTokensService {
+    public constructor(private readonly jwtService: JwtService) {}
+
+    public static INJECTION_TOKEN = "JWT_TOKENS_SERVICE";
+
+    public create(dto: TJwtInfo) {
+        return this.jwtService.sign({
+            id: dto.id,
+            email: dto.email,
+            role: dto.role,
+            organizationId: dto.organizationId
+        });
+    }
+}

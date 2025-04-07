@@ -2,8 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { IRegisterAdminDto, OrganizationsManagementGrpcService, UsersManagementGrpcService } from "common/grpc";
 import { Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
-import { JwtService } from "@nestjs/jwt";
-import { TJwtInfo } from "common/jwt";
+import { TokensService } from "common/modules";
 
 @Injectable()
 export class AuthenticationService {
@@ -12,17 +11,8 @@ export class AuthenticationService {
 
         private readonly organizationsManagementGrpcService: OrganizationsManagementGrpcService,
 
-        private readonly jwtService: JwtService
+        private readonly tokensService: TokensService
     ) {}
-
-    private generateJwt(dto: TJwtInfo) {
-        return this.jwtService.sign({
-            id: dto.id,
-            email: dto.email,
-            role: dto.role,
-            organizationId: dto.organizationId
-        });
-    }
 
     public async registerAdmin(dto: IRegisterAdminDto) {
         const organization = await firstValueFrom(this.organizationsManagementGrpcService.createDefault());
@@ -41,7 +31,7 @@ export class AuthenticationService {
             email: user.email,
             role: user.role,
             organizationId: organization._id,
-            token: this.generateJwt({
+            token: this.tokensService.jwt.create({
                 id: user.id,
                 email: user.email,
                 role: user.role as Role,

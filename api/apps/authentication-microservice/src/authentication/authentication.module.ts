@@ -1,21 +1,11 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { JwtModule } from "@nestjs/jwt";
-import { getJwtConfig } from "common/config";
 import { AuthenticationController } from "./authentication.controller";
 import { AuthenticationService } from "./authentication.service";
 import { OrganizationsManagementGrpcModule, UsersManagementGrpcModule } from "common/grpc";
+import { TokensModule } from "common/modules";
 
 @Module({
-    imports: [
-        JwtModule.registerAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            useFactory: getJwtConfig
-        }),
-        OrganizationsManagementGrpcModule,
-        UsersManagementGrpcModule
-    ],
+    imports: [TokensModule, OrganizationsManagementGrpcModule, UsersManagementGrpcModule],
     controllers: [AuthenticationController],
     providers: [AuthenticationService]
 })

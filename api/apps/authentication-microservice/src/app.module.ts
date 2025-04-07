@@ -6,6 +6,7 @@ import { AuthenticationModule } from "./authentication/authentication.module";
 import { JwtModule } from "@nestjs/jwt";
 import { getJwtConfig } from "common/config";
 import { OrganizationsManagementGrpcModule, UsersManagementGrpcModule } from "common/grpc";
+import { TokensModule } from "common/modules";
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { OrganizationsManagementGrpcModule, UsersManagementGrpcModule } from "co
             inject: [ConfigService],
             useFactory: getJwtConfig
         }),
+        TokensModule,
         AuthenticationModule,
         OrganizationsManagementGrpcModule,
         UsersManagementGrpcModule

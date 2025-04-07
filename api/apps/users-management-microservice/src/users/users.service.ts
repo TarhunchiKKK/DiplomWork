@@ -63,15 +63,15 @@ export class UsersService {
     }
 
     public async inviteUsers(dto: InviteUsersDto) {
-        await Promise.all(
-            dto.emails.map(email =>
-                this.create({
-                    email: email,
-                    organizationId: dto.organizationId,
-                    role: Role.USER
-                })
-            )
-        );
+        // await Promise.all(
+        //     dto.emails.map(email =>
+        //         this.create({
+        //             email: email,
+        //             organizationId: dto.organizationId,
+        //             role: Role.USER
+        //         })
+        //     )
+        // );
 
         dto.emails.forEach(email =>
             this.notificationsGrpcService.sendInvitation({

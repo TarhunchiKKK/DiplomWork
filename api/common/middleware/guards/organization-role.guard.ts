@@ -3,7 +3,7 @@ import { BaseJwtAuthGuard } from "./base-jwt.guard";
 import { ExtractFromRequest, RequireRoles } from "../decorators";
 import { JwtService } from "@nestjs/jwt";
 import { Reflector } from "@nestjs/core";
-import { TJwtInfo } from "common/jwt";
+import { TJwtInfo } from "common/modules";
 
 @Injectable()
 export class OrganizationRoleGuard extends BaseJwtAuthGuard {
