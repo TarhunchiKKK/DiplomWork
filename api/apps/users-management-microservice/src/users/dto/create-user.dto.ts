@@ -1,11 +1,9 @@
-import { ICreateUserDto } from "common/grpc";
-
-export class CreateUserDto implements ICreateUserDto {
-    username: string;
+export class CreateUserDto {
+    username?: string;
 
     email: string;
 
-    password: string;
+    password?: string;
 
     role: string;
 

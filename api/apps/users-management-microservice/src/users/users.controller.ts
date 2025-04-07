@@ -1,5 +1,9 @@
 import { Controller } from "@nestjs/common";
-import { UsersManagementServiceController, UsersManagementServiceControllerMethods } from "common/grpc";
+import {
+    IInviteUsersDto,
+    UsersManagementServiceController,
+    UsersManagementServiceControllerMethods
+} from "common/grpc";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 
@@ -10,5 +14,9 @@ export class UsersController implements UsersManagementServiceController {
 
     public async create(dto: CreateUserDto) {
         return await this.usersService.create(dto);
+    }
+
+    public async inviteUsers(dto: IInviteUsersDto) {
+        await this.usersService.inviteUsers(dto);
     }
 }

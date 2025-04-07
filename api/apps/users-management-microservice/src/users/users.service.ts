@@ -2,17 +2,20 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { ICreateUserResponse } from "common/grpc";
+import { ICreateUserResponse, NotificationsGrpcService } from "common/grpc";
 import { Role } from "common/enums/role.enum";
 import { CryptoService } from "common/modules";
 import { CreateUserDto } from "./dto/create-user.dto";
+import { InviteUsersDto } from "./dto/invite-users.dto";
 
 @Injectable()
 export class UsersService {
     public constructor(
         @InjectRepository(User) private readonly usersRepository: Repository<User>,
 
-        private readonly cryptoService: CryptoService
+        private readonly cryptoService: CryptoService,
+
+        private readonly notificationsGrpcService: NotificationsGrpcService
     ) {}
 
     public async create(dto: CreateUserDto): Promise<ICreateUserResponse> {
@@ -57,5 +60,25 @@ export class UsersService {
                 email
             }
         });
+    }
+
+    public async inviteUsers(dto: InviteUsersDto) {
+        await Promise.all(
+            dto.emails.map(email =>
+                this.create({
+                    email: email,
+                    organizationId: dto.organizationId,
+                    role: Role.USER
+                })
+            )
+        );
+
+        dto.emails.forEach(email =>
+            this.notificationsGrpcService.sendInvitation({
+                from: dto.adminEmail,
+                to: email,
+                token: ""
+            })
+        );
     }
 }

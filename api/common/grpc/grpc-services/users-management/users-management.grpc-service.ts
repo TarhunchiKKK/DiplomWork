@@ -7,6 +7,7 @@ import {
     ICreateUserDto
 } from "common/grpc/generated";
 import { BaseGrpcService } from "../base.grpc-service";
+import { InviteUsersDto } from "apps/users-management-microservice/src/users/dto/invite-users.dto";
 
 @Injectable()
 export class UsersManagementGrpcService extends BaseGrpcService<UsersManagementServiceClient> {
@@ -16,5 +17,9 @@ export class UsersManagementGrpcService extends BaseGrpcService<UsersManagementS
 
     public create(dto: ICreateUserDto) {
         return this.serviceClient.create(dto);
+    }
+
+    public sendInvitations(dto: InviteUsersDto) {
+        return this.serviceClient.inviteUsers(dto);
     }
 }
