@@ -1,6 +1,6 @@
 import { Type } from "class-transformer";
 import { IsArray, IsNotEmpty, IsString, Matches } from "class-validator";
-import { EMAIL_REGEX } from "common/constants";
+import { EMAIL_REGEX } from "common/validation";
 import { IInviteUsersDto } from "common/grpc";
 
 export class InviteUsersDto implements IInviteUsersDto {

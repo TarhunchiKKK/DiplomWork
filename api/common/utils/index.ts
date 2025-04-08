@@ -1,4 +1,4 @@
 export { omit, pick } from "./object";
 export { allObservables } from "./observable";
 export { firstOrDefault } from "./array";
-export {asType} from './typing'
+export { asType } from "./typing";
