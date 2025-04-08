@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { BaseGrpcService } from "../base.grpc-service";
 import {
-    ISendInvitationDto,
+    IUserInvitationDto,
     NOTIFICATIONS_PACKAGE_NAME,
     NOTIFICATIONS_SERVICE_NAME,
     NotificationsServiceClient
@@ -14,7 +14,7 @@ export class NotificationsGrpcService extends BaseGrpcService<NotificationsServi
         super(clientGrpc, NOTIFICATIONS_SERVICE_NAME);
     }
 
-    public sendInvitation(dto: ISendInvitationDto) {
-        return this.serviceClient.sendInvitation(dto);
+    public userInvitation(dto: IUserInvitationDto) {
+        return this.serviceClient.userInvitation(dto);
     }
 }

@@ -4,6 +4,7 @@ import { AuthenticationModule } from "./authentication/authentication.module";
 import { UsersModule } from "./users/users.module";
 import { OrganizationsModule } from "./organizations/organizations.module";
 import { AppController } from "./app.controller";
+import { NotificationsModule } from "./notifications/notifications.module";
 
 @Module({
     imports: [
@@ -12,7 +13,8 @@ import { AppController } from "./app.controller";
         }),
         AuthenticationModule,
         OrganizationsModule,
-        UsersModule
+        UsersModule,
+        NotificationsModule
     ],
     controllers: [AppController]
 })

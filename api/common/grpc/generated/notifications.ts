@@ -11,7 +11,7 @@ import { Empty } from "./google/protobuf/empty";
 
 const protobufPackage = "notifications";
 
-export interface ISendInvitationDto {
+export interface IUserInvitationDto {
   from: string;
   to: string;
   token: string;
@@ -20,16 +20,16 @@ export interface ISendInvitationDto {
 export const NOTIFICATIONS_PACKAGE_NAME = "notifications";
 
 export interface NotificationsServiceClient {
-  sendInvitation(request: ISendInvitationDto): Observable<Empty>;
+  userInvitation(request: IUserInvitationDto): Observable<Empty>;
 }
 
 export interface NotificationsServiceController {
-  sendInvitation(request: ISendInvitationDto): void;
+  userInvitation(request: IUserInvitationDto): void;
 }
 
 export function NotificationsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["sendInvitation"];
+    const grpcMethods: string[] = ["userInvitation"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("NotificationsService", method)(constructor.prototype[method], method, descriptor);

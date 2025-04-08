@@ -16,7 +16,7 @@ async function bootstrap() {
 
     await app.listen(configService.getOrThrow<number>("USERS_MICROSERVICE_PORT"));
 
-    console.info(`Users Management Microservice is running on: ${await app.getUrl()}`);
+    console.info(`Users Microservice is running on: ${await app.getUrl()}`);
 }
 
 bootstrap();
