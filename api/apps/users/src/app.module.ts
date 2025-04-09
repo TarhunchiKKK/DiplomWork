@@ -1,0 +1,39 @@
+import { Module } from "@nestjs/common";
+import { AuthenticationController } from "./authentication/authentication.controller";
+import { AuthenticationService } from "./authentication/authentication.service";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { AuthenticationModule } from "./authentication/authentication.module";
+import { UsersModule } from "./users/users.module";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { User } from "./users/entities/user.entity";
+import { OrganizationsGrpcModule } from "common/grpc";
+import { TokensModule } from "common/modules";
+
+@Module({
+    imports: [
+        ConfigModule.forRoot({
+            isGlobal: true
+        }),
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (configService: ConfigService) => ({
+                type: "postgres",
+                database: configService.getOrThrow<string>("USERS_MICROSERVICE_DB_NAME"),
+                host: configService.getOrThrow<string>("USERS_MICROSERVICE_DB_HOST"),
+                port: +configService.getOrThrow<number>("USERS_MICROSERVICE_DB_PORT"),
+                username: configService.getOrThrow<string>("USERS_MICROSERVICE_DB_USER"),
+                password: configService.getOrThrow<string>("USERS_MICROSERVICE_DB_PASSWORD"),
+                synchronize: true,
+                entities: [User]
+            })
+        }),
+        TokensModule,
+        OrganizationsGrpcModule,
+        UsersModule,
+        AuthenticationModule
+    ],
+    controllers: [AuthenticationController],
+    providers: [AuthenticationService]
+})
+export class AppModule {}

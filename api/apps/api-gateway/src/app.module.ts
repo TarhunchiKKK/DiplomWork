@@ -1,18 +1,18 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { AuthenticationModule } from "./authentication/authentication.module";
-import { UsersManagementModule } from "./users-management/users-management.module";
-import { OrganizationsManagementModule } from "./organizations-management/organizations-management.module";
+import { UsersModule } from "./users/users.module";
+import { OrganizationsModule } from "./organizations/organizations.module";
 import { AppController } from "./app.controller";
+import { NotificationsModule } from "./notifications/notifications.module";
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             isGlobal: true
         }),
-        AuthenticationModule,
-        OrganizationsManagementModule,
-        UsersManagementModule
+        UsersModule,
+        OrganizationsModule,
+        NotificationsModule
     ],
     controllers: [AppController]
 })

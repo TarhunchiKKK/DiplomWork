@@ -1,12 +1,11 @@
 import { CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { JwtService } from "@nestjs/jwt";
-import { TJwtInfo } from "common/jwt";
+import { TJwtInfo, TokensService } from "common/modules";
 import { Request } from "express";
 
-export abstract class BaseJwtAuthGuard implements CanActivate {
+export abstract class BaseJwtGuard implements CanActivate {
     public constructor(
-        protected readonly jwtService: JwtService,
+        protected readonly tokensService: TokensService,
 
         protected readonly reflector: Reflector
     ) {}
@@ -14,13 +13,19 @@ export abstract class BaseJwtAuthGuard implements CanActivate {
     public canActivate(context: ExecutionContext): boolean | Promise<boolean> {
         const request = context.switchToHttp().getRequest();
 
+        if (request.jwtInfo) {
+            return this.compareData(request.jwtInfo, context);
+        }
+
         const token = this.extractBearerToken(request);
         if (!token) {
             throw new UnauthorizedException("Токен авторизации не найден");
         }
 
         try {
-            const jwtInfo = this.jwtService.verify(token);
+            const jwtInfo = this.tokensService.jwt.verify(token);
+
+            request.jwtInfo = jwtInfo;
 
             return this.compareData(jwtInfo, context);
         } catch (_: unknown) {

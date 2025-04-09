@@ -3,7 +3,7 @@ import { map, Observable } from "rxjs";
 
 @Injectable()
 export class GrpcNotFoundInterceptor implements NestInterceptor {
-    public intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
+    public intercept(_: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
         return next.handle().pipe(map(this.transformResponse));
     }
 

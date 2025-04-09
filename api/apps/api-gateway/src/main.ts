@@ -6,9 +6,12 @@ import { ConfigService } from "@nestjs/config";
 
 function setupSwagger(app: INestApplication) {
     const config = new DocumentBuilder()
-        .setTitle("API Gateway")
-        .setDescription("API Gateway for the application")
+        .setTitle("Защищённый сервис электронного документооборота")
+        .setDescription(
+            "Данная документация описавыет маршруты API Gateway для микросовервисного приложения. С помощью данного API можно управлять пользователями, настройками организаций, электронными документами и маршрутами согласования электронных документов. "
+        )
         .setVersion("1.0.0")
+        .setContact("Konstantin Barilo", "https://github.com/TarhunchiKKK", "kostabarilo12@gmail.com")
         .build();
 
     const documentFactory = () => SwaggerModule.createDocument(app, config);
@@ -21,11 +24,13 @@ async function bootstrap() {
 
     app.enableCors();
 
-    const configService = app.get(ConfigService);
-
     setupSwagger(app);
 
+    const configService = app.get(ConfigService);
+
     await app.listen(configService.getOrThrow<number>("API_GATEWAY_PORT"));
+
+    // await app.listen(3000)
 
     console.info(`API Gateway is running on: ${await app.getUrl()}`);
 }
