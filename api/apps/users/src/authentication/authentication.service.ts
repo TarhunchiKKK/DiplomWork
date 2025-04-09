@@ -1,10 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { OrganizationsGrpcService } from "common/grpc";
+import { IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
 import { Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { TokensService } from "common/modules";
 import { UsersService } from "../users/users.service";
-import { RegisterAdminDto } from "./dto/register-admin.dto";
 
 @Injectable()
 export class AuthenticationService {
@@ -16,7 +15,7 @@ export class AuthenticationService {
         private readonly tokensService: TokensService
     ) {}
 
-    public async registerAdmin(dto: RegisterAdminDto) {
+    public async registerAdmin(dto: IRegisterAdminDto) {
         const organization = await firstValueFrom(this.organizationsGrpcService.createDefault());
 
         const user = await this.usersService.create({

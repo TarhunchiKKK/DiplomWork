@@ -1,4 +1,4 @@
-export class CreateOrganizationDto {
+export interface ICreateOrganizationDto {
     urgencyInterval: number;
 
     documentAims: { value: string }[];

@@ -1,17 +1,17 @@
 import { IRegisterAdminDto } from "common/grpc";
-import { createEntityApiInfo } from "common/swagger";
+import { createEntityApiInfo, swaggerExampleValues } from "common/swagger";
 
 export const RegisterAdminApiProperties = createEntityApiInfo<IRegisterAdminDto>({
     username: {
         description: "Отображаемое имя пользователя",
-        example: "nickname"
+        example: swaggerExampleValues.username
     },
     email: {
         description: "Отображаемое имя пользователя",
-        example: "ivanov@gmail.com"
+        example: swaggerExampleValues.email
     },
     password: {
         description: "Отображаемое имя пользователя",
-        example: "Password123?"
+        example: swaggerExampleValues.password
     }
 });

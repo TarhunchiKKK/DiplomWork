@@ -2,17 +2,19 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Organization } from "./schemas/organization.schema";
 import { Model } from "mongoose";
-import { CreateOrganizationDto } from "./dto/create-organization.dto";
-import { UpdateDocumentAimsDto } from "./dto/update-document-aims.dto";
-import { UpdateDocumentTypesDto } from "./dto/update-document-types.dto";
-import { UpdateAdministrativeDivisionsDto } from "./dto/update-administrative-divisions.dto";
-import { UpdateUrgencyIntervalDto } from "./dto/update-urgency-interval.dto";
+import { ICreateOrganizationDto } from "./dto/create-organization.dto";
+import {
+    IUpdateAdministrativeDivisionsDto,
+    IUpdateDocumentAimsDto,
+    IUpdateDocumentTypesDto,
+    IUpdateUrgencyIntervalDto
+} from "common/grpc";
 
 @Injectable()
 export class OrganizationsService {
     public constructor(@InjectModel(Organization.name) private readonly organizationModel: Model<Organization>) {}
 
-    public async create(dto: CreateOrganizationDto) {
+    public async create(dto: ICreateOrganizationDto) {
         return await this.organizationModel.create(dto);
     }
 
@@ -20,7 +22,7 @@ export class OrganizationsService {
         return await this.organizationModel.findById(organizationId);
     }
 
-    public async updateUrgencyInterval(dto: UpdateUrgencyIntervalDto) {
+    public async updateUrgencyInterval(dto: IUpdateUrgencyIntervalDto) {
         const organization = await this.findOneById(dto.organizationId);
 
         if (organization) {
@@ -30,7 +32,7 @@ export class OrganizationsService {
         }
     }
 
-    public async updateDocumentAims(dto: UpdateDocumentAimsDto) {
+    public async updateDocumentAims(dto: IUpdateDocumentAimsDto) {
         const organization = await this.findOneById(dto.organizationId);
 
         if (organization) {
@@ -40,7 +42,7 @@ export class OrganizationsService {
         }
     }
 
-    public async updateDocumentTypes(dto: UpdateDocumentTypesDto) {
+    public async updateDocumentTypes(dto: IUpdateDocumentTypesDto) {
         const organization = await this.findOneById(dto.organizationId);
 
         if (organization) {
@@ -50,7 +52,7 @@ export class OrganizationsService {
         }
     }
 
-    public async updateAdministrativeDivisions(dto: UpdateAdministrativeDivisionsDto) {
+    public async updateAdministrativeDivisions(dto: IUpdateAdministrativeDivisionsDto) {
         const organization = await this.findOneById(dto.organizationId);
 
         if (organization) {

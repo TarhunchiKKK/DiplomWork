@@ -6,12 +6,12 @@ import {
     IUpdateAdministrativeDivisionsDto,
     IUpdateDocumentAimsDto,
     IUpdateDocumentTypesDto,
+    IUpdateUrgencyIntervalDto,
     OrganizationsServiceController,
     OrganizationsServiceControllerMethods,
     StringValue
 } from "common/grpc";
 import { defaultOrganization } from "./constants/organization.constants";
-import { UpdateUrgencyIntervalDto } from "./dto/update-urgency-interval.dto";
 import { asType } from "common/utils";
 
 @Controller()
@@ -30,7 +30,7 @@ export class OrganizationsController implements OrganizationsServiceController {
         return asType<{ data: IOrganization[] }>(organization);
     }
 
-    public async updateUrgencyInterval(dto: UpdateUrgencyIntervalDto) {
+    public async updateUrgencyInterval(dto: IUpdateUrgencyIntervalDto) {
         await this.organizationsService.updateUrgencyInterval(dto);
     }
 

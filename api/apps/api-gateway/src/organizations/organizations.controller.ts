@@ -9,15 +9,15 @@ import {
     UsePipes,
     ValidationPipe
 } from "@nestjs/common";
-import { UpdateAdministrativeDivisionsDto } from "apps/organizations/src/organizations/dto/update-administrative-divisions.dto";
-import { UpdateDocumentAimsDto } from "apps/organizations/src/organizations/dto/update-document-aims.dto";
-import { UpdateDocumentTypesDto } from "apps/organizations/src/organizations/dto/update-document-types.dto";
-import { UpdateUrgencyIntervalDto } from "apps/organizations/src/organizations/dto/update-urgency-interval.dto";
 import { Role } from "common/enums";
 import { ExtractDataInterceptor, OrganizationsGrpcService } from "common/grpc";
 import { AuthenticationGuard, ExtractFromRequest, OrganizationGuard, RequireRoles, RoleGuard } from "common/middleware";
 import { OrganizationsControllerApiInfo } from "./swagger/organizations-controller-api-info.decorator";
 import { TAuthenticatedRequest } from "common/modules";
+import { UpdateUrgencyIntervalDto } from "./dto/update-urgency-interval.dto";
+import { UpdateDocumentAimsDto } from "./dto/update-document-aims.dto";
+import { UpdateDocumentTypesDto } from "./dto/update-document-types.dto";
+import { UpdateAdministrativeDivisionsDto } from "./dto/update-administrative-divisions.dto";
 
 @Controller("organizations")
 @OrganizationsControllerApiInfo()

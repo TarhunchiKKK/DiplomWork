@@ -1,11 +1,11 @@
 import { MailerService } from "@nestjs-modules/mailer";
 import { Injectable } from "@nestjs/common";
 import { SendMailDto } from "./dto/send-mail.dot";
-import { SendUserInvitationDto } from "./dto/send-user-invitation.dto";
 import { ConfigService } from "@nestjs/config";
 import { render } from "@react-email/components";
 import { UserInvitationTemplate } from "./templates/user-invitation.template";
 import { NotificationSubject } from "../enums/notification-subjects.enum";
+import { UserInvitationEvent } from "common/rabbitmq";
 
 @Injectable()
 export class MailNotificationsService {
@@ -31,19 +31,19 @@ export class MailNotificationsService {
         return this.configService.getOrThrow<string>("APP_DOMAIN");
     }
 
-    public async sendUserInvitation(dto: SendUserInvitationDto) {
+    public async sendUserInvitation(dto: UserInvitationEvent) {
         const domain = this.getDomain();
 
         const html = await render(
             UserInvitationTemplate({
-                adminEmail: dto.adminEmail,
+                adminEmail: dto.from,
                 domain: domain,
                 token: dto.token
             })
         );
 
         this.sendMail({
-            to: dto.userEmail,
+            to: dto.to,
             subject: NotificationSubject.USER_INVITATION,
             html: html
         });

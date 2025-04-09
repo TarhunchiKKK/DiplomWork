@@ -2,14 +2,18 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { IAuthResponse, IConfirmInvitationDto, ICreateUserResponse } from "common/grpc";
+import {
+    IAuthResponse,
+    IConfirmInvitationDto,
+    ICreateUserDto,
+    ICreateUserResponse,
+    IInviteUsersDto
+} from "common/grpc";
 import { Role } from "common/enums/role.enum";
 import { CryptoService, TokensService } from "common/modules";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { InviteUsersDto } from "./dto/invite-users.dto";
 import { NotificationsRmqService } from "common/rabbitmq";
 import { UserInvitationEvent } from "common/rabbitmq/events/notifications";
-import { SaveInvitedUserDto } from "./dto/save-invited-user.dto";
+import { ISaveInvitedUserDto } from "./dto/save-invited-user.dto";
 import { AccountStatus } from "./enums/account-status.enum";
 
 @Injectable()
@@ -28,11 +32,12 @@ export class UsersService {
         return this.cryptoService.generateAssymetricKeys();
     }
 
-    public async create(dto: CreateUserDto): Promise<ICreateUserResponse> {
+    public async create(dto: ICreateUserDto): Promise<ICreateUserResponse> {
         const keys = this.generateAssymetricKeys();
 
         const user = await this.usersRepository.save({
             ...dto,
+            role: dto.role as Role,
             status: AccountStatus.ACTIVE,
             ...keys
         });
@@ -72,7 +77,7 @@ export class UsersService {
         });
     }
 
-    public async saveInvitedUser(dto: SaveInvitedUserDto): Promise<User> {
+    private async saveInvitedUser(dto: ISaveInvitedUserDto): Promise<User> {
         return await this.usersRepository.save({
             ...dto,
             status: AccountStatus.INVITED,
@@ -80,7 +85,7 @@ export class UsersService {
         });
     }
 
-    public async inviteUsers(dto: InviteUsersDto): Promise<void> {
+    public async inviteUsers(dto: IInviteUsersDto): Promise<void> {
         const storedUsers = await Promise.all(
             dto.emails.map(email =>
                 this.saveInvitedUser({

@@ -1,4 +1,4 @@
-export class SaveInvitedUserDto {
+export interface ISaveInvitedUserDto {
     organizationId: string;
 
     email: string;

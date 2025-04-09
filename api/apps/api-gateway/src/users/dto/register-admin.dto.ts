@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString, Matches, MaxLength, MinLength } from "class-validator";
 import { EMAIL_REGEX, ONE_SPECIAL_CHARACTER_REGEX } from "common/validation";
 import { IRegisterAdminDto } from "common/grpc";
-import { RegisterAdminApiProperties } from "../swagger/register-admin-dto.decorator";
+import { RegisterAdminApiProperties } from "../swagger/register-admin-dto-api-info.decorator";
 
 @RegisterAdminApiProperties()
 export class RegisterAdminDto implements IRegisterAdminDto {

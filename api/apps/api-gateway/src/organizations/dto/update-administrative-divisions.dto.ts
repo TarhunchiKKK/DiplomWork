@@ -3,8 +3,8 @@ import { IsNotEmpty, IsString, IsArray, ValidateNested } from "class-validator";
 import { Optional } from "@nestjs/common";
 import { Type } from "class-transformer";
 import {
-    UpdateAdministrativeDivisionDtoApiInfo,
     UpdateAdministrativeDivisionsDtoApiInfo,
+    UpdateAdministrativeDivisionDtoApiInfo,
     UpdatePostDtoApiInfo
 } from "../swagger/update-administrativi-divisions-dto.decorator";
 

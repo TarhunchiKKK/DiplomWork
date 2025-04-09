@@ -8,7 +8,7 @@ export const InviteUsersDtoApiInfo = createEntityApiInfo<InviteUsersDto>({
     },
     adminEmail: {
         description: "Электронная почта отправителя(администратора организации)",
-        example: "admin@gmail.com"
+        example: swaggerExampleValues.email
     },
     emails: {
         description: "Массив электронных почт пользователей",

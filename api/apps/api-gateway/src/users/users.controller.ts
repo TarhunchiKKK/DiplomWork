@@ -4,7 +4,7 @@ import { UsersControllerApiInfo } from "./swagger/users-controller-api-info.deco
 import { AuthenticationGuard, RequireRoles, RoleGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { Role } from "common/enums";
-import { RegisterAdminDto } from "apps/users/src/authentication/dto/register-admin.dto";
+import { RegisterAdminDto } from "apps/api-gateway/src/users/dto/register-admin.dto";
 import { ConfirmInvitationDto } from "./dto/confirm-invitation.dto";
 
 @Controller("users")
