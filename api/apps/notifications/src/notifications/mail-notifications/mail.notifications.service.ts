@@ -22,6 +22,7 @@ export class MailNotificationsService {
                 html: dto.html
             });
         } catch (error: unknown) {
+            console.log("SMTP error:");
             console.error(error);
         }
     }

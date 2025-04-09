@@ -1,11 +1,11 @@
 import { Controller } from "@nestjs/common";
 import { AuthenticationService } from "./authentication.service";
-import { AuthenticationServiceController, AuthenticationServiceControllerMethods } from "common/grpc";
+import { UsersServiceController, UsersServiceControllerMethods } from "common/grpc";
 import { RegisterAdminDto } from "./dto/register-admin.dto";
 
 @Controller()
-@AuthenticationServiceControllerMethods()
-export class AuthenticationController implements AuthenticationServiceController {
+@UsersServiceControllerMethods()
+export class AuthenticationController implements Partial<UsersServiceController> {
     public constructor(private readonly authenticationService: AuthenticationService) {}
 
     public registerAdmin(dto: RegisterAdminDto) {

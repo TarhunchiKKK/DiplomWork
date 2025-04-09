@@ -4,11 +4,13 @@ import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
 import { ICreateUserResponse } from "common/grpc";
 import { Role } from "common/enums/role.enum";
-import { CryptoService } from "common/modules";
+import { CryptoService, TokensService } from "common/modules";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { InviteUsersDto } from "./dto/invite-users.dto";
 import { NotificationsRmqService } from "common/rabbitmq";
 import { UserInvitationEvent } from "common/rabbitmq/events/notifications";
+import { SaveInvitedUserDto } from "./dto/save-invited-user.dto";
+import { AccountStatus } from "./enums/account-status.enum";
 
 @Injectable()
 export class UsersService {
@@ -17,15 +19,21 @@ export class UsersService {
 
         private readonly cryptoService: CryptoService,
 
-        private readonly notificationsRmqService: NotificationsRmqService
+        private readonly notificationsRmqService: NotificationsRmqService,
+
+        private readonly tokensService: TokensService
     ) {}
 
+    private generateAssymetricKeys() {
+        return this.cryptoService.generateAssymetricKeys();
+    }
+
     public async create(dto: CreateUserDto): Promise<ICreateUserResponse> {
-        const keys = this.cryptoService.generateAssymetricKeys();
+        const keys = this.generateAssymetricKeys();
 
         const user = await this.usersRepository.save({
             ...dto,
-            role: dto.role as Role,
+            status: AccountStatus.ACTIVE,
             ...keys
         });
 
@@ -64,7 +72,29 @@ export class UsersService {
         });
     }
 
+    public async saveInvitedUser(dto: SaveInvitedUserDto) {
+        return await this.usersRepository.save({
+            ...dto,
+            status: AccountStatus.INVITED,
+            role: Role.USER
+        });
+    }
+
     public async inviteUsers(dto: InviteUsersDto) {
-        this.notificationsRmqService.userInvitation(new UserInvitationEvent(dto.adminEmail, dto.emails[0], ""));
+        const storedUsers = await Promise.all(
+            dto.emails.map(email =>
+                this.saveInvitedUser({
+                    organizationId: dto.organizationId,
+                    email: email
+                })
+            )
+        );
+
+        storedUsers.forEach(user =>
+            this.notificationsRmqService.userInvitation(
+                new UserInvitationEvent(dto.adminEmail, user.email, this.tokensService.userInvitation.create(user))
+            )
+        );
+        console.log("End");
     }
 }

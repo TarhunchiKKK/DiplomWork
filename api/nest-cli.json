@@ -23,17 +23,6 @@
                 "watchAssets": true
             }
         },
-        "authentication": {
-            "type": "application",
-            "root": "apps/authentication",
-            "entryFile": "src/main",
-            "sourceRoot": "./",
-            "compilerOptions": {
-                "tsConfigPath": "apps/authentication/tsconfig.app.json",
-                "assets": ["proto/*.proto"],
-                "watchAssets": true
-            }
-        },
         "documents": {
             "type": "application",
             "root": "apps/documents",

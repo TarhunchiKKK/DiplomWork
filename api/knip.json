@@ -2,7 +2,6 @@
     "$schema": "https://unpkg.com/knip@5/schema.json",
     "entry": [
         "apps/api-gateway/src/main.ts",
-        "apps/authentication/src/main.ts",
         "apps/documents/src/main.ts",
         "apps/notifications/src/main.ts",
         "apps/organizations/src/main.ts",

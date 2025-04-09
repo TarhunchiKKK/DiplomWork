@@ -5,9 +5,41 @@ import "google/protobuf/empty.proto";
 package users;
 
 service UsersService {
+    rpc RegisterAdmin (IRegisterAdminDto) returns (IAuthResponse) {}
+
+    rpc ConfirmInvitation(IConfirmInvitationDto) returns (IAuthResponse) {}
+
     rpc Create (ICreateUserDto) returns (ICreateUserResponse) {}
 
     rpc InviteUsers (IInviteUsersDto) returns (google.protobuf.Empty) {}
+}
+
+message IRegisterAdminDto {
+    string username = 1;
+
+    string email = 2;
+
+    string password = 3;
+}
+
+message IAuthResponse {
+    string id = 1;
+
+    string username = 2;
+    
+    string email = 3;
+
+    string role = 4;
+
+    string organizationId = 5;
+
+    string token = 6;
+}
+
+message IConfirmInvitationDto {
+    string id = 1;
+
+    string password = 2;
 }
 
 message ICreateUserDto {

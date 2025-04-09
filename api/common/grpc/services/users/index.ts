@@ -1,2 +1,2 @@
-export { UsersGrpcModule } from "./users-management.grpc-module";
+export { UsersGrpcModule } from "./users.grpc-module";
 export { UsersGrpcService } from "./users.grpc-service";

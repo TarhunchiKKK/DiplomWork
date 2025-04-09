@@ -1,24 +1,18 @@
 import { Module } from "@nestjs/common";
+import { AuthenticationController } from "./authentication/authentication.controller";
+import { AuthenticationService } from "./authentication/authentication.service";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { getJwtConfig } from "common/config";
+import { AuthenticationModule } from "./authentication/authentication.module";
+import { UsersModule } from "./users/users.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./users/entities/user.entity";
-import { Token } from "./tokens/entities/token.entity";
-import { UsersModule } from "./users/users.module";
-import { TokensModule } from "./tokens/tokens.module";
-import { PostsModule } from "./posts/posts.module";
-import { Post } from "./posts/entities/post.entity";
-import { JwtModule } from "@nestjs/jwt";
+import { OrganizationsGrpcModule } from "common/grpc";
+import { TokensModule } from "common/modules";
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             isGlobal: true
-        }),
-        JwtModule.registerAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            useFactory: getJwtConfig
         }),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
@@ -31,12 +25,15 @@ import { JwtModule } from "@nestjs/jwt";
                 username: configService.getOrThrow<string>("USERS_MICROSERVICE_DB_USER"),
                 password: configService.getOrThrow<string>("USERS_MICROSERVICE_DB_PASSWORD"),
                 synchronize: true,
-                entities: [User, Token, Post]
+                entities: [User]
             })
         }),
-        UsersModule,
         TokensModule,
-        PostsModule
-    ]
+        OrganizationsGrpcModule,
+        UsersModule,
+        AuthenticationModule
+    ],
+    controllers: [AuthenticationController],
+    providers: [AuthenticationService]
 })
 export class AppModule {}

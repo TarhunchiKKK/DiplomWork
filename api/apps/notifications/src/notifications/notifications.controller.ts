@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { NotificationsServiceController, NotificationsServiceControllerMethods } from "common/grpc";
 import { NotificationsService } from "./notifications.service";
 import { EventPattern } from "@nestjs/microservices";
-import { UserInvitationEvent } from "common/rabbitmq/events/notifications";
+import { UserInvitationEvent } from "common/rabbitmq";
 
 @Controller()
 @NotificationsServiceControllerMethods()

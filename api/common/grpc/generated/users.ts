@@ -11,6 +11,26 @@ import { Empty } from "./google/protobuf/empty";
 
 const protobufPackage = "users";
 
+export interface IRegisterAdminDto {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface IAuthResponse {
+  id: string;
+  username: string;
+  email: string;
+  role: string;
+  organizationId: string;
+  token: string;
+}
+
+export interface IConfirmInvitationDto {
+  id: string;
+  password: string;
+}
+
 export interface ICreateUserDto {
   username: string;
   email: string;
@@ -38,12 +58,20 @@ export interface IInviteUsersDto {
 export const USERS_PACKAGE_NAME = "users";
 
 export interface UsersServiceClient {
+  registerAdmin(request: IRegisterAdminDto): Observable<IAuthResponse>;
+
+  confirmInvitation(request: IConfirmInvitationDto): Observable<IAuthResponse>;
+
   create(request: ICreateUserDto): Observable<ICreateUserResponse>;
 
   inviteUsers(request: IInviteUsersDto): Observable<Empty>;
 }
 
 export interface UsersServiceController {
+  registerAdmin(request: IRegisterAdminDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
+
+  confirmInvitation(request: IConfirmInvitationDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
+
   create(request: ICreateUserDto): Promise<ICreateUserResponse> | Observable<ICreateUserResponse> | ICreateUserResponse;
 
   inviteUsers(request: IInviteUsersDto): void;
@@ -51,14 +79,26 @@ export interface UsersServiceController {
 
 export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "inviteUsers"];
+    const grpcMethods: string[] = ["registerAdmin", "confirmInvitation", "create", "inviteUsers"];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
       GrpcMethod("UsersService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
       GrpcStreamMethod("UsersService", method)(constructor.prototype[method], method, descriptor);
     }
   };

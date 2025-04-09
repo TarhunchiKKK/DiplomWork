@@ -1,7 +1,6 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Post } from "../../posts/entities/post.entity";
-import { Token } from "../../tokens/entities/token.entity";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "../../../../../common/enums/role.enum";
+import { AccountStatus } from "../enums/account-status.enum";
 
 @Entity()
 export class User {
@@ -14,8 +13,11 @@ export class User {
     @Column()
     public email: string;
 
-    @Column()
-    public password: string;
+    @Column({ nullable: true })
+    public password?: string;
+
+    @Column({ type: "enum", enum: AccountStatus })
+    status: AccountStatus;
 
     @Column({ type: "enum", enum: Role })
     public role: Role;
@@ -23,11 +25,11 @@ export class User {
     @Column()
     public organizationId: string;
 
-    @Column()
-    public privateKey: string;
+    @Column({ nullable: true, default: null })
+    public privateKey?: string;
 
-    @Column()
-    public publicKey: string;
+    @Column({ nullable: true, default: null })
+    public publicKey?: string;
 
     @CreateDateColumn()
     public createdAt: Date;
@@ -37,11 +39,4 @@ export class User {
 
     @Column({ default: false })
     public isDeactivated: boolean;
-
-    @OneToOne(() => Post, post => post.user)
-    @JoinColumn()
-    public post: Post;
-
-    @OneToMany(() => Token, token => token.user)
-    public tokens: Token[];
 }

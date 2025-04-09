@@ -21,12 +21,24 @@ export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = [];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
       GrpcMethod("DocumentsService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
       GrpcStreamMethod("DocumentsService", method)(constructor.prototype[method], method, descriptor);
     }
   };

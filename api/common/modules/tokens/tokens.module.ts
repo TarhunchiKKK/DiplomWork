@@ -4,6 +4,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { getJwtConfig } from "common/config";
 import { JwtTokensService } from "./services/jwt-tokens.service";
 import { TokensService } from "./services/tokens.service";
+import { UserInvitationTokensService } from "./services/users-invitation-tokens.service";
 
 @Module({
     imports: [
@@ -20,6 +21,10 @@ import { TokensService } from "./services/tokens.service";
         {
             provide: JwtTokensService.INJECTION_TOKEN,
             useClass: JwtTokensService
+        },
+        {
+            provide: UserInvitationTokensService.INJECTION_TOKEN,
+            useClass: UserInvitationTokensService
         },
         TokensService
     ],

@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
-import { ClientsModule } from "@nestjs/microservices";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ClientsModule } from "@nestjs/microservices";
 import { getGrpcConfig } from "common/config";
-import { USERS_PACKAGE_NAME } from "common/grpc/generated";
+import { USERS_PACKAGE_NAME } from "common/grpc";
 import { UsersGrpcService } from "./users.grpc-service";
 
 @Module({

@@ -9,3 +9,13 @@ export type TJwtInfo = {
 
     organizationId: string;
 };
+
+export type TUserInvitationTokenInfo = {
+    id: string;
+
+    email: string;
+
+    role: Role;
+
+    organizationId: string;
+};

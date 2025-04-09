@@ -1,3 +1,5 @@
+import { Role } from "common/enums";
+
 export class CreateUserDto {
     username: string;
 
@@ -5,7 +7,7 @@ export class CreateUserDto {
 
     password: string;
 
-    role: string;
+    role: Role;
 
     organizationId: string;
 }
