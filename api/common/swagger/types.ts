@@ -1,9 +1,9 @@
 import { ApiOperationOptions, ApiPropertyOptions, ApiResponseOptions } from "@nestjs/swagger";
 
-export type TControllerSwaggerInfo = {
+export type TControllerSwaggerInfo<TController> = {
     tags: string;
 
-    methods: Record<string, TMethodInfo>;
+    methods: Record<keyof TController, TMethodInfo>;
 };
 
 type TMethodInfo = {
@@ -14,4 +14,4 @@ type TMethodInfo = {
     bearerAuth?: boolean;
 };
 
-export type TDtoSwaggerInfo = Record<string, ApiPropertyOptions>;
+export type TEntitySwaggerInfo<T> = Record<keyof T, ApiPropertyOptions>;

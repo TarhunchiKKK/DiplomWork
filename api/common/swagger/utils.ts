@@ -1,7 +1,7 @@
-import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse, ApiProperty, ApiPropertyOptions } from "@nestjs/swagger";
-import { TControllerSwaggerInfo } from "./types";
+import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse, ApiProperty } from "@nestjs/swagger";
+import { TControllerSwaggerInfo, TEntitySwaggerInfo } from "./types";
 
-export function createControllerApiInfo(swaggerInfo: TControllerSwaggerInfo) {
+export function createControllerApiInfo<T>(swaggerInfo: TControllerSwaggerInfo<T>) {
     return function () {
         // eslint-disable-next-line @typescript-eslint/ban-types
         return function (constructor: Function) {
@@ -21,7 +21,7 @@ export function createControllerApiInfo(swaggerInfo: TControllerSwaggerInfo) {
     };
 }
 
-export function createEntityApiInfo<T>(swaggerInfo: Record<keyof T, ApiPropertyOptions>) {
+export function createEntityApiInfo<T>(swaggerInfo: TEntitySwaggerInfo<T>) {
     return function () {
         // eslint-disable-next-line @typescript-eslint/ban-types
         return function (constructor: Function) {
