@@ -12,7 +12,8 @@ export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsC
             response: {
                 status: 200,
                 description: "Находит организации по идентификатору"
-            }
+            },
+            bearerAuth: true
         },
         updateAdministrativeDivisions: {
             operation: {
@@ -21,7 +22,8 @@ export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsC
             response: {
                 status: 200,
                 description: "Обновляет административну иерархию организации"
-            }
+            },
+            bearerAuth: true
         },
         updateDocumentAims: {
             operation: {
@@ -30,7 +32,8 @@ export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsC
             response: {
                 status: 200,
                 description: "Обновляет цели документов в рамках организации"
-            }
+            },
+            bearerAuth: true
         },
         updateDocumentTypes: {
             operation: {
@@ -39,7 +42,8 @@ export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsC
             response: {
                 status: 200,
                 description: "Обновляет типы документов в рамках организации"
-            }
+            },
+            bearerAuth: true
         },
         updateUrgencyInterval: {
             operation: {
@@ -49,7 +53,8 @@ export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsC
             response: {
                 status: 200,
                 description: "Обновляет интервал срочности документов в рамках организации"
-            }
+            },
+            bearerAuth: true
         }
     }
 });

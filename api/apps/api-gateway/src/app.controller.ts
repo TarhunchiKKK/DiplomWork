@@ -1,13 +1,13 @@
-import { Controller, Get } from "@nestjs/common";
-import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Controller, Get, Res } from "@nestjs/common";
+import { ApiOperation, ApiTags, ApiTemporaryRedirectResponse } from "@nestjs/swagger";
 
 @Controller()
-@ApiTags("Root")
+@ApiTags("Docs")
 export class AppController {
     @Get()
-    @ApiOperation({ summary: 'Возвращает строку "Hello"' })
-    @ApiResponse({ status: 200, example: "Hello" })
-    public hello() {
-        return "Hello";
+    @ApiOperation({ summary: "Swagger" })
+    @ApiTemporaryRedirectResponse()
+    public swagger(@Res() response) {
+        response.status(302).redirect("/api");
     }
 }
