@@ -9,13 +9,7 @@ export function getRabbitMqConfig(configService: ConfigService, queue: keyof typ
         transport: Transport.RMQ,
         options: {
             urls: [configService.getOrThrow<string>("RABBITMQ_URL")],
-            queue: rabbitMqInfo.queue,
-            queueOptions: {
-                durable: false
-            },
-            socketOptions: {
-                connectionOptions: {}
-            }
+            queue: rabbitMqInfo.queue
         }
     };
 }

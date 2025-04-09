@@ -12,11 +12,17 @@ export class UsersController {
 
     @Post("/invitation")
     @RequireRoles([Role.ADMIN])
-    @UseGuards(RoleGuard)
+    // @UseGuards(RoleGuard)
     public sendInvitations(@Req() request: TAuthenticatedRequest, @Body() emails: string[]) {
+        // return this.usersGrpcService.sendInvitations({
+        //     organizationId: request.jwtInfo.organizationId,
+        //     adminEmail: request.jwtInfo.email,
+        //     emails: emails
+        // });
+
         return this.usersGrpcService.sendInvitations({
-            organizationId: request.jwtInfo.organizationId,
-            adminEmail: request.jwtInfo.email,
+            organizationId: "",
+            adminEmail: "",
             emails: emails
         });
     }

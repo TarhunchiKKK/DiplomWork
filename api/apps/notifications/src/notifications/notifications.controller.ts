@@ -11,6 +11,7 @@ export class NotificationsController implements NotificationsServiceController {
 
     @EventPattern(UserInvitationEvent.PATTERN)
     public userInvitation(event: UserInvitationEvent) {
+        console.log(event);
         this.notificationsService.userInvitation(event);
     }
 }
