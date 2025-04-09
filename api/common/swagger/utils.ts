@@ -10,6 +10,10 @@ export function createControllerApiInfo<T>(swaggerInfo: TControllerSwaggerInfo<T
             for (const method in swaggerInfo.methods) {
                 const descriptor: unknown = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
 
+                if (!descriptor) {
+                    continue;
+                }
+
                 if (swaggerInfo.methods[method].bearerAuth) {
                     ApiBearerAuth()(constructor.prototype[method], method, descriptor);
                 }
