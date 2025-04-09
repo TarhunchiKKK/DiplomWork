@@ -1,7 +1,9 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
 import { UsersGrpcService } from "common/grpc";
 import { UsersControllerApiInfo } from "./swagger/users-controller-api-info.decorator";
-import { InviteUsersDto } from "apps/users/src/users/dto/invite-users.dto";
+import { RequireRoles, RoleGuard } from "common/middleware";
+import { Role } from "common/enums";
+import { TAuthenticatedRequest } from "common/modules";
 
 @Controller("users")
 @UsersControllerApiInfo()
@@ -9,7 +11,13 @@ export class UsersController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}
 
     @Post("/invitation")
-    public sendInvitations(@Body() dto: InviteUsersDto) {
-        return this.usersGrpcService.sendInvitations(dto);
+    @RequireRoles([Role.ADMIN])
+    @UseGuards(RoleGuard)
+    public sendInvitations(@Req() request: TAuthenticatedRequest, @Body() emails: string[]) {
+        return this.usersGrpcService.sendInvitations({
+            organizationId: request.jwtInfo.organizationId,
+            adminEmail: request.jwtInfo.email,
+            emails: emails
+        });
     }
 }

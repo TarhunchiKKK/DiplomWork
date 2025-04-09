@@ -1,39 +1,46 @@
 version: "3.7"
 
 services:
-    organizations-db:
-        image: mongo:latest
-        environment:
-            - MONGO_INITDB_DATABASE=${ORGANIZATIONS_DB_NAME}
+    api-gatewayyyyyy:
+        build:
+            context: .
+            dockerfile: apps/api-gateway/Dockerfile
         ports:
-            - ${ORGANIZATIONS_DB_PORT}:27017
-        networks:
-            - organizations-network
+            - 3000:3000
 
-    users-db:
-        container_name: users-db
-        image: postgres:15.2
-        restart: always
-        environment:
-            - POSTGRES_DB=${USERS_MICROSERVICE_DB_NAME}
-            - POSTGRES_USER=${USERS_MICROSERVICE_DB_USER}
-            - POSTGRES_PASSWORD=${USERS_MICROSERVICE_DB_PASSWORD}
-        ports:
-            - ${USERS_MICROSERVICE_DB_PORT}:5432
-        volumes:
-            - users-postgres_data:/var/lib/postgresql/data
-        networks:
-            - users-network
+    # organizations-db:
+    #     image: mongo:latest
+    #     environment:
+    #         - MONGO_INITDB_DATABASE=${ORGANIZATIONS_DB_NAME}
+    #     ports:
+    #         - ${ORGANIZATIONS_DB_PORT}:27017
+    #     networks:
+    #         - organizations-network
 
-    rabbitmq:
-        image: rabbitmq:3.10.7-management
-        hostname: ${RABBITMQ_HOSTNAME}
-        restart: always
-        environment:
-            - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
-            - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
-        ports:
-            - ${RABBITMQ_PORT}:15672
+    # users-db:
+    #     container_name: users-db
+    #     image: postgres:15.2
+    #     restart: always
+    #     environment:
+    #         - POSTGRES_DB=${USERS_MICROSERVICE_DB_NAME}
+    #         - POSTGRES_USER=${USERS_MICROSERVICE_DB_USER}
+    #         - POSTGRES_PASSWORD=${USERS_MICROSERVICE_DB_PASSWORD}
+    #     ports:
+    #         - ${USERS_MICROSERVICE_DB_PORT}:5432
+    #     volumes:
+    #         - users-postgres_data:/var/lib/postgresql/data
+    #     networks:
+    #         - users-network
+
+    # rabbitmq:
+    #     image: rabbitmq:3.10.7-management
+    #     hostname: ${RABBITMQ_HOSTNAME}
+    #     restart: always
+    #     environment:
+    #         - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+    #         - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    #     ports:
+    #         - ${RABBITMQ_PORT}:15672
 
 volumes:
     users-postgres_data:

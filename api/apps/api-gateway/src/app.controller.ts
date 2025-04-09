@@ -10,4 +10,9 @@ export class AppController {
     public swagger(@Res() response) {
         response.status(302).redirect("/api");
     }
+
+    @Get("/hello")
+    public hello() {
+        return "Hello";
+    }
 }

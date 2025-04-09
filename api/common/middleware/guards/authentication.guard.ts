@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { BaseJwtAuthGuard } from "./base-jwt.guard";
+import { BaseJwtGuard } from "./base-jwt.guard";
 import { TokensService } from "common/modules";
 import { Reflector } from "@nestjs/core";
 
 @Injectable()
-export class AuthenticationGuard extends BaseJwtAuthGuard {
+export class AuthenticationGuard extends BaseJwtGuard {
     public constructor(
         readonly tokensService: TokensService,
 

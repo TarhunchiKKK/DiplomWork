@@ -30,6 +30,8 @@ async function bootstrap() {
 
     await app.listen(configService.getOrThrow<number>("API_GATEWAY_PORT"));
 
+    // await app.listen(3000)
+
     console.info(`API Gateway is running on: ${await app.getUrl()}`);
 }
 

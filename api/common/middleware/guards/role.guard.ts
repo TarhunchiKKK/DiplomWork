@@ -1,11 +1,11 @@
 import { ExecutionContext, Injectable } from "@nestjs/common";
-import { BaseJwtAuthGuard } from "./base-jwt.guard";
-import { ExtractFromRequest, RequireRoles } from "../decorators";
 import { Reflector } from "@nestjs/core";
 import { TJwtInfo, TokensService } from "common/modules";
+import { BaseJwtGuard } from "./base-jwt.guard";
+import { RequireRoles } from "../decorators";
 
 @Injectable()
-export class OrganizationRoleGuard extends BaseJwtAuthGuard {
+export class RoleGuard extends BaseJwtGuard {
     public constructor(
         readonly tokensService: TokensService,
 
@@ -17,13 +17,10 @@ export class OrganizationRoleGuard extends BaseJwtAuthGuard {
     public compareData(info: TJwtInfo, context: ExecutionContext): boolean {
         const roles = this.reflector.get(RequireRoles, context.getHandler());
 
-        const extractFromRequest = this.reflector.get(ExtractFromRequest, context.getHandler());
-        const organizationId = extractFromRequest(context.switchToHttp().getRequest()) as string;
-
         if (!roles || roles.length === 0) {
-            return info.organizationId === organizationId;
+            return true;
         }
 
-        return roles.includes(info.role) && info.organizationId === organizationId;
+        return roles.includes(info.role);
     }
 }
