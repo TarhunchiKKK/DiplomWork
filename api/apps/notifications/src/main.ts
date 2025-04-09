@@ -3,7 +3,7 @@ import { AppModule } from "./app.module";
 import { ConfigService } from "@nestjs/config";
 import { MicroserviceOptions } from "@nestjs/microservices";
 import { getRabbitMqConfig } from "common/config";
-import { NOTIFICATIONS_QUEUE } from "common/rabbitmq";
+import { NOTIFICATIONS_RMQ_SERVICE } from "common/rabbitmq";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -12,7 +12,7 @@ async function bootstrap() {
 
     // app.connectMicroservice<MicroserviceOptions>(getGrpcConfig(configService, NOTIFICATIONS_PACKAGE_NAME));
 
-    app.connectMicroservice<MicroserviceOptions>(getRabbitMqConfig(configService, NOTIFICATIONS_QUEUE));
+    app.connectMicroservice<MicroserviceOptions>(getRabbitMqConfig(configService, NOTIFICATIONS_RMQ_SERVICE));
 
     await app.startAllMicroservices();
 

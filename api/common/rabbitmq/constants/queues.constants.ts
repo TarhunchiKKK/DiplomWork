@@ -1,1 +1,1 @@
-export const NOTIFICATIONS_QUEUE = "notifications_queue";
+export const NOTIFICATIONS_RMQ_QUEUE = "notifications_queue";
