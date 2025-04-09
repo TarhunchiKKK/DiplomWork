@@ -4,6 +4,8 @@ import {
     Get,
     Param,
     Patch,
+    Req,
+    Res,
     UseGuards,
     UseInterceptors,
     UsePipes,
@@ -15,8 +17,9 @@ import { UpdateDocumentTypesDto } from "apps/organizations/src/organizations/dto
 import { UpdateUrgencyIntervalDto } from "apps/organizations/src/organizations/dto/update-urgency-interval.dto";
 import { Role } from "common/enums";
 import { ExtractDataInterceptor, OrganizationsGrpcService } from "common/grpc";
-import { ExtractFromRequest, OrganizationRoleGuard, RequireRoles } from "common/middleware";
+import { AuthenticationGuard, ExtractFromRequest, OrganizationRoleGuard, RequireRoles } from "common/middleware";
 import { OrganizationsControllerApi } from "./swagger/organizations-controller-api.decorator";
+import { TAuthenticatedRequest } from "common/modules";
 
 @Controller("organizations")
 @OrganizationsControllerApi()
@@ -24,9 +27,10 @@ export class OrganizationsController {
     public constructor(private readonly organizationsGrpcService: OrganizationsGrpcService) {}
 
     @Get(":id")
+    @UseGuards(AuthenticationGuard)
     @UseInterceptors(ExtractDataInterceptor)
-    public async findOneById(@Param("id") organizationId: string) {
-        return this.organizationsGrpcService.findOneById(organizationId);
+    public async findOneById(@Req() request: TAuthenticatedRequest) {
+        return this.organizationsGrpcService.findOneById(request.jwtInfo.organizationId);
     }
 
     @Patch("urgency-interval")

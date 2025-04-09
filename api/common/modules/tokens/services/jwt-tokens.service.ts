@@ -16,4 +16,8 @@ export class JwtTokensService {
             organizationId: dto.organizationId
         });
     }
+
+    public verify(token: string) {
+        return this.jwtService.verify(token);
+    }
 }

@@ -1,5 +1,6 @@
 import { createControllerApiInfo } from "common/swagger";
 import { NotificationsController } from "../notifications.controller";
+import { HttpStatus } from "@nestjs/common";
 
 export const NotificationsControllerApi = createControllerApiInfo<NotificationsController>({
     tags: "Уведомления",
@@ -10,8 +11,8 @@ export const NotificationsControllerApi = createControllerApiInfo<NotificationsC
                 summary: "Отправление приглашений пользователям"
             },
             response: {
-                status: 200,
-                description: "Отправляет электронные письма-приглашения пользователям"
+                status: HttpStatus.OK,
+                description: "Ничего не возвращает"
             }
         }
     }

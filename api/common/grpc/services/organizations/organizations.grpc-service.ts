@@ -22,7 +22,7 @@ export class OrganizationsGrpcService extends BaseGrpcService<OrganizationsServi
     }
 
     public findOneById(id: string) {
-        return this.serviceClient.findOneById({ value: id });
+        return this.serviceClient.findOneById({ value: id }).subscribe(value => value.data[0] || null);
     }
 
     public updateUrgencyInterval(dto: IUpdateUrgencyIntervalDto) {

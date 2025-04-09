@@ -1,5 +1,6 @@
 import { createControllerApiInfo } from "common/swagger";
 import { OrganizationsController } from "../organizations.controller";
+import { HttpStatus } from "@nestjs/common";
 
 export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsController>({
     tags: "Организации",
@@ -10,8 +11,8 @@ export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsC
                 summary: "Поиск организации по идентификатору"
             },
             response: {
-                status: 200,
-                description: "Находит организации по идентификатору"
+                status: HttpStatus.OK,
+                description: "Ничего не возвращает"
             },
             bearerAuth: true
         },
@@ -20,8 +21,8 @@ export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsC
                 summary: "Обновление административных подразделений организации"
             },
             response: {
-                status: 200,
-                description: "Обновляет административну иерархию организации"
+                status: HttpStatus.OK,
+                description: "Ничего не возвращает"
             },
             bearerAuth: true
         },
@@ -30,8 +31,8 @@ export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsC
                 summary: "Обновление целей документов"
             },
             response: {
-                status: 200,
-                description: "Обновляет цели документов в рамках организации"
+                status: HttpStatus.OK,
+                description: "Ничего не возвращает"
             },
             bearerAuth: true
         },
@@ -40,8 +41,8 @@ export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsC
                 summary: "Обновление типов документов"
             },
             response: {
-                status: 200,
-                description: "Обновляет типы документов в рамках организации"
+                status: HttpStatus.OK,
+                description: "Ничего не возвращает"
             },
             bearerAuth: true
         },
@@ -51,8 +52,8 @@ export const OrganizationsControllerApi = createControllerApiInfo<OrganizationsC
                 deprecated: true
             },
             response: {
-                status: 200,
-                description: "Обновляет интервал срочности документов в рамках организации"
+                status: HttpStatus.OK,
+                description: "Ничего не возвращает"
             },
             bearerAuth: true
         }

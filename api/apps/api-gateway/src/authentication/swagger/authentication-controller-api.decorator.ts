@@ -1,5 +1,6 @@
 import { createControllerApiInfo } from "common/swagger";
 import { AuthenticationController } from "../authentication.controller";
+import { HttpStatus } from "@nestjs/common";
 
 export const AuthenticationControllerApi = createControllerApiInfo<AuthenticationController>({
     tags: "Аутентификация",
@@ -10,8 +11,8 @@ export const AuthenticationControllerApi = createControllerApiInfo<Authenticatio
                 summary: "Регистрация администратора организации"
             },
             response: {
-                status: 200,
-                description: "Создает пользователя с ролью ADMIN и новую организацию"
+                status: HttpStatus.OK,
+                description: "Объект с данными пользователя, идентификатором созданной организации и JWT-токеном"
             }
         }
     }

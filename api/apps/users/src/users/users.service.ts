@@ -74,7 +74,7 @@ export class UsersService {
         // );
 
         dto.emails.forEach(email =>
-            this.notificationsGrpcService.sendInvitation({
+            this.notificationsGrpcService.userInvitation({
                 from: dto.adminEmail,
                 to: email,
                 token: ""
