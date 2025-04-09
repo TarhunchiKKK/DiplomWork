@@ -6,7 +6,8 @@ import {
     USERS_SERVICE_NAME,
     IRegisterAdminDto,
     ICreateUserDto,
-    IInviteUsersDto
+    IInviteUsersDto,
+    IConfirmInvitationDto
 } from "common/grpc/generated";
 import { BaseGrpcService } from "../base.grpc-service";
 
@@ -30,5 +31,9 @@ export class UsersGrpcService extends BaseGrpcService<UsersServiceClient> {
 
     public sendInvitations(dto: IInviteUsersDto) {
         return this.serviceClient.inviteUsers(dto);
+    }
+
+    public confirmInvitation(dto: IConfirmInvitationDto) {
+        return this.serviceClient.confirmInvitation(dto);
     }
 }

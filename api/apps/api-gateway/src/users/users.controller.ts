@@ -1,10 +1,11 @@
-import { Body, Controller, Post, Req, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { UsersGrpcService } from "common/grpc";
 import { UsersControllerApiInfo } from "./swagger/users-controller-api-info.decorator";
-import { RequireRoles } from "common/middleware";
+import { AuthenticationGuard, RequireRoles, RoleGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { Role } from "common/enums";
 import { RegisterAdminDto } from "apps/users/src/authentication/dto/register-admin.dto";
+import { ConfirmInvitationDto } from "./dto/confirm-invitation.dto";
 
 @Controller("users")
 @UsersControllerApiInfo()
@@ -17,20 +18,23 @@ export class UsersController {
         return this.usersGrpcService.registerAdmin(dto);
     }
 
-    @Post("/invitation")
+    @Post("/invitations/send")
     @RequireRoles([Role.ADMIN])
-    // @UseGuards(RoleGuard)
+    @UseGuards(RoleGuard)
     public sendInvitations(@Req() request: TAuthenticatedRequest, @Body() emails: string[]) {
-        // return this.usersGrpcService.sendInvitations({
-        //     organizationId: request.jwtInfo.organizationId,
-        //     adminEmail: request.jwtInfo.email,
-        //     emails: emails
-        // });
-
         return this.usersGrpcService.sendInvitations({
-            organizationId: "",
-            adminEmail: "",
+            organizationId: request.jwtInfo.organizationId,
+            adminEmail: request.jwtInfo.email,
             emails: emails
+        });
+    }
+
+    @Post("/invitations/confirm")
+    @UseGuards(AuthenticationGuard)
+    public confirmInvitation(@Req() request: TAuthenticatedRequest, @Body() dto: ConfirmInvitationDto) {
+        return this.usersGrpcService.confirmInvitation({
+            ...dto,
+            id: request.jwtInfo.id
         });
     }
 }

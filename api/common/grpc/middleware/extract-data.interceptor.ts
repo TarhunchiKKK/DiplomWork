@@ -9,7 +9,6 @@ export class ExtractDataInterceptor implements NestInterceptor {
 
     private extractData<T>(value: { data?: T[] }): T {
         if (!value.data || value.data.length === 0) {
-            console.log("exception");
             throw new NotFoundException();
         }
 

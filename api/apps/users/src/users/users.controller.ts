@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { InviteUsersDto } from "./dto/invite-users.dto";
 import { UsersService } from "./users.service";
-import { UsersServiceController, UsersServiceControllerMethods } from "common/grpc";
+import { IConfirmInvitationDto, UsersServiceController, UsersServiceControllerMethods } from "common/grpc";
 
 @Controller()
 @UsersServiceControllerMethods()
@@ -15,5 +15,9 @@ export class UsersController implements Partial<UsersServiceController> {
 
     public async inviteUsers(dto: InviteUsersDto) {
         await this.usersService.inviteUsers(dto);
+    }
+
+    public async confirmInvitation(dto: IConfirmInvitationDto) {
+        return await this.usersService.confirmInvitation(dto);
     }
 }

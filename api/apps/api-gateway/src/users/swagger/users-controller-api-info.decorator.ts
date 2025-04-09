@@ -23,6 +23,15 @@ export const UsersControllerApiInfo = createControllerApiInfo<UsersController>({
                 status: HttpStatus.OK,
                 description: "Ничего не возвращает"
             }
+        },
+        confirmInvitation: {
+            operation: {
+                summary: "Подтверждение приглашённого пользователя"
+            },
+            response: {
+                status: HttpStatus.OK,
+                description: "Возвращает IAuthResponse"
+            }
         }
     }
 });

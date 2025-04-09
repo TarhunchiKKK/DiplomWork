@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { ICreateUserResponse } from "common/grpc";
+import { IAuthResponse, IConfirmInvitationDto, ICreateUserResponse } from "common/grpc";
 import { Role } from "common/enums/role.enum";
 import { CryptoService, TokensService } from "common/modules";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -48,7 +48,7 @@ export class UsersService {
         };
     }
 
-    public async findAllByOrganizationId(organizationId: string) {
+    public async findAllByOrganizationId(organizationId: string): Promise<User[]> {
         return await this.usersRepository.find({
             where: {
                 organizationId
@@ -56,7 +56,7 @@ export class UsersService {
         });
     }
 
-    public async findOneById(userId: string) {
+    public async findOneById(userId: string): Promise<User> {
         return await this.usersRepository.findOne({
             where: {
                 id: userId
@@ -64,7 +64,7 @@ export class UsersService {
         });
     }
 
-    public async findOneByEmail(email: string) {
+    public async findOneByEmail(email: string): Promise<User> {
         return await this.usersRepository.findOne({
             where: {
                 email
@@ -72,7 +72,7 @@ export class UsersService {
         });
     }
 
-    public async saveInvitedUser(dto: SaveInvitedUserDto) {
+    public async saveInvitedUser(dto: SaveInvitedUserDto): Promise<User> {
         return await this.usersRepository.save({
             ...dto,
             status: AccountStatus.INVITED,
@@ -80,7 +80,7 @@ export class UsersService {
         });
     }
 
-    public async inviteUsers(dto: InviteUsersDto) {
+    public async inviteUsers(dto: InviteUsersDto): Promise<void> {
         const storedUsers = await Promise.all(
             dto.emails.map(email =>
                 this.saveInvitedUser({
@@ -95,6 +95,28 @@ export class UsersService {
                 new UserInvitationEvent(dto.adminEmail, user.email, this.tokensService.userInvitation.create(user))
             )
         );
-        console.log("End");
+    }
+
+    public async confirmInvitation(dto: IConfirmInvitationDto): Promise<IAuthResponse> {
+        const user = await this.usersRepository.findOne({
+            where: {
+                id: dto.id
+            }
+        });
+
+        if (user) {
+            Object.assign(user, { ...dto, status: AccountStatus.ACTIVE });
+
+            await this.usersRepository.save(user);
+        }
+
+        return {
+            id: user.id,
+            username: user.username ?? dto.username,
+            email: user.email,
+            role: user.role,
+            organizationId: user.organizationId,
+            token: this.tokensService.jwt.create(user)
+        };
     }
 }

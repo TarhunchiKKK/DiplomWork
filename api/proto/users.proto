@@ -7,11 +7,11 @@ package users;
 service UsersService {
     rpc RegisterAdmin (IRegisterAdminDto) returns (IAuthResponse) {}
 
-    rpc ConfirmInvitation(IConfirmInvitationDto) returns (IAuthResponse) {}
-
     rpc Create (ICreateUserDto) returns (ICreateUserResponse) {}
 
     rpc InviteUsers (IInviteUsersDto) returns (google.protobuf.Empty) {}
+
+    rpc ConfirmInvitation (IConfirmInvitationDto) returns (IAuthResponse) {}
 }
 
 message IRegisterAdminDto {
@@ -36,11 +36,7 @@ message IAuthResponse {
     string token = 6;
 }
 
-message IConfirmInvitationDto {
-    string id = 1;
 
-    string password = 2;
-}
 
 message ICreateUserDto {
     string username = 1;
@@ -76,4 +72,12 @@ message IInviteUsersDto {
     string adminEmail = 2;
 
     repeated string emails = 3;
+}
+
+message IConfirmInvitationDto {
+    string id = 1;
+
+    string username = 2;
+
+    string password = 3;
 }
