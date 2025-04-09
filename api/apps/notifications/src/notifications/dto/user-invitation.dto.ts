@@ -1,6 +1,4 @@
-import { IUserInvitationDto } from "common/grpc";
-
-export class UserInvitationDto implements IUserInvitationDto {
+export class UserInvitationDto {
     from: string;
 
     to: string;

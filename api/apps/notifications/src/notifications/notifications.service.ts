@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { UserInvitationDto } from "./dto/user-invitation.dto";
 import { MailNotificationsService } from "./mail-notifications/mail.notifications.service";
+import { UserInvitationDto } from "./dto/user-invitation.dto";
 
 @Injectable()
 export class NotificationsService {

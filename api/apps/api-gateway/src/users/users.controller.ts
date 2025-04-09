@@ -1,14 +1,15 @@
-import { Controller } from "@nestjs/common";
+import { Body, Controller, Post } from "@nestjs/common";
 import { UsersGrpcService } from "common/grpc";
-import { UsersControllerApi } from "./swagger/users-controller-api.decorator";
+import { UsersControllerApiInfo } from "./swagger/users-controller-api-info.decorator";
 import { InviteUsersDto } from "apps/users/src/users/dto/invite-users.dto";
 
 @Controller("users")
-@UsersControllerApi()
+@UsersControllerApiInfo()
 export class UsersController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}
 
-    public sendInvitations(dto: InviteUsersDto) {
+    @Post("/invitation")
+    public sendInvitations(@Body() dto: InviteUsersDto) {
         return this.usersGrpcService.sendInvitations(dto);
     }
 }

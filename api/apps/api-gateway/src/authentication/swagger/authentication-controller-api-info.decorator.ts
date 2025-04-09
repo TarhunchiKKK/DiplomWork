@@ -2,7 +2,7 @@ import { createControllerApiInfo } from "common/swagger";
 import { AuthenticationController } from "../authentication.controller";
 import { HttpStatus } from "@nestjs/common";
 
-export const AuthenticationControllerApi = createControllerApiInfo<AuthenticationController>({
+export const AuthenticationControllerApiInfo = createControllerApiInfo<AuthenticationController>({
     tags: "Аутентификация",
 
     methods: {

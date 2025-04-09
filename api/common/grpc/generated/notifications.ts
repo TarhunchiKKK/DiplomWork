@@ -6,30 +6,20 @@
 
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
-import { Observable } from "rxjs";
-import { Empty } from "./google/protobuf/empty";
 
 const protobufPackage = "notifications";
-
-export interface IUserInvitationDto {
-  from: string;
-  to: string;
-  token: string;
-}
 
 export const NOTIFICATIONS_PACKAGE_NAME = "notifications";
 
 export interface NotificationsServiceClient {
-  userInvitation(request: IUserInvitationDto): Observable<Empty>;
 }
 
 export interface NotificationsServiceController {
-  userInvitation(request: IUserInvitationDto): void;
 }
 
 export function NotificationsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["userInvitation"];
+    const grpcMethods: string[] = [];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("NotificationsService", method)(constructor.prototype[method], method, descriptor);

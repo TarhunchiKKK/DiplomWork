@@ -2,10 +2,8 @@ import {
     Body,
     Controller,
     Get,
-    Param,
     Patch,
     Req,
-    Res,
     UseGuards,
     UseInterceptors,
     UsePipes,
@@ -18,11 +16,11 @@ import { UpdateUrgencyIntervalDto } from "apps/organizations/src/organizations/d
 import { Role } from "common/enums";
 import { ExtractDataInterceptor, OrganizationsGrpcService } from "common/grpc";
 import { AuthenticationGuard, ExtractFromRequest, OrganizationRoleGuard, RequireRoles } from "common/middleware";
-import { OrganizationsControllerApi } from "./swagger/organizations-controller-api.decorator";
+import { OrganizationsControllerApiInfo } from "./swagger/organizations-controller-api-info.decorator";
 import { TAuthenticatedRequest } from "common/modules";
 
 @Controller("organizations")
-@OrganizationsControllerApi()
+@OrganizationsControllerApiInfo()
 export class OrganizationsController {
     public constructor(private readonly organizationsGrpcService: OrganizationsGrpcService) {}
 

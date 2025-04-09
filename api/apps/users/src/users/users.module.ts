@@ -4,10 +4,10 @@ import { UsersService } from "./users.service";
 import { User } from "./entities/user.entity";
 import { UsersController } from "./users.controller";
 import { CryptoModule } from "common/modules";
-import { NotificationsGrpcModule } from "common/grpc";
+import { NotificationsRmqModule } from "common/rabbitmq";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User]), CryptoModule, NotificationsGrpcModule],
+    imports: [TypeOrmModule.forFeature([User]), CryptoModule, NotificationsRmqModule],
     controllers: [UsersController],
     providers: [UsersService]
 })

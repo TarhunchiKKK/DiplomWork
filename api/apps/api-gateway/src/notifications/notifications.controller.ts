@@ -1,15 +1,8 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { UserInvitationDto } from "apps/notifications/src/notifications/dto/user-invitation.dto";
-import { NotificationsGrpcService } from "common/grpc";
-import { NotificationsControllerApi } from "./swagger/notifications-controller-api.decorator";
+import { Controller } from "@nestjs/common";
+import { NotificationsControllerApiInfo } from "./swagger/notifications-controller-api-info.decorator";
 
 @Controller("notifications")
-@NotificationsControllerApi()
+@NotificationsControllerApiInfo()
 export class NotificationsController {
-    public constructor(private readonly notificationsGrpcService: NotificationsGrpcService) {}
-
-    @Post("/invitation")
-    public userInvitation(@Body() dto: UserInvitationDto) {
-        return this.notificationsGrpcService.userInvitation(dto);
-    }
+    public constructor() {}
 }

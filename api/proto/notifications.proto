@@ -1,17 +1,7 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto"; 
-
 package notifications;
 
 service NotificationsService {
-    rpc UserInvitation (IUserInvitationDto) returns (google.protobuf.Empty) {}
 }
 
-message IUserInvitationDto {
-    string from = 1;
-
-    string to = 2;
-
-    string token = 3;
-}

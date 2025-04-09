@@ -2,7 +2,7 @@ import { createControllerApiInfo } from "common/swagger";
 import { UsersController } from "../users.controller";
 import { HttpStatus } from "@nestjs/common";
 
-export const UsersControllerApi = createControllerApiInfo<UsersController>({
+export const UsersControllerApiInfo = createControllerApiInfo<UsersController>({
     tags: "Пользователи",
 
     methods: {

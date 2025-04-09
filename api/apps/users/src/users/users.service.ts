@@ -2,11 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { ICreateUserResponse, NotificationsGrpcService } from "common/grpc";
+import { ICreateUserResponse } from "common/grpc";
 import { Role } from "common/enums/role.enum";
 import { CryptoService } from "common/modules";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { InviteUsersDto } from "./dto/invite-users.dto";
+import { NotificationsRmqService } from "common/rabbitmq";
+import { UserInvitationEvent } from "common/rabbitmq/events/notifications";
 
 @Injectable()
 export class UsersService {
@@ -15,7 +17,7 @@ export class UsersService {
 
         private readonly cryptoService: CryptoService,
 
-        private readonly notificationsGrpcService: NotificationsGrpcService
+        private readonly notificationsRmqService: NotificationsRmqService
     ) {}
 
     public async create(dto: CreateUserDto): Promise<ICreateUserResponse> {
@@ -63,22 +65,6 @@ export class UsersService {
     }
 
     public async inviteUsers(dto: InviteUsersDto) {
-        // await Promise.all(
-        //     dto.emails.map(email =>
-        //         this.create({
-        //             email: email,
-        //             organizationId: dto.organizationId,
-        //             role: Role.USER
-        //         })
-        //     )
-        // );
-
-        dto.emails.forEach(email =>
-            this.notificationsGrpcService.userInvitation({
-                from: dto.adminEmail,
-                to: email,
-                token: ""
-            })
-        );
+        this.notificationsRmqService.userInvitation(new UserInvitationEvent(dto.adminEmail, dto.emails[0], ""));
     }
 }

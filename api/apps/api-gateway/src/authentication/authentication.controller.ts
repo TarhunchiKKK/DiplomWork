@@ -1,10 +1,10 @@
 import { Body, Controller, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { RegisterAdminDto } from "apps/authentication/src/authentication/dto/register-admin.dto";
 import { AuthenticationGrpcService } from "common/grpc";
-import { AuthenticationControllerApi } from "./swagger/authentication-controller-api.decorator";
+import { AuthenticationControllerApiInfo } from "./swagger/authentication-controller-api-info.decorator";
 
 @Controller("auth")
-@AuthenticationControllerApi()
+@AuthenticationControllerApiInfo()
 export class AuthenticationController {
     public constructor(private readonly authenticationGrpcService: AuthenticationGrpcService) {}
 
