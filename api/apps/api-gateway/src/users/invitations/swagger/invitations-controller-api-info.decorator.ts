@@ -1,9 +1,9 @@
 import { createControllerApiInfo } from "common/swagger";
-import { UsersController } from "../users.controller";
+import { InvitationsController } from "../invitations.controller";
 import { HttpStatus } from "@nestjs/common";
 
-export const UsersControllerApiInfo = createControllerApiInfo<UsersController>({
-    tags: "Аутентификация",
+export const InvitatiosnControllerApiInfo = createControllerApiInfo<InvitationsController>({
+    tags: "Приглашение пользователей",
 
     methods: {
         sendInvitations: {

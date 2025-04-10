@@ -1,5 +1,5 @@
 import { Controller } from "@nestjs/common";
-import { InviteUsersDto } from "../../../api-gateway/src/users/dto/invite-users.dto";
+import { InviteUsersDto } from "../../../api-gateway/src/users/invitations/dto/invite-users.dto";
 import { UsersService } from "./users.service";
 import {
     IConfirmInvitationDto,
