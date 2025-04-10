@@ -5,7 +5,7 @@ import { UsersModule } from "./users/users.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./users/entities/user.entity";
 import { OrganizationsGrpcModule } from "common/grpc";
-import { TokensModule } from "common/modules";
+import { JwtTokensModule, PasswordRecoveryTokensModule, UserInvitationTokensModule } from "common/modules";
 import { InvitationsModule } from "./invitations/invitations.module";
 
 @Module({
@@ -27,7 +27,9 @@ import { InvitationsModule } from "./invitations/invitations.module";
                 entities: [User]
             })
         }),
-        TokensModule,
+        JwtTokensModule,
+        UserInvitationTokensModule,
+        PasswordRecoveryTokensModule,
         OrganizationsGrpcModule,
         UsersModule,
         AuthModule,

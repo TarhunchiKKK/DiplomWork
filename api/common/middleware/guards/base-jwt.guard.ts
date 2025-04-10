@@ -1,11 +1,11 @@
 import { CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { TJwtInfo, TokensService } from "common/modules";
+import { JwtTokensService, TJwtInfo } from "common/modules";
 import { Request } from "express";
 
 export abstract class BaseJwtGuard implements CanActivate {
     public constructor(
-        protected readonly tokensService: TokensService,
+        protected readonly tokensService: JwtTokensService,
 
         protected readonly reflector: Reflector
     ) {}
@@ -20,7 +20,7 @@ export abstract class BaseJwtGuard implements CanActivate {
         const token = this.extractBearerToken(request);
 
         try {
-            const jwtInfo = this.tokensService.jwt.verify(token);
+            const jwtInfo = this.tokensService.verify(token);
 
             request.jwtInfo = jwtInfo;
 

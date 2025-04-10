@@ -5,7 +5,6 @@ import {
     USERS_PACKAGE_NAME,
     USERS_SERVICE_NAME,
     IRegisterAdminDto,
-    ICreateUserDto,
     IInviteUsersDto,
     IConfirmInvitationDto,
     ILoginDto
@@ -24,10 +23,6 @@ export class UsersGrpcService extends BaseGrpcService<UsersServiceClient> {
 
     public login(dto: ILoginDto) {
         return this.serviceClient.login(dto);
-    }
-
-    public create(dto: ICreateUserDto) {
-        return this.serviceClient.create(dto);
     }
 
     public sendInvitations(dto: IInviteUsersDto) {

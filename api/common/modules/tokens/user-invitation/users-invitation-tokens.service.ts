@@ -1,14 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { TJwtInfo } from "../types/jwt.types";
+import { TUserInvitationTokenInfo } from "./types/jwt.types";
 
 @Injectable()
-export class JwtTokensService {
+export class UserInvitationTokensService {
     public constructor(private readonly jwtService: JwtService) {}
 
-    public static INJECTION_TOKEN = "JWT_TOKENS_SERVICE";
-
-    public create(dto: TJwtInfo) {
+    public create(dto: TUserInvitationTokenInfo) {
         return this.jwtService.sign({
             id: dto.id,
             email: dto.email,

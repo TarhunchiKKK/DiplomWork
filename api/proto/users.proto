@@ -9,7 +9,6 @@ service UsersService {
 
     rpc Login (ILoginDto) returns (IAuthResponse) {}
 
-
     rpc InviteUsers (IInviteUsersDto) returns (google.protobuf.Empty) {}
 
     rpc ConfirmInvitation (IConfirmInvitationDto) returns (IAuthResponse) {}
@@ -52,9 +51,9 @@ message IInviteUsersDto {
 }
 
 message IConfirmInvitationDto {
-    string id = 1;
+    string username = 1;
 
-    string username = 2;
+    string password = 2;
 
-    string password = 3;
+    string token = 3;
 }

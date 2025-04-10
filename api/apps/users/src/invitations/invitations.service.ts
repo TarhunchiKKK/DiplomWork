@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { TokensService } from "common/modules";
+import { JwtTokensService, UserInvitationTokensService } from "common/modules";
 import { NotificationsRmqService, UserInvitationEvent } from "common/rabbitmq";
 import { UsersService } from "../users/users.service";
 import { IAuthResponse, IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
@@ -11,7 +11,9 @@ export class InvitationsService {
 
         private readonly notificationsRmqService: NotificationsRmqService,
 
-        private readonly tokensService: TokensService
+        private readonly jwtTokensService: JwtTokensService,
+
+        private readonly invitationTokensService: UserInvitationTokensService
     ) {}
 
     public async send(dto: IInviteUsersDto): Promise<void> {
@@ -26,13 +28,16 @@ export class InvitationsService {
 
         storedUsers.forEach(user =>
             this.notificationsRmqService.userInvitation(
-                new UserInvitationEvent(dto.adminEmail, user.email, this.tokensService.userInvitation.create(user))
+                new UserInvitationEvent(dto.adminEmail, user.email, this.invitationTokensService.create(user))
             )
         );
     }
 
     public async confirmInvitation(dto: IConfirmInvitationDto): Promise<IAuthResponse> {
-        const { id, ...data } = dto;
+        const { token, ...data } = dto;
+
+        const { id } = this.invitationTokensService.verify(token);
+
         const user = await this.usersService.update(id, data);
 
         return {
@@ -41,7 +46,7 @@ export class InvitationsService {
             email: user.email,
             role: user.role,
             organizationId: user.organizationId,
-            token: this.tokensService.jwt.create({
+            token: this.jwtTokensService.create({
                 id: user.id,
                 username: user.username as string,
                 email: user.email,

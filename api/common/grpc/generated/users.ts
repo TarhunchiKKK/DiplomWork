@@ -38,9 +38,9 @@ export interface IInviteUsersDto {
 }
 
 export interface IConfirmInvitationDto {
-  id: string;
   username: string;
   password: string;
+  token: string;
 }
 
 export const USERS_PACKAGE_NAME = "users";

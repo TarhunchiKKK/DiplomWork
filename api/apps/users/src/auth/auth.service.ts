@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { IAuthResponse, ILoginDto, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
 import { Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
-import { TokensService } from "common/modules";
+import { JwtTokensService } from "common/modules";
 import { UsersService } from "../users/users.service";
 import { argon2 } from "./mocks";
 
@@ -13,7 +13,7 @@ export class AuthService {
 
         private readonly organizationsGrpcService: OrganizationsGrpcService,
 
-        private readonly tokensService: TokensService
+        private readonly tokensService: JwtTokensService
     ) {}
 
     public async registerAdmin(dto: IRegisterAdminDto): Promise<IAuthResponse> {
@@ -32,7 +32,7 @@ export class AuthService {
             email: user.email,
             role: user.role,
             organizationId: organization._id,
-            token: this.tokensService.jwt.create({
+            token: this.tokensService.create({
                 id: user.id,
                 username: user.username as string,
                 email: user.email,
@@ -55,7 +55,7 @@ export class AuthService {
             email: user.email,
             role: user.role,
             organizationId: user.organizationId,
-            token: this.tokensService.jwt.create({
+            token: this.tokensService.create({
                 id: user.id,
                 username: user.username as string,
                 email: user.email,

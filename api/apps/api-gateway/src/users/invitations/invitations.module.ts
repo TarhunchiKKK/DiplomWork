@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { UsersGrpcModule } from "common/grpc";
 import { InvitationsController } from "./invitations.controller";
-import { TokensModule } from "common/modules";
+import { JwtTokensModule, UserInvitationTokensModule } from "common/modules";
 
 @Module({
-    imports: [UsersGrpcModule, TokensModule],
+    imports: [UsersGrpcModule, JwtTokensModule, UserInvitationTokensModule],
     controllers: [InvitationsController]
 })
 export class InvitationsModule {}

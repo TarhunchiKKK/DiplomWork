@@ -3,5 +3,6 @@ export const swaggerExampleValues = {
     mongoId: "5d6ede6a0ba62570afcedd3a",
     username: "nickname",
     email: "ivanov@gmail.com",
-    password: "Password123?"
+    password: "Password123?",
+    jwt: "ljkhj.hbnvmb.hjkhjh"
 };
