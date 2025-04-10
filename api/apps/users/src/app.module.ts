@@ -7,6 +7,7 @@ import { User } from "./users/entities/user.entity";
 import { OrganizationsGrpcModule } from "common/grpc";
 import { JwtTokensModule, PasswordRecoveryTokensModule, UserInvitationTokensModule } from "common/modules";
 import { InvitationsModule } from "./invitations/invitations.module";
+import { PasswordRecoveryModule } from "./password-recovery/password-recovery.module";
 
 @Module({
     imports: [
@@ -33,7 +34,8 @@ import { InvitationsModule } from "./invitations/invitations.module";
         OrganizationsGrpcModule,
         UsersModule,
         AuthModule,
-        InvitationsModule
+        InvitationsModule,
+        PasswordRecoveryModule
     ]
 })
 export class AppModule {}
