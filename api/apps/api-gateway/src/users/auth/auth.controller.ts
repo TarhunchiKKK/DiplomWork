@@ -1,8 +1,10 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { UsersGrpcService } from "common/grpc";
 import { RegisterAdminDto } from "./dto/register-admin.dto";
 import { LoginDto } from "./dto/login.dto";
 import { AuthControllerApiInfo } from "./swagger/auth-controller-api-info.decorator";
+import { AuthenticationGuard } from "common/middleware";
+import { TAuthenticatedRequest } from "common/modules";
 
 @Controller("auth")
 @AuthControllerApiInfo()
@@ -19,5 +21,11 @@ export class AuthController {
     @UsePipes(ValidationPipe)
     public login(@Body() dto: LoginDto) {
         return this.usersGrpcService.login(dto);
+    }
+
+    @Get("/profile")
+    @UseGuards(AuthenticationGuard)
+    public profile(@Req() request: TAuthenticatedRequest) {
+        return request.jwtInfo;
     }
 }

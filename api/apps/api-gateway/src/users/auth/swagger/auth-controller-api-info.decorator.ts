@@ -12,7 +12,7 @@ export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
             },
             response: {
                 status: HttpStatus.CREATED,
-                description: "Объект с данными пользователя, идентификатором созданной организации и JWT-токеном"
+                description: "Объект с профилем пользователя, идентификатором созданной организации и JWT-токеном"
             }
         },
         login: {
@@ -21,8 +21,18 @@ export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
             },
             response: {
                 status: HttpStatus.OK,
-                description: "Объект с данными пользователя, идентификатором его организации и JWT-токеном"
+                description: "Объект с профилем пользователя, идентификатором его организации и JWT-токеном"
             }
+        },
+        profile: {
+            operation: {
+                summary: "Получить профиль пользователя"
+            },
+            response: {
+                status: HttpStatus.OK,
+                description: "Профиль пользователя"
+            },
+            bearerAuth: true
         }
     }
 });

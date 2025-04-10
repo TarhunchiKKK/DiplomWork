@@ -34,6 +34,7 @@ export class AuthService {
             organizationId: organization._id,
             token: this.tokensService.jwt.create({
                 id: user.id,
+                username: user.username as string,
                 email: user.email,
                 role: user.role as Role,
                 organizationId: organization._id
@@ -56,6 +57,7 @@ export class AuthService {
             organizationId: user.organizationId,
             token: this.tokensService.jwt.create({
                 id: user.id,
+                username: user.username as string,
                 email: user.email,
                 role: user.role as Role,
                 organizationId: user.organizationId

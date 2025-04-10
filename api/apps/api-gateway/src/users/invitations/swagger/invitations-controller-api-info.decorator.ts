@@ -22,7 +22,8 @@ export const InvitatiosnControllerApiInfo = createControllerApiInfo<InvitationsC
             response: {
                 status: HttpStatus.OK,
                 description: "Возвращает IAuthResponse"
-            }
+            },
+            bearerAuth: true
         }
     }
 });

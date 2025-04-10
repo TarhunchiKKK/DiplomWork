@@ -18,9 +18,6 @@ export abstract class BaseJwtGuard implements CanActivate {
         }
 
         const token = this.extractBearerToken(request);
-        if (!token) {
-            throw new UnauthorizedException("Токен авторизации не найден");
-        }
 
         try {
             const jwtInfo = this.tokensService.jwt.verify(token);
@@ -36,7 +33,11 @@ export abstract class BaseJwtGuard implements CanActivate {
     protected extractBearerToken(request: Request): string | undefined {
         const [type, token] = request.headers.authorization?.split(" ") ?? [];
 
-        return type === "Bearer" ? token : undefined;
+        if (type !== "Bearer" || !token) {
+            throw new UnauthorizedException("Токен авторизации не найден");
+        }
+
+        return token;
     }
 
     protected abstract compareData(info: TJwtInfo, context: ExecutionContext): boolean | Promise<boolean>;
