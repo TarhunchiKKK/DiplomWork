@@ -17,6 +17,11 @@ export interface IRegisterAdminDto {
   password: string;
 }
 
+export interface ILoginDto {
+  login: string;
+  password: string;
+}
+
 export interface IAuthResponse {
   id: string;
   username: string;
@@ -61,6 +66,8 @@ export const USERS_PACKAGE_NAME = "users";
 export interface UsersServiceClient {
   registerAdmin(request: IRegisterAdminDto): Observable<IAuthResponse>;
 
+  login(request: ILoginDto): Observable<IAuthResponse>;
+
   create(request: ICreateUserDto): Observable<ICreateUserResponse>;
 
   inviteUsers(request: IInviteUsersDto): Observable<Empty>;
@@ -71,6 +78,8 @@ export interface UsersServiceClient {
 export interface UsersServiceController {
   registerAdmin(request: IRegisterAdminDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
+  login(request: ILoginDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
+
   create(request: ICreateUserDto): Promise<ICreateUserResponse> | Observable<ICreateUserResponse> | ICreateUserResponse;
 
   inviteUsers(request: IInviteUsersDto): void;
@@ -80,7 +89,7 @@ export interface UsersServiceController {
 
 export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["registerAdmin", "create", "inviteUsers", "confirmInvitation"];
+    const grpcMethods: string[] = ["registerAdmin", "login", "create", "inviteUsers", "confirmInvitation"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

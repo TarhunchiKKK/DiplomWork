@@ -1,22 +1,15 @@
-import { Body, Controller, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
 import { UsersGrpcService } from "common/grpc";
 import { UsersControllerApiInfo } from "./swagger/users-controller-api-info.decorator";
 import { AuthenticationGuard, RequireRoles, RoleGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { Role } from "common/enums";
-import { RegisterAdminDto } from "apps/api-gateway/src/users/dto/register-admin.dto";
 import { ConfirmInvitationDto } from "./dto/confirm-invitation.dto";
 
 @Controller("users")
 @UsersControllerApiInfo()
 export class UsersController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}
-
-    @Post("/register/admin")
-    @UsePipes(ValidationPipe)
-    public registerAdmin(@Body() dto: RegisterAdminDto) {
-        return this.usersGrpcService.registerAdmin(dto);
-    }
 
     @Post("/invitations/send")
     @RequireRoles([Role.ADMIN])

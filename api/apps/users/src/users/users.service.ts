@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
@@ -75,6 +75,18 @@ export class UsersService {
                 email
             }
         });
+    }
+
+    public async findOneByLogin(login: string): Promise<User> {
+        const user = await this.usersRepository.findOne({
+            where: [{ username: login }, { email: login }]
+        });
+
+        if (!user) {
+            throw new NotFoundException("Неверный логин");
+        }
+
+        return user;
     }
 
     private async saveInvitedUser(dto: ISaveInvitedUserDto): Promise<User> {

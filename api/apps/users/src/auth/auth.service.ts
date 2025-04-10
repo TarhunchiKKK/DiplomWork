@@ -1,12 +1,13 @@
-import { Injectable } from "@nestjs/common";
-import { IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { IAuthResponse, ILoginDto, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
 import { Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { TokensService } from "common/modules";
 import { UsersService } from "../users/users.service";
+import { argon2 } from "./mocks";
 
 @Injectable()
-export class AuthenticationService {
+export class AuthService {
     public constructor(
         private readonly usersService: UsersService,
 
@@ -15,11 +16,12 @@ export class AuthenticationService {
         private readonly tokensService: TokensService
     ) {}
 
-    public async registerAdmin(dto: IRegisterAdminDto) {
+    public async registerAdmin(dto: IRegisterAdminDto): Promise<IAuthResponse> {
         const organization = await firstValueFrom(this.organizationsGrpcService.createDefault());
 
         const user = await this.usersService.create({
             ...dto,
+            password: argon2.hash(dto.password),
             organizationId: organization._id,
             role: Role.ADMIN
         });
@@ -35,6 +37,28 @@ export class AuthenticationService {
                 email: user.email,
                 role: user.role as Role,
                 organizationId: organization._id
+            })
+        };
+    }
+
+    public async login(dto: ILoginDto): Promise<IAuthResponse> {
+        const user = await this.usersService.findOneByLogin(dto.login);
+
+        if (!argon2.verify(dto.login, user.password)) {
+            throw new BadRequestException("Неверный пароль.");
+        }
+
+        return {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            role: user.role,
+            organizationId: user.organizationId,
+            token: this.tokensService.jwt.create({
+                id: user.id,
+                email: user.email,
+                role: user.role as Role,
+                organizationId: user.organizationId
             })
         };
     }

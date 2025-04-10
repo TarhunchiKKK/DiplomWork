@@ -7,6 +7,8 @@ package users;
 service UsersService {
     rpc RegisterAdmin (IRegisterAdminDto) returns (IAuthResponse) {}
 
+    rpc Login (ILoginDto) returns (IAuthResponse) {}
+
     rpc Create (ICreateUserDto) returns (ICreateUserResponse) {}
 
     rpc InviteUsers (IInviteUsersDto) returns (google.protobuf.Empty) {}
@@ -22,6 +24,12 @@ message IRegisterAdminDto {
     string password = 3;
 }
 
+message ILoginDto {
+    string login = 1;
+
+    string password = 2;
+}
+
 message IAuthResponse {
     string id = 1;
 
@@ -35,8 +43,6 @@ message IAuthResponse {
 
     string token = 6;
 }
-
-
 
 message ICreateUserDto {
     string username = 1;
