@@ -2,37 +2,25 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import {
-    IAuthResponse,
-    IConfirmInvitationDto,
-    ICreateUserDto,
-    ICreateUserResponse,
-    IInviteUsersDto
-} from "common/grpc";
 import { Role } from "common/enums/role.enum";
-import { CryptoService, TokensService } from "common/modules";
-import { NotificationsRmqService } from "common/rabbitmq";
-import { UserInvitationEvent } from "common/rabbitmq/events/notifications";
-import { ISaveInvitedUserDto } from "./dto/save-invited-user.dto";
+import { CryptoService } from "common/modules";
 import { AccountStatus } from "./enums/account-status.enum";
+import { IUpdateUserDto } from "./dto/update-user.dto";
+import { ISaveUserDto } from "./dto/save-user.dto";
 
 @Injectable()
 export class UsersService {
     public constructor(
         @InjectRepository(User) private readonly usersRepository: Repository<User>,
 
-        private readonly cryptoService: CryptoService,
-
-        private readonly notificationsRmqService: NotificationsRmqService,
-
-        private readonly tokensService: TokensService
+        private readonly cryptoService: CryptoService
     ) {}
 
     private generateAssymetricKeys() {
         return this.cryptoService.generateAssymetricKeys();
     }
 
-    public async create(dto: ICreateUserDto): Promise<ICreateUserResponse> {
+    public async create(dto: ISaveUserDto) {
         const keys = this.generateAssymetricKeys();
 
         const user = await this.usersRepository.save({
@@ -51,6 +39,10 @@ export class UsersService {
             organizationId: user.organizationId,
             createdAt: user.createdAt?.toString()
         };
+    }
+
+    public async save(dto: ISaveUserDto): Promise<User> {
+        return await this.usersRepository.save(dto);
     }
 
     public async findAllByOrganizationId(organizationId: string): Promise<User[]> {
@@ -89,51 +81,21 @@ export class UsersService {
         return user;
     }
 
-    private async saveInvitedUser(dto: ISaveInvitedUserDto): Promise<User> {
-        return await this.usersRepository.save({
-            ...dto,
-            status: AccountStatus.INVITED,
-            role: Role.USER
-        });
-    }
-
-    public async inviteUsers(dto: IInviteUsersDto): Promise<void> {
-        const storedUsers = await Promise.all(
-            dto.emails.map(email =>
-                this.saveInvitedUser({
-                    organizationId: dto.organizationId,
-                    email: email
-                })
-            )
-        );
-
-        storedUsers.forEach(user =>
-            this.notificationsRmqService.userInvitation(
-                new UserInvitationEvent(dto.adminEmail, user.email, this.tokensService.userInvitation.create(user))
-            )
-        );
-    }
-
-    public async confirmInvitation(dto: IConfirmInvitationDto): Promise<IAuthResponse> {
+    public async update(id: string, dto: IUpdateUserDto) {
         const user = await this.usersRepository.findOne({
             where: {
-                id: dto.id
+                id: id
             }
         });
 
-        if (user) {
-            Object.assign(user, { ...dto, status: AccountStatus.ACTIVE });
-
-            await this.usersRepository.save(user);
+        if (!user) {
+            throw new NotFoundException("Пользователь не найден");
         }
 
-        return {
-            id: user.id,
-            username: user.username ?? dto.username,
-            email: user.email,
-            role: user.role,
-            organizationId: user.organizationId,
-            token: this.tokensService.jwt.create(user)
-        };
+        Object.assign(user, { ...dto, status: AccountStatus.ACTIVE });
+
+        await this.usersRepository.save(user);
+
+        return user;
     }
 }

@@ -24,7 +24,7 @@ export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
                 description: "Объект с профилем пользователя, идентификатором его организации и JWT-токеном"
             }
         },
-        profile: {
+        me: {
             operation: {
                 summary: "Получить профиль пользователя"
             },

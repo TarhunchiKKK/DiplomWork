@@ -9,7 +9,6 @@ service UsersService {
 
     rpc Login (ILoginDto) returns (IAuthResponse) {}
 
-    rpc Create (ICreateUserDto) returns (ICreateUserResponse) {}
 
     rpc InviteUsers (IInviteUsersDto) returns (google.protobuf.Empty) {}
 
@@ -42,34 +41,6 @@ message IAuthResponse {
     string organizationId = 5;
 
     string token = 6;
-}
-
-message ICreateUserDto {
-    string username = 1;
-
-    string email = 2;
-
-    string password = 3;
-
-    string role = 4;
-
-    string organizationId = 5;
-}
-
-message ICreateUserResponse {
-    string id = 1;
-
-    string username = 2;
-
-    string email = 3;
-
-    string password = 4;
-
-    string role = 5;
-
-    string organizationId = 6;
-
-    string createdAt = 7;
 }
 
 message IInviteUsersDto {

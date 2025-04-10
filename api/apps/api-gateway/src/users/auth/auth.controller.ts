@@ -23,9 +23,9 @@ export class AuthController {
         return this.usersGrpcService.login(dto);
     }
 
-    @Get("/profile")
+    @Get("/me")
     @UseGuards(AuthenticationGuard)
-    public profile(@Req() request: TAuthenticatedRequest) {
+    public me(@Req() request: TAuthenticatedRequest) {
         return request.jwtInfo;
     }
 }

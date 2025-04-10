@@ -31,24 +31,6 @@ export interface IAuthResponse {
   token: string;
 }
 
-export interface ICreateUserDto {
-  username: string;
-  email: string;
-  password: string;
-  role: string;
-  organizationId: string;
-}
-
-export interface ICreateUserResponse {
-  id: string;
-  username: string;
-  email: string;
-  password: string;
-  role: string;
-  organizationId: string;
-  createdAt: string;
-}
-
 export interface IInviteUsersDto {
   organizationId: string;
   adminEmail: string;
@@ -68,8 +50,6 @@ export interface UsersServiceClient {
 
   login(request: ILoginDto): Observable<IAuthResponse>;
 
-  create(request: ICreateUserDto): Observable<ICreateUserResponse>;
-
   inviteUsers(request: IInviteUsersDto): Observable<Empty>;
 
   confirmInvitation(request: IConfirmInvitationDto): Observable<IAuthResponse>;
@@ -80,8 +60,6 @@ export interface UsersServiceController {
 
   login(request: ILoginDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
-  create(request: ICreateUserDto): Promise<ICreateUserResponse> | Observable<ICreateUserResponse> | ICreateUserResponse;
-
   inviteUsers(request: IInviteUsersDto): void;
 
   confirmInvitation(request: IConfirmInvitationDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
@@ -89,7 +67,7 @@ export interface UsersServiceController {
 
 export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["registerAdmin", "login", "create", "inviteUsers", "confirmInvitation"];
+    const grpcMethods: string[] = ["registerAdmin", "login", "inviteUsers", "confirmInvitation"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
