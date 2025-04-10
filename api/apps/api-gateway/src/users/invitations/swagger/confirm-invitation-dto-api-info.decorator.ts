@@ -7,7 +7,7 @@ export const ConfirmInvitationDtoApiInfo = createEntityApiInfo<ConfirmInvitation
         example: swaggerExampleValues.username
     },
     password: {
-        description: "Отображаемое имя пользователя",
+        description: "Пароль пользователя",
         example: swaggerExampleValues.password
     },
     token: {

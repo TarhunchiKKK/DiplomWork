@@ -4,6 +4,7 @@ import { UsersController } from "./users.controller";
 import { JwtTokensModule, PasswordRecoveryTokensModule, UserInvitationTokensModule } from "common/modules";
 import { InvitationsModule } from "./invitations/invitations.module";
 import { AuthModule } from "./auth/auth.module";
+import { PasswordRecoveryModule } from "./password-recovery/password-recovery.module";
 
 @Module({
     imports: [
@@ -12,7 +13,8 @@ import { AuthModule } from "./auth/auth.module";
         UserInvitationTokensModule,
         PasswordRecoveryTokensModule,
         AuthModule,
-        InvitationsModule
+        InvitationsModule,
+        PasswordRecoveryModule
     ],
     controllers: [UsersController]
 })

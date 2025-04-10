@@ -21,7 +21,7 @@ export const InvitatiosnControllerApiInfo = createControllerApiInfo<InvitationsC
             },
             response: {
                 status: HttpStatus.OK,
-                description: "Возвращает IAuthResponse"
+                description: "Возвращает объект с профилем пользователя, идентификатором его организации и JWT-токен"
             },
             bearerAuth: true
         }
