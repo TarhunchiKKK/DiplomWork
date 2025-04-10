@@ -3,37 +3,29 @@ import { Body, Head, Heading, Link, Preview, Section, Tailwind, Text } from "@re
 import { Html } from "@react-email/html";
 
 type TProps = {
-    adminEmail: string;
-
     domain: string;
 
     token: string;
 };
 
-export function UserInvitationTemplate({ adminEmail, token, domain }: TProps) {
-    const adminEmailLink = `mailto:${adminEmail}`;
+export function ResetPasswordTemplate({ domain, token }: TProps) {
     const verificationLink = `${domain}/auth/new-verification?token=${token}`;
 
     return (
         <Html>
             <Head />
 
-            <Preview>Приглашение в E-Doc-Hub</Preview>
+            <Preview>Сброс пароля</Preview>
 
             <Tailwind>
                 <Body className="max-w-2xl mx-auto p-6 bg-slate-50">
                     <Section className="text-center mb-8">
-                        <Heading className="text-3xl text-black font-bold">Приглашение в E-Doc-Hub</Heading>
-
-                        <Text className="text-black text-base mt-2">
-                            Пользователь <Link href={adminEmailLink}>{adminEmail}</Link> приглашает вас присоединиться к
-                            работе в сервисе <b>E-Doc-Hub</b>.
-                        </Text>
+                        <Heading className="text-3xl text-black font-bold">Подтверждение сброса пароля</Heading>
                     </Section>
 
                     <Section className="text-center mb-8">
                         <Heading className="text-3xl text-black font-bold">
-                            Присоединиться можно по ссылке ниже:
+                            Измменить пароль можно по ссылке ниже:
                         </Heading>
 
                         <Link
