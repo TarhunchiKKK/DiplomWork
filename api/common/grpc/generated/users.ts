@@ -47,6 +47,11 @@ export interface IResetPasswordDto {
   userId: string;
 }
 
+export interface IUpdatePasswordDto {
+  token: string;
+  password: string;
+}
+
 export const USERS_PACKAGE_NAME = "users";
 
 export interface UsersServiceClient {
@@ -59,6 +64,8 @@ export interface UsersServiceClient {
   confirmInvitation(request: IConfirmInvitationDto): Observable<IAuthResponse>;
 
   resetPassword(request: IResetPasswordDto): Observable<Empty>;
+
+  updatePassword(request: IUpdatePasswordDto): Observable<Empty>;
 }
 
 export interface UsersServiceController {
@@ -71,11 +78,20 @@ export interface UsersServiceController {
   confirmInvitation(request: IConfirmInvitationDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
   resetPassword(request: IResetPasswordDto): void;
+
+  updatePassword(request: IUpdatePasswordDto): void;
 }
 
 export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["registerAdmin", "login", "inviteUsers", "confirmInvitation", "resetPassword"];
+    const grpcMethods: string[] = [
+      "registerAdmin",
+      "login",
+      "inviteUsers",
+      "confirmInvitation",
+      "resetPassword",
+      "updatePassword",
+    ];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

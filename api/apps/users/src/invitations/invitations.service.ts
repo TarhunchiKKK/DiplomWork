@@ -3,6 +3,7 @@ import { JwtTokensService, UserInvitationTokensService } from "common/modules";
 import { NotificationsRmqService, UserInvitationEvent } from "common/rabbitmq";
 import { UsersService } from "../users/users.service";
 import { IAuthResponse, IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
+import { AccountStatus } from "../users/enums/account-status.enum";
 
 @Injectable()
 export class InvitationsService {
@@ -34,11 +35,13 @@ export class InvitationsService {
     }
 
     public async confirmInvitation(dto: IConfirmInvitationDto): Promise<IAuthResponse> {
-        const { token, ...data } = dto;
+        const { id } = this.invitationTokensService.verify(dto.token);
 
-        const { id } = this.invitationTokensService.verify(token);
-
-        const user = await this.usersService.update(id, data);
+        const user = await this.usersService.update(id, {
+            username: dto.username,
+            password: dto.password,
+            status: AccountStatus.INVITED
+        });
 
         return {
             id: user.id,

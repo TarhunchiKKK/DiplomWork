@@ -1,8 +1,13 @@
 import { Controller } from "@nestjs/common";
-import { IResetPasswordDto, UsersServiceController, UsersServiceControllerMethods } from "common/grpc";
+import {
+    IResetPasswordDto,
+    IUpdatePasswordDto,
+    UsersServiceController,
+    UsersServiceControllerMethods
+} from "common/grpc";
 import { PasswordRecoveryService } from "./password-recovery.service";
 
-type ServiceController = Pick<UsersServiceController, "resetPassword">;
+type ServiceController = Pick<UsersServiceController, "resetPassword" | "updatePassword">;
 
 @Controller()
 @UsersServiceControllerMethods()
@@ -11,5 +16,9 @@ export class PasswordRecoveryController implements ServiceController {
 
     public async resetPassword(dto: IResetPasswordDto) {
         await this.passwordRecoveryService.reset(dto.userId);
+    }
+
+    public async updatePassword(dto: IUpdatePasswordDto) {
+        await this.passwordRecoveryService.update(dto);
     }
 }

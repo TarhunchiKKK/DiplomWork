@@ -14,6 +14,8 @@ service UsersService {
     rpc ConfirmInvitation (IConfirmInvitationDto) returns (IAuthResponse) {}
 
     rpc ResetPassword (IResetPasswordDto) returns (google.protobuf.Empty) {}
+
+    rpc UpdatePassword (IUpdatePasswordDto) returns (google.protobuf.Empty) {}
 }
 
 message IRegisterAdminDto {
@@ -62,4 +64,10 @@ message IConfirmInvitationDto {
 
 message IResetPasswordDto {
     string userId = 1;
+}
+
+message IUpdatePasswordDto {
+    string token = 1;
+
+    string password = 2;
 }
