@@ -11,7 +11,7 @@ import { InvitatiosnControllerApiInfo } from "./swagger/invitations-controller-a
 export class InvitationsController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}
 
-    @Post("/invitations/send")
+    @Post("/send")
     @RequireRoles([Role.ADMIN])
     @UseGuards(RoleGuard)
     public sendInvitations(@Req() request: TAuthenticatedRequest, @Body() emails: string[]) {
@@ -22,7 +22,7 @@ export class InvitationsController {
         });
     }
 
-    @Post("/invitations/confirm")
+    @Post("/confirm")
     public confirmInvitation(@Body() dto: ConfirmInvitationDto) {
         return this.usersGrpcService.confirmInvitation(dto);
     }
