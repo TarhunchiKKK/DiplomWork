@@ -6,7 +6,7 @@ import { TAuthenticatedRequest } from "common/modules";
 import { ConfirmInvitationDto } from "./dto/confirm-invitation.dto";
 import { InvitatiosnControllerApiInfo } from "./swagger/invitations-controller-api-info.decorator";
 
-@Controller("invitations")
+@Controller("/users/invitations")
 @InvitatiosnControllerApiInfo()
 export class InvitationsController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}

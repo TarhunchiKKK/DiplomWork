@@ -6,7 +6,7 @@ import { AuthControllerApiInfo } from "./swagger/auth-controller-api-info.decora
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 
-@Controller("auth")
+@Controller("/users/auth")
 @AuthControllerApiInfo()
 export class AuthController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}

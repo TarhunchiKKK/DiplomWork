@@ -5,7 +5,7 @@ import { TAuthenticatedRequest } from "common/modules";
 import { UpdatePasswordDto } from "./dto/update-password.dto";
 import { PasswordRecoveryControllerApiInfo } from "./swagger/password-recovery-controller-api-info.decorator";
 
-@Controller("password-recovery")
+@Controller("/users/password-recovery")
 @PasswordRecoveryControllerApiInfo()
 export class PasswordRecoveryController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}
