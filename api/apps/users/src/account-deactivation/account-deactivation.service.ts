@@ -17,7 +17,7 @@ export class AccountDeactivationService {
             status: AccountStatus.ACTIVE
         });
 
-        this.notificationsRmqService.activateAccount(new ActivateAccountEvent(dto.userId));
+        this.notificationsRmqService.emit(new ActivateAccountEvent(dto.userId));
     }
 
     public async deactivateAccount(dto: IDeactivateAccountDto) {
@@ -25,6 +25,6 @@ export class AccountDeactivationService {
             status: AccountStatus.DEACTIVATED
         });
 
-        this.notificationsRmqService.deactivateAccount(new DeactivateAccountEvent(dto.userId));
+        this.notificationsRmqService.emit(new DeactivateAccountEvent(dto.userId));
     }
 }

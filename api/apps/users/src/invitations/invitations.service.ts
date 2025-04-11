@@ -28,7 +28,7 @@ export class InvitationsService {
         );
 
         storedUsers.forEach(user =>
-            this.notificationsRmqService.userInvitation(
+            this.notificationsRmqService.emit(
                 new UserInvitationEvent(dto.adminEmail, user.email, this.invitationTokensService.create(user))
             )
         );

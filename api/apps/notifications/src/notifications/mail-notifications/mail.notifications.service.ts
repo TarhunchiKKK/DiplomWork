@@ -32,7 +32,7 @@ export class MailNotificationsService {
         return this.configService.getOrThrow<string>("APP_DOMAIN");
     }
 
-    public async sendUserInvitationMail(dto: UserInvitationEvent) {
+    public async sendUserInvitationMail(dto: UserInvitationEvent["payload"]) {
         const domain = this.getDomain();
 
         const html = await render(
@@ -50,7 +50,7 @@ export class MailNotificationsService {
         });
     }
 
-    public async sendResetPasswordMail(dto: ResetPasswordEvent) {
+    public async sendResetPasswordMail(dto: ResetPasswordEvent["payload"]) {
         const domain = this.getDomain();
 
         const html = await render(
