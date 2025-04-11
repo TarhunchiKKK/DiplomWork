@@ -16,6 +16,10 @@ service UsersService {
     rpc ResetPassword (IResetPasswordDto) returns (google.protobuf.Empty) {}
 
     rpc UpdatePassword (IUpdatePasswordDto) returns (google.protobuf.Empty) {}
+
+    rpc ActivateAccount (IActivateAccountDto) returns (google.protobuf.Empty) {}
+
+    rpc DeactivateAccount (IDeactivateAccountDto) returns (google.protobuf.Empty) {}
 }
 
 message IRegisterAdminDto {
@@ -70,4 +74,12 @@ message IUpdatePasswordDto {
     string token = 1;
 
     string password = 2;
+}
+
+message IActivateAccountDto {
+    string userId = 1;
+}
+
+message IDeactivateAccountDto {
+    string userId = 1;
 }

@@ -9,8 +9,10 @@ import {
     IConfirmInvitationDto,
     ILoginDto,
     IResetPasswordDto,
-    IUpdatePasswordDto
-} from "common/grpc/generated";
+    IUpdatePasswordDto,
+    IActivateAccountDto,
+    IDeactivateAccountDto
+} from "common/grpc";
 import { BaseGrpcService } from "../base.grpc-service";
 
 @Injectable()
@@ -41,5 +43,13 @@ export class UsersGrpcService extends BaseGrpcService<UsersServiceClient> {
 
     public updatePassword(dto: IUpdatePasswordDto) {
         return this.serviceClient.updatePassword(dto);
+    }
+
+    public activateAccount(dto: IActivateAccountDto) {
+        return this.serviceClient.activateAccount(dto);
+    }
+
+    public deactivateAccount(dto: IDeactivateAccountDto) {
+        return this.serviceClient.deactivateAccount(dto);
     }
 }

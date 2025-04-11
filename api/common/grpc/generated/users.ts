@@ -52,6 +52,14 @@ export interface IUpdatePasswordDto {
   password: string;
 }
 
+export interface IActivateAccountDto {
+  userId: string;
+}
+
+export interface IDeactivateAccountDto {
+  userId: string;
+}
+
 export const USERS_PACKAGE_NAME = "users";
 
 export interface UsersServiceClient {
@@ -66,6 +74,10 @@ export interface UsersServiceClient {
   resetPassword(request: IResetPasswordDto): Observable<Empty>;
 
   updatePassword(request: IUpdatePasswordDto): Observable<Empty>;
+
+  activateAccount(request: IActivateAccountDto): Observable<Empty>;
+
+  deactivateAccount(request: IDeactivateAccountDto): Observable<Empty>;
 }
 
 export interface UsersServiceController {
@@ -80,6 +92,10 @@ export interface UsersServiceController {
   resetPassword(request: IResetPasswordDto): void;
 
   updatePassword(request: IUpdatePasswordDto): void;
+
+  activateAccount(request: IActivateAccountDto): void;
+
+  deactivateAccount(request: IDeactivateAccountDto): void;
 }
 
 export function UsersServiceControllerMethods() {
@@ -91,6 +107,8 @@ export function UsersServiceControllerMethods() {
       "confirmInvitation",
       "resetPassword",
       "updatePassword",
+      "activateAccount",
+      "deactivateAccount",
     ];
     for (const method of grpcMethods) {
       
