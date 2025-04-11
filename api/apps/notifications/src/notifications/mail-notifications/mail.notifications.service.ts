@@ -5,8 +5,10 @@ import { ConfigService } from "@nestjs/config";
 import { render } from "@react-email/components";
 import { UserInvitationTemplate } from "./templates/user-invitation.template";
 import { NotificationSubject } from "../enums/notification-subjects.enum";
-import { ResetPasswordEvent, UserInvitationEvent } from "common/rabbitmq";
+import { ActivateAccountEvent, DeactivateAccountEvent, ResetPasswordEvent, UserInvitationEvent } from "common/rabbitmq";
 import { ResetPasswordTemplate } from "./templates/reset-password.template";
+import { AccountActivationTemplate } from "./templates/account-activation.template";
+import { AccountDeactivationTemplate } from "./templates/account-deactivate.template";
 
 @Injectable()
 export class MailNotificationsService {
@@ -63,6 +65,26 @@ export class MailNotificationsService {
         this.sendMail({
             to: dto.email,
             subject: NotificationSubject.PASSWORD_RECOVERY,
+            html: html
+        });
+    }
+
+    public async sendAccountActivationMail(dto: ActivateAccountEvent["payload"]) {
+        const html = await render(AccountActivationTemplate());
+
+        this.sendResetPasswordMail({
+            to: dto.email,
+            subject: NotificationSubject.ACCOUNT_ACTIVATION,
+            html: html
+        });
+    }
+
+    public async sendAccountDeactivationMail(dto: DeactivateAccountEvent["payload"]) {
+        const html = await render(AccountDeactivationTemplate());
+
+        this.sendResetPasswordMail({
+            to: dto.email,
+            subject: NotificationSubject.ACCOUNT_DEACTIVATION,
             html: html
         });
     }
