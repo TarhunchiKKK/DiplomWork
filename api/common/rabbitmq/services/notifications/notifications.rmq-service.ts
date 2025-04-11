@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { NOTIFICATIONS_RMQ_SERVICE } from "common/rabbitmq/constants";
-import { UserInvitationEvent } from "common/rabbitmq/events/notifications";
+import { ResetPasswordEvent, UserInvitationEvent } from "common/rabbitmq/events/notifications";
 
 @Injectable()
 export class NotificationsRmqService {
@@ -9,5 +9,9 @@ export class NotificationsRmqService {
 
     public userInvitation(event: UserInvitationEvent) {
         this.client.emit(UserInvitationEvent.PATTERN, event);
+    }
+
+    public resetPassword(event: ResetPasswordEvent) {
+        this.client.emit(ResetPasswordEvent.PATTERN, event);
     }
 }

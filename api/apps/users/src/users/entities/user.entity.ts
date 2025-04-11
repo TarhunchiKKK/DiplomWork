@@ -17,7 +17,7 @@ export class User {
     public password?: string;
 
     @Column({ type: "enum", enum: AccountStatus })
-    status: AccountStatus;
+    public status: AccountStatus;
 
     @Column({ type: "enum", enum: Role })
     public role: Role;

@@ -17,7 +17,9 @@ export function UserInvitationTemplate({ adminEmail, token, domain }: TProps) {
     return (
         <Html>
             <Head />
+
             <Preview>Приглашение в E-Doc-Hub</Preview>
+
             <Tailwind>
                 <Body className="max-w-2xl mx-auto p-6 bg-slate-50">
                     <Section className="text-center mb-8">

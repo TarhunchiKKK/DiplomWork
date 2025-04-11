@@ -2,12 +2,12 @@ import { ExecutionContext, Injectable } from "@nestjs/common";
 import { BaseJwtGuard } from "./base-jwt.guard";
 import { ExtractFromRequest } from "../decorators";
 import { Reflector } from "@nestjs/core";
-import { TJwtInfo, TokensService } from "common/modules";
+import { TJwtInfo, JwtTokensService } from "common/modules";
 
 @Injectable()
 export class OrganizationGuard extends BaseJwtGuard {
     public constructor(
-        readonly tokensService: TokensService,
+        readonly tokensService: JwtTokensService,
 
         readonly reflector: Reflector
     ) {

@@ -5,9 +5,11 @@ import {
     USERS_PACKAGE_NAME,
     USERS_SERVICE_NAME,
     IRegisterAdminDto,
-    ICreateUserDto,
     IInviteUsersDto,
-    IConfirmInvitationDto
+    IConfirmInvitationDto,
+    ILoginDto,
+    IResetPasswordDto,
+    IUpdatePasswordDto
 } from "common/grpc/generated";
 import { BaseGrpcService } from "../base.grpc-service";
 
@@ -18,15 +20,11 @@ export class UsersGrpcService extends BaseGrpcService<UsersServiceClient> {
     }
 
     public registerAdmin(dto: IRegisterAdminDto) {
-        try {
-            return this.serviceClient.registerAdmin(dto);
-        } catch (error) {
-            throw error;
-        }
+        return this.serviceClient.registerAdmin(dto);
     }
 
-    public create(dto: ICreateUserDto) {
-        return this.serviceClient.create(dto);
+    public login(dto: ILoginDto) {
+        return this.serviceClient.login(dto);
     }
 
     public sendInvitations(dto: IInviteUsersDto) {
@@ -35,5 +33,13 @@ export class UsersGrpcService extends BaseGrpcService<UsersServiceClient> {
 
     public confirmInvitation(dto: IConfirmInvitationDto) {
         return this.serviceClient.confirmInvitation(dto);
+    }
+
+    public resetPassword(dto: IResetPasswordDto) {
+        return this.serviceClient.resetPassword(dto);
+    }
+
+    public updatePassword(dto: IUpdatePasswordDto) {
+        return this.serviceClient.updatePassword(dto);
     }
 }

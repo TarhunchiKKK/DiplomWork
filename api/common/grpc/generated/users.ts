@@ -17,6 +17,11 @@ export interface IRegisterAdminDto {
   password: string;
 }
 
+export interface ILoginDto {
+  login: string;
+  password: string;
+}
+
 export interface IAuthResponse {
   id: string;
   username: string;
@@ -26,24 +31,6 @@ export interface IAuthResponse {
   token: string;
 }
 
-export interface ICreateUserDto {
-  username: string;
-  email: string;
-  password: string;
-  role: string;
-  organizationId: string;
-}
-
-export interface ICreateUserResponse {
-  id: string;
-  username: string;
-  email: string;
-  password: string;
-  role: string;
-  organizationId: string;
-  createdAt: string;
-}
-
 export interface IInviteUsersDto {
   organizationId: string;
   adminEmail: string;
@@ -51,8 +38,17 @@ export interface IInviteUsersDto {
 }
 
 export interface IConfirmInvitationDto {
-  id: string;
   username: string;
+  password: string;
+  token: string;
+}
+
+export interface IResetPasswordDto {
+  userId: string;
+}
+
+export interface IUpdatePasswordDto {
+  token: string;
   password: string;
 }
 
@@ -61,26 +57,41 @@ export const USERS_PACKAGE_NAME = "users";
 export interface UsersServiceClient {
   registerAdmin(request: IRegisterAdminDto): Observable<IAuthResponse>;
 
-  create(request: ICreateUserDto): Observable<ICreateUserResponse>;
+  login(request: ILoginDto): Observable<IAuthResponse>;
 
   inviteUsers(request: IInviteUsersDto): Observable<Empty>;
 
   confirmInvitation(request: IConfirmInvitationDto): Observable<IAuthResponse>;
+
+  resetPassword(request: IResetPasswordDto): Observable<Empty>;
+
+  updatePassword(request: IUpdatePasswordDto): Observable<Empty>;
 }
 
 export interface UsersServiceController {
   registerAdmin(request: IRegisterAdminDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
-  create(request: ICreateUserDto): Promise<ICreateUserResponse> | Observable<ICreateUserResponse> | ICreateUserResponse;
+  login(request: ILoginDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
   inviteUsers(request: IInviteUsersDto): void;
 
   confirmInvitation(request: IConfirmInvitationDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
+
+  resetPassword(request: IResetPasswordDto): void;
+
+  updatePassword(request: IUpdatePasswordDto): void;
 }
 
 export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["registerAdmin", "create", "inviteUsers", "confirmInvitation"];
+    const grpcMethods: string[] = [
+      "registerAdmin",
+      "login",
+      "inviteUsers",
+      "confirmInvitation",
+      "resetPassword",
+      "updatePassword",
+    ];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

@@ -5,7 +5,8 @@ import { ConfigService } from "@nestjs/config";
 import { render } from "@react-email/components";
 import { UserInvitationTemplate } from "./templates/user-invitation.template";
 import { NotificationSubject } from "../enums/notification-subjects.enum";
-import { UserInvitationEvent } from "common/rabbitmq";
+import { ResetPasswordEvent, UserInvitationEvent } from "common/rabbitmq";
+import { ResetPasswordTemplate } from "./templates/reset-password.template";
 
 @Injectable()
 export class MailNotificationsService {
@@ -31,7 +32,7 @@ export class MailNotificationsService {
         return this.configService.getOrThrow<string>("APP_DOMAIN");
     }
 
-    public async sendUserInvitation(dto: UserInvitationEvent) {
+    public async sendUserInvitationMail(dto: UserInvitationEvent) {
         const domain = this.getDomain();
 
         const html = await render(
@@ -45,6 +46,23 @@ export class MailNotificationsService {
         this.sendMail({
             to: dto.to,
             subject: NotificationSubject.USER_INVITATION,
+            html: html
+        });
+    }
+
+    public async sendResetPasswordMail(dto: ResetPasswordEvent) {
+        const domain = this.getDomain();
+
+        const html = await render(
+            ResetPasswordTemplate({
+                domain: domain,
+                token: dto.token
+            })
+        );
+
+        this.sendMail({
+            to: dto.email,
+            subject: NotificationSubject.PASSWORD_RECOVERY,
             html: html
         });
     }
