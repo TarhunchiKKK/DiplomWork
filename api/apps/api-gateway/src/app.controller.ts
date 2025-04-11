@@ -1,5 +1,5 @@
 import { Controller, Get, Res } from "@nestjs/common";
-import { ApiOperation, ApiTags, ApiTemporaryRedirectResponse } from "@nestjs/swagger";
+import { ApiOperation, ApiResponse, ApiTags, ApiTemporaryRedirectResponse } from "@nestjs/swagger";
 
 @Controller()
 @ApiTags("Docs")
@@ -12,6 +12,8 @@ export class AppController {
     }
 
     @Get("/hello")
+    @ApiOperation({ summary: "API Gateway pinging" })
+    @ApiResponse({ example: "Hello" })
     public hello() {
         return "Hello";
     }
