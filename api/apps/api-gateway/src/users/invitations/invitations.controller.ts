@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Patch, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { Role } from "common/enums";
 import { UsersGrpcService } from "common/grpc";
 import { RequireRoles, RoleGuard } from "common/middleware";
@@ -22,7 +22,8 @@ export class InvitationsController {
         });
     }
 
-    @Post("/confirm")
+    @Patch("/confirm")
+    @UsePipes(ValidationPipe)
     public confirmInvitation(@Body() dto: ConfirmInvitationDto) {
         return this.usersGrpcService.confirmInvitation(dto);
     }

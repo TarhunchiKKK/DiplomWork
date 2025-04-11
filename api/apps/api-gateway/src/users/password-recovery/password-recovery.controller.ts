@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Patch, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { UsersGrpcService } from "common/grpc";
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
@@ -18,8 +18,9 @@ export class PasswordRecoveryController {
         });
     }
 
-    @Post("/update")
+    @Patch("/update")
     @UseGuards(AuthenticationGuard)
+    @UsePipes(ValidationPipe)
     public update(@Body() dto: UpdatePasswordDto) {
         return this.usersGrpcService.updatePassword(dto);
     }
