@@ -4,5 +4,5 @@ export const swaggerExampleValues = {
     username: "nickname",
     email: "ivanov@gmail.com",
     password: "Password123?",
-    jwt: "ljkhj.hbnvmb.hjkhjh"
+    jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 };
