@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
+import { AccountStatus } from "common/enums";
 import { JwtTokensService, TJwtInfo } from "common/modules";
 import { Request } from "express";
 
@@ -38,6 +39,12 @@ export abstract class BaseJwtGuard implements CanActivate {
         }
 
         return token;
+    }
+
+    protected handleDeactivatedAccount(jwtInfo: TJwtInfo) {
+        if (jwtInfo.status === AccountStatus.DEACTIVATED) {
+            throw new UnauthorizedException("Аккаунт деактивирован");
+        }
     }
 
     protected abstract compareData(info: TJwtInfo, context: ExecutionContext): boolean | Promise<boolean>;

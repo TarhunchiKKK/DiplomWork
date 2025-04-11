@@ -26,7 +26,7 @@ export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
         },
         me: {
             operation: {
-                summary: "Получить профиль пользователя"
+                summary: "Получить профиль пользователя с новым jwt-токеном"
             },
             response: {
                 status: HttpStatus.OK,

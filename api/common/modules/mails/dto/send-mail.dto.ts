@@ -1,4 +1,4 @@
-export class SendMailDto {
+export interface ISendMailDto {
     to: string;
 
     subject: string;

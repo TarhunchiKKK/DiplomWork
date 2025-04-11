@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { BaseJwtGuard } from "./base-jwt.guard";
-import { JwtTokensService } from "common/modules";
+import { JwtTokensService, TJwtInfo } from "common/modules";
 import { Reflector } from "@nestjs/core";
 
 @Injectable()
@@ -13,7 +13,9 @@ export class AuthenticationGuard extends BaseJwtGuard {
         super(tokensService, reflector);
     }
 
-    public compareData(): boolean {
+    public compareData(jwtInfo: TJwtInfo): boolean {
+        this.handleDeactivatedAccount(jwtInfo);
+
         return true;
     }
 }

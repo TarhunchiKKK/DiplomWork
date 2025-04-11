@@ -8,6 +8,7 @@ import { OrganizationsGrpcModule } from "common/grpc";
 import { JwtTokensModule, PasswordRecoveryTokensModule, UserInvitationTokensModule } from "common/modules";
 import { InvitationsModule } from "./invitations/invitations.module";
 import { PasswordRecoveryModule } from "./password-recovery/password-recovery.module";
+import { AccountDeactivationModule } from "./account-deactivation/account-deactivation.module";
 
 @Module({
     imports: [
@@ -35,7 +36,8 @@ import { PasswordRecoveryModule } from "./password-recovery/password-recovery.mo
         UsersModule,
         AuthModule,
         InvitationsModule,
-        PasswordRecoveryModule
+        PasswordRecoveryModule,
+        AccountDeactivationModule
     ]
 })
 export class AppModule {}

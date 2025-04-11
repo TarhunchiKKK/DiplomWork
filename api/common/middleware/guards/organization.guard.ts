@@ -14,11 +14,13 @@ export class OrganizationGuard extends BaseJwtGuard {
         super(tokensService, reflector);
     }
 
-    public compareData(info: TJwtInfo, context: ExecutionContext): boolean {
+    public compareData(jwtInfo: TJwtInfo, context: ExecutionContext): boolean {
+        this.handleDeactivatedAccount(jwtInfo);
+
         const extractFromRequest = this.reflector.get(ExtractFromRequest, context.getHandler());
 
         const organizationId = extractFromRequest(context.switchToHttp().getRequest()) as string;
 
-        return info.organizationId === organizationId;
+        return jwtInfo.organizationId === organizationId;
     }
 }

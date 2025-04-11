@@ -5,6 +5,7 @@ import { JwtTokensModule, PasswordRecoveryTokensModule, UserInvitationTokensModu
 import { InvitationsModule } from "./invitations/invitations.module";
 import { AuthModule } from "./auth/auth.module";
 import { PasswordRecoveryModule } from "./password-recovery/password-recovery.module";
+import { AccountDeactivationModule } from "./account-deactivation/account-deactivation.module";
 
 @Module({
     imports: [
@@ -14,7 +15,8 @@ import { PasswordRecoveryModule } from "./password-recovery/password-recovery.mo
         PasswordRecoveryTokensModule,
         AuthModule,
         InvitationsModule,
-        PasswordRecoveryModule
+        PasswordRecoveryModule,
+        AccountDeactivationModule
     ],
     controllers: [UsersController]
 })

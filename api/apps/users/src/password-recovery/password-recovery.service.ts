@@ -27,7 +27,7 @@ export class PasswordRecoveryService {
             password: user.password
         });
 
-        this.notificationsRmqService.resetPassword(new ResetPasswordEvent(user.email, token));
+        this.notificationsRmqService.emit(new ResetPasswordEvent(user.email, token));
     }
 
     public async update(dto: IUpdatePasswordDto) {

@@ -3,7 +3,7 @@ import { JwtTokensService, UserInvitationTokensService } from "common/modules";
 import { NotificationsRmqService, UserInvitationEvent } from "common/rabbitmq";
 import { UsersService } from "../users/users.service";
 import { IAuthResponse, IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
-import { AccountStatus } from "../users/enums/account-status.enum";
+import { AccountStatus } from "common/enums";
 
 @Injectable()
 export class InvitationsService {
@@ -28,7 +28,7 @@ export class InvitationsService {
         );
 
         storedUsers.forEach(user =>
-            this.notificationsRmqService.userInvitation(
+            this.notificationsRmqService.emit(
                 new UserInvitationEvent(dto.adminEmail, user.email, this.invitationTokensService.create(user))
             )
         );
@@ -54,6 +54,7 @@ export class InvitationsService {
                 username: user.username as string,
                 email: user.email,
                 role: user.role,
+                status: user.status,
                 organizationId: user.organizationId
             })
         };

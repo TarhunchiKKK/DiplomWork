@@ -22,6 +22,10 @@ export interface ILoginDto {
   password: string;
 }
 
+export interface IRefreshProfileDto {
+  userId: string;
+}
+
 export interface IAuthResponse {
   id: string;
   username: string;
@@ -52,12 +56,22 @@ export interface IUpdatePasswordDto {
   password: string;
 }
 
+export interface IActivateAccountDto {
+  userId: string;
+}
+
+export interface IDeactivateAccountDto {
+  userId: string;
+}
+
 export const USERS_PACKAGE_NAME = "users";
 
 export interface UsersServiceClient {
   registerAdmin(request: IRegisterAdminDto): Observable<IAuthResponse>;
 
   login(request: ILoginDto): Observable<IAuthResponse>;
+
+  refreshProfile(request: IRefreshProfileDto): Observable<IAuthResponse>;
 
   inviteUsers(request: IInviteUsersDto): Observable<Empty>;
 
@@ -66,12 +80,18 @@ export interface UsersServiceClient {
   resetPassword(request: IResetPasswordDto): Observable<Empty>;
 
   updatePassword(request: IUpdatePasswordDto): Observable<Empty>;
+
+  activateAccount(request: IActivateAccountDto): Observable<Empty>;
+
+  deactivateAccount(request: IDeactivateAccountDto): Observable<Empty>;
 }
 
 export interface UsersServiceController {
   registerAdmin(request: IRegisterAdminDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
   login(request: ILoginDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
+
+  refreshProfile(request: IRefreshProfileDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
   inviteUsers(request: IInviteUsersDto): void;
 
@@ -80,6 +100,10 @@ export interface UsersServiceController {
   resetPassword(request: IResetPasswordDto): void;
 
   updatePassword(request: IUpdatePasswordDto): void;
+
+  activateAccount(request: IActivateAccountDto): void;
+
+  deactivateAccount(request: IDeactivateAccountDto): void;
 }
 
 export function UsersServiceControllerMethods() {
@@ -87,10 +111,13 @@ export function UsersServiceControllerMethods() {
     const grpcMethods: string[] = [
       "registerAdmin",
       "login",
+      "refreshProfile",
       "inviteUsers",
       "confirmInvitation",
       "resetPassword",
       "updatePassword",
+      "activateAccount",
+      "deactivateAccount",
     ];
     for (const method of grpcMethods) {
       

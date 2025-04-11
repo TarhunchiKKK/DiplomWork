@@ -1,8 +1,12 @@
-export class ResetPasswordEvent {
-    public static PATTERN = "reset_password";
+import { BaseRmqEvent } from "../base-rmq-event";
 
-    public constructor(
-        public email: string,
-        public token: string
-    ) {}
+export class ResetPasswordEvent extends BaseRmqEvent {
+    public static PATTERN = "RESET_PASSWORD";
+
+    public constructor(email: string, token: string) {
+        super(ResetPasswordEvent.PATTERN, {
+            email,
+            token
+        });
+    }
 }

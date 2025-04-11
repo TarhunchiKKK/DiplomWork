@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { IAuthResponse, ILoginDto, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
-import { Role } from "common/enums";
+import { IAuthResponse, ILoginDto, IRefreshProfileDto, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
+import { AccountStatus, Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { JwtTokensService } from "common/modules";
 import { UsersService } from "../users/users.service";
@@ -22,7 +22,8 @@ export class AuthService {
         const user = await this.usersService.create({
             ...dto,
             organizationId: organization._id,
-            role: Role.ADMIN
+            role: Role.ADMIN,
+            status: AccountStatus.ACTIVE
         });
 
         return {
@@ -33,9 +34,10 @@ export class AuthService {
             organizationId: organization._id,
             token: this.tokensService.create({
                 id: user.id,
-                username: user.username as string,
+                username: user.username,
                 email: user.email,
-                role: user.role as Role,
+                role: user.role,
+                status: user.status,
                 organizationId: organization._id
             })
         };
@@ -56,9 +58,30 @@ export class AuthService {
             organizationId: user.organizationId,
             token: this.tokensService.create({
                 id: user.id,
-                username: user.username as string,
+                username: user.username,
                 email: user.email,
-                role: user.role as Role,
+                role: user.role,
+                status: user.status,
+                organizationId: user.organizationId
+            })
+        };
+    }
+
+    public async refreshProfile(dto: IRefreshProfileDto) {
+        const user = await this.usersService.findOneById(dto.userId);
+
+        return {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            role: user.role,
+            organizationId: user.organizationId,
+            token: this.tokensService.create({
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+                status: user.status,
                 organizationId: user.organizationId
             })
         };

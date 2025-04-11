@@ -1,4 +1,4 @@
-import { Role } from "common/enums";
+import { AccountStatus, Role } from "common/enums";
 
 export type TJwtInfo = {
     id: string;
@@ -8,6 +8,8 @@ export type TJwtInfo = {
     email: string;
 
     role: Role;
+
+    status: AccountStatus;
 
     organizationId: string;
 };

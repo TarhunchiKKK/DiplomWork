@@ -9,6 +9,8 @@ service UsersService {
 
     rpc Login (ILoginDto) returns (IAuthResponse) {}
 
+    rpc RefreshProfile (IRefreshProfileDto) returns (IAuthResponse) {}
+
     rpc InviteUsers (IInviteUsersDto) returns (google.protobuf.Empty) {}
 
     rpc ConfirmInvitation (IConfirmInvitationDto) returns (IAuthResponse) {}
@@ -16,6 +18,10 @@ service UsersService {
     rpc ResetPassword (IResetPasswordDto) returns (google.protobuf.Empty) {}
 
     rpc UpdatePassword (IUpdatePasswordDto) returns (google.protobuf.Empty) {}
+
+    rpc ActivateAccount (IActivateAccountDto) returns (google.protobuf.Empty) {}
+
+    rpc DeactivateAccount (IDeactivateAccountDto) returns (google.protobuf.Empty) {}
 }
 
 message IRegisterAdminDto {
@@ -30,6 +36,10 @@ message ILoginDto {
     string login = 1;
 
     string password = 2;
+}
+
+message IRefreshProfileDto {
+    string userId = 1;
 }
 
 message IAuthResponse {
@@ -70,4 +80,12 @@ message IUpdatePasswordDto {
     string token = 1;
 
     string password = 2;
+}
+
+message IActivateAccountDto {
+    string userId = 1;
+}
+
+message IDeactivateAccountDto {
+    string userId = 1;
 }
