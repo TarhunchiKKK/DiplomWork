@@ -4,7 +4,7 @@ import { Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { JwtTokensService } from "common/modules";
 import { UsersService } from "../users/users.service";
-import { argon2 } from "./mocks";
+import * as argon2 from "argon2";
 
 @Injectable()
 export class AuthService {
@@ -21,7 +21,6 @@ export class AuthService {
 
         const user = await this.usersService.create({
             ...dto,
-            password: argon2.hash(dto.password),
             organizationId: organization._id,
             role: Role.ADMIN
         });

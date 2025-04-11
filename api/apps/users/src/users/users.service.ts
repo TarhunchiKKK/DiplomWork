@@ -7,6 +7,7 @@ import { CryptoService } from "common/modules";
 import { AccountStatus } from "./enums/account-status.enum";
 import { IUpdateUserDto } from "./dto/update-user.dto";
 import { ISaveUserDto } from "./dto/save-user.dto";
+import { withHashedPassword } from "./helpers/hashing.helpers";
 
 @Injectable()
 export class UsersService {
@@ -23,12 +24,14 @@ export class UsersService {
     public async create(dto: ISaveUserDto) {
         const keys = this.generateAssymetricKeys();
 
-        const user = await this.usersRepository.save({
-            ...dto,
-            role: dto.role as Role,
-            status: AccountStatus.ACTIVE,
-            ...keys
-        });
+        const user = await this.usersRepository.save(
+            withHashedPassword({
+                ...dto,
+                role: dto.role as Role,
+                status: AccountStatus.ACTIVE,
+                ...keys
+            })
+        );
 
         return {
             id: user.id,
@@ -42,7 +45,7 @@ export class UsersService {
     }
 
     public async save(dto: ISaveUserDto): Promise<User> {
-        return await this.usersRepository.save(dto);
+        return await this.usersRepository.save(withHashedPassword(dto));
     }
 
     public async findAllByOrganizationId(organizationId: string): Promise<User[]> {
@@ -92,10 +95,14 @@ export class UsersService {
             throw new NotFoundException("Пользователь не найден");
         }
 
-        Object.assign(user, { ...dto, status: AccountStatus.ACTIVE });
+        Object.assign(
+            user,
+            withHashedPassword({
+                ...dto,
+                status: AccountStatus.ACTIVE
+            })
+        );
 
-        await this.usersRepository.save(user);
-
-        return user;
+        return await this.usersRepository.save(user);
     }
 }
