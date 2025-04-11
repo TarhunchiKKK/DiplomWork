@@ -26,6 +26,8 @@ export class AuthController {
     @Get("/me")
     @UseGuards(AuthenticationGuard)
     public me(@Req() request: TAuthenticatedRequest) {
-        return request.jwtInfo;
+        return this.usersGrpcService.refreshProfile({
+            userId: request.jwtInfo.id
+        });
     }
 }

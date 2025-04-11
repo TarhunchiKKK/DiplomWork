@@ -22,6 +22,10 @@ export interface ILoginDto {
   password: string;
 }
 
+export interface IRefreshProfileDto {
+  userId: string;
+}
+
 export interface IAuthResponse {
   id: string;
   username: string;
@@ -67,6 +71,8 @@ export interface UsersServiceClient {
 
   login(request: ILoginDto): Observable<IAuthResponse>;
 
+  refreshProfile(request: IRefreshProfileDto): Observable<IAuthResponse>;
+
   inviteUsers(request: IInviteUsersDto): Observable<Empty>;
 
   confirmInvitation(request: IConfirmInvitationDto): Observable<IAuthResponse>;
@@ -84,6 +90,8 @@ export interface UsersServiceController {
   registerAdmin(request: IRegisterAdminDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
   login(request: ILoginDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
+
+  refreshProfile(request: IRefreshProfileDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
   inviteUsers(request: IInviteUsersDto): void;
 
@@ -103,6 +111,7 @@ export function UsersServiceControllerMethods() {
     const grpcMethods: string[] = [
       "registerAdmin",
       "login",
+      "refreshProfile",
       "inviteUsers",
       "confirmInvitation",
       "resetPassword",

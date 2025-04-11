@@ -14,13 +14,15 @@ export class RoleGuard extends BaseJwtGuard {
         super(tokensService, reflector);
     }
 
-    public compareData(info: TJwtInfo, context: ExecutionContext): boolean {
+    public compareData(jwtInfo: TJwtInfo, context: ExecutionContext): boolean {
+        this.handleDeactivatedAccount(jwtInfo);
+
         const roles = this.reflector.get(RequireRoles, context.getHandler());
 
         if (!roles || roles.length === 0) {
             return true;
         }
 
-        return roles.includes(info.role);
+        return roles.includes(jwtInfo.role);
     }
 }

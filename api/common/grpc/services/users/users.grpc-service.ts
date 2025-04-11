@@ -11,7 +11,8 @@ import {
     IResetPasswordDto,
     IUpdatePasswordDto,
     IActivateAccountDto,
-    IDeactivateAccountDto
+    IDeactivateAccountDto,
+    IRefreshProfileDto
 } from "common/grpc";
 import { BaseGrpcService } from "../base.grpc-service";
 
@@ -27,6 +28,10 @@ export class UsersGrpcService extends BaseGrpcService<UsersServiceClient> {
 
     public login(dto: ILoginDto) {
         return this.serviceClient.login(dto);
+    }
+
+    public refreshProfile(dto: IRefreshProfileDto) {
+        return this.serviceClient.refreshProfile(dto);
     }
 
     public sendInvitations(dto: IInviteUsersDto) {

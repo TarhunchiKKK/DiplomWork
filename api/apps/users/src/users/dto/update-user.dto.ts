@@ -1,5 +1,4 @@
-import { Role } from "common/enums";
-import { AccountStatus } from "../enums/account-status.enum";
+import { Role, AccountStatus } from "common/enums";
 
 export interface IUpdateUserDto {
     username?: string;

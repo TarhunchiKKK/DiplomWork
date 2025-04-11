@@ -1,6 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { Role } from "../../../../../common/enums/role.enum";
-import { AccountStatus } from "../enums/account-status.enum";
+import { Role, AccountStatus } from "common/enums";
 
 @Entity()
 export class User {
@@ -16,7 +15,7 @@ export class User {
     @Column({ nullable: true })
     public password?: string;
 
-    @Column({ type: "enum", enum: AccountStatus })
+    @Column({ type: "enum", enum: AccountStatus, default: AccountStatus.ACTIVE })
     public status: AccountStatus;
 
     @Column({ type: "enum", enum: Role })

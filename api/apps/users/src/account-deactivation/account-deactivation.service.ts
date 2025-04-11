@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
 import { ActivateAccountEvent, DeactivateAccountEvent, NotificationsRmqService } from "common/rabbitmq";
 import { IActivateAccountDto, IDeactivateAccountDto } from "common/grpc";
-import { AccountStatus } from "../users/enums/account-status.enum";
+import { AccountStatus } from "common/enums";
 
 @Injectable()
 export class AccountDeactivationService {
