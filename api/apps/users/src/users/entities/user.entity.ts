@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { Role, AccountStatus } from "common/enums";
+import { Role, AccountStatus, AuthType } from "common/enums";
 
 @Entity()
 export class User {
@@ -33,9 +33,13 @@ export class User {
     @CreateDateColumn()
     public createdAt: Date;
 
-    @Column({ default: false })
-    public isTwoFactorEnabled: boolean;
+    @Column({ type: "enum", enum: AuthType, default: AuthType.BASIC })
+    public authType: AuthType;
 
-    @Column({ default: false })
-    public isDeactivated: boolean;
+    @Column({ nullable: true, default: null })
+    public totpSecret?: string;
+
+    public get useBasicAuth() {
+        return this.authType === AuthType.BASIC;
+    }
 }

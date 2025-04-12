@@ -22,6 +22,14 @@ service UsersService {
     rpc ActivateAccount (IActivateAccountDto) returns (google.protobuf.Empty) {}
 
     rpc DeactivateAccount (IDeactivateAccountDto) returns (google.protobuf.Empty) {}
+
+    rpc GenerateTotp (IGenerateTotpDto) returns (IGenerateTotpResponse) {}
+
+    rpc EnableTotp (IEnableTotpDto) returns (google.protobuf.Empty) {}
+
+    rpc DisableTotp (IDisableTotpDto) returns (google.protobuf.Empty) {}
+
+    rpc LoginWithTotp (ILoginWithTotpDto) returns (IAuthResponse) {}
 }
 
 message IRegisterAdminDto {
@@ -88,4 +96,38 @@ message IActivateAccountDto {
 
 message IDeactivateAccountDto {
     string userId = 1;
+}
+
+message IGenerateTotpDto {
+    string userId = 1;
+
+    string userEmail = 2;
+}
+
+message IGenerateTotpResponse {
+    string qrCode = 1;
+
+    string secret = 2;
+}
+
+message IEnableTotpDto {
+    string userId = 1;
+
+    string userEmail = 2;
+
+    string secret = 3;
+
+    string pin = 4;
+}
+
+message IDisableTotpDto {
+    string userId = 1;
+}
+
+message ILoginWithTotpDto {
+    string userId = 1;
+
+    string userEmail = 2;
+
+    string pin = 3;
 }

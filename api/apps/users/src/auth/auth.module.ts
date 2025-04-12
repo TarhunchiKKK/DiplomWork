@@ -8,6 +8,7 @@ import { UsersModule } from "../users/users.module";
 @Module({
     imports: [JwtTokensModule, UsersModule, OrganizationsGrpcModule],
     controllers: [AuthController],
-    providers: [AuthService]
+    providers: [AuthService],
+    exports: [AuthService]
 })
 export class AuthModule {}

@@ -4,7 +4,7 @@ import { UpdateDocumentAimDto, UpdateDocumentAimsDto } from "../dto/update-docum
 export const UpdateDocumentAimsDtoApiInfo = createEntityApiInfo<UpdateDocumentAimsDto>({
     organizationId: {
         description: "Идентификатор организации (24 символа)",
-        example: swaggerExampleValues.mongoId
+        example: swaggerExampleValues.id.mongo
     },
     documentAims: {
         description: "Цели документов",
@@ -17,7 +17,7 @@ export const UpdateDocumentAimsDtoApiInfo = createEntityApiInfo<UpdateDocumentAi
 export const UpdateDocumentAimDtoApiInfo = createEntityApiInfo<UpdateDocumentAimDto>({
     _id: {
         description: "Идентификатор сущности(24 символа)",
-        example: swaggerExampleValues.mongoId,
+        example: swaggerExampleValues.id.mongo,
         required: false
     },
     __v: {

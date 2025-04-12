@@ -5,6 +5,7 @@ import { firstValueFrom } from "rxjs";
 import { JwtTokensService } from "common/modules";
 import { UsersService } from "../users/users.service";
 import * as argon2 from "argon2";
+import { User } from "../users/entities/user.entity";
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,17 @@ export class AuthService {
 
         private readonly tokensService: JwtTokensService
     ) {}
+
+    public createJwtFromUser(user: User) {
+        return this.tokensService.create({
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            role: user.role,
+            status: user.status,
+            organizationId: user.organizationId
+        });
+    }
 
     public async registerAdmin(dto: IRegisterAdminDto): Promise<IAuthResponse> {
         const organization = await firstValueFrom(this.organizationsGrpcService.createDefault());
@@ -31,15 +43,8 @@ export class AuthService {
             username: user.username,
             email: user.email,
             role: user.role,
-            organizationId: organization._id,
-            token: this.tokensService.create({
-                id: user.id,
-                username: user.username,
-                email: user.email,
-                role: user.role,
-                status: user.status,
-                organizationId: organization._id
-            })
+            organizationId: user.organizationId,
+            token: this.createJwtFromUser(user)
         };
     }
 
@@ -56,14 +61,7 @@ export class AuthService {
             email: user.email,
             role: user.role,
             organizationId: user.organizationId,
-            token: this.tokensService.create({
-                id: user.id,
-                username: user.username,
-                email: user.email,
-                role: user.role,
-                status: user.status,
-                organizationId: user.organizationId
-            })
+            token: user.useBasicAuth ? this.createJwtFromUser(user) : ""
         };
     }
 
@@ -76,14 +74,7 @@ export class AuthService {
             email: user.email,
             role: user.role,
             organizationId: user.organizationId,
-            token: this.tokensService.create({
-                id: user.id,
-                username: user.username,
-                email: user.email,
-                role: user.role,
-                status: user.status,
-                organizationId: user.organizationId
-            })
+            token: this.createJwtFromUser(user)
         };
     }
 }

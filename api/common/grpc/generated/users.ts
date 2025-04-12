@@ -64,6 +64,33 @@ export interface IDeactivateAccountDto {
   userId: string;
 }
 
+export interface IGenerateTotpDto {
+  userId: string;
+  userEmail: string;
+}
+
+export interface IGenerateTotpResponse {
+  qrCode: string;
+  secret: string;
+}
+
+export interface IEnableTotpDto {
+  userId: string;
+  userEmail: string;
+  secret: string;
+  pin: string;
+}
+
+export interface IDisableTotpDto {
+  userId: string;
+}
+
+export interface ILoginWithTotpDto {
+  userId: string;
+  userEmail: string;
+  pin: string;
+}
+
 export const USERS_PACKAGE_NAME = "users";
 
 export interface UsersServiceClient {
@@ -84,6 +111,14 @@ export interface UsersServiceClient {
   activateAccount(request: IActivateAccountDto): Observable<Empty>;
 
   deactivateAccount(request: IDeactivateAccountDto): Observable<Empty>;
+
+  generateTotp(request: IGenerateTotpDto): Observable<IGenerateTotpResponse>;
+
+  enableTotp(request: IEnableTotpDto): Observable<Empty>;
+
+  disableTotp(request: IDisableTotpDto): Observable<Empty>;
+
+  loginWithTotp(request: ILoginWithTotpDto): Observable<IAuthResponse>;
 }
 
 export interface UsersServiceController {
@@ -104,6 +139,16 @@ export interface UsersServiceController {
   activateAccount(request: IActivateAccountDto): void;
 
   deactivateAccount(request: IDeactivateAccountDto): void;
+
+  generateTotp(
+    request: IGenerateTotpDto,
+  ): Promise<IGenerateTotpResponse> | Observable<IGenerateTotpResponse> | IGenerateTotpResponse;
+
+  enableTotp(request: IEnableTotpDto): void;
+
+  disableTotp(request: IDisableTotpDto): void;
+
+  loginWithTotp(request: ILoginWithTotpDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 }
 
 export function UsersServiceControllerMethods() {
@@ -118,6 +163,10 @@ export function UsersServiceControllerMethods() {
       "updatePassword",
       "activateAccount",
       "deactivateAccount",
+      "generateTotp",
+      "enableTotp",
+      "disableTotp",
+      "loginWithTotp",
     ];
     for (const method of grpcMethods) {
       
