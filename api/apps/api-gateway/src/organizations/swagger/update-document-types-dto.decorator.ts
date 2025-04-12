@@ -4,7 +4,7 @@ import { UpdateDocumentTypeDto, UpdateDocumentTypesDto } from "../dto/update-doc
 export const UpdateDocumentTypesDtoApiInfo = createEntityApiInfo<UpdateDocumentTypesDto>({
     organizationId: {
         description: "Идентификатор организации (24 символа)",
-        example: swaggerExampleValues.mongoId
+        example: swaggerExampleValues.id.mongo
     },
     documentTypes: {
         description: "Типы документов",
@@ -16,7 +16,7 @@ export const UpdateDocumentTypesDtoApiInfo = createEntityApiInfo<UpdateDocumentT
 export const UpdateDocumentTypeDtoApiInfo = createEntityApiInfo<UpdateDocumentTypeDto>({
     _id: {
         description: "Идентификатор сущности(24 символа)",
-        example: swaggerExampleValues.mongoId,
+        example: swaggerExampleValues.id.mongo,
         required: false
     },
     __v: {

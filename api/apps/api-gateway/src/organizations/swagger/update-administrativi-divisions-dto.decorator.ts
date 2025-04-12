@@ -8,7 +8,7 @@ import {
 export const UpdateAdministrativeDivisionsDtoApiInfo = createEntityApiInfo<UpdateAdministrativeDivisionsDto>({
     organizationId: {
         description: "Идентификатор организации (24 символа)",
-        example: swaggerExampleValues.mongoId
+        example: swaggerExampleValues.id.mongo
     },
     administrativeDivisions: {
         description: "Административные подразделения",
@@ -20,7 +20,7 @@ export const UpdateAdministrativeDivisionsDtoApiInfo = createEntityApiInfo<Updat
 export const UpdateAdministrativeDivisionDtoApiInfo = createEntityApiInfo<UpdateAdministrativeDivisionDto>({
     _id: {
         description: "Идентификатор сущности(24 символа)",
-        example: swaggerExampleValues.mongoId,
+        example: swaggerExampleValues.id.mongo,
         required: false
     },
     __v: {
@@ -42,7 +42,7 @@ export const UpdateAdministrativeDivisionDtoApiInfo = createEntityApiInfo<Update
 export const UpdatePostDtoApiInfo = createEntityApiInfo<UpdatePostDto>({
     _id: {
         description: "Идентификатор сущности(24 символа)",
-        example: swaggerExampleValues.mongoId,
+        example: swaggerExampleValues.id.mongo,
         required: false
     },
     __v: {

@@ -4,11 +4,11 @@ import { ConfirmInvitationDto } from "../dto/confirm-invitation.dto";
 export const ConfirmInvitationDtoApiInfo = createEntityApiInfo<ConfirmInvitationDto>({
     username: {
         description: "Отображаемое имя пользователя",
-        example: swaggerExampleValues.username
+        example: swaggerExampleValues.user.username
     },
     password: {
         description: "Пароль пользователя",
-        example: swaggerExampleValues.password
+        example: swaggerExampleValues.user.password
     },
     token: {
         description: "Токен приглашения пользователя",

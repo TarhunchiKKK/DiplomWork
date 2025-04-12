@@ -4,11 +4,11 @@ import { InviteUsersDto } from "../dto/invite-users.dto";
 export const InviteUsersDtoApiInfo = createEntityApiInfo<InviteUsersDto>({
     organizationId: {
         description: "Идентификатор организации",
-        example: swaggerExampleValues.mongoId
+        example: swaggerExampleValues.id.mongo
     },
     adminEmail: {
         description: "Электронная почта отправителя(администратора организации)",
-        example: swaggerExampleValues.email
+        example: swaggerExampleValues.user.email
     },
     emails: {
         description: "Массив электронных почт пользователей",

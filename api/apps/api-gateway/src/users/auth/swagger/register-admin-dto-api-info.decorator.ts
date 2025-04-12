@@ -4,14 +4,14 @@ import { RegisterAdminDto } from "../dto/register-admin.dto";
 export const RegisterAdminApiProperties = createEntityApiInfo<RegisterAdminDto>({
     username: {
         description: "Отображаемое имя пользователя",
-        example: swaggerExampleValues.username
+        example: swaggerExampleValues.user.username
     },
     email: {
         description: "Отображаемое имя пользователя",
-        example: swaggerExampleValues.email
+        example: swaggerExampleValues.user.email
     },
     password: {
         description: "Отображаемое имя пользователя",
-        example: swaggerExampleValues.password
+        example: swaggerExampleValues.user.password
     }
 });
