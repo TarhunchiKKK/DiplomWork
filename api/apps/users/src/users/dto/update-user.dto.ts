@@ -1,4 +1,4 @@
-import { Role, AccountStatus } from "common/enums";
+import { Role, AccountStatus, AuthType } from "common/enums";
 
 export interface IUpdateUserDto {
     username?: string;
@@ -11,7 +11,7 @@ export interface IUpdateUserDto {
 
     role?: Role;
 
-    isTwoFactorEnabled?: boolean;
+    authType?: AuthType;
 
-    isDeactivated?: boolean;
+    totpSecret?: string;
 }
