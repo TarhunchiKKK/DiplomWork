@@ -1,6 +1,7 @@
-import { createControllerApiInfo, swaggerExampleValues } from "common/swagger";
+import { createControllerApiInfo } from "common/swagger";
 import { AuthController } from "../auth.controller";
 import { HttpStatus } from "@nestjs/common";
+import { AuthResponseDto } from "apps/api-gateway/src/swagger/auth-response.dto";
 
 export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
     tags: "Аутентификация",
@@ -12,7 +13,7 @@ export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
             },
             response: {
                 status: HttpStatus.CREATED,
-                example: swaggerExampleValues.auth.response
+                type: () => AuthResponseDto
             }
         },
         login: {
@@ -21,7 +22,7 @@ export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
             },
             response: {
                 status: HttpStatus.OK,
-                example: swaggerExampleValues.auth.response
+                type: () => AuthResponseDto
             }
         },
         me: {
@@ -30,7 +31,7 @@ export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
             },
             response: {
                 status: HttpStatus.OK,
-                example: swaggerExampleValues.auth.response
+                type: () => AuthResponseDto
             },
             bearerAuth: true
         }

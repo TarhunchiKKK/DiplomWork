@@ -1,6 +1,7 @@
-import { createControllerApiInfo, swaggerExampleValues } from "common/swagger";
+import { createControllerApiInfo } from "common/swagger";
 import { TotpController } from "../totp.controller";
 import { HttpStatus } from "@nestjs/common";
+import { AuthResponseDto } from "apps/api-gateway/src/swagger/auth-response.dto";
 
 export const TotpControllerApiInfo = createControllerApiInfo<TotpController>({
     tags: "TOTP-аутентификация",
@@ -42,7 +43,7 @@ export const TotpControllerApiInfo = createControllerApiInfo<TotpController>({
             },
             response: {
                 status: HttpStatus.OK,
-                example: swaggerExampleValues.auth.response
+                type: () => AuthResponseDto
             },
             bearerAuth: true
         }

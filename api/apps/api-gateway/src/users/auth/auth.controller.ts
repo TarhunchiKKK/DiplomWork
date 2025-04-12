@@ -2,9 +2,9 @@ import { Body, Controller, Get, Post, Req, UseGuards, UsePipes, ValidationPipe }
 import { UsersGrpcService } from "common/grpc";
 import { RegisterAdminDto } from "./dto/register-admin.dto";
 import { LoginDto } from "./dto/login.dto";
-import { AuthControllerApiInfo } from "./swagger/auth-controller-api-info.decorator";
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
+import { AuthControllerApiInfo } from "./swagger/auth-controller-api-info.decorator";
 
 @Controller("/users/auth")
 @AuthControllerApiInfo()
