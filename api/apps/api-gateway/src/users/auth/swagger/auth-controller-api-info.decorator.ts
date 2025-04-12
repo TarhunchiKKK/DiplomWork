@@ -1,4 +1,4 @@
-import { createControllerApiInfo } from "common/swagger";
+import { createControllerApiInfo, swaggerExampleValues } from "common/swagger";
 import { AuthController } from "../auth.controller";
 import { HttpStatus } from "@nestjs/common";
 
@@ -12,7 +12,7 @@ export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
             },
             response: {
                 status: HttpStatus.CREATED,
-                description: "Объект с профилем пользователя, идентификатором созданной организации и JWT-токеном"
+                example: swaggerExampleValues.auth.response
             }
         },
         login: {
@@ -21,7 +21,7 @@ export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
             },
             response: {
                 status: HttpStatus.OK,
-                description: "Объект с профилем пользователя, идентификатором его организации и JWT-токеном"
+                example: swaggerExampleValues.auth.response
             }
         },
         me: {
@@ -30,7 +30,7 @@ export const AuthControllerApiInfo = createControllerApiInfo<AuthController>({
             },
             response: {
                 status: HttpStatus.OK,
-                description: "Профиль пользователя"
+                example: swaggerExampleValues.auth.response
             },
             bearerAuth: true
         }

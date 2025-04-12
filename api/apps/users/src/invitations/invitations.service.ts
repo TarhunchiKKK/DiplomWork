@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { JwtTokensService, UserInvitationTokensService } from "common/modules";
+import { UserInvitationTokensService } from "common/modules";
 import { NotificationsRmqService, UserInvitationEvent } from "common/rabbitmq";
 import { UsersService } from "../users/users.service";
 import { IAuthResponse, IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
 import { AccountStatus } from "common/enums";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable()
 export class InvitationsService {
@@ -12,7 +13,7 @@ export class InvitationsService {
 
         private readonly notificationsRmqService: NotificationsRmqService,
 
-        private readonly jwtTokensService: JwtTokensService,
+        private readonly authService: AuthService,
 
         private readonly invitationTokensService: UserInvitationTokensService
     ) {}
@@ -49,14 +50,7 @@ export class InvitationsService {
             email: user.email,
             role: user.role,
             organizationId: user.organizationId,
-            token: this.jwtTokensService.create({
-                id: user.id,
-                username: user.username as string,
-                email: user.email,
-                role: user.role,
-                status: user.status,
-                organizationId: user.organizationId
-            })
+            token: this.authService.createJwtFromUser(user)
         };
     }
 }

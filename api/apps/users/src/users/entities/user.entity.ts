@@ -38,4 +38,8 @@ export class User {
 
     @Column({ nullable: true, default: null })
     public totpSecret?: string;
+
+    public get useBasicAuth() {
+        return this.authType === AuthType.BASIC;
+    }
 }

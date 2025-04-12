@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { UsersService } from "../../users/users.service";
-import { IDisableTotpDto, IEnableTotpDto, IGenerateTotpDto } from "common/grpc";
+import { UsersService } from "../users/users.service";
+import { IAuthResponse, IDisableTotpDto, IEnableTotpDto, IGenerateTotpDto, ILoginWithTotpDto } from "common/grpc";
 import { generateTotpSecret } from "./helpers/encoding.helpers";
 import { ConfigService } from "@nestjs/config";
 import { ICreateTotpInstanceDto } from "./dto/create-totp-instance.dto";
@@ -8,11 +8,14 @@ import { TOTP } from "otpauth";
 import { createQrCodeFromTotp } from "./helpers/qr-code.helpers";
 import { IValidateTotpDto } from "./dto/validate-totp.dto";
 import { AuthType } from "common/enums";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable()
 export class TotpService {
     public constructor(
         private readonly usersService: UsersService,
+
+        private readonly authService: AuthService,
 
         private readonly configService: ConfigService
     ) {}
@@ -68,5 +71,24 @@ export class TotpService {
             authType: AuthType.BASIC,
             totpSecret: null
         });
+    }
+
+    public async login(dto: ILoginWithTotpDto): Promise<IAuthResponse> {
+        const user = await this.usersService.findOneById(dto.userId);
+
+        this.validateTotp({
+            label: dto.userEmail,
+            secret: user.totpSecret,
+            pin: dto.pin
+        });
+
+        return {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            role: user.role,
+            organizationId: user.organizationId,
+            token: this.authService.createJwtFromUser(user)
+        };
     }
 }

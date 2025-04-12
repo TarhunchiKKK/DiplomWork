@@ -1,4 +1,4 @@
-import { createControllerApiInfo } from "common/swagger";
+import { createControllerApiInfo, swaggerExampleValues } from "common/swagger";
 import { InvitationsController } from "../invitations.controller";
 import { HttpStatus } from "@nestjs/common";
 
@@ -21,7 +21,7 @@ export const InvitatiosnControllerApiInfo = createControllerApiInfo<InvitationsC
             },
             response: {
                 status: HttpStatus.OK,
-                description: "Возвращает объект с профилем пользователя, идентификатором его организации и JWT-токен"
+                example: swaggerExampleValues.auth.response
             },
             bearerAuth: true
         }

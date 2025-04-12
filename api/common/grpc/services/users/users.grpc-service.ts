@@ -15,7 +15,8 @@ import {
     IRefreshProfileDto,
     IGenerateTotpDto,
     IEnableTotpDto,
-    IDisableTotpDto
+    IDisableTotpDto,
+    ILoginWithTotpDto
 } from "common/grpc";
 import { BaseGrpcService } from "../base.grpc-service";
 
@@ -71,5 +72,9 @@ export class UsersGrpcService extends BaseGrpcService<UsersServiceClient> {
 
     public disableTotp(dto: IDisableTotpDto) {
         return this.serviceClient.disableTotp(dto);
+    }
+
+    public loginWithTotp(dto: ILoginWithTotpDto) {
+        return this.serviceClient.loginWithTotp(dto);
     }
 }

@@ -8,6 +8,6 @@ export const UpdatePasswordDtoApiInfo = createEntityApiInfo<UpdatePasswordDto>({
     },
     token: {
         description: "Токен смены пароля",
-        example: swaggerExampleValues.jwt
+        example: swaggerExampleValues.auth.jwt
     }
 });

@@ -85,6 +85,12 @@ export interface IDisableTotpDto {
   userId: string;
 }
 
+export interface ILoginWithTotpDto {
+  userId: string;
+  userEmail: string;
+  pin: string;
+}
+
 export const USERS_PACKAGE_NAME = "users";
 
 export interface UsersServiceClient {
@@ -111,6 +117,8 @@ export interface UsersServiceClient {
   enableTotp(request: IEnableTotpDto): Observable<Empty>;
 
   disableTotp(request: IDisableTotpDto): Observable<Empty>;
+
+  loginWithTotp(request: ILoginWithTotpDto): Observable<IAuthResponse>;
 }
 
 export interface UsersServiceController {
@@ -139,6 +147,8 @@ export interface UsersServiceController {
   enableTotp(request: IEnableTotpDto): void;
 
   disableTotp(request: IDisableTotpDto): void;
+
+  loginWithTotp(request: ILoginWithTotpDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 }
 
 export function UsersServiceControllerMethods() {
@@ -156,6 +166,7 @@ export function UsersServiceControllerMethods() {
       "generateTotp",
       "enableTotp",
       "disableTotp",
+      "loginWithTotp",
     ];
     for (const method of grpcMethods) {
       

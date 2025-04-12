@@ -12,6 +12,6 @@ export const ConfirmInvitationDtoApiInfo = createEntityApiInfo<ConfirmInvitation
     },
     token: {
         description: "Токен приглашения пользователя",
-        example: swaggerExampleValues.jwt
+        example: swaggerExampleValues.auth.jwt
     }
 });

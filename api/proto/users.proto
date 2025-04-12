@@ -28,6 +28,8 @@ service UsersService {
     rpc EnableTotp (IEnableTotpDto) returns (google.protobuf.Empty) {}
 
     rpc DisableTotp (IDisableTotpDto) returns (google.protobuf.Empty) {}
+
+    rpc LoginWithTotp (ILoginWithTotpDto) returns (IAuthResponse) {}
 }
 
 message IRegisterAdminDto {
@@ -120,4 +122,12 @@ message IEnableTotpDto {
 
 message IDisableTotpDto {
     string userId = 1;
+}
+
+message ILoginWithTotpDto {
+    string userId = 1;
+
+    string userEmail = 2;
+
+    string pin = 3;
 }

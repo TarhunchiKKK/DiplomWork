@@ -3,12 +3,13 @@ import {
     IDisableTotpDto,
     IEnableTotpDto,
     IGenerateTotpDto,
+    ILoginWithTotpDto,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
 import { TotpService } from "./totp.service";
 
-type ServiceController = Pick<UsersServiceController, "generateTotp" | "enableTotp" | "disableTotp">;
+type ServiceController = Pick<UsersServiceController, "generateTotp" | "enableTotp" | "disableTotp" | "loginWithTotp">;
 
 @Controller()
 @UsersServiceControllerMethods()
@@ -25,5 +26,9 @@ export class TotpController implements ServiceController {
 
     public async disableTotp(dto: IDisableTotpDto) {
         await this.totpService.disable(dto);
+    }
+
+    public async loginWithTotp(dto: ILoginWithTotpDto) {
+        return await this.totpService.login(dto);
     }
 }
