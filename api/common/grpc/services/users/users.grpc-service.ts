@@ -12,7 +12,10 @@ import {
     IUpdatePasswordDto,
     IActivateAccountDto,
     IDeactivateAccountDto,
-    IRefreshProfileDto
+    IRefreshProfileDto,
+    IGenerateTotpDto,
+    IEnableTotpDto,
+    IDisableTotpDto
 } from "common/grpc";
 import { BaseGrpcService } from "../base.grpc-service";
 
@@ -56,5 +59,17 @@ export class UsersGrpcService extends BaseGrpcService<UsersServiceClient> {
 
     public deactivateAccount(dto: IDeactivateAccountDto) {
         return this.serviceClient.deactivateAccount(dto);
+    }
+
+    public generateTotp(dto: IGenerateTotpDto) {
+        return this.serviceClient.generateTotp(dto);
+    }
+
+    public enableTotp(dto: IEnableTotpDto) {
+        return this.serviceClient.enableTotp(dto);
+    }
+
+    public disableTotp(dto: IDisableTotpDto) {
+        return this.serviceClient.disableTotp(dto);
     }
 }
