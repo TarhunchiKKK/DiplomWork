@@ -1,16 +1,6 @@
-import {
-    Body,
-    Controller,
-    Get,
-    Patch,
-    Req,
-    UseGuards,
-    UseInterceptors,
-    UsePipes,
-    ValidationPipe
-} from "@nestjs/common";
+import { Body, Controller, Get, Patch, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { Role } from "common/enums";
-import { ExtractDataInterceptor, OrganizationsGrpcService } from "common/grpc";
+import { OrganizationsGrpcService } from "common/grpc";
 import { AuthenticationGuard, ExtractFromRequest, OrganizationGuard, RequireRoles, RoleGuard } from "common/middleware";
 import { OrganizationsControllerApiInfo } from "./swagger/organizations-controller-api-info.decorator";
 import { TAuthenticatedRequest } from "common/modules";
@@ -25,7 +15,6 @@ export class OrganizationsController {
 
     @Get(":id")
     @UseGuards(AuthenticationGuard)
-    @UseInterceptors(ExtractDataInterceptor)
     public async findOneById(@Req() request: TAuthenticatedRequest) {
         return this.organizationsGrpcService.findOneById(request.jwtInfo.organizationId);
     }

@@ -1,5 +1,4 @@
 import { Role } from "common/enums";
-import { IAuthResponse } from "common/grpc";
 import { createEntityApiInfo, swaggerExampleValues } from "common/swagger";
 
 export const AuthResponseDtoApiInfo = createEntityApiInfo<AuthResponseDto>({

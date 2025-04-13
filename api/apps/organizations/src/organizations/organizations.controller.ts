@@ -1,7 +1,6 @@
-import { Controller, UseInterceptors } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import { OrganizationsService } from "./organizations.service";
 import {
-    GrpcNotFoundInterceptor,
     ICreateDefaultOrganizationResponse,
     IUpdateAdministrativeDivisionsDto,
     IUpdateDocumentAimsDto,
@@ -23,7 +22,6 @@ export class OrganizationsController implements UnknownReturnTypes<Organizations
         return asType<ICreateDefaultOrganizationResponse>(organization);
     }
 
-    @UseInterceptors(GrpcNotFoundInterceptor)
     public async findOneById(dto: StringValue) {
         return await this.organizationsService.findOneById(dto.value);
     }

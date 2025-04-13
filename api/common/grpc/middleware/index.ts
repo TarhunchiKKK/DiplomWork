@@ -1,3 +1,2 @@
-export { GrpcNotFoundInterceptor } from "./grpc-not-found.interceptor";
-export { ExtractDataInterceptor } from "./extract-data.interceptor";
-export { ReturnEmptyInterceptor } from "./return-empty.interceptor";
+export { ExtractGrpcResponseInterceptor } from "./extract-grpc-response.interceptor";
+export { InsertGrpcResponseInterceptor } from "./insert-grpc-response.interceptor";

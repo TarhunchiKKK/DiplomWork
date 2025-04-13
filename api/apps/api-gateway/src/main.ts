@@ -3,6 +3,7 @@ import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { INestApplication } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { ExtractGrpcResponseInterceptor } from "common/grpc";
 
 function setupSwagger(app: INestApplication) {
     const config = new DocumentBuilder()
@@ -25,6 +26,8 @@ async function bootstrap() {
     app.enableCors();
 
     setupSwagger(app);
+
+    app.useGlobalInterceptors(new ExtractGrpcResponseInterceptor());
 
     const configService = app.get(ConfigService);
 

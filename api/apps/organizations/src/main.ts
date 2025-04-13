@@ -3,7 +3,7 @@ import { AppModule } from "./app.module";
 import { ConfigService } from "@nestjs/config";
 import { MicroserviceOptions } from "@nestjs/microservices";
 import { getGrpcConfig } from "common/config";
-import { ORGANIZATIONS_PACKAGE_NAME } from "common/grpc";
+import { InsertGrpcResponseInterceptor, ORGANIZATIONS_PACKAGE_NAME } from "common/grpc";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -11,6 +11,8 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
 
     app.connectMicroservice<MicroserviceOptions>(getGrpcConfig(configService, ORGANIZATIONS_PACKAGE_NAME));
+
+    app.useGlobalInterceptors(new InsertGrpcResponseInterceptor());
 
     await app.startAllMicroservices();
 
