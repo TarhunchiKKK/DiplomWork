@@ -5,6 +5,7 @@ import { RequireRoles, RoleGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { ConfirmInvitationDto } from "./dto/confirm-invitation.dto";
 import { InvitatiosnControllerApiInfo } from "./swagger/invitations-controller-api-info.decorator";
+import { Recaptcha } from "@nestlab/google-recaptcha";
 
 @Controller("/users/invitations")
 @InvitatiosnControllerApiInfo()
@@ -23,6 +24,7 @@ export class InvitationsController {
     }
 
     @Patch("/confirm")
+    @Recaptcha()
     @UsePipes(ValidationPipe)
     public confirmInvitation(@Body() dto: ConfirmInvitationDto) {
         return this.usersGrpcService.confirmInvitation(dto);
