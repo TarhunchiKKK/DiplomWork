@@ -6,12 +6,13 @@ import {
     UsersServiceControllerMethods
 } from "common/grpc";
 import { InvitationsService } from "./invitations.service";
+import { UnknownReturnTypes } from "common/utils";
 
 type ServiceConttroller = Pick<UsersServiceController, "inviteUsers" | "confirmInvitation">;
 
 @Controller()
 @UsersServiceControllerMethods()
-export class InvitationsController implements ServiceConttroller {
+export class InvitationsController implements UnknownReturnTypes<ServiceConttroller> {
     public constructor(private readonly invitationsService: InvitationsService) {}
 
     public async inviteUsers(dto: IInviteUsersDto) {

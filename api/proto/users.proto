@@ -1,35 +1,36 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto"; 
+import "common.proto";
 
 package users;
 
 service UsersService {
-    rpc RegisterAdmin (IRegisterAdminDto) returns (IAuthResponse) {}
+    rpc RegisterAdmin (IRegisterAdminDto) returns (common.IAuthResponse) {}
 
-    rpc Login (ILoginDto) returns (IAuthResponse) {}
+    rpc Login (ILoginDto) returns (common.IAuthResponse) {}
 
-    rpc RefreshProfile (IRefreshProfileDto) returns (IAuthResponse) {}
+    rpc RefreshProfile (IRefreshProfileDto) returns (common.IAuthResponse) {}
 
-    rpc InviteUsers (IInviteUsersDto) returns (google.protobuf.Empty) {}
+    rpc InviteUsers (IInviteUsersDto) returns (common.IEmptyResponse) {}
 
-    rpc ConfirmInvitation (IConfirmInvitationDto) returns (IAuthResponse) {}
+    rpc ConfirmInvitation (IConfirmInvitationDto) returns (common.IAuthResponse) {}
 
-    rpc ResetPassword (IResetPasswordDto) returns (google.protobuf.Empty) {}
+    rpc ResetPassword (IResetPasswordDto) returns (common.IEmptyResponse) {}
 
-    rpc UpdatePassword (IUpdatePasswordDto) returns (google.protobuf.Empty) {}
+    rpc UpdatePassword (IUpdatePasswordDto) returns (common.IEmptyResponse) {}
 
-    rpc ActivateAccount (IActivateAccountDto) returns (google.protobuf.Empty) {}
+    rpc ActivateAccount (IActivateAccountDto) returns (common.IEmptyResponse) {}
 
-    rpc DeactivateAccount (IDeactivateAccountDto) returns (google.protobuf.Empty) {}
+    rpc DeactivateAccount (IDeactivateAccountDto) returns (common.IEmptyResponse) {}
 
     rpc GenerateTotp (IGenerateTotpDto) returns (IGenerateTotpResponse) {}
 
-    rpc EnableTotp (IEnableTotpDto) returns (google.protobuf.Empty) {}
+    rpc EnableTotp (IEnableTotpDto) returns (common.IEmptyResponse) {}
 
-    rpc DisableTotp (IDisableTotpDto) returns (google.protobuf.Empty) {}
+    rpc DisableTotp (IDisableTotpDto) returns (common.IEmptyResponse) {}
 
-    rpc LoginWithTotp (ILoginWithTotpDto) returns (IAuthResponse) {}
+    rpc LoginWithTotp (ILoginWithTotpDto) returns (common.IAuthResponse) {}
+
 }
 
 message IRegisterAdminDto {
@@ -48,20 +49,6 @@ message ILoginDto {
 
 message IRefreshProfileDto {
     string userId = 1;
-}
-
-message IAuthResponse {
-    string id = 1;
-
-    string username = 2;
-    
-    string email = 3;
-
-    string role = 4;
-
-    string organizationId = 5;
-
-    string token = 6;
 }
 
 message IInviteUsersDto {

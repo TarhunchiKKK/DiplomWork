@@ -8,12 +8,13 @@ import {
     UsersServiceControllerMethods
 } from "common/grpc";
 import { TotpService } from "./totp.service";
+import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<UsersServiceController, "generateTotp" | "enableTotp" | "disableTotp" | "loginWithTotp">;
 
 @Controller()
 @UsersServiceControllerMethods()
-export class TotpController implements ServiceController {
+export class TotpController implements UnknownReturnTypes<ServiceController> {
     public constructor(private readonly totpService: TotpService) {}
 
     public async generateTotp(dto: IGenerateTotpDto) {

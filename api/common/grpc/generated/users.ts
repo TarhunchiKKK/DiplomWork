@@ -7,7 +7,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { Empty } from "./google/protobuf/empty";
+import { IAuthResponse, IEmptyResponse } from "./common";
 
 const protobufPackage = "users";
 
@@ -24,15 +24,6 @@ export interface ILoginDto {
 
 export interface IRefreshProfileDto {
   userId: string;
-}
-
-export interface IAuthResponse {
-  id: string;
-  username: string;
-  email: string;
-  role: string;
-  organizationId: string;
-  token: string;
 }
 
 export interface IInviteUsersDto {
@@ -100,23 +91,23 @@ export interface UsersServiceClient {
 
   refreshProfile(request: IRefreshProfileDto): Observable<IAuthResponse>;
 
-  inviteUsers(request: IInviteUsersDto): Observable<Empty>;
+  inviteUsers(request: IInviteUsersDto): Observable<IEmptyResponse>;
 
   confirmInvitation(request: IConfirmInvitationDto): Observable<IAuthResponse>;
 
-  resetPassword(request: IResetPasswordDto): Observable<Empty>;
+  resetPassword(request: IResetPasswordDto): Observable<IEmptyResponse>;
 
-  updatePassword(request: IUpdatePasswordDto): Observable<Empty>;
+  updatePassword(request: IUpdatePasswordDto): Observable<IEmptyResponse>;
 
-  activateAccount(request: IActivateAccountDto): Observable<Empty>;
+  activateAccount(request: IActivateAccountDto): Observable<IEmptyResponse>;
 
-  deactivateAccount(request: IDeactivateAccountDto): Observable<Empty>;
+  deactivateAccount(request: IDeactivateAccountDto): Observable<IEmptyResponse>;
 
   generateTotp(request: IGenerateTotpDto): Observable<IGenerateTotpResponse>;
 
-  enableTotp(request: IEnableTotpDto): Observable<Empty>;
+  enableTotp(request: IEnableTotpDto): Observable<IEmptyResponse>;
 
-  disableTotp(request: IDisableTotpDto): Observable<Empty>;
+  disableTotp(request: IDisableTotpDto): Observable<IEmptyResponse>;
 
   loginWithTotp(request: ILoginWithTotpDto): Observable<IAuthResponse>;
 }
@@ -128,25 +119,27 @@ export interface UsersServiceController {
 
   refreshProfile(request: IRefreshProfileDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
-  inviteUsers(request: IInviteUsersDto): void;
+  inviteUsers(request: IInviteUsersDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   confirmInvitation(request: IConfirmInvitationDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
-  resetPassword(request: IResetPasswordDto): void;
+  resetPassword(request: IResetPasswordDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  updatePassword(request: IUpdatePasswordDto): void;
+  updatePassword(request: IUpdatePasswordDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  activateAccount(request: IActivateAccountDto): void;
+  activateAccount(request: IActivateAccountDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  deactivateAccount(request: IDeactivateAccountDto): void;
+  deactivateAccount(
+    request: IDeactivateAccountDto,
+  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   generateTotp(
     request: IGenerateTotpDto,
   ): Promise<IGenerateTotpResponse> | Observable<IGenerateTotpResponse> | IGenerateTotpResponse;
 
-  enableTotp(request: IEnableTotpDto): void;
+  enableTotp(request: IEnableTotpDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  disableTotp(request: IDisableTotpDto): void;
+  disableTotp(request: IDisableTotpDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   loginWithTotp(request: ILoginWithTotpDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 }

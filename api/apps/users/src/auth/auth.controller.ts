@@ -7,12 +7,13 @@ import {
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
+import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<UsersServiceController, "registerAdmin" | "login" | "refreshProfile">;
 
 @Controller()
 @UsersServiceControllerMethods()
-export class AuthController implements ServiceController {
+export class AuthController implements UnknownReturnTypes<ServiceController> {
     public constructor(private readonly authService: AuthService) {}
 
     public async registerAdmin(dto: IRegisterAdminDto) {

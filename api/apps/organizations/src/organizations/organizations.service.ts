@@ -3,12 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Organization } from "./schemas/organization.schema";
 import { Model } from "mongoose";
 import { ICreateOrganizationDto } from "./dto/create-organization.dto";
-import {
-    IUpdateAdministrativeDivisionsDto,
-    IUpdateDocumentAimsDto,
-    IUpdateDocumentTypesDto,
-    IUpdateUrgencyIntervalDto
-} from "common/grpc";
+import { IUpdateAdministrativeDivisionsDto, IUpdateDocumentAimsDto, IUpdateDocumentTypesDto } from "common/grpc";
 
 @Injectable()
 export class OrganizationsService {
@@ -20,16 +15,6 @@ export class OrganizationsService {
 
     public async findOneById(organizationId: string) {
         return await this.organizationModel.findById(organizationId);
-    }
-
-    public async updateUrgencyInterval(dto: IUpdateUrgencyIntervalDto) {
-        const organization = await this.findOneById(dto.organizationId);
-
-        if (organization) {
-            organization.urgencyInterval = dto.urgencyInterval;
-
-            await organization.save();
-        }
     }
 
     public async updateDocumentAims(dto: IUpdateDocumentAimsDto) {

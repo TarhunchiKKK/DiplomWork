@@ -2,36 +2,30 @@ import { Controller, UseInterceptors } from "@nestjs/common";
 import { OrganizationsService } from "./organizations.service";
 import {
     GrpcNotFoundInterceptor,
-    IOrganization,
+    ICreateDefaultOrganizationResponse,
     IUpdateAdministrativeDivisionsDto,
     IUpdateDocumentAimsDto,
     IUpdateDocumentTypesDto,
-    IUpdateUrgencyIntervalDto,
     OrganizationsServiceController,
     OrganizationsServiceControllerMethods,
     StringValue
 } from "common/grpc";
 import { defaultOrganization } from "./constants/organization.constants";
-import { asType } from "common/utils";
+import { asType, UnknownReturnTypes } from "common/utils";
 
 @Controller()
 @OrganizationsServiceControllerMethods()
-export class OrganizationsController implements OrganizationsServiceController {
+export class OrganizationsController implements UnknownReturnTypes<OrganizationsServiceController> {
     public constructor(private readonly organizationsService: OrganizationsService) {}
 
     public async createDefault() {
         const organization = await this.organizationsService.create(defaultOrganization);
-        return asType<IOrganization>(organization);
+        return asType<ICreateDefaultOrganizationResponse>(organization);
     }
 
     @UseInterceptors(GrpcNotFoundInterceptor)
     public async findOneById(dto: StringValue) {
-        const organization = await this.organizationsService.findOneById(dto.value);
-        return asType<{ data: IOrganization[] }>(organization);
-    }
-
-    public async updateUrgencyInterval(dto: IUpdateUrgencyIntervalDto) {
-        await this.organizationsService.updateUrgencyInterval(dto);
+        return await this.organizationsService.findOneById(dto.value);
     }
 
     public async updateDocumentAims(dto: IUpdateDocumentAimsDto) {

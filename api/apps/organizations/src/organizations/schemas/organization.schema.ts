@@ -5,9 +5,6 @@ import { DocumentType, DocumentTypeSchema } from "./document-type.schema";
 
 @Schema()
 export class Organization {
-    @Prop(Number)
-    urgencyInterval: number;
-
     @Prop([DocumentAimSchema])
     documentAims: DocumentAim[];
 

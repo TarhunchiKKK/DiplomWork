@@ -30,7 +30,7 @@ export const AuthResponseDtoApiInfo = createEntityApiInfo<AuthResponseDto>({
 });
 
 @AuthResponseDtoApiInfo()
-export class AuthResponseDto implements IAuthResponse {
+export class AuthResponseDto {
     id: string;
 
     username: string;

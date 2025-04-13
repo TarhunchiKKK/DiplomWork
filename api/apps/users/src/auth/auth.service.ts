@@ -28,12 +28,12 @@ export class AuthService {
         });
     }
 
-    public async registerAdmin(dto: IRegisterAdminDto): Promise<IAuthResponse> {
+    public async registerAdmin(dto: IRegisterAdminDto) {
         const organization = await firstValueFrom(this.organizationsGrpcService.createDefault());
 
         const user = await this.usersService.create({
             ...dto,
-            organizationId: organization._id,
+            organizationId: organization.data._id,
             role: Role.ADMIN,
             status: AccountStatus.ACTIVE
         });
@@ -48,7 +48,7 @@ export class AuthService {
         };
     }
 
-    public async login(dto: ILoginDto): Promise<IAuthResponse> {
+    public async login(dto: ILoginDto) {
         const user = await this.usersService.findOneByLogin(dto.login);
 
         if (!argon2.verify(dto.login, user.password)) {

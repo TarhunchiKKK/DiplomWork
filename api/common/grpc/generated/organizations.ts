@@ -7,6 +7,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
+import { IEmptyResponse, IHttpError } from "./common";
 import { Empty } from "./google/protobuf/empty";
 import { StringValue } from "./google/protobuf/wrappers";
 
@@ -19,6 +20,11 @@ export interface IOrganization {
   documentAims: IDocumentAim[];
   documentTypes: IDocumentType[];
   administrativeDivisions: IAdministrativeDivision[];
+}
+
+export interface ICreateDefaultOrganizationResponse {
+  data?: IOrganization | undefined;
+  error?: IHttpError | undefined;
 }
 
 export interface IDocumentAim {
@@ -47,12 +53,8 @@ export interface IPost {
 }
 
 export interface IFindOneOrganizationResponse {
-  data: IOrganization[];
-}
-
-export interface IUpdateUrgencyIntervalDto {
-  organizationId: string;
-  urgencyInterval: number;
+  data?: IOrganization | undefined;
+  error?: IHttpError | undefined;
 }
 
 export interface IUpdateDocumentAimsDto {
@@ -73,33 +75,40 @@ export interface IUpdateAdministrativeDivisionsDto {
 export const ORGANIZATIONS_PACKAGE_NAME = "organizations";
 
 export interface OrganizationsServiceClient {
-  createDefault(request: Empty): Observable<IOrganization>;
+  createDefault(request: Empty): Observable<ICreateDefaultOrganizationResponse>;
 
   findOneById(request: StringValue): Observable<IFindOneOrganizationResponse>;
 
-  updateUrgencyInterval(request: IUpdateUrgencyIntervalDto): Observable<Empty>;
+  updateDocumentAims(request: IUpdateDocumentAimsDto): Observable<IEmptyResponse>;
 
-  updateDocumentAims(request: IUpdateDocumentAimsDto): Observable<Empty>;
+  updateDocumentTypes(request: IUpdateDocumentTypesDto): Observable<IEmptyResponse>;
 
-  updateDocumentTypes(request: IUpdateDocumentTypesDto): Observable<Empty>;
-
-  updateAdministrativeDivisions(request: IUpdateAdministrativeDivisionsDto): Observable<Empty>;
+  updateAdministrativeDivisions(request: IUpdateAdministrativeDivisionsDto): Observable<IEmptyResponse>;
 }
 
 export interface OrganizationsServiceController {
-  createDefault(request: Empty): Promise<IOrganization> | Observable<IOrganization> | IOrganization;
+  createDefault(
+    request: Empty,
+  ):
+    | Promise<ICreateDefaultOrganizationResponse>
+    | Observable<ICreateDefaultOrganizationResponse>
+    | ICreateDefaultOrganizationResponse;
 
   findOneById(
     request: StringValue,
   ): Promise<IFindOneOrganizationResponse> | Observable<IFindOneOrganizationResponse> | IFindOneOrganizationResponse;
 
-  updateUrgencyInterval(request: IUpdateUrgencyIntervalDto): void;
+  updateDocumentAims(
+    request: IUpdateDocumentAimsDto,
+  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  updateDocumentAims(request: IUpdateDocumentAimsDto): void;
+  updateDocumentTypes(
+    request: IUpdateDocumentTypesDto,
+  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  updateDocumentTypes(request: IUpdateDocumentTypesDto): void;
-
-  updateAdministrativeDivisions(request: IUpdateAdministrativeDivisionsDto): void;
+  updateAdministrativeDivisions(
+    request: IUpdateAdministrativeDivisionsDto,
+  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function OrganizationsServiceControllerMethods() {
@@ -107,7 +116,6 @@ export function OrganizationsServiceControllerMethods() {
     const grpcMethods: string[] = [
       "createDefault",
       "findOneById",
-      "updateUrgencyInterval",
       "updateDocumentAims",
       "updateDocumentTypes",
       "updateAdministrativeDivisions",

@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto"; 
+
+package common;
+
+message IHttpError {
+    repeated string message = 1;
+
+    string error = 2;
+
+    int32 statusCode = 3;
+}
+
+message IProfile {
+    string id = 1;
+
+    string username = 2;
+    
+    string email = 3;
+
+    string role = 4;
+
+    string organizationId = 5;
+
+    string token = 6;
+}
+
+message IAuthResponse {
+    oneof response {
+        IProfile data = 1;
+
+        IHttpError error = 2;
+    }
+}
+
+message IEmptyResponse {
+    oneof response {
+        google.protobuf.Empty data = 1;
+
+        common.IHttpError error = 2;
+    }
+}

@@ -45,17 +45,6 @@ export const OrganizationsControllerApiInfo = createControllerApiInfo<Organizati
                 description: "Ничего не возвращает"
             },
             bearerAuth: true
-        },
-        updateUrgencyInterval: {
-            operation: {
-                summary: "Обновление интервал срочности документов",
-                deprecated: true
-            },
-            response: {
-                status: HttpStatus.OK,
-                description: "Ничего не возвращает"
-            },
-            bearerAuth: true
         }
     }
 });

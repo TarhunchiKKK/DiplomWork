@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { UserInvitationTokensService } from "common/modules";
 import { NotificationsRmqService, UserInvitationEvent } from "common/rabbitmq";
 import { UsersService } from "../users/users.service";
-import { IAuthResponse, IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
+import { IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
 import { AccountStatus } from "common/enums";
 import { AuthService } from "../auth/auth.service";
 
@@ -35,7 +35,7 @@ export class InvitationsService {
         );
     }
 
-    public async confirmInvitation(dto: IConfirmInvitationDto): Promise<IAuthResponse> {
+    public async confirmInvitation(dto: IConfirmInvitationDto) {
         const { id } = this.invitationTokensService.verify(dto.token);
 
         const user = await this.usersService.update(id, {
