@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 @Schema()
 export class DocumentAim {
     @Prop(String)
-    value: string;
+    public value: string;
 }
 
 export const DocumentAimSchema = SchemaFactory.createForClass(DocumentAim);

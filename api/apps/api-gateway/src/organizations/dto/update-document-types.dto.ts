@@ -6,22 +6,22 @@ import { Type } from "class-transformer";
 export class UpdateDocumentTypesDto implements IUpdateDocumentTypesDto {
     @IsNotEmpty({ message: "Идентификатор организации не указан" })
     @IsString({ message: "Идентификатор организации должен быть строкой" })
-    organizationId: string;
+    public organizationId: string;
 
     @IsArray({ message: "Ожидается массив" })
     @ValidateNested({ each: true })
     @Type(() => UpdateDocumentTypeDto)
-    documentTypes: UpdateDocumentTypeDto[];
+    public documentTypes: UpdateDocumentTypeDto[];
 }
 
 export class UpdateDocumentTypeDto {
     @Optional()
-    _id: string;
+    public _id: string;
 
     @Optional()
-    __v: number;
+    public __v: number;
 
     @IsNotEmpty({ message: "Укажите значение документного типа" })
     @IsString({ message: "Значение документного типа должно быть строкой" })
-    value: string;
+    public value: string;
 }

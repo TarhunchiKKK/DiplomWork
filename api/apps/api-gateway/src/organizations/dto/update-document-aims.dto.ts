@@ -6,22 +6,22 @@ import { IUpdateDocumentAimsDto } from "common/grpc";
 export class UpdateDocumentAimsDto implements IUpdateDocumentAimsDto {
     @IsNotEmpty({ message: "Идентификатор организации не указан" })
     @IsString({ message: "Идентификатор организации должен быть строкой" })
-    organizationId: string;
+    public organizationId: string;
 
     @IsArray({ message: "Ожидается массив" })
     @ValidateNested({ each: true })
     @Type(() => UpdateDocumentAimDto)
-    documentAims: UpdateDocumentAimDto[];
+    public documentAims: UpdateDocumentAimDto[];
 }
 
 export class UpdateDocumentAimDto {
     @IsOptional()
-    _id: string;
+    public _id: string;
 
     @Optional()
-    __v: number;
+    public __v: number;
 
     @IsNotEmpty({ message: "Укажите значение цели документа" })
     @IsString({ message: "Значение цели документа должно быть строкой" })
-    value: string;
+    public value: string;
 }
