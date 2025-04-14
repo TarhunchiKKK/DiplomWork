@@ -6,12 +6,13 @@ import {
     UsersServiceControllerMethods
 } from "common/grpc";
 import { PasswordRecoveryService } from "./password-recovery.service";
+import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<UsersServiceController, "resetPassword" | "updatePassword">;
 
 @Controller()
 @UsersServiceControllerMethods()
-export class PasswordRecoveryController implements ServiceController {
+export class PasswordRecoveryController implements UnknownReturnTypes<ServiceController> {
     public constructor(private readonly passwordRecoveryService: PasswordRecoveryService) {}
 
     public async resetPassword(dto: IResetPasswordDto) {

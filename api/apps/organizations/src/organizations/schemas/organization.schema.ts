@@ -5,17 +5,14 @@ import { DocumentType, DocumentTypeSchema } from "./document-type.schema";
 
 @Schema()
 export class Organization {
-    @Prop(Number)
-    urgencyInterval: number;
-
     @Prop([DocumentAimSchema])
-    documentAims: DocumentAim[];
+    public documentAims: DocumentAim[];
 
     @Prop([DocumentTypeSchema])
-    documentTypes: DocumentType[];
+    public documentTypes: DocumentType[];
 
     @Prop([AdministrativeDivisionSchema])
-    administrativeDivisions: AdministrativeDivision[];
+    public administrativeDivisions: AdministrativeDivision[];
 }
 
 export const OrganizationSchema = SchemaFactory.createForClass(Organization);

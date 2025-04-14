@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
-import { IAuthResponse, IDisableTotpDto, IEnableTotpDto, IGenerateTotpDto, ILoginWithTotpDto } from "common/grpc";
+import { IDisableTotpDto, IEnableTotpDto, IGenerateTotpDto, ILoginWithTotpDto } from "common/grpc";
 import { generateTotpSecret } from "./helpers/encoding.helpers";
 import { ConfigService } from "@nestjs/config";
-import { ICreateTotpInstanceDto } from "./dto/create-totp-instance.dto";
+import { ICreateTotpInstanceDto } from "./interfaces/create-totp-instance.dto";
 import { TOTP } from "otpauth";
 import { createQrCodeFromTotp } from "./helpers/qr-code.helpers";
-import { IValidateTotpDto } from "./dto/validate-totp.dto";
+import { IValidateTotpDto } from "./interfaces/validate-totp.dto";
 import { AuthType } from "common/enums";
 import { AuthService } from "../auth/auth.service";
 
@@ -73,7 +73,7 @@ export class TotpService {
         });
     }
 
-    public async login(dto: ILoginWithTotpDto): Promise<IAuthResponse> {
+    public async login(dto: ILoginWithTotpDto) {
         const user = await this.usersService.findOneById(dto.userId);
 
         this.validateTotp({

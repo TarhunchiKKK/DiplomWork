@@ -2,21 +2,20 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto"; 
 import "google/protobuf/wrappers.proto"; 
+import "common.proto";
 
 package organizations;
 
 service OrganizationsService {
-    rpc CreateDefault(google.protobuf.Empty) returns (IOrganization) {}
+    rpc CreateDefault(google.protobuf.Empty) returns (ICreateDefaultOrganizationResponse) {}
 
     rpc FindOneById(google.protobuf.StringValue) returns (IFindOneOrganizationResponse) {}
 
-    rpc UpdateUrgencyInterval(IUpdateUrgencyIntervalDto) returns (google.protobuf.Empty) {}
+    rpc UpdateDocumentAims(IUpdateDocumentAimsDto) returns (common.IEmptyResponse) {}
 
-    rpc UpdateDocumentAims(IUpdateDocumentAimsDto) returns (google.protobuf.Empty) {}
+    rpc UpdateDocumentTypes(IUpdateDocumentTypesDto) returns (common.IEmptyResponse) {}
 
-    rpc UpdateDocumentTypes(IUpdateDocumentTypesDto) returns (google.protobuf.Empty) {}
-
-    rpc UpdateAdministrativeDivisions(IUpdateAdministrativeDivisionsDto) returns (google.protobuf.Empty) {}
+    rpc UpdateAdministrativeDivisions(IUpdateAdministrativeDivisionsDto) returns (common.IEmptyResponse) {}
 }
 
 message IOrganization {
@@ -31,6 +30,14 @@ message IOrganization {
     repeated IDocumentType documentTypes = 5;
 
     repeated IAdministrativeDivision administrativeDivisions = 6;
+}
+
+message ICreateDefaultOrganizationResponse {
+    oneof response {
+        IOrganization data = 1;
+
+        common.IHttpError error = 2;
+    }
 }
 
 message IDocumentAim {
@@ -68,13 +75,11 @@ message IPost {
 }
 
 message IFindOneOrganizationResponse {
-    repeated IOrganization data = 1;
-}
+    oneof response {
+        IOrganization data = 1;
 
-message IUpdateUrgencyIntervalDto {
-    string organizationId = 1;
-
-    int64 urgencyInterval = 2;
+        common.IHttpError error = 2;
+    }
 }
 
 message IUpdateDocumentAimsDto {

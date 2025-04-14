@@ -4,11 +4,9 @@ import { UsersGrpcService } from "common/grpc";
 import { RequireRoles, RoleGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { ConfirmInvitationDto } from "./dto/confirm-invitation.dto";
-import { InvitatiosnControllerApiInfo } from "./swagger/invitations-controller-api-info.decorator";
 import { Recaptcha } from "@nestlab/google-recaptcha";
 
 @Controller("/users/invitations")
-@InvitatiosnControllerApiInfo()
 export class InvitationsController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}
 
@@ -16,7 +14,7 @@ export class InvitationsController {
     @RequireRoles([Role.ADMIN])
     @UseGuards(RoleGuard)
     public sendInvitations(@Req() request: TAuthenticatedRequest, @Body() emails: string[]) {
-        return this.usersGrpcService.sendInvitations({
+        return this.usersGrpcService.call("inviteUsers", {
             organizationId: request.jwtInfo.organizationId,
             adminEmail: request.jwtInfo.email,
             emails: emails
@@ -27,6 +25,6 @@ export class InvitationsController {
     @Recaptcha()
     @UsePipes(ValidationPipe)
     public confirmInvitation(@Body() dto: ConfirmInvitationDto) {
-        return this.usersGrpcService.confirmInvitation(dto);
+        return this.usersGrpcService.call("confirmInvitation", dto);
     }
 }
