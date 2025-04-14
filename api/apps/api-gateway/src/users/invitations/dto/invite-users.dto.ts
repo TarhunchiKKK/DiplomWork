@@ -2,9 +2,7 @@ import { Type } from "class-transformer";
 import { IsArray, IsNotEmpty, IsString, Matches } from "class-validator";
 import { EMAIL_REGEX } from "common/validation";
 import { IInviteUsersDto } from "common/grpc";
-import { InviteUsersDtoApiInfo } from "../swagger/invite-users-dto-api-info.decorator";
 
-@InviteUsersDtoApiInfo()
 export class InviteUsersDto implements IInviteUsersDto {
     @IsNotEmpty({ message: "Идентификатор организации не указан" })
     @IsString({ message: "Идентификатор организации должен быть строкой" })

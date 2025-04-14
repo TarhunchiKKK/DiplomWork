@@ -3,11 +3,9 @@ import { Role } from "common/enums";
 import { UsersGrpcService } from "common/grpc";
 import { RequireRoles, RoleGuard } from "common/middleware";
 import { ActivateAccountDto } from "./dto/activate-account.dto";
-import { AccountDeactivationControllerApiInfo } from "./swagger/acount-deactivation-controller-api-info.decorator";
 import { DeactivateAccountDto } from "./dto/deactivate-account.dto";
 
 @Controller("/users/account-deactivation")
-@AccountDeactivationControllerApiInfo()
 export class AccountDeactivationController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}
 

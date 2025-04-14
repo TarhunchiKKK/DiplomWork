@@ -1,9 +1,7 @@
 import { IsNotEmpty, IsString, Matches, MaxLength, MinLength } from "class-validator";
 import { IConfirmInvitationDto } from "common/grpc";
 import { ONE_SPECIAL_CHARACTER_REGEX } from "common/validation";
-import { ConfirmInvitationDtoApiInfo } from "../swagger/confirm-invitation-dto-api-info.decorator";
 
-@ConfirmInvitationDtoApiInfo()
 export class ConfirmInvitationDto implements IConfirmInvitationDto {
     @IsNotEmpty({ message: "Введите имя пользователя" })
     @IsString({ message: "Имя пользователя должно быть строкой" })

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Organization } from "./schemas/organization.schema";
 import { Model } from "mongoose";
-import { ICreateOrganizationDto } from "./dto/create-organization.dto";
+import { ICreateOrganizationDto } from "./interfaces/create-organization.dto";
 import { IUpdateAdministrativeDivisionsDto, IUpdateDocumentAimsDto, IUpdateDocumentTypesDto } from "common/grpc";
 
 @Injectable()

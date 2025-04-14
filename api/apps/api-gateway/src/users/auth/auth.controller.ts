@@ -4,11 +4,9 @@ import { RegisterAdminDto } from "./dto/register-admin.dto";
 import { LoginDto } from "./dto/login.dto";
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
-import { AuthControllerApiInfo } from "./swagger/auth-controller-api-info.decorator";
 import { Recaptcha } from "@nestlab/google-recaptcha";
 
 @Controller("/users/auth")
-@AuthControllerApiInfo()
 export class AuthController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}
 

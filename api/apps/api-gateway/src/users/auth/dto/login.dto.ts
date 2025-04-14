@@ -1,9 +1,7 @@
 import { IsNotEmpty, IsString, MinLength, MaxLength, Matches } from "class-validator";
 import { ILoginDto } from "common/grpc";
 import { ONE_SPECIAL_CHARACTER_REGEX } from "common/validation";
-import { LoginDtoApiInfo } from "../swagger/login-dto-api-info.decorator";
 
-@LoginDtoApiInfo()
 export class LoginDto implements ILoginDto {
     @IsNotEmpty({ message: "Введите имя пользователя" })
     @IsString({ message: "Имя пользователя должно быть строкой" })

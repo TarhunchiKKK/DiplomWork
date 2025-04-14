@@ -4,8 +4,8 @@ import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
 import { CryptoService } from "common/modules";
 import { AccountStatus } from "common/enums";
-import { IUpdateUserDto } from "./dto/update-user.dto";
-import { ISaveUserDto } from "./dto/save-user.dto";
+import { IUpdateUserDto } from "./interfaces/update-user.dto";
+import { ISaveUserDto } from "./interfaces/save-user.dto";
 import { withHashedPassword } from "./helpers/hashing.helpers";
 
 @Injectable()

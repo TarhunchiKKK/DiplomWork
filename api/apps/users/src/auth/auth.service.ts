@@ -33,7 +33,7 @@ export class AuthService {
 
         const user = await this.usersService.create({
             ...dto,
-            organizationId: organization.data._id,
+            organizationId: organization._id,
             role: Role.ADMIN,
             status: AccountStatus.ACTIVE
         });

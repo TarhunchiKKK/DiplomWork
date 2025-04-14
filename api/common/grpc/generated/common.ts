@@ -10,7 +10,7 @@ import { Empty } from "./google/protobuf/empty";
 export const protobufPackage = "common";
 
 export interface IHttpError {
-  message: string[];
+  message: string;
   error: string;
   statusCode: number;
 }

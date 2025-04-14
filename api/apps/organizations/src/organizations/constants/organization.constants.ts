@@ -1,4 +1,4 @@
-import { ICreateOrganizationDto } from "../dto/create-organization.dto";
+import { ICreateOrganizationDto } from "../interfaces/create-organization.dto";
 import { defaultDocumentAims } from "./document-aims.constants";
 import { defaultDocumentTypes } from "./document-types.constants";
 

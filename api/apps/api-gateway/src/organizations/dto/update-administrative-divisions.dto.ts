@@ -2,13 +2,7 @@ import { IUpdateAdministrativeDivisionsDto } from "common/grpc";
 import { IsNotEmpty, IsString, IsArray, ValidateNested } from "class-validator";
 import { Optional } from "@nestjs/common";
 import { Type } from "class-transformer";
-import {
-    UpdateAdministrativeDivisionsDtoApiInfo,
-    UpdateAdministrativeDivisionDtoApiInfo,
-    UpdatePostDtoApiInfo
-} from "../swagger/update-administrativi-divisions-dto.decorator";
 
-@UpdateAdministrativeDivisionsDtoApiInfo()
 export class UpdateAdministrativeDivisionsDto implements IUpdateAdministrativeDivisionsDto {
     @IsNotEmpty({ message: "Идентификатор организации не указан" })
     @IsString({ message: "Идентификатор организации должен быть строкой" })
@@ -20,7 +14,6 @@ export class UpdateAdministrativeDivisionsDto implements IUpdateAdministrativeDi
     administrativeDivisions: UpdateAdministrativeDivisionDto[];
 }
 
-@UpdateAdministrativeDivisionDtoApiInfo()
 export class UpdateAdministrativeDivisionDto {
     @Optional()
     _id: string;
@@ -38,7 +31,6 @@ export class UpdateAdministrativeDivisionDto {
     posts: UpdatePostDto[];
 }
 
-@UpdatePostDtoApiInfo()
 export class UpdatePostDto {
     @Optional()
     _id: string;

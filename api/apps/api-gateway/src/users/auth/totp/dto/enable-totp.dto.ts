@@ -1,8 +1,6 @@
 import { IsNotEmpty, IsString, Length } from "class-validator";
 import { IEnableTotpDto } from "common/grpc";
-import { EnableTotpDtoApiInfo } from "../swagger/enable-totp-dto-api-info.decorator";
 
-@EnableTotpDtoApiInfo()
 export class EnableTotpDto implements Pick<IEnableTotpDto, "secret" | "pin"> {
     @IsNotEmpty({ message: "TOTP-секрет не предоставлен" })
     @IsString({ message: "TOTP-секрет должен быть строкой" })

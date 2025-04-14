@@ -2,14 +2,12 @@ import { Body, Controller, Get, Patch, Req, UseGuards, UsePipes, ValidationPipe 
 import { Role } from "common/enums";
 import { OrganizationsGrpcService } from "common/grpc";
 import { AuthenticationGuard, ExtractFromRequest, OrganizationGuard, RequireRoles, RoleGuard } from "common/middleware";
-import { OrganizationsControllerApiInfo } from "./swagger/organizations-controller-api-info.decorator";
 import { TAuthenticatedRequest } from "common/modules";
 import { UpdateDocumentAimsDto } from "./dto/update-document-aims.dto";
 import { UpdateDocumentTypesDto } from "./dto/update-document-types.dto";
 import { UpdateAdministrativeDivisionsDto } from "./dto/update-administrative-divisions.dto";
 
 @Controller("organizations")
-@OrganizationsControllerApiInfo()
 export class OrganizationsController {
     public constructor(private readonly organizationsGrpcService: OrganizationsGrpcService) {}
 
