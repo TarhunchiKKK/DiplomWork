@@ -4,6 +4,7 @@ import { UsersGrpcService } from "common/grpc";
 import { RequireRoles, RoleGuard } from "common/middleware";
 import { ActivateAccountDto } from "./dto/activate-account.dto";
 import { AccountDeactivationControllerApiInfo } from "./swagger/acount-deactivation-controller-api-info.decorator";
+import { DeactivateAccountDto } from "./dto/deactivate-account.dto";
 
 @Controller("/users/account-deactivation")
 @AccountDeactivationControllerApiInfo()
@@ -15,14 +16,14 @@ export class AccountDeactivationController {
     @UseGuards(RoleGuard)
     @UsePipes(ValidationPipe)
     public activate(@Body() dto: ActivateAccountDto) {
-        return this.usersGrpcService.deactivateAccount(dto);
+        return this.usersGrpcService.call("activateAccount", dto);
     }
 
     @Patch("/deactivate")
     @RequireRoles([Role.ADMIN])
     @UseGuards(RoleGuard)
     @UsePipes(ValidationPipe)
-    public deactivate(@Body() dto: ActivateAccountDto) {
-        return this.usersGrpcService.activateAccount(dto);
+    public deactivate(@Body() dto: DeactivateAccountDto) {
+        return this.usersGrpcService.call("deactivateAccount", dto);
     }
 }

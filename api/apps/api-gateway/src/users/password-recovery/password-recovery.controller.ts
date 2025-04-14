@@ -13,7 +13,7 @@ export class PasswordRecoveryController {
     @Post("/reset")
     @UseGuards(AuthenticationGuard)
     public reset(@Req() request: TAuthenticatedRequest) {
-        return this.usersGrpcService.resetPassword({
+        return this.usersGrpcService.call("resetPassword", {
             userId: request.jwtInfo.id
         });
     }
@@ -22,6 +22,6 @@ export class PasswordRecoveryController {
     @UseGuards(AuthenticationGuard)
     @UsePipes(ValidationPipe)
     public update(@Body() dto: UpdatePasswordDto) {
-        return this.usersGrpcService.updatePassword(dto);
+        return this.usersGrpcService.call("updatePassword", dto);
     }
 }

@@ -16,7 +16,7 @@ export class InvitationsController {
     @RequireRoles([Role.ADMIN])
     @UseGuards(RoleGuard)
     public sendInvitations(@Req() request: TAuthenticatedRequest, @Body() emails: string[]) {
-        return this.usersGrpcService.sendInvitations({
+        return this.usersGrpcService.call("inviteUsers", {
             organizationId: request.jwtInfo.organizationId,
             adminEmail: request.jwtInfo.email,
             emails: emails
@@ -27,6 +27,6 @@ export class InvitationsController {
     @Recaptcha()
     @UsePipes(ValidationPipe)
     public confirmInvitation(@Body() dto: ConfirmInvitationDto) {
-        return this.usersGrpcService.confirmInvitation(dto);
+        return this.usersGrpcService.call("confirmInvitation", dto);
     }
 }

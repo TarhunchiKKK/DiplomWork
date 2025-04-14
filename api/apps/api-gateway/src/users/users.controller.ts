@@ -5,5 +5,3 @@ import { UsersGrpcService } from "common/grpc";
 export class UsersController {
     public constructor(private readonly usersGrpcService: UsersGrpcService) {}
 }
-
-//statusCode message

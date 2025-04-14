@@ -16,7 +16,7 @@ export class OrganizationsController {
     @Get(":id")
     @UseGuards(AuthenticationGuard)
     public async findOneById(@Req() request: TAuthenticatedRequest) {
-        return this.organizationsGrpcService.findOneById(request.jwtInfo.organizationId);
+        return this.organizationsGrpcService.call("findOneById", { value: request.jwtInfo.organizationId });
     }
 
     @Patch("document-aims")
@@ -25,7 +25,7 @@ export class OrganizationsController {
     @UseGuards(RoleGuard, OrganizationGuard)
     @UsePipes(ValidationPipe)
     public async updateDocumentAims(@Body() dto: UpdateDocumentAimsDto) {
-        return this.organizationsGrpcService.updateDocumentAims(dto);
+        return this.organizationsGrpcService.call("updateDocumentAims", dto);
     }
 
     @Patch("document-types")
@@ -34,7 +34,7 @@ export class OrganizationsController {
     @UseGuards(RoleGuard, OrganizationGuard)
     @UsePipes(ValidationPipe)
     public async updateDocumentTypes(@Body() dto: UpdateDocumentTypesDto) {
-        return this.organizationsGrpcService.updateDocumenttypes(dto);
+        return this.organizationsGrpcService.call("updateDocumentTypes", dto);
     }
 
     @Patch("administrative-divisions")
@@ -43,6 +43,6 @@ export class OrganizationsController {
     @UseGuards(RoleGuard, OrganizationGuard)
     @UsePipes(ValidationPipe)
     public async updateAdministrativeDivisions(@Body() dto: UpdateAdministrativeDivisionsDto) {
-        return this.organizationsGrpcService.updateAdministrativeDivisions(dto);
+        return this.organizationsGrpcService.call("updateAdministrativeDivisions", dto);
     }
 }

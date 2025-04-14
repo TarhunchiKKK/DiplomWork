@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { IAuthResponse, ILoginDto, IRefreshProfileDto, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
+import { ILoginDto, IRefreshProfileDto, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
 import { AccountStatus, Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { JwtTokensService } from "common/modules";
@@ -29,7 +29,7 @@ export class AuthService {
     }
 
     public async registerAdmin(dto: IRegisterAdminDto) {
-        const organization = await firstValueFrom(this.organizationsGrpcService.createDefault());
+        const organization = await firstValueFrom(this.organizationsGrpcService.call("createDefault", {}));
 
         const user = await this.usersService.create({
             ...dto,

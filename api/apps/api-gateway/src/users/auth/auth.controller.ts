@@ -16,20 +16,20 @@ export class AuthController {
     @Recaptcha()
     @UsePipes(ValidationPipe)
     public registerAdmin(@Body() dto: RegisterAdminDto) {
-        return this.usersGrpcService.registerAdmin(dto);
+        return this.usersGrpcService.call("registerAdmin", dto);
     }
 
     @Post("/login")
     @Recaptcha()
     @UsePipes(ValidationPipe)
     public login(@Body() dto: LoginDto) {
-        return this.usersGrpcService.login(dto);
+        return this.usersGrpcService.call("login", dto);
     }
 
     @Get("/me")
     @UseGuards(AuthenticationGuard)
     public me(@Req() request: TAuthenticatedRequest) {
-        return this.usersGrpcService.refreshProfile({
+        return this.usersGrpcService.call("refreshProfile", {
             userId: request.jwtInfo.id
         });
     }
