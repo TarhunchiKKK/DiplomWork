@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { BaseGrpcService } from "../base.grpc-service";
+import { BaseGrpcService } from "../base";
 import { WORKFLOWS_PACKAGE_NAME, WORKFLOWS_SERVICE_NAME, WorkflowsServiceClient } from "common/grpc/generated";
 import { ClientGrpc } from "@nestjs/microservices";
 import { OnlyMethods } from "common/utils";

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { BaseGrpcService } from "../base.grpc-service";
+import { BaseGrpcService } from "../base";
 import {
     NOTIFICATIONS_PACKAGE_NAME,
     NOTIFICATIONS_SERVICE_NAME,

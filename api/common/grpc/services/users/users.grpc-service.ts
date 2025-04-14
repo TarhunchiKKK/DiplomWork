@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientGrpc } from "@nestjs/microservices";
 import { UsersServiceClient, USERS_PACKAGE_NAME, USERS_SERVICE_NAME } from "common/grpc";
-import { BaseGrpcService } from "../base.grpc-service";
+import { BaseGrpcService } from "../base";
 import { OnlyMethods } from "common/utils";
 
 @Injectable()

@@ -91,10 +91,18 @@ message IGenerateTotpDto {
     string userEmail = 2;
 }
 
-message IGenerateTotpResponse {
+message ITotpPair {
     string qrCode = 1;
 
     string secret = 2;
+}
+
+message IGenerateTotpResponse {
+    oneof response {
+        ITotpPair data = 1;
+
+        common.IHttpError error = 2;
+    }
 }
 
 message IEnableTotpDto {

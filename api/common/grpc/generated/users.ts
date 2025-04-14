@@ -7,7 +7,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { IAuthResponse, IEmptyResponse } from "./common";
+import { IAuthResponse, IEmptyResponse, IHttpError } from "./common";
 
 const protobufPackage = "users";
 
@@ -60,9 +60,14 @@ export interface IGenerateTotpDto {
   userEmail: string;
 }
 
-export interface IGenerateTotpResponse {
+export interface ITotpPair {
   qrCode: string;
   secret: string;
+}
+
+export interface IGenerateTotpResponse {
+  data?: ITotpPair | undefined;
+  error?: IHttpError | undefined;
 }
 
 export interface IEnableTotpDto {

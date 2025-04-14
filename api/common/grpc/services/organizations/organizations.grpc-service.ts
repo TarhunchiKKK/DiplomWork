@@ -5,7 +5,7 @@ import {
     ORGANIZATIONS_SERVICE_NAME,
     ORGANIZATIONS_PACKAGE_NAME
 } from "common/grpc/generated";
-import { BaseGrpcService } from "../base.grpc-service";
+import { BaseGrpcService } from "../base";
 import { OnlyMethods } from "common/utils";
 
 @Injectable()
