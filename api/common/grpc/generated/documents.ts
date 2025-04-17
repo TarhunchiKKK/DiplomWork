@@ -7,7 +7,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { IHttpError } from "./common";
+import { IEmptyResponse, IHttpError } from "./common";
 
 const protobufPackage = "documents";
 
@@ -16,6 +16,8 @@ export interface ICreateDocumentDto {
   title: string;
   typeId: string;
   aimId: string;
+  isUrgent: boolean;
+  fileExtension: string;
 }
 
 export interface ICreateDocumentResponseData {
@@ -31,21 +33,34 @@ export interface ICreateDocumentResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IUpdateDocumentInfoDto {
+  documentId: string;
+  title?: string | undefined;
+  typeId?: string | undefined;
+  aimId?: string | undefined;
+  isUrgent?: boolean | undefined;
+  userId: string;
+}
+
 export const DOCUMENTS_PACKAGE_NAME = "documents";
 
 export interface DocumentsServiceClient {
   create(request: ICreateDocumentDto): Observable<ICreateDocumentResponse>;
+
+  updateInfo(request: IUpdateDocumentInfoDto): Observable<IEmptyResponse>;
 }
 
 export interface DocumentsServiceController {
   create(
     request: ICreateDocumentDto,
   ): Promise<ICreateDocumentResponse> | Observable<ICreateDocumentResponse> | ICreateDocumentResponse;
+
+  updateInfo(request: IUpdateDocumentInfoDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create"];
+    const grpcMethods: string[] = ["create", "updateInfo"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

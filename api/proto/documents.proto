@@ -6,6 +6,8 @@ package documents;
 
 service DocumentsService {
     rpc Create (ICreateDocumentDto) returns (ICreateDocumentResponse) {}
+
+    rpc UpdateInfo (IUpdateDocumentInfoDto) returns (common.IEmptyResponse) {}
 }
 
 message ICreateDocumentDto {
@@ -16,6 +18,10 @@ message ICreateDocumentDto {
     string typeId = 3;
 
     string aimId = 4; 
+
+    bool isUrgent = 5;
+
+    string fileExtension = 6;
 }
 
 message ICreateDocumentResponseData {
@@ -36,4 +42,18 @@ message ICreateDocumentResponse {
 
         common.IHttpError error = 2;
     }
+}
+
+message IUpdateDocumentInfoDto {
+    string documentId = 1;
+
+    optional string title = 2;
+
+    optional string typeId = 3;
+
+    optional string aimId = 4; 
+
+    optional bool isUrgent = 5;
+
+    string userId = 6;
 }

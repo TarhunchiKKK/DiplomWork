@@ -15,6 +15,9 @@ export class ElectronicDocument {
     @Column()
     public aimId: string;
 
+    @Column({ default: false })
+    public isUrgent: boolean;
+
     @Column({ type: "enum", enum: DocumentStatus, default: DocumentStatus.DEFAULT })
     public status: DocumentStatus;
 
