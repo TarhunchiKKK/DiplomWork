@@ -13,7 +13,7 @@ export class FindDocumentsQueryBuilder {
     public constructor(private dto: IFindDocumentsDto) {}
 
     public setWhereOptions() {
-        const whereOptions = lodash.pick(this.dto, ["aimId", "typeId", "status", "isUrgent"]);
+        const whereOptions = lodash.pick(this.dto, ["aimId", "typeId", "status", "isUrgent", "authorId"]);
         Object.assign(this.options.where, whereOptions);
     }
 

@@ -42,7 +42,13 @@ export class DocumentsService {
     }
 
     public async findAll(dto: IFindDocumentsDto) {
-        return await this.documentsRepository.find(new FindDocumentsQueryBuilder(dto).build());
+        const documents = await this.documentsRepository.find(new FindDocumentsQueryBuilder(dto).build());
+
+        return documents.map(document => ({
+            id: document.id,
+            title: document.title,
+            createdAt: document.createdAt.toISOString()
+        }));
     }
 
     public async findOneById(id: string) {

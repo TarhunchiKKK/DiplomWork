@@ -83,15 +83,17 @@ message IUpdateDocumentFileResponse {
 }
 
 message IFindDocumentsDto {
-    optional string typeId = 1;
+    optional string authorId = 1;
+    
+    optional string typeId = 2;
 
-    optional string aimId = 2;
+    optional string aimId = 3;
 
-    optional string status = 3;
+    optional string status = 4;
 
-    optional bool isUrgent = 4;
+    optional bool isUrgent = 5;
 
-    optional string sortOrder = 5;
+    optional string sortOrder = 6;
 }
 
 message IDocumentShortData {

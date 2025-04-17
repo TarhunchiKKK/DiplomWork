@@ -58,6 +58,7 @@ export interface IUpdateDocumentFileResponse {
 }
 
 export interface IFindDocumentsDto {
+  authorId?: string | undefined;
   typeId?: string | undefined;
   aimId?: string | undefined;
   status?: string | undefined;
