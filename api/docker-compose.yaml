@@ -10,6 +10,21 @@ services:
         networks:
             - organizations-network
 
+    documents-db:
+        container_name: documents-db
+        image: postgres:15.2
+        restart: always
+        environment:
+            - POSTGRES_DB=${DOCUMENTS_MICROSERVICE_DB_NAME}
+            - POSTGRES_USER=${DOCUMENTS_MICROSERVICE_DB_USER}
+            - POSTGRES_PASSWORD=${DOCUMENTS_MICROSERVICE_DB_PASSWORD}
+        ports:
+            - ${DOCUMENTS_MICROSERVICE_DB_PORT}:5432
+        volumes:
+            - documents-postgres_data:/var/lib/postgresql/data
+        networks:
+            - documents-network
+
     users-db:
         container_name: users-db
         image: postgres:15.2
@@ -32,7 +47,9 @@ services:
 
 volumes:
     users-postgres_data:
+    documents-postgres_data:
 
 networks:
     organizations-network:
+    documents-network:
     users-network:
