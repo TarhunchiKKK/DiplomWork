@@ -91,7 +91,7 @@ message IGenerateTotpDto {
     string userEmail = 2;
 }
 
-message ITotpPair {
+message ICreateTotpResponsedata {
     string qrCode = 1;
 
     string secret = 2;
@@ -99,7 +99,7 @@ message ITotpPair {
 
 message IGenerateTotpResponse {
     oneof response {
-        ITotpPair data = 1;
+        ICreateTotpResponsedata data = 1;
 
         common.IHttpError error = 2;
     }

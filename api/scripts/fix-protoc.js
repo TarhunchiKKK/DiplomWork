@@ -20,13 +20,10 @@ const files = [
 ];
 
 const replacements = [
-    // Problem 1
     {
         from: "export const protobufPackage",
         to: "const protobufPackage"
     },
-    // Problem 2
-    // The names of the fields must be written together with the ":" symbol so that the script does not touch anything superfluous.
     {
         from: "Id:",
         to: "_id:"
@@ -39,7 +36,14 @@ const replacements = [
         from: "user_id",
         to: "userId"
     },
-    // Problem 3
+    {
+        from: "author_id",
+        to: "authorId"
+    },
+    {
+        from: "type_id",
+        to: "typeId"
+    },
     {
         from: "organization_id",
         to: "organizationId"

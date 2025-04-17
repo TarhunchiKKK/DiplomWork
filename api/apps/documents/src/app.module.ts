@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DocumentsModule } from "./documents/documents.module";
+import { ElectronicDocument } from "./documents/entities/document.entity";
 
 @Module({
     imports: [
@@ -19,7 +20,7 @@ import { DocumentsModule } from "./documents/documents.module";
                 username: configService.getOrThrow<string>("DOCUMENTS_MICROSERVICE_DB_USER"),
                 password: configService.getOrThrow<string>("DOCUMENTS_MICROSERVICE_DB_PASSWORD"),
                 synchronize: true,
-                entities: [Document]
+                entities: [ElectronicDocument]
             })
         }),
         DocumentsModule

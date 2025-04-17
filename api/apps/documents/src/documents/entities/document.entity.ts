@@ -2,9 +2,12 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { DocumentStatus } from "../enums/document-status.enum";
 
 @Entity()
-export class Document {
+export class ElectronicDocument {
     @PrimaryGeneratedColumn("uuid")
     public id: string;
+
+    @Column()
+    public title: string;
 
     @Column()
     public typeId: string;

@@ -6,20 +6,45 @@
 
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
+import { Observable } from "rxjs";
+import { IHttpError } from "./common";
 
 const protobufPackage = "documents";
+
+export interface ICreateDocumentDto {
+  title: string;
+  typeId: string;
+  authorId: string;
+}
+
+export interface ICreateDocumentResponseData {
+  id: string;
+  title: string;
+  typeId: string;
+  authorId: string;
+  url: string;
+}
+
+export interface ICreateDocumentResponse {
+  data?: ICreateDocumentResponseData | undefined;
+  error?: IHttpError | undefined;
+}
 
 export const DOCUMENTS_PACKAGE_NAME = "documents";
 
 export interface DocumentsServiceClient {
+  create(request: ICreateDocumentDto): Observable<ICreateDocumentResponse>;
 }
 
 export interface DocumentsServiceController {
+  create(
+    request: ICreateDocumentDto,
+  ): Promise<ICreateDocumentResponse> | Observable<ICreateDocumentResponse> | ICreateDocumentResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = [];
+    const grpcMethods: string[] = ["create"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

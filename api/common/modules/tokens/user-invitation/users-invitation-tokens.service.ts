@@ -16,6 +16,6 @@ export class UserInvitationTokensService {
     }
 
     public verify(token: string) {
-        return this.jwtService.verify(token);
+        return this.jwtService.verify(token) as TUserInvitationTokenInfo;
     }
 }

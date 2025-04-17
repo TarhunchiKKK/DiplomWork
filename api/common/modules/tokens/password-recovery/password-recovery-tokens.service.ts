@@ -15,6 +15,6 @@ export class PasswordRecoveryTokensService {
     }
 
     public verify(token: string) {
-        return this.jwtService.verify(token);
+        return this.jwtService.verify(token) as TPasswordRecoveryTokenInfo;
     }
 }
