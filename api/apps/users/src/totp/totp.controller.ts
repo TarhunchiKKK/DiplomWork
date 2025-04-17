@@ -1,9 +1,11 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
+    GrpcExceptionFilter,
     IDisableTotpDto,
     IEnableTotpDto,
     IGenerateTotpDto,
     ILoginWithTotpDto,
+    InsertGrpcResponseInterceptor,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
@@ -14,6 +16,8 @@ type ServiceController = Pick<UsersServiceController, "generateTotp" | "enableTo
 
 @Controller()
 @UsersServiceControllerMethods()
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(InsertGrpcResponseInterceptor)
 export class TotpController implements UnknownReturnTypes<ServiceController> {
     public constructor(private readonly totpService: TotpService) {}
 

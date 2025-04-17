@@ -1,7 +1,9 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
+    GrpcExceptionFilter,
     IConfirmInvitationDto,
     IInviteUsersDto,
+    InsertGrpcResponseInterceptor,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
@@ -12,6 +14,8 @@ type ServiceConttroller = Pick<UsersServiceController, "inviteUsers" | "confirmI
 
 @Controller()
 @UsersServiceControllerMethods()
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(InsertGrpcResponseInterceptor)
 export class InvitationsController implements UnknownReturnTypes<ServiceConttroller> {
     public constructor(private readonly invitationsService: InvitationsService) {}
 

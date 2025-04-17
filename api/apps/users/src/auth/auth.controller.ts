@@ -1,7 +1,9 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import {
+    GrpcExceptionFilter,
     ILoginDto,
+    InsertGrpcResponseInterceptor,
     IRefreshProfileDto,
     IRegisterAdminDto,
     UsersServiceController,
@@ -13,6 +15,8 @@ type ServiceController = Pick<UsersServiceController, "registerAdmin" | "login" 
 
 @Controller()
 @UsersServiceControllerMethods()
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(InsertGrpcResponseInterceptor)
 export class AuthController implements UnknownReturnTypes<ServiceController> {
     public constructor(private readonly authService: AuthService) {}
 

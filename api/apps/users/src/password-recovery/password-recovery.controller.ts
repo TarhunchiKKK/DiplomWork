@@ -1,5 +1,7 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
+    GrpcExceptionFilter,
+    InsertGrpcResponseInterceptor,
     IResetPasswordDto,
     IUpdatePasswordDto,
     UsersServiceController,
@@ -12,6 +14,8 @@ type ServiceController = Pick<UsersServiceController, "resetPassword" | "updateP
 
 @Controller()
 @UsersServiceControllerMethods()
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(InsertGrpcResponseInterceptor)
 export class PasswordRecoveryController implements UnknownReturnTypes<ServiceController> {
     public constructor(private readonly passwordRecoveryService: PasswordRecoveryService) {}
 

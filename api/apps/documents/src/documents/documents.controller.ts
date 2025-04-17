@@ -1,16 +1,18 @@
-import { Controller, UseFilters } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import { DocumentsService } from "./documents.service";
 import {
     DocumentsServiceController,
     DocumentsServiceControllerMethods,
     GrpcExceptionFilter,
-    ICreateDocumentDto
+    ICreateDocumentDto,
+    InsertGrpcResponseInterceptor
 } from "common/grpc";
 import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<DocumentsServiceController, "create">;
 
 @UseFilters(GrpcExceptionFilter)
+@UseInterceptors(InsertGrpcResponseInterceptor)
 @Controller()
 @DocumentsServiceControllerMethods()
 export class DocumentsController implements UnknownReturnTypes<ServiceController> {

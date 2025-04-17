@@ -1,7 +1,9 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import { OrganizationsService } from "./organizations.service";
 import {
+    GrpcExceptionFilter,
     ICreateDefaultOrganizationResponse,
+    InsertGrpcResponseInterceptor,
     IUpdateAdministrativeDivisionsDto,
     IUpdateDocumentAimsDto,
     IUpdateDocumentTypesDto,
@@ -12,6 +14,8 @@ import {
 import { defaultOrganization } from "./constants/organization.constants";
 import { asType, UnknownReturnTypes } from "common/utils";
 
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(InsertGrpcResponseInterceptor)
 @Controller()
 @OrganizationsServiceControllerMethods()
 export class OrganizationsController implements UnknownReturnTypes<OrganizationsServiceController> {
