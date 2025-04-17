@@ -4,11 +4,11 @@ import {
     IActivateAccountDto,
     IDeactivateAccountDto,
     InsertGrpcResponseInterceptor,
+    UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
 import { AccountDeactivationService } from "./account-deactivation.service";
-import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<UsersServiceController, "activateAccount" | "deactivateAccount">;
 
@@ -16,7 +16,7 @@ type ServiceController = Pick<UsersServiceController, "activateAccount" | "deact
 @UsersServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(InsertGrpcResponseInterceptor)
-export class AccountDeactivationController implements UnknownReturnTypes<ServiceController> {
+export class AccountDeactivationController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly accountDeactivationService: AccountDeactivationService) {}
 
     public async activateAccount(dto: IActivateAccountDto) {

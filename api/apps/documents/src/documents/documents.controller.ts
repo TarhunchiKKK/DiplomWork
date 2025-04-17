@@ -5,9 +5,9 @@ import {
     DocumentsServiceControllerMethods,
     GrpcExceptionFilter,
     ICreateDocumentDto,
-    InsertGrpcResponseInterceptor
+    InsertGrpcResponseInterceptor,
+    UnwrapGrpcResponse
 } from "common/grpc";
-import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<DocumentsServiceController, "create">;
 
@@ -15,7 +15,7 @@ type ServiceController = Pick<DocumentsServiceController, "create">;
 @UseInterceptors(InsertGrpcResponseInterceptor)
 @Controller()
 @DocumentsServiceControllerMethods()
-export class DocumentsController implements UnknownReturnTypes<ServiceController> {
+export class DocumentsController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly documentsService: DocumentsService) {}
 
     public async create(dto: ICreateDocumentDto) {

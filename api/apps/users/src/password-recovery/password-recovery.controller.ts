@@ -4,11 +4,11 @@ import {
     InsertGrpcResponseInterceptor,
     IResetPasswordDto,
     IUpdatePasswordDto,
+    UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
 import { PasswordRecoveryService } from "./password-recovery.service";
-import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<UsersServiceController, "resetPassword" | "updatePassword">;
 
@@ -16,7 +16,7 @@ type ServiceController = Pick<UsersServiceController, "resetPassword" | "updateP
 @UsersServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(InsertGrpcResponseInterceptor)
-export class PasswordRecoveryController implements UnknownReturnTypes<ServiceController> {
+export class PasswordRecoveryController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly passwordRecoveryService: PasswordRecoveryService) {}
 
     public async resetPassword(dto: IResetPasswordDto) {

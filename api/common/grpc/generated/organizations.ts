@@ -16,7 +16,6 @@ const protobufPackage = "organizations";
 export interface IOrganization {
   _id: string;
   __v: number;
-  urgencyInterval: number;
   documentAims: IDocumentAim[];
   documentTypes: IDocumentType[];
   administrativeDivisions: IAdministrativeDivision[];

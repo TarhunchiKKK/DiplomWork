@@ -6,11 +6,11 @@ import {
     IGenerateTotpDto,
     ILoginWithTotpDto,
     InsertGrpcResponseInterceptor,
+    UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
 import { TotpService } from "./totp.service";
-import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<UsersServiceController, "generateTotp" | "enableTotp" | "disableTotp" | "loginWithTotp">;
 
@@ -18,7 +18,7 @@ type ServiceController = Pick<UsersServiceController, "generateTotp" | "enableTo
 @UsersServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(InsertGrpcResponseInterceptor)
-export class TotpController implements UnknownReturnTypes<ServiceController> {
+export class TotpController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly totpService: TotpService) {}
 
     public async generateTotp(dto: IGenerateTotpDto) {

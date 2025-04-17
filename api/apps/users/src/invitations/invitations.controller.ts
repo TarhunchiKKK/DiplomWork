@@ -4,11 +4,11 @@ import {
     IConfirmInvitationDto,
     IInviteUsersDto,
     InsertGrpcResponseInterceptor,
+    UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
 import { InvitationsService } from "./invitations.service";
-import { UnknownReturnTypes } from "common/utils";
 
 type ServiceConttroller = Pick<UsersServiceController, "inviteUsers" | "confirmInvitation">;
 
@@ -16,7 +16,7 @@ type ServiceConttroller = Pick<UsersServiceController, "inviteUsers" | "confirmI
 @UsersServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(InsertGrpcResponseInterceptor)
-export class InvitationsController implements UnknownReturnTypes<ServiceConttroller> {
+export class InvitationsController implements UnwrapGrpcResponse<ServiceConttroller> {
     public constructor(private readonly invitationsService: InvitationsService) {}
 
     public async inviteUsers(dto: IInviteUsersDto) {

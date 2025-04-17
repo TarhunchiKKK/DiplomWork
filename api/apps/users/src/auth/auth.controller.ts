@@ -6,10 +6,10 @@ import {
     InsertGrpcResponseInterceptor,
     IRefreshProfileDto,
     IRegisterAdminDto,
+    UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
-import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<UsersServiceController, "registerAdmin" | "login" | "refreshProfile">;
 
@@ -17,7 +17,7 @@ type ServiceController = Pick<UsersServiceController, "registerAdmin" | "login" 
 @UsersServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(InsertGrpcResponseInterceptor)
-export class AuthController implements UnknownReturnTypes<ServiceController> {
+export class AuthController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly authService: AuthService) {}
 
     public async registerAdmin(dto: IRegisterAdminDto) {

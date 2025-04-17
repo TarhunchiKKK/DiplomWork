@@ -23,13 +23,11 @@ message IOrganization {
 
     int32 __v = 2;
 
-    int64 urgencyInterval = 3;
+    repeated IDocumentAim documentAims = 3;
 
-    repeated IDocumentAim documentAims = 4;
+    repeated IDocumentType documentTypes = 4;
 
-    repeated IDocumentType documentTypes = 5;
-
-    repeated IAdministrativeDivision administrativeDivisions = 6;
+    repeated IAdministrativeDivision administrativeDivisions = 5;
 }
 
 message ICreateDefaultOrganizationResponse {
