@@ -4,7 +4,7 @@ import {
     GrpcExceptionFilter,
     ICreateDefaultOrganizationResponse,
     IFindOneOrganizationResponse,
-    InsertGrpcResponseInterceptor,
+    WrapGrpcResponseInterceptor,
     IUpdateAdministrativeDivisionsDto,
     IUpdateDocumentAimsDto,
     IUpdateDocumentTypesDto,
@@ -17,7 +17,7 @@ import { defaultOrganization } from "./constants/organization.constants";
 import { asType } from "common/utils";
 
 @UseFilters(GrpcExceptionFilter)
-@UseInterceptors(InsertGrpcResponseInterceptor)
+@UseInterceptors(WrapGrpcResponseInterceptor)
 @Controller()
 @OrganizationsServiceControllerMethods()
 export class OrganizationsController implements UnwrapGrpcResponse<OrganizationsServiceController> {

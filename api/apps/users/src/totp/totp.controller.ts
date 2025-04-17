@@ -5,7 +5,7 @@ import {
     IEnableTotpDto,
     IGenerateTotpDto,
     ILoginWithTotpDto,
-    InsertGrpcResponseInterceptor,
+    WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
@@ -17,7 +17,7 @@ type ServiceController = Pick<UsersServiceController, "generateTotp" | "enableTo
 @Controller()
 @UsersServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
-@UseInterceptors(InsertGrpcResponseInterceptor)
+@UseInterceptors(WrapGrpcResponseInterceptor)
 export class TotpController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly totpService: TotpService) {}
 

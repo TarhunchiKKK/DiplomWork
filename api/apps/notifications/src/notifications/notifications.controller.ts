@@ -1,14 +1,14 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
     GrpcExceptionFilter,
-    InsertGrpcResponseInterceptor,
+    WrapGrpcResponseInterceptor,
     NotificationsServiceController,
     NotificationsServiceControllerMethods
 } from "common/grpc";
 import { NotificationsService } from "./notifications.service";
 
 @UseFilters(GrpcExceptionFilter)
-@UseInterceptors(InsertGrpcResponseInterceptor)
+@UseInterceptors(WrapGrpcResponseInterceptor)
 @Controller()
 @NotificationsServiceControllerMethods()
 export class NotificationsController implements NotificationsServiceController {

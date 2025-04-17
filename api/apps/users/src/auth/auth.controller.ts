@@ -3,7 +3,7 @@ import { AuthService } from "./auth.service";
 import {
     GrpcExceptionFilter,
     ILoginDto,
-    InsertGrpcResponseInterceptor,
+    WrapGrpcResponseInterceptor,
     IRefreshProfileDto,
     IRegisterAdminDto,
     UnwrapGrpcResponse,
@@ -16,7 +16,7 @@ type ServiceController = Pick<UsersServiceController, "registerAdmin" | "login" 
 @Controller()
 @UsersServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
-@UseInterceptors(InsertGrpcResponseInterceptor)
+@UseInterceptors(WrapGrpcResponseInterceptor)
 export class AuthController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly authService: AuthService) {}
 

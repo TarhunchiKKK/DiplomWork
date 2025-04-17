@@ -5,14 +5,14 @@ import {
     DocumentsServiceControllerMethods,
     GrpcExceptionFilter,
     ICreateDocumentDto,
-    InsertGrpcResponseInterceptor,
+    WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse
 } from "common/grpc";
 
 type ServiceController = Pick<DocumentsServiceController, "create">;
 
 @UseFilters(GrpcExceptionFilter)
-@UseInterceptors(InsertGrpcResponseInterceptor)
+@UseInterceptors(WrapGrpcResponseInterceptor)
 @Controller()
 @DocumentsServiceControllerMethods()
 export class DocumentsController implements UnwrapGrpcResponse<ServiceController> {

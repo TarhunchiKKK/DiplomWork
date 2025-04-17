@@ -3,7 +3,7 @@ import {
     GrpcExceptionFilter,
     IActivateAccountDto,
     IDeactivateAccountDto,
-    InsertGrpcResponseInterceptor,
+    WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
@@ -15,7 +15,7 @@ type ServiceController = Pick<UsersServiceController, "activateAccount" | "deact
 @Controller()
 @UsersServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
-@UseInterceptors(InsertGrpcResponseInterceptor)
+@UseInterceptors(WrapGrpcResponseInterceptor)
 export class AccountDeactivationController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly accountDeactivationService: AccountDeactivationService) {}
 

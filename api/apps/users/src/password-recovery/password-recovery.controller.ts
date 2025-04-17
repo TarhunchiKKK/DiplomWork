@@ -1,7 +1,7 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
     GrpcExceptionFilter,
-    InsertGrpcResponseInterceptor,
+    WrapGrpcResponseInterceptor,
     IResetPasswordDto,
     IUpdatePasswordDto,
     UnwrapGrpcResponse,
@@ -15,7 +15,7 @@ type ServiceController = Pick<UsersServiceController, "resetPassword" | "updateP
 @Controller()
 @UsersServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
-@UseInterceptors(InsertGrpcResponseInterceptor)
+@UseInterceptors(WrapGrpcResponseInterceptor)
 export class PasswordRecoveryController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly passwordRecoveryService: PasswordRecoveryService) {}
 

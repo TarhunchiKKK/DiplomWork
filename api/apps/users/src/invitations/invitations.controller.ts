@@ -3,7 +3,7 @@ import {
     GrpcExceptionFilter,
     IConfirmInvitationDto,
     IInviteUsersDto,
-    InsertGrpcResponseInterceptor,
+    WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
@@ -15,7 +15,7 @@ type ServiceConttroller = Pick<UsersServiceController, "inviteUsers" | "confirmI
 @Controller()
 @UsersServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
-@UseInterceptors(InsertGrpcResponseInterceptor)
+@UseInterceptors(WrapGrpcResponseInterceptor)
 export class InvitationsController implements UnwrapGrpcResponse<ServiceConttroller> {
     public constructor(private readonly invitationsService: InvitationsService) {}
 
