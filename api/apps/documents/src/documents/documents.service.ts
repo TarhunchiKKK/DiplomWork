@@ -2,12 +2,13 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ElectronicDocument } from "./entities/document.entity";
 import { Repository } from "typeorm";
-import { ICreateDocumentDto, IUpdateDocumentFileDto, IUpdateDocumentInfoDto } from "common/grpc";
+import { ICreateDocumentDto, IFindDocumentsDto, IUpdateDocumentFileDto, IUpdateDocumentInfoDto } from "common/grpc";
 import { DocumentAccessTokensService } from "common/modules";
-import { DocumentStatus } from "./enums/document-status.enum";
 import * as uuid from "uuid";
 import { DocumentRolesService } from "../document-roles/document-roles.service";
 import { DocumentOperation } from "../document-roles/enums/document-operation.enum";
+import { FindDocumentsQueryBuilder } from "./utils/find-documents.query-builder";
+import { DocumentStatus } from "common/enums";
 
 @Injectable()
 export class DocumentsService {
@@ -38,6 +39,10 @@ export class DocumentsService {
                 usersIds: []
             })
         });
+    }
+
+    public async findAll(dto: IFindDocumentsDto) {
+        return await this.documentsRepository.find(new FindDocumentsQueryBuilder(dto).build());
     }
 
     public async findOneById(id: string) {

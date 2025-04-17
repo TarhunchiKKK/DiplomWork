@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { DocumentStatus } from "../enums/document-status.enum";
+import { DocumentStatus } from "common/enums";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class ElectronicDocument {
@@ -29,4 +29,7 @@ export class ElectronicDocument {
 
     @Column()
     public accessToken: string;
+
+    @CreateDateColumn()
+    public createdAt: Date;
 }

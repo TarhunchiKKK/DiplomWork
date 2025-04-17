@@ -57,6 +57,29 @@ export interface IUpdateDocumentFileResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IFindDocumentsDto {
+  typeId?: string | undefined;
+  aimId?: string | undefined;
+  status?: string | undefined;
+  isUrgent?: boolean | undefined;
+  sortOrder?: string | undefined;
+}
+
+export interface IDocumentShortData {
+  id: string;
+  title: string;
+  createdAt: string;
+}
+
+export interface IFindDocumentResponseData {
+  data: IDocumentShortData[];
+}
+
+export interface IFindDocumentsResponse {
+  data?: IFindDocumentResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
 export const DOCUMENTS_PACKAGE_NAME = "documents";
 
 export interface DocumentsServiceClient {
@@ -65,6 +88,8 @@ export interface DocumentsServiceClient {
   updateInfo(request: IUpdateDocumentInfoDto): Observable<IEmptyResponse>;
 
   updateFile(request: IUpdateDocumentFileDto): Observable<IUpdateDocumentFileResponse>;
+
+  findAll(request: IFindDocumentsDto): Observable<IFindDocumentsResponse>;
 }
 
 export interface DocumentsServiceController {
@@ -77,11 +102,15 @@ export interface DocumentsServiceController {
   updateFile(
     request: IUpdateDocumentFileDto,
   ): Promise<IUpdateDocumentFileResponse> | Observable<IUpdateDocumentFileResponse> | IUpdateDocumentFileResponse;
+
+  findAll(
+    request: IFindDocumentsDto,
+  ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "updateInfo", "updateFile"];
+    const grpcMethods: string[] = ["create", "updateInfo", "updateFile", "findAll"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

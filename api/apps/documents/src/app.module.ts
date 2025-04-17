@@ -4,6 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { DocumentsModule } from "./documents/documents.module";
 import { ElectronicDocument } from "./documents/entities/document.entity";
 import { DocumentRolesModule } from "./document-roles/document-roles.module";
+import { DocumentAccessTokensModule } from "common/modules";
 
 @Module({
     imports: [
@@ -25,7 +26,8 @@ import { DocumentRolesModule } from "./document-roles/document-roles.module";
             })
         }),
         DocumentsModule,
-        DocumentRolesModule
+        DocumentRolesModule,
+        DocumentAccessTokensModule
     ]
 })
 export class AppModule {}
