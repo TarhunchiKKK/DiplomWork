@@ -20,6 +20,8 @@ export class BaseGrpcService<T extends TGrpcClient> implements OnModuleInit {
     public call<K extends keyof T>(method: K, arg: T[K] extends (arg: infer P) => any ? P : never) {
         return this.serviceClient[method](arg).pipe(
             map(response => {
+                console.log(response);
+
                 if (response.error) {
                     const Contructor = exceptionsMap.get(response.error.statusCode) ?? InternalServerErrorException;
                     throw new Contructor(response.error.message);

@@ -60,13 +60,13 @@ export interface IGenerateTotpDto {
   userEmail: string;
 }
 
-export interface ITotpPair {
+export interface ICreateTotpResponsedata {
   qrCode: string;
   secret: string;
 }
 
 export interface IGenerateTotpResponse {
-  data?: ITotpPair | undefined;
+  data?: ICreateTotpResponsedata | undefined;
   error?: IHttpError | undefined;
 }
 

@@ -1,18 +1,22 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
+    GrpcExceptionFilter,
     IActivateAccountDto,
     IDeactivateAccountDto,
+    WrapGrpcResponseInterceptor,
+    UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
 import { AccountDeactivationService } from "./account-deactivation.service";
-import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<UsersServiceController, "activateAccount" | "deactivateAccount">;
 
 @Controller()
 @UsersServiceControllerMethods()
-export class AccountDeactivationController implements UnknownReturnTypes<ServiceController> {
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(WrapGrpcResponseInterceptor)
+export class AccountDeactivationController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly accountDeactivationService: AccountDeactivationService) {}
 
     public async activateAccount(dto: IActivateAccountDto) {

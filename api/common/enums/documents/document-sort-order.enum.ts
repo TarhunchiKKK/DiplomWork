@@ -1,0 +1,6 @@
+export enum DocumentSortOrder {
+    TITLE_ASC = "TITLE_ASC",
+    TITLE_DESC = "TITLE_DESC",
+    CREATED_AT_ASC = "CREATED_AT_ASC",
+    CREATED_AT_DESC = "CREATED_AT_DESC"
+}

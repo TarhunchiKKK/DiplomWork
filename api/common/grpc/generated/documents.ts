@@ -6,20 +6,150 @@
 
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
+import { Observable } from "rxjs";
+import { IEmptyResponse, IHttpError } from "./common";
 
 const protobufPackage = "documents";
+
+export interface ICreateDocumentDto {
+  authorId: string;
+  title: string;
+  typeId: string;
+  aimId: string;
+  isUrgent: boolean;
+  fileExtension: string;
+}
+
+export interface ICreateDocumentResponseData {
+  id: string;
+  title: string;
+  typeId: string;
+  authorId: string;
+  url: string;
+}
+
+export interface ICreateDocumentResponse {
+  data?: ICreateDocumentResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IUpdateDocumentInfoDto {
+  documentId: string;
+  title?: string | undefined;
+  typeId?: string | undefined;
+  aimId?: string | undefined;
+  isUrgent?: boolean | undefined;
+  userId: string;
+}
+
+export interface IUpdateDocumentFileDto {
+  documentId: string;
+  fileExtension: string;
+  userId: string;
+}
+
+export interface IUpdateDocumentFileResponseData {
+  url: string;
+}
+
+export interface IUpdateDocumentFileResponse {
+  data?: IUpdateDocumentFileResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IFindDocumentsDto {
+  authorId?: string | undefined;
+  typeId?: string | undefined;
+  aimId?: string | undefined;
+  status?: string | undefined;
+  isUrgent?: boolean | undefined;
+  sortOrder?: string | undefined;
+}
+
+export interface IDocumentShortData {
+  id: string;
+  title: string;
+  createdAt: string;
+}
+
+export interface IFindDocumentResponseData {
+  data: IDocumentShortData[];
+}
+
+export interface IFindDocumentsResponse {
+  data?: IFindDocumentResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IAddToFavouriteDto {
+  userId: string;
+  documentId: string;
+}
+
+export interface IRemoveFromFavouriteDto {
+  documentId: string;
+  userId: string;
+}
+
+export interface IFindFavouriteDto {
+  userId: string;
+}
 
 export const DOCUMENTS_PACKAGE_NAME = "documents";
 
 export interface DocumentsServiceClient {
+  create(request: ICreateDocumentDto): Observable<ICreateDocumentResponse>;
+
+  updateInfo(request: IUpdateDocumentInfoDto): Observable<IEmptyResponse>;
+
+  updateFile(request: IUpdateDocumentFileDto): Observable<IUpdateDocumentFileResponse>;
+
+  findAll(request: IFindDocumentsDto): Observable<IFindDocumentsResponse>;
+
+  addToFavourite(request: IAddToFavouriteDto): Observable<IEmptyResponse>;
+
+  removeFromFavourite(request: IRemoveFromFavouriteDto): Observable<IEmptyResponse>;
+
+  findFavourite(request: IFindFavouriteDto): Observable<IFindDocumentsResponse>;
 }
 
 export interface DocumentsServiceController {
+  create(
+    request: ICreateDocumentDto,
+  ): Promise<ICreateDocumentResponse> | Observable<ICreateDocumentResponse> | ICreateDocumentResponse;
+
+  updateInfo(request: IUpdateDocumentInfoDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  updateFile(
+    request: IUpdateDocumentFileDto,
+  ): Promise<IUpdateDocumentFileResponse> | Observable<IUpdateDocumentFileResponse> | IUpdateDocumentFileResponse;
+
+  findAll(
+    request: IFindDocumentsDto,
+  ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
+
+  addToFavourite(request: IAddToFavouriteDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  removeFromFavourite(
+    request: IRemoveFromFavouriteDto,
+  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  findFavourite(
+    request: IFindFavouriteDto,
+  ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = [];
+    const grpcMethods: string[] = [
+      "create",
+      "updateInfo",
+      "updateFile",
+      "findAll",
+      "addToFavourite",
+      "removeFromFavourite",
+      "findFavourite",
+    ];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

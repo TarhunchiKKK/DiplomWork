@@ -1,18 +1,22 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
+    GrpcExceptionFilter,
     IConfirmInvitationDto,
     IInviteUsersDto,
+    WrapGrpcResponseInterceptor,
+    UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
 import { InvitationsService } from "./invitations.service";
-import { UnknownReturnTypes } from "common/utils";
 
 type ServiceConttroller = Pick<UsersServiceController, "inviteUsers" | "confirmInvitation">;
 
 @Controller()
 @UsersServiceControllerMethods()
-export class InvitationsController implements UnknownReturnTypes<ServiceConttroller> {
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(WrapGrpcResponseInterceptor)
+export class InvitationsController implements UnwrapGrpcResponse<ServiceConttroller> {
     public constructor(private readonly invitationsService: InvitationsService) {}
 
     public async inviteUsers(dto: IInviteUsersDto) {

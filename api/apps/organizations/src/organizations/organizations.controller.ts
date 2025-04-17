@@ -1,29 +1,36 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import { OrganizationsService } from "./organizations.service";
 import {
+    GrpcExceptionFilter,
     ICreateDefaultOrganizationResponse,
+    IFindOneOrganizationResponse,
+    WrapGrpcResponseInterceptor,
     IUpdateAdministrativeDivisionsDto,
     IUpdateDocumentAimsDto,
     IUpdateDocumentTypesDto,
     OrganizationsServiceController,
     OrganizationsServiceControllerMethods,
-    StringValue
+    StringValue,
+    UnwrapGrpcResponse
 } from "common/grpc";
 import { defaultOrganization } from "./constants/organization.constants";
-import { asType, UnknownReturnTypes } from "common/utils";
+import { asType } from "common/utils";
 
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(WrapGrpcResponseInterceptor)
 @Controller()
 @OrganizationsServiceControllerMethods()
-export class OrganizationsController implements UnknownReturnTypes<OrganizationsServiceController> {
+export class OrganizationsController implements UnwrapGrpcResponse<OrganizationsServiceController> {
     public constructor(private readonly organizationsService: OrganizationsService) {}
 
     public async createDefault() {
         const organization = await this.organizationsService.create(defaultOrganization);
-        return asType<ICreateDefaultOrganizationResponse>(organization);
+        return asType<ICreateDefaultOrganizationResponse["data"]>(organization);
     }
 
     public async findOneById(dto: StringValue) {
-        return await this.organizationsService.findOneById(dto.value);
+        const data = await this.organizationsService.findOneById(dto.value);
+        return asType<IFindOneOrganizationResponse["data"]>(data);
     }
 
     public async updateDocumentAims(dto: IUpdateDocumentAimsDto) {

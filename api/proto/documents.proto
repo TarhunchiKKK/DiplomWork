@@ -1,7 +1,140 @@
 syntax = "proto3";
 
+import "common.proto";
+
 package documents;
 
 service DocumentsService {
+    rpc Create (ICreateDocumentDto) returns (ICreateDocumentResponse) {}
 
+    rpc UpdateInfo (IUpdateDocumentInfoDto) returns (common.IEmptyResponse) {}
+
+    rpc UpdateFile (IUpdateDocumentFileDto) returns (IUpdateDocumentFileResponse) {}
+
+    rpc FindAll (IFindDocumentsDto) returns (IFindDocumentsResponse) {}
+
+    rpc AddToFavourite (IAddToFavouriteDto) returns (common.IEmptyResponse) {}
+
+    rpc RemoveFromFavourite (IRemoveFromFavouriteDto) returns (common.IEmptyResponse) {}
+
+    rpc FindFavourite (IFindFavouriteDto) returns (IFindDocumentsResponse) {}
+}
+
+message ICreateDocumentDto {
+    string authorId = 1;
+
+    string title = 2;
+
+    string typeId = 3;
+
+    string aimId = 4; 
+
+    bool isUrgent = 5;
+
+    string fileExtension = 6;
+}
+
+message ICreateDocumentResponseData {
+    string id = 1;
+
+    string title = 2;
+
+    string typeId = 3;
+
+    string authorId = 4;
+
+    string url = 5;
+}
+
+message ICreateDocumentResponse {
+    oneof response {
+        ICreateDocumentResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
+message IUpdateDocumentInfoDto {
+    string documentId = 1;
+
+    optional string title = 2;
+
+    optional string typeId = 3;
+
+    optional string aimId = 4; 
+
+    optional bool isUrgent = 5;
+
+    string userId = 6;
+}
+
+message IUpdateDocumentFileDto {
+    string documentId = 1;
+
+    string fileExtension = 2;
+
+    string userId = 3; 
+}
+
+message IUpdateDocumentFileResponseData {
+    string url = 1;
+}
+
+message IUpdateDocumentFileResponse {
+    oneof response {
+        IUpdateDocumentFileResponseData data = 1;
+        
+        common.IHttpError error = 2;
+    }
+}
+
+message IFindDocumentsDto {
+    optional string authorId = 1;
+    
+    optional string typeId = 2;
+
+    optional string aimId = 3;
+
+    optional string status = 4;
+
+    optional bool isUrgent = 5;
+
+    optional string sortOrder = 6;
+}
+
+message IDocumentShortData {
+    string id = 1;
+
+    string title = 2;
+
+    string createdAt = 3;
+}
+
+message IFindDocumentResponseData {
+    repeated IDocumentShortData data = 1;
+}
+
+message IFindDocumentsResponse {
+    oneof response {
+        IFindDocumentResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
+message IAddToFavouriteDto {
+    string userId = 1;
+
+    string documentId = 2;
+}
+
+
+message IRemoveFromFavouriteDto {
+    string documentId = 1;
+
+    string userId = 2;
+}
+
+message IFindFavouriteDto {
+    string userId = 1;
 }

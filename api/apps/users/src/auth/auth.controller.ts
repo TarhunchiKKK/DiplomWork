@@ -1,19 +1,23 @@
-import { Controller } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import {
+    GrpcExceptionFilter,
     ILoginDto,
+    WrapGrpcResponseInterceptor,
     IRefreshProfileDto,
     IRegisterAdminDto,
+    UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods
 } from "common/grpc";
-import { UnknownReturnTypes } from "common/utils";
 
 type ServiceController = Pick<UsersServiceController, "registerAdmin" | "login" | "refreshProfile">;
 
 @Controller()
 @UsersServiceControllerMethods()
-export class AuthController implements UnknownReturnTypes<ServiceController> {
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(WrapGrpcResponseInterceptor)
+export class AuthController implements UnwrapGrpcResponse<ServiceController> {
     public constructor(private readonly authService: AuthService) {}
 
     public async registerAdmin(dto: IRegisterAdminDto) {
