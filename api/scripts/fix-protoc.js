@@ -45,6 +45,10 @@ const replacements = [
         to: "typeId"
     },
     {
+        from: "aim_id",
+        to: "aimId"
+    },
+    {
         from: "organization_id",
         to: "organizationId"
     },

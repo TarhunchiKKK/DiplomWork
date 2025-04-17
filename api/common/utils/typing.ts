@@ -9,3 +9,5 @@ export type OnlyMethods<T extends Record<string, any>> = {
 };
 
 export type Observed<T> = T extends Observable<infer U> ? U : T;
+
+export type IgnoreFields<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;

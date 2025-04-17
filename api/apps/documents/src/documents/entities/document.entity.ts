@@ -12,6 +12,9 @@ export class ElectronicDocument {
     @Column()
     public typeId: string;
 
+    @Column()
+    public aimId: string;
+
     @Column({ type: "enum", enum: DocumentStatus, default: DocumentStatus.DEFAULT })
     public status: DocumentStatus;
 

@@ -1,7 +1,8 @@
 import { IsNotEmpty, IsString, Length } from "class-validator";
 import { IEnableTotpDto } from "common/grpc";
+import { IgnoreFields } from "common/utils";
 
-export class EnableTotpDto implements Pick<IEnableTotpDto, "secret" | "pin"> {
+export class EnableTotpDto implements IgnoreFields<IEnableTotpDto, "userId" | "userEmail"> {
     @IsNotEmpty({ message: "TOTP-секрет не предоставлен" })
     @IsString({ message: "TOTP-секрет должен быть строкой" })
     public secret: string;

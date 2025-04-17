@@ -12,9 +12,10 @@ import { IHttpError } from "./common";
 const protobufPackage = "documents";
 
 export interface ICreateDocumentDto {
+  authorId: string;
   title: string;
   typeId: string;
-  authorId: string;
+  aimId: string;
 }
 
 export interface ICreateDocumentResponseData {

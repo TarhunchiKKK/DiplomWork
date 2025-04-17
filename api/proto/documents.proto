@@ -9,11 +9,13 @@ service DocumentsService {
 }
 
 message ICreateDocumentDto {
-    string title = 1;
+    string authorId = 1;
 
-    string typeId = 2;
+    string title = 2;
 
-    string authorId = 3;
+    string typeId = 3;
+
+    string aimId = 4; 
 }
 
 message ICreateDocumentResponseData {
