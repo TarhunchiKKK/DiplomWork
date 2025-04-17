@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DocumentsModule } from "./documents/documents.module";
 import { ElectronicDocument } from "./documents/entities/document.entity";
+import { DocumentRolesModule } from "./document-roles/document-roles.module";
 
 @Module({
     imports: [
@@ -23,7 +24,8 @@ import { ElectronicDocument } from "./documents/entities/document.entity";
                 entities: [ElectronicDocument]
             })
         }),
-        DocumentsModule
+        DocumentsModule,
+        DocumentRolesModule
     ]
 })
 export class AppModule {}

@@ -1,30 +1,27 @@
-import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ElectronicDocument } from "./entities/document.entity";
 import { Repository } from "typeorm";
-import { ICreateDocumentDto, IUpdateDocumentInfoDto } from "common/grpc";
+import { ICreateDocumentDto, IUpdateDocumentFileDto, IUpdateDocumentInfoDto } from "common/grpc";
 import { DocumentAccessTokensService } from "common/modules";
 import { DocumentStatus } from "./enums/document-status.enum";
 import * as uuid from "uuid";
-import { IgnoreFields } from "common/utils";
+import { DocumentRolesService } from "../document-roles/document-roles.service";
+import { DocumentOperation } from "../document-roles/enums/document-operation.enum";
 
 @Injectable()
 export class DocumentsService {
     public constructor(
         @InjectRepository(ElectronicDocument) private readonly documentsRepository: Repository<ElectronicDocument>,
 
-        private readonly tokensService: DocumentAccessTokensService
+        private readonly tokensService: DocumentAccessTokensService,
+
+        private readonly rolesService: DocumentRolesService
     ) {}
 
     private generateS3Filename(fileExtension: string) {
         const filename = uuid.v4();
         return `${filename}.${fileExtension}`;
-    }
-
-    private verifyAccess(token: string, userId: string) {
-        const tokenInfo = this.tokensService.verify(token);
-
-        return tokenInfo.authorId === userId || tokenInfo.usersIds.includes(userId);
     }
 
     public create(dto: ICreateDocumentDto) {
@@ -43,25 +40,49 @@ export class DocumentsService {
         });
     }
 
-    public async updateInfo(dto: IUpdateDocumentInfoDto) {
-        const { documentId, userId, ...data } = dto;
-
+    public async findOneById(id: string) {
         const document = await this.documentsRepository.findOne({
-            where: { id: documentId }
+            where: { id: id }
         });
 
         if (!document) {
             throw new NotFoundException("Документ не найден");
         }
 
-        const haveAccess = this.verifyAccess(document.accessToken, userId);
+        return document;
+    }
 
-        if (!haveAccess) {
-            throw new UnauthorizedException("Доступ запрещен");
-        }
+    public async updateInfo(dto: IUpdateDocumentInfoDto) {
+        const { documentId, userId, ...data } = dto;
+
+        const document = await this.findOneById(documentId);
+
+        this.rolesService.checkPermissions({
+            token: document.accessToken,
+            userId: userId,
+            operation: DocumentOperation.UPDATE_INFO
+        });
 
         Object.assign(document, data);
 
         await this.documentsRepository.save(document);
+    }
+
+    public async updateFile(dto: IUpdateDocumentFileDto) {
+        const document = await this.findOneById(dto.documentId);
+
+        this.rolesService.checkPermissions({
+            token: document.accessToken,
+            userId: dto.userId,
+            operation: DocumentOperation.UPDATE_FILE
+        });
+
+        document.url = this.generateS3Filename(dto.fileExtension);
+
+        await this.documentsRepository.save(document);
+
+        return {
+            url: document.url
+        };
     }
 }

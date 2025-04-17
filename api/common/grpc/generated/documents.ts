@@ -42,12 +42,29 @@ export interface IUpdateDocumentInfoDto {
   userId: string;
 }
 
+export interface IUpdateDocumentFileDto {
+  documentId: string;
+  fileExtension: string;
+  userId: string;
+}
+
+export interface IUpdateDocumentFileResponseData {
+  url: string;
+}
+
+export interface IUpdateDocumentFileResponse {
+  data?: IUpdateDocumentFileResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
 export const DOCUMENTS_PACKAGE_NAME = "documents";
 
 export interface DocumentsServiceClient {
   create(request: ICreateDocumentDto): Observable<ICreateDocumentResponse>;
 
   updateInfo(request: IUpdateDocumentInfoDto): Observable<IEmptyResponse>;
+
+  updateFile(request: IUpdateDocumentFileDto): Observable<IUpdateDocumentFileResponse>;
 }
 
 export interface DocumentsServiceController {
@@ -56,11 +73,15 @@ export interface DocumentsServiceController {
   ): Promise<ICreateDocumentResponse> | Observable<ICreateDocumentResponse> | ICreateDocumentResponse;
 
   updateInfo(request: IUpdateDocumentInfoDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  updateFile(
+    request: IUpdateDocumentFileDto,
+  ): Promise<IUpdateDocumentFileResponse> | Observable<IUpdateDocumentFileResponse> | IUpdateDocumentFileResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "updateInfo"];
+    const grpcMethods: string[] = ["create", "updateInfo", "updateFile"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

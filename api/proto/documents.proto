@@ -8,6 +8,8 @@ service DocumentsService {
     rpc Create (ICreateDocumentDto) returns (ICreateDocumentResponse) {}
 
     rpc UpdateInfo (IUpdateDocumentInfoDto) returns (common.IEmptyResponse) {}
+
+    rpc UpdateFile (IUpdateDocumentFileDto) returns (IUpdateDocumentFileResponse) {}
 }
 
 message ICreateDocumentDto {
@@ -56,4 +58,24 @@ message IUpdateDocumentInfoDto {
     optional bool isUrgent = 5;
 
     string userId = 6;
+}
+
+message IUpdateDocumentFileDto {
+    string documentId = 1;
+
+    string fileExtension = 2;
+
+    string userId = 3; 
+}
+
+message IUpdateDocumentFileResponseData {
+    string url = 1;
+}
+
+message IUpdateDocumentFileResponse {
+    oneof response {
+        IUpdateDocumentFileResponseData data = 1;
+        
+        common.IHttpError error = 2;
+    }
 }

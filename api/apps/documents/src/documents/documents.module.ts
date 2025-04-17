@@ -4,9 +4,10 @@ import { DocumentsService } from "./documents.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ElectronicDocument } from "./entities/document.entity";
 import { DocumentAccessTokensModule } from "common/modules";
+import { DocumentRolesModule } from "../document-roles/document-roles.module";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([ElectronicDocument]), DocumentAccessTokensModule],
+    imports: [TypeOrmModule.forFeature([ElectronicDocument]), DocumentAccessTokensModule, DocumentRolesModule],
     controllers: [DocumentsController],
     providers: [DocumentsService]
 })

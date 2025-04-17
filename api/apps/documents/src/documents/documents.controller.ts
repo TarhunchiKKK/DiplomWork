@@ -7,10 +7,11 @@ import {
     ICreateDocumentDto,
     WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
-    IUpdateDocumentInfoDto
+    IUpdateDocumentInfoDto,
+    IUpdateDocumentFileDto
 } from "common/grpc";
 
-type ServiceController = Pick<DocumentsServiceController, "create" | "updateInfo">;
+type ServiceController = Pick<DocumentsServiceController, "create" | "updateInfo" | "updateFile">;
 
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(WrapGrpcResponseInterceptor)
@@ -25,5 +26,9 @@ export class DocumentsController implements UnwrapGrpcResponse<ServiceController
 
     public async updateInfo(dto: IUpdateDocumentInfoDto) {
         await this.documentsService.updateInfo(dto);
+    }
+
+    public async updateFile(dto: IUpdateDocumentFileDto) {
+        return await this.documentsService.updateFile(dto);
     }
 }
