@@ -9,6 +9,7 @@ import { DocumentRolesService } from "../document-roles/document-roles.service";
 import { DocumentOperation } from "../document-roles/enums/document-operation.enum";
 import { FindDocumentsQueryBuilder } from "./utils/find-documents.query-builder";
 import { DocumentStatus } from "common/enums";
+import { getShortDocumentData } from "./helpers/documents.helpers";
 
 @Injectable()
 export class DocumentsService {
@@ -44,11 +45,9 @@ export class DocumentsService {
     public async findAll(dto: IFindDocumentsDto) {
         const documents = await this.documentsRepository.find(new FindDocumentsQueryBuilder(dto).build());
 
-        return documents.map(document => ({
-            id: document.id,
-            title: document.title,
-            createdAt: document.createdAt.toISOString()
-        }));
+        return {
+            data: documents.map(getShortDocumentData)
+        };
     }
 
     public async findOneById(id: string) {

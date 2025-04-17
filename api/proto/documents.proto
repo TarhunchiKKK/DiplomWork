@@ -12,6 +12,12 @@ service DocumentsService {
     rpc UpdateFile (IUpdateDocumentFileDto) returns (IUpdateDocumentFileResponse) {}
 
     rpc FindAll (IFindDocumentsDto) returns (IFindDocumentsResponse) {}
+
+    rpc AddToFavourite (IAddToFavouriteDto) returns (common.IEmptyResponse) {}
+
+    rpc RemoveFromFavourite (IRemoveFromFavouriteDto) returns (common.IEmptyResponse) {}
+
+    rpc FindFavourite (IFindFavouriteDto) returns (IFindDocumentsResponse) {}
 }
 
 message ICreateDocumentDto {
@@ -114,4 +120,21 @@ message IFindDocumentsResponse {
 
         common.IHttpError error = 2;
     }
+}
+
+message IAddToFavouriteDto {
+    string userId = 1;
+
+    string documentId = 2;
+}
+
+
+message IRemoveFromFavouriteDto {
+    string documentId = 1;
+
+    string userId = 2;
+}
+
+message IFindFavouriteDto {
+    string userId = 1;
 }

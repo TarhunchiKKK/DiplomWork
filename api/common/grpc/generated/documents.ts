@@ -81,6 +81,20 @@ export interface IFindDocumentsResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IAddToFavouriteDto {
+  userId: string;
+  documentId: string;
+}
+
+export interface IRemoveFromFavouriteDto {
+  documentId: string;
+  userId: string;
+}
+
+export interface IFindFavouriteDto {
+  userId: string;
+}
+
 export const DOCUMENTS_PACKAGE_NAME = "documents";
 
 export interface DocumentsServiceClient {
@@ -91,6 +105,12 @@ export interface DocumentsServiceClient {
   updateFile(request: IUpdateDocumentFileDto): Observable<IUpdateDocumentFileResponse>;
 
   findAll(request: IFindDocumentsDto): Observable<IFindDocumentsResponse>;
+
+  addToFavourite(request: IAddToFavouriteDto): Observable<IEmptyResponse>;
+
+  removeFromFavourite(request: IRemoveFromFavouriteDto): Observable<IEmptyResponse>;
+
+  findFavourite(request: IFindFavouriteDto): Observable<IFindDocumentsResponse>;
 }
 
 export interface DocumentsServiceController {
@@ -107,11 +127,29 @@ export interface DocumentsServiceController {
   findAll(
     request: IFindDocumentsDto,
   ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
+
+  addToFavourite(request: IAddToFavouriteDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  removeFromFavourite(
+    request: IRemoveFromFavouriteDto,
+  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  findFavourite(
+    request: IFindFavouriteDto,
+  ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "updateInfo", "updateFile", "findAll"];
+    const grpcMethods: string[] = [
+      "create",
+      "updateInfo",
+      "updateFile",
+      "findAll",
+      "addToFavourite",
+      "removeFromFavourite",
+      "findFavourite",
+    ];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
