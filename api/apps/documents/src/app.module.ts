@@ -6,6 +6,7 @@ import { ElectronicDocument } from "./documents/entities/document.entity";
 import { DocumentRolesModule } from "./document-roles/document-roles.module";
 import { DocumentAccessTokensModule } from "common/modules";
 import { FavouriteDocumentInfo } from "./documents/favourite/entities/favourite-document-info.entity";
+import { DocumentVersionsModule } from "./versions/document-versions.module";
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import { FavouriteDocumentInfo } from "./documents/favourite/entities/favourite-
         }),
         DocumentsModule,
         DocumentRolesModule,
+        DocumentVersionsModule,
         DocumentAccessTokensModule
     ]
 })
