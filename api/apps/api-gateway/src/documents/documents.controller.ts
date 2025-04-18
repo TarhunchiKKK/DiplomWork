@@ -15,7 +15,7 @@ import { DocumentsGrpcService, IFindDocumentsDto } from "common/grpc";
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { CreateDocumentDto } from "./dto/create-document.dto";
-import { UpdateDocumentInfoDto } from "./dto/update-document-info.dto";
+import { UpdateDocumentDto } from "./dto/update-document-info.dto";
 import { DocumentSortOrder, DocumentStatus, Role } from "common/enums";
 
 @Controller("/documents")
@@ -29,16 +29,6 @@ export class DocumentsController {
         return this.documentsGrpcService.call("create", {
             ...dto,
             authorId: request.jwtInfo.id
-        });
-    }
-
-    @Patch()
-    @UsePipes(ValidationPipe)
-    @UseGuards(AuthenticationGuard)
-    public updateInfo(@Req() request: TAuthenticatedRequest, @Body() dto: UpdateDocumentInfoDto) {
-        return this.documentsGrpcService.call("updateInfo", {
-            ...dto,
-            userId: request.jwtInfo.id
         });
     }
 
@@ -65,5 +55,15 @@ export class DocumentsController {
         }
 
         return this.documentsGrpcService.call("findAll", dto);
+    }
+
+    @Patch()
+    @UsePipes(ValidationPipe)
+    @UseGuards(AuthenticationGuard)
+    public updateInfo(@Req() request: TAuthenticatedRequest, @Body() dto: UpdateDocumentDto) {
+        return this.documentsGrpcService.call("update", {
+            ...dto,
+            userId: request.jwtInfo.id
+        });
     }
 }

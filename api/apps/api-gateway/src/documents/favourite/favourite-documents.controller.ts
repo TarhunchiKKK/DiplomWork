@@ -1,18 +1,19 @@
-import { Body, Controller, Get, Patch, Req, UseGuards } from "@nestjs/common";
-import { DocumentsGrpcService } from "common/grpc";
+import { Body, Controller, Delete, Get, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { AddToFavouriteDto } from "./dto/add-to-favourite.dto";
 import { RemoveFromFavouriteDto } from "./dto/remove-from-favourite.dto";
+import { FavouriteDocumentsGrpcService } from "common/grpc";
 
 @Controller("/documents/favourite")
 export class FavouriteDocumentsController {
-    public constructor(private readonly documentsGrpcService: DocumentsGrpcService) {}
+    public constructor(private readonly favouriteDocumentsGrpcService: FavouriteDocumentsGrpcService) {}
 
-    @Patch("/add")
+    @Post()
+    @UsePipes(ValidationPipe)
     @UseGuards(AuthenticationGuard)
     public add(@Req() request: TAuthenticatedRequest, @Body() dto: AddToFavouriteDto) {
-        return this.documentsGrpcService.call("addToFavourite", {
+        return this.favouriteDocumentsGrpcService.call("add", {
             userId: request.jwtInfo.id,
             documentId: dto.documentId
         });
@@ -21,15 +22,16 @@ export class FavouriteDocumentsController {
     @Get()
     @UseGuards(AuthenticationGuard)
     public findAll(@Req() request: TAuthenticatedRequest) {
-        return this.documentsGrpcService.call("findFavourite", {
+        return this.favouriteDocumentsGrpcService.call("findAll", {
             userId: request.jwtInfo.id
         });
     }
 
-    @Patch("/remove")
+    @Delete()
+    @UsePipes(ValidationPipe)
     @UseGuards(AuthenticationGuard)
     public remove(@Req() request: TAuthenticatedRequest, @Body() dto: RemoveFromFavouriteDto) {
-        return this.documentsGrpcService.call("removeFromFavourite", {
+        return this.favouriteDocumentsGrpcService.call("remove", {
             userId: request.jwtInfo.id,
             documentId: dto.documentId
         });

@@ -5,5 +5,5 @@ import { IgnoreFields } from "common/utils";
 export class AddToFavouriteDto implements IgnoreFields<IAddToFavouriteDto, "userId"> {
     @IsNotEmpty({ message: "Идентификатор докуента не указан" })
     @IsString({ message: "Идентификатор документа должен быть строкой" })
-    documentId: string;
+    public documentId: string;
 }
