@@ -8,14 +8,14 @@ import { TOTP } from "otpauth";
 import { createQrCodeFromTotp } from "./helpers/qr-code.helpers";
 import { IValidateTotpDto } from "./interfaces/validate-totp.dto";
 import { AuthType } from "common/enums";
-import { AuthService } from "../auth/auth.service";
+import { AuthenticationService } from "../authentiation/authentiation.service";
 
 @Injectable()
-export class TotpService {
+export class TotpAuthenticationService {
     public constructor(
         private readonly usersService: UsersService,
 
-        private readonly authService: AuthService,
+        private readonly authenticationService: AuthenticationService,
 
         private readonly configService: ConfigService
     ) {}
@@ -88,7 +88,7 @@ export class TotpService {
             email: user.email,
             role: user.role,
             organizationId: user.organizationId,
-            token: this.authService.createJwtFromUser(user)
+            token: this.authenticationService.createJwtFromUser(user)
         };
     }
 }

@@ -10,28 +10,28 @@ import {
     TotpAuthenticationServiceControllerMethods,
     TotpAuthenticationServiceController
 } from "common/grpc";
-import { TotpService } from "./totp.service";
+import { TotpAuthenticationService } from "./totp-authentication.service";
 
 @Controller()
 @TotpAuthenticationServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(WrapGrpcResponseInterceptor)
-export class TotpController implements UnwrapGrpcResponse<TotpAuthenticationServiceController> {
-    public constructor(private readonly totpService: TotpService) {}
+export class TotpAuthenticationController implements UnwrapGrpcResponse<TotpAuthenticationServiceController> {
+    public constructor(private readonly totpAuthenticationService: TotpAuthenticationService) {}
 
     public async generate(dto: IGenerateTotpDto) {
-        return await this.totpService.generate(dto);
+        return await this.totpAuthenticationService.generate(dto);
     }
 
     public async enable(dto: IEnableTotpDto) {
-        await this.totpService.enable(dto);
+        await this.totpAuthenticationService.enable(dto);
     }
 
     public async disable(dto: IDisableTotpDto) {
-        await this.totpService.disable(dto);
+        await this.totpAuthenticationService.disable(dto);
     }
 
     public async login(dto: ILoginWithTotpDto) {
-        return await this.totpService.login(dto);
+        return await this.totpAuthenticationService.login(dto);
     }
 }

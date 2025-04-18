@@ -8,7 +8,7 @@ import * as argon2 from "argon2";
 import { User } from "../users/entities/user.entity";
 
 @Injectable()
-export class AuthService {
+export class AuthenticationService {
     public constructor(
         private readonly usersService: UsersService,
 
