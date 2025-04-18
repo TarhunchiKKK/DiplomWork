@@ -15,7 +15,7 @@ import { DocumentsGrpcService, IFindDocumentsDto } from "common/grpc";
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { CreateDocumentDto } from "./dto/create-document.dto";
-import { UpdateDocumentDto } from "./dto/update-document-info.dto";
+import { UpdateDocumentDto } from "./dto/update-document.dto";
 import { DocumentSortOrder, DocumentStatus, Role } from "common/enums";
 
 @Controller("/documents")
