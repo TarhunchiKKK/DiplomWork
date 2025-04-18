@@ -5,25 +5,23 @@ import {
     IDeactivateAccountDto,
     WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
-    UsersServiceController,
-    UsersServiceControllerMethods
+    AccountDeactivationServiceController,
+    AccountDeactivationServiceControllerMethods
 } from "common/grpc";
 import { AccountDeactivationService } from "./account-deactivation.service";
 
-type ServiceController = Pick<UsersServiceController, "activateAccount" | "deactivateAccount">;
-
 @Controller()
-@UsersServiceControllerMethods()
+@AccountDeactivationServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(WrapGrpcResponseInterceptor)
-export class AccountDeactivationController implements UnwrapGrpcResponse<ServiceController> {
+export class AccountDeactivationController implements UnwrapGrpcResponse<AccountDeactivationServiceController> {
     public constructor(private readonly accountDeactivationService: AccountDeactivationService) {}
 
-    public async activateAccount(dto: IActivateAccountDto) {
-        await this.accountDeactivationService.activateAccount(dto);
+    public async activate(dto: IActivateAccountDto) {
+        await this.accountDeactivationService.activate(dto);
     }
 
-    public async deactivateAccount(dto: IDeactivateAccountDto) {
-        await this.accountDeactivationService.deactivateAccount(dto);
+    public async deactivate(dto: IDeactivateAccountDto) {
+        await this.accountDeactivationService.deactivate(dto);
     }
 }

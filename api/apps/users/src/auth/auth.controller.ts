@@ -7,17 +7,15 @@ import {
     IRefreshProfileDto,
     IRegisterAdminDto,
     UnwrapGrpcResponse,
-    UsersServiceController,
-    UsersServiceControllerMethods
+    AuthenticationServiceControllerMethods,
+    AuthenticationServiceController
 } from "common/grpc";
 
-type ServiceController = Pick<UsersServiceController, "registerAdmin" | "login" | "refreshProfile">;
-
 @Controller()
-@UsersServiceControllerMethods()
+@AuthenticationServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(WrapGrpcResponseInterceptor)
-export class AuthController implements UnwrapGrpcResponse<ServiceController> {
+export class AuthController implements UnwrapGrpcResponse<AuthenticationServiceController> {
     public constructor(private readonly authService: AuthService) {}
 
     public async registerAdmin(dto: IRegisterAdminDto) {

@@ -7,33 +7,31 @@ import {
     ILoginWithTotpDto,
     WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
-    UsersServiceController,
-    UsersServiceControllerMethods
+    TotpAuthenticationServiceControllerMethods,
+    TotpAuthenticationServiceController
 } from "common/grpc";
 import { TotpService } from "./totp.service";
 
-type ServiceController = Pick<UsersServiceController, "generateTotp" | "enableTotp" | "disableTotp" | "loginWithTotp">;
-
 @Controller()
-@UsersServiceControllerMethods()
+@TotpAuthenticationServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(WrapGrpcResponseInterceptor)
-export class TotpController implements UnwrapGrpcResponse<ServiceController> {
+export class TotpController implements UnwrapGrpcResponse<TotpAuthenticationServiceController> {
     public constructor(private readonly totpService: TotpService) {}
 
-    public async generateTotp(dto: IGenerateTotpDto) {
+    public async generate(dto: IGenerateTotpDto) {
         return await this.totpService.generate(dto);
     }
 
-    public async enableTotp(dto: IEnableTotpDto) {
+    public async enable(dto: IEnableTotpDto) {
         await this.totpService.enable(dto);
     }
 
-    public async disableTotp(dto: IDisableTotpDto) {
+    public async disable(dto: IDisableTotpDto) {
         await this.totpService.disable(dto);
     }
 
-    public async loginWithTotp(dto: ILoginWithTotpDto) {
+    public async login(dto: ILoginWithTotpDto) {
         return await this.totpService.login(dto);
     }
 }

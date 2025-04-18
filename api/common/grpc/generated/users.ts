@@ -89,83 +89,25 @@ export interface ILoginWithTotpDto {
 
 export const USERS_PACKAGE_NAME = "users";
 
-export interface UsersServiceClient {
+export interface AuthenticationServiceClient {
   registerAdmin(request: IRegisterAdminDto): Observable<IAuthResponse>;
 
   login(request: ILoginDto): Observable<IAuthResponse>;
 
   refreshProfile(request: IRefreshProfileDto): Observable<IAuthResponse>;
-
-  inviteUsers(request: IInviteUsersDto): Observable<IEmptyResponse>;
-
-  confirmInvitation(request: IConfirmInvitationDto): Observable<IAuthResponse>;
-
-  resetPassword(request: IResetPasswordDto): Observable<IEmptyResponse>;
-
-  updatePassword(request: IUpdatePasswordDto): Observable<IEmptyResponse>;
-
-  activateAccount(request: IActivateAccountDto): Observable<IEmptyResponse>;
-
-  deactivateAccount(request: IDeactivateAccountDto): Observable<IEmptyResponse>;
-
-  generateTotp(request: IGenerateTotpDto): Observable<IGenerateTotpResponse>;
-
-  enableTotp(request: IEnableTotpDto): Observable<IEmptyResponse>;
-
-  disableTotp(request: IDisableTotpDto): Observable<IEmptyResponse>;
-
-  loginWithTotp(request: ILoginWithTotpDto): Observable<IAuthResponse>;
 }
 
-export interface UsersServiceController {
+export interface AuthenticationServiceController {
   registerAdmin(request: IRegisterAdminDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
   login(request: ILoginDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
   refreshProfile(request: IRefreshProfileDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
-
-  inviteUsers(request: IInviteUsersDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  confirmInvitation(request: IConfirmInvitationDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
-
-  resetPassword(request: IResetPasswordDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  updatePassword(request: IUpdatePasswordDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  activateAccount(request: IActivateAccountDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  deactivateAccount(
-    request: IDeactivateAccountDto,
-  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  generateTotp(
-    request: IGenerateTotpDto,
-  ): Promise<IGenerateTotpResponse> | Observable<IGenerateTotpResponse> | IGenerateTotpResponse;
-
-  enableTotp(request: IEnableTotpDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  disableTotp(request: IDisableTotpDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  loginWithTotp(request: ILoginWithTotpDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 }
 
-export function UsersServiceControllerMethods() {
+export function AuthenticationServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = [
-      "registerAdmin",
-      "login",
-      "refreshProfile",
-      "inviteUsers",
-      "confirmInvitation",
-      "resetPassword",
-      "updatePassword",
-      "activateAccount",
-      "deactivateAccount",
-      "generateTotp",
-      "enableTotp",
-      "disableTotp",
-      "loginWithTotp",
-    ];
+    const grpcMethods: string[] = ["registerAdmin", "login", "refreshProfile"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
@@ -174,7 +116,7 @@ export function UsersServiceControllerMethods() {
             continue;
         }
         
-      GrpcMethod("UsersService", method)(constructor.prototype[method], method, descriptor);
+      GrpcMethod("AuthenticationService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
@@ -185,9 +127,183 @@ export function UsersServiceControllerMethods() {
             continue;
         }
         
-      GrpcStreamMethod("UsersService", method)(constructor.prototype[method], method, descriptor);
+      GrpcStreamMethod("AuthenticationService", method)(constructor.prototype[method], method, descriptor);
     }
   };
 }
 
-export const USERS_SERVICE_NAME = "UsersService";
+export const AUTHENTICATION_SERVICE_NAME = "AuthenticationService";
+
+export interface UsersInvitationServiceClient {
+  invite(request: IInviteUsersDto): Observable<IEmptyResponse>;
+
+  confirm(request: IConfirmInvitationDto): Observable<IAuthResponse>;
+}
+
+export interface UsersInvitationServiceController {
+  invite(request: IInviteUsersDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  confirm(request: IConfirmInvitationDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
+}
+
+export function UsersInvitationServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["invite", "confirm"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("UsersInvitationService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("UsersInvitationService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const USERS_INVITATION_SERVICE_NAME = "UsersInvitationService";
+
+export interface PasswordRecoveryServiceClient {
+  reset(request: IResetPasswordDto): Observable<IEmptyResponse>;
+
+  update(request: IUpdatePasswordDto): Observable<IEmptyResponse>;
+}
+
+export interface PasswordRecoveryServiceController {
+  reset(request: IResetPasswordDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  update(request: IUpdatePasswordDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+}
+
+export function PasswordRecoveryServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["reset", "update"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("PasswordRecoveryService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("PasswordRecoveryService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const PASSWORD_RECOVERY_SERVICE_NAME = "PasswordRecoveryService";
+
+export interface AccountDeactivationServiceClient {
+  activate(request: IActivateAccountDto): Observable<IEmptyResponse>;
+
+  deactivate(request: IDeactivateAccountDto): Observable<IEmptyResponse>;
+}
+
+export interface AccountDeactivationServiceController {
+  activate(request: IActivateAccountDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  deactivate(request: IDeactivateAccountDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+}
+
+export function AccountDeactivationServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["activate", "deactivate"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("AccountDeactivationService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("AccountDeactivationService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const ACCOUNT_DEACTIVATION_SERVICE_NAME = "AccountDeactivationService";
+
+export interface TotpAuthenticationServiceClient {
+  generate(request: IGenerateTotpDto): Observable<IGenerateTotpResponse>;
+
+  enable(request: IEnableTotpDto): Observable<IEmptyResponse>;
+
+  disable(request: IDisableTotpDto): Observable<IEmptyResponse>;
+
+  login(request: ILoginWithTotpDto): Observable<IAuthResponse>;
+}
+
+export interface TotpAuthenticationServiceController {
+  generate(
+    request: IGenerateTotpDto,
+  ): Promise<IGenerateTotpResponse> | Observable<IGenerateTotpResponse> | IGenerateTotpResponse;
+
+  enable(request: IEnableTotpDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  disable(request: IDisableTotpDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  login(request: ILoginWithTotpDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
+}
+
+export function TotpAuthenticationServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["generate", "enable", "disable", "login"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("TotpAuthenticationService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("TotpAuthenticationService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const TOTP_AUTHENTICATION_SERVICE_NAME = "TotpAuthenticationService";
