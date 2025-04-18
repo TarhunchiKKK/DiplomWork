@@ -23,9 +23,11 @@ export interface ICreateDocumentDto {
 export interface ICreateDocumentResponseData {
   id: string;
   title: string;
-  typeId: string;
   authorId: string;
-  url: string;
+  typeId: string;
+  aimId: string;
+  status: string;
+  isUrgent: boolean;
 }
 
 export interface ICreateDocumentResponse {

@@ -24,9 +24,6 @@ export class ElectronicDocument {
     public status: DocumentStatus;
 
     @Column()
-    public url: string;
-
-    @Column()
     public authorId: string;
 
     @Column()

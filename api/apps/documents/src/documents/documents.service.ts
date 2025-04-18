@@ -1,15 +1,16 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ElectronicDocument } from "./entities/document.entity";
 import { Repository } from "typeorm";
 import { ICreateDocumentDto, IFindDocumentsDto, IUpdateDocumentDto } from "common/grpc";
 import { DocumentAccessTokensService } from "common/modules";
-import * as uuid from "uuid";
-import { DocumentRolesService } from "../document-roles/document-roles.service";
-import { DocumentOperation } from "../document-roles/enums/document-operation.enum";
+import { DocumentRolesService } from "../roles/document-roles.service";
+import { DocumentOperation } from "../roles/enums/document-operation.enum";
 import { FindDocumentsQueryBuilder } from "./utils/find-documents.query-builder";
 import { DocumentStatus } from "common/enums";
 import { getShortDocumentData } from "./helpers/documents.helpers";
+import { DocumentVersionsService } from "../versions/document-versions.service";
+import lodash from "lodash";
 
 @Injectable()
 export class DocumentsService {
@@ -18,28 +19,32 @@ export class DocumentsService {
 
         private readonly tokensService: DocumentAccessTokensService,
 
-        private readonly rolesService: DocumentRolesService
+        private readonly rolesService: DocumentRolesService,
+
+        @Inject(forwardRef(() => DocumentVersionsService)) private readonly versionsService: DocumentVersionsService
     ) {}
 
-    private generateS3Filename(fileExtension: string) {
-        const filename = uuid.v4();
-        return `${filename}.${fileExtension}`;
-    }
-
-    public create(dto: ICreateDocumentDto) {
-        return this.documentsRepository.save({
+    public async create(dto: ICreateDocumentDto) {
+        const document = await this.documentsRepository.save({
             aimId: dto.aimId,
             typeId: dto.typeId,
             authorId: dto.authorId,
             isUrgent: dto.isUrgent,
             title: dto.title,
             status: DocumentStatus.DEFAULT,
-            url: this.generateS3Filename(dto.fileExtension),
             accessToken: this.tokensService.create({
                 authorId: dto.authorId,
                 usersIds: []
             })
         });
+
+        this.versionsService.create({
+            documentId: document.id,
+            fileExtension: dto.fileExtension,
+            userId: dto.authorId
+        });
+
+        return lodash.pick(document, ["id", "authorId", "title", "typeId", "aimId", "status", "isUrgent"]);
     }
 
     public async findAll(dto: IFindDocumentsDto) {

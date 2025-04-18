@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DocumentsModule } from "./documents/documents.module";
 import { ElectronicDocument } from "./documents/entities/document.entity";
-import { DocumentRolesModule } from "./document-roles/document-roles.module";
+import { DocumentRolesModule } from "./roles/document-roles.module";
 import { DocumentAccessTokensModule } from "common/modules";
 import { FavouriteDocumentInfo } from "./documents/favourite/entities/favourite-document-info.entity";
 import { DocumentVersionsModule } from "./versions/document-versions.module";
