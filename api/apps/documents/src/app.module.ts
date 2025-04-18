@@ -7,6 +7,7 @@ import { DocumentRolesModule } from "./document-roles/document-roles.module";
 import { DocumentAccessTokensModule } from "common/modules";
 import { FavouriteDocumentInfo } from "./documents/favourite/entities/favourite-document-info.entity";
 import { DocumentVersionsModule } from "./versions/document-versions.module";
+import { DocumentVersion } from "./versions/entities/document-version.entity";
 
 @Module({
     imports: [
@@ -24,7 +25,7 @@ import { DocumentVersionsModule } from "./versions/document-versions.module";
                 username: configService.getOrThrow<string>("DOCUMENTS_MICROSERVICE_DB_USER"),
                 password: configService.getOrThrow<string>("DOCUMENTS_MICROSERVICE_DB_PASSWORD"),
                 synchronize: true,
-                entities: [ElectronicDocument, FavouriteDocumentInfo]
+                entities: [ElectronicDocument, FavouriteDocumentInfo, DocumentVersion]
             })
         }),
         DocumentsModule,

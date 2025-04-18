@@ -33,28 +33,13 @@ export interface ICreateDocumentResponse {
   error?: IHttpError | undefined;
 }
 
-export interface IUpdateDocumentInfoDto {
+export interface IUpdateDocumentDto {
   documentId: string;
   title?: string | undefined;
   typeId?: string | undefined;
   aimId?: string | undefined;
   isUrgent?: boolean | undefined;
   userId: string;
-}
-
-export interface IUpdateDocumentFileDto {
-  documentId: string;
-  fileExtension: string;
-  userId: string;
-}
-
-export interface IUpdateDocumentFileResponseData {
-  url: string;
-}
-
-export interface IUpdateDocumentFileResponse {
-  data?: IUpdateDocumentFileResponseData | undefined;
-  error?: IHttpError | undefined;
 }
 
 export interface IFindDocumentsDto {
@@ -91,8 +76,24 @@ export interface IRemoveFromFavouriteDto {
   userId: string;
 }
 
-export interface IFindFavouriteDto {
+export interface IFindFavouriteDocumentsDto {
   userId: string;
+}
+
+export interface ICreateDocumentVersionDto {
+  documentId: string;
+  fileExtension: string;
+  description?: string | undefined;
+  userId: string;
+}
+
+export interface ICreateDocumentVersionResponseData {
+  url: string;
+}
+
+export interface ICreateDocumentVersionResponse {
+  data?: ICreateDocumentVersionResponseData | undefined;
+  error?: IHttpError | undefined;
 }
 
 export const DOCUMENTS_PACKAGE_NAME = "documents";
@@ -100,17 +101,9 @@ export const DOCUMENTS_PACKAGE_NAME = "documents";
 export interface DocumentsServiceClient {
   create(request: ICreateDocumentDto): Observable<ICreateDocumentResponse>;
 
-  updateInfo(request: IUpdateDocumentInfoDto): Observable<IEmptyResponse>;
-
-  updateFile(request: IUpdateDocumentFileDto): Observable<IUpdateDocumentFileResponse>;
+  update(request: IUpdateDocumentDto): Observable<IEmptyResponse>;
 
   findAll(request: IFindDocumentsDto): Observable<IFindDocumentsResponse>;
-
-  addToFavourite(request: IAddToFavouriteDto): Observable<IEmptyResponse>;
-
-  removeFromFavourite(request: IRemoveFromFavouriteDto): Observable<IEmptyResponse>;
-
-  findFavourite(request: IFindFavouriteDto): Observable<IFindDocumentsResponse>;
 }
 
 export interface DocumentsServiceController {
@@ -118,38 +111,16 @@ export interface DocumentsServiceController {
     request: ICreateDocumentDto,
   ): Promise<ICreateDocumentResponse> | Observable<ICreateDocumentResponse> | ICreateDocumentResponse;
 
-  updateInfo(request: IUpdateDocumentInfoDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  updateFile(
-    request: IUpdateDocumentFileDto,
-  ): Promise<IUpdateDocumentFileResponse> | Observable<IUpdateDocumentFileResponse> | IUpdateDocumentFileResponse;
+  update(request: IUpdateDocumentDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   findAll(
     request: IFindDocumentsDto,
-  ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
-
-  addToFavourite(request: IAddToFavouriteDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  removeFromFavourite(
-    request: IRemoveFromFavouriteDto,
-  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  findFavourite(
-    request: IFindFavouriteDto,
   ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = [
-      "create",
-      "updateInfo",
-      "updateFile",
-      "findAll",
-      "addToFavourite",
-      "removeFromFavourite",
-      "findFavourite",
-    ];
+    const grpcMethods: string[] = ["create", "update", "findAll"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
@@ -175,3 +146,92 @@ export function DocumentsServiceControllerMethods() {
 }
 
 export const DOCUMENTS_SERVICE_NAME = "DocumentsService";
+
+export interface FavouriteDocumentsServiceClient {
+  add(request: IAddToFavouriteDto): Observable<IEmptyResponse>;
+
+  remove(request: IRemoveFromFavouriteDto): Observable<IEmptyResponse>;
+
+  findAll(request: IFindFavouriteDocumentsDto): Observable<IFindDocumentsResponse>;
+}
+
+export interface FavouriteDocumentsServiceController {
+  add(request: IAddToFavouriteDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  remove(request: IRemoveFromFavouriteDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  findAll(
+    request: IFindFavouriteDocumentsDto,
+  ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
+}
+
+export function FavouriteDocumentsServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["add", "remove", "findAll"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("FavouriteDocumentsService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("FavouriteDocumentsService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const FAVOURITE_DOCUMENTS_SERVICE_NAME = "FavouriteDocumentsService";
+
+export interface DocumentVersionsServiceClient {
+  create(request: ICreateDocumentVersionDto): Observable<ICreateDocumentVersionResponse>;
+}
+
+export interface DocumentVersionsServiceController {
+  create(
+    request: ICreateDocumentVersionDto,
+  ):
+    | Promise<ICreateDocumentVersionResponse>
+    | Observable<ICreateDocumentVersionResponse>
+    | ICreateDocumentVersionResponse;
+}
+
+export function DocumentVersionsServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["create"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("DocumentVersionsService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("DocumentVersionsService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const DOCUMENT_VERSIONS_SERVICE_NAME = "DocumentVersionsService";

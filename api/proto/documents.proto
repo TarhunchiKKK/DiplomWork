@@ -4,20 +4,14 @@ import "common.proto";
 
 package documents;
 
+/********************************************Documents*********************************************************************/
+
 service DocumentsService {
     rpc Create (ICreateDocumentDto) returns (ICreateDocumentResponse) {}
 
-    rpc UpdateInfo (IUpdateDocumentInfoDto) returns (common.IEmptyResponse) {}
-
-    rpc UpdateFile (IUpdateDocumentFileDto) returns (IUpdateDocumentFileResponse) {}
+    rpc Update (IUpdateDocumentDto) returns (common.IEmptyResponse) {}
 
     rpc FindAll (IFindDocumentsDto) returns (IFindDocumentsResponse) {}
-
-    rpc AddToFavourite (IAddToFavouriteDto) returns (common.IEmptyResponse) {}
-
-    rpc RemoveFromFavourite (IRemoveFromFavouriteDto) returns (common.IEmptyResponse) {}
-
-    rpc FindFavourite (IFindFavouriteDto) returns (IFindDocumentsResponse) {}
 }
 
 message ICreateDocumentDto {
@@ -54,7 +48,7 @@ message ICreateDocumentResponse {
     }
 }
 
-message IUpdateDocumentInfoDto {
+message IUpdateDocumentDto {
     string documentId = 1;
 
     optional string title = 2;
@@ -66,26 +60,6 @@ message IUpdateDocumentInfoDto {
     optional bool isUrgent = 5;
 
     string userId = 6;
-}
-
-message IUpdateDocumentFileDto {
-    string documentId = 1;
-
-    string fileExtension = 2;
-
-    string userId = 3; 
-}
-
-message IUpdateDocumentFileResponseData {
-    string url = 1;
-}
-
-message IUpdateDocumentFileResponse {
-    oneof response {
-        IUpdateDocumentFileResponseData data = 1;
-        
-        common.IHttpError error = 2;
-    }
 }
 
 message IFindDocumentsDto {
@@ -122,6 +96,16 @@ message IFindDocumentsResponse {
     }
 }
 
+/********************************************Favourite Documents*********************************************************************/
+
+service FavouriteDocumentsService {
+    rpc Add (IAddToFavouriteDto) returns (common.IEmptyResponse) {}
+
+    rpc Remove (IRemoveFromFavouriteDto) returns (common.IEmptyResponse) {}
+
+    rpc FindAll (IFindFavouriteDocumentsDto) returns (IFindDocumentsResponse) {}
+}
+
 message IAddToFavouriteDto {
     string userId = 1;
 
@@ -135,6 +119,34 @@ message IRemoveFromFavouriteDto {
     string userId = 2;
 }
 
-message IFindFavouriteDto {
+message IFindFavouriteDocumentsDto {
     string userId = 1;
+}
+
+/********************************************Document Versions*********************************************************************/
+
+service DocumentVersionsService {
+    rpc Create (ICreateDocumentVersionDto) returns (ICreateDocumentVersionResponse) {}
+}
+
+message ICreateDocumentVersionDto {
+    string documentId = 1;
+
+    string fileExtension = 2;
+
+    optional string description = 3;
+
+    string userId = 4; 
+}
+
+message ICreateDocumentVersionResponseData {
+    string url = 1;
+}
+
+message ICreateDocumentVersionResponse {
+    oneof response {
+        ICreateDocumentVersionResponseData data = 1;
+        
+        common.IHttpError error = 2;
+    }
 }

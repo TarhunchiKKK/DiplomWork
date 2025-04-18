@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { ElectronicDocument } from "../../documents/entities/document.entity";
 
 @Entity()
 export class DocumentVersion {
@@ -9,11 +10,12 @@ export class DocumentVersion {
     public description?: string;
 
     @Column()
-    public versionNumber: number;
-
-    @Column()
     public url: string;
 
     @CreateDateColumn()
     public createdAt: Date;
+
+    @ManyToOne(() => ElectronicDocument, document => document.versions)
+    @JoinColumn()
+    public document: ElectronicDocument;
 }

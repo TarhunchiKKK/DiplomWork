@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ElectronicDocument } from "./entities/document.entity";
 import { Repository } from "typeorm";
-import { ICreateDocumentDto, IFindDocumentsDto, IUpdateDocumentFileDto, IUpdateDocumentInfoDto } from "common/grpc";
+import { ICreateDocumentDto, IFindDocumentsDto, IUpdateDocumentDto } from "common/grpc";
 import { DocumentAccessTokensService } from "common/modules";
 import * as uuid from "uuid";
 import { DocumentRolesService } from "../document-roles/document-roles.service";
@@ -62,7 +62,7 @@ export class DocumentsService {
         return document;
     }
 
-    public async updateInfo(dto: IUpdateDocumentInfoDto) {
+    public async update(dto: IUpdateDocumentDto) {
         const { documentId, userId, ...data } = dto;
 
         const document = await this.findOneById(documentId);
@@ -76,23 +76,5 @@ export class DocumentsService {
         Object.assign(document, data);
 
         await this.documentsRepository.save(document);
-    }
-
-    public async updateFile(dto: IUpdateDocumentFileDto) {
-        const document = await this.findOneById(dto.documentId);
-
-        this.rolesService.checkPermissions({
-            token: document.accessToken,
-            userId: dto.userId,
-            operation: DocumentOperation.UPDATE_FILE
-        });
-
-        document.url = this.generateS3Filename(dto.fileExtension);
-
-        await this.documentsRepository.save(document);
-
-        return {
-            url: document.url
-        };
     }
 }

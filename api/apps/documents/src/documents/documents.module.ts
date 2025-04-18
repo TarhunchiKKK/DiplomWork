@@ -15,6 +15,7 @@ import { FavouriteDocumentsModule } from "./favourite/marked-documents.module";
         FavouriteDocumentsModule
     ],
     controllers: [DocumentsController],
-    providers: [DocumentsService]
+    providers: [DocumentsService],
+    exports: [DocumentsService]
 })
 export class DocumentsModule {}

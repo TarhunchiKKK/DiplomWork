@@ -1,34 +1,32 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
-    DocumentsServiceController,
     DocumentsServiceControllerMethods,
+    FavouriteDocumentsServiceController,
     GrpcExceptionFilter,
     IAddToFavouriteDto,
-    IFindFavouriteDto,
+    IFindFavouriteDocumentsDto,
     IRemoveFromFavouriteDto,
     UnwrapGrpcResponse,
     WrapGrpcResponseInterceptor
 } from "common/grpc";
 import { FavouriteDocumentsService } from "./favourite-documents.service";
 
-type ServiceController = Pick<DocumentsServiceController, "addToFavourite" | "removeFromFavourite" | "findFavourite">;
-
 @Controller()
 @DocumentsServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(WrapGrpcResponseInterceptor)
-export class FavouriteDocumentsController implements UnwrapGrpcResponse<ServiceController> {
+export class FavouriteDocumentsController implements UnwrapGrpcResponse<FavouriteDocumentsServiceController> {
     public constructor(private readonly favouriteDocumentsService: FavouriteDocumentsService) {}
 
-    public async addToFavourite(dto: IAddToFavouriteDto) {
+    public async add(dto: IAddToFavouriteDto) {
         await this.favouriteDocumentsService.add(dto);
     }
 
-    public async findFavourite(dto: IFindFavouriteDto) {
+    public async findAll(dto: IFindFavouriteDocumentsDto) {
         return await this.favouriteDocumentsService.findAll(dto);
     }
 
-    public async removeFromFavourite(dto: IRemoveFromFavouriteDto) {
+    public async remove(dto: IRemoveFromFavouriteDto) {
         await this.favouriteDocumentsService.remove(dto);
     }
 }
