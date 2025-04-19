@@ -6,7 +6,7 @@ export const documentPermissions: Record<DocumentRole, DocumentOperation[]> = {
         DocumentOperation.UPDATE_INFO,
         DocumentOperation.UPDATE_FILE,
         DocumentOperation.COMMENTING,
-        DocumentOperation.READ_FILE
+        DocumentOperation.READ
     ],
-    [DocumentRole.REGULAR]: [DocumentOperation.COMMENTING, DocumentOperation.READ_FILE]
+    [DocumentRole.REGULAR]: [DocumentOperation.COMMENTING, DocumentOperation.READ]
 };

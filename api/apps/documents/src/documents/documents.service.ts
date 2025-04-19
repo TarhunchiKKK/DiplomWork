@@ -1,11 +1,9 @@
-import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ElectronicDocument } from "./entities/document.entity";
 import { Repository } from "typeorm";
 import { ICreateDocumentDto, IFindDocumentsDto, IUpdateDocumentDto } from "common/grpc";
 import { DocumentAccessTokensService } from "common/modules";
-import { DocumentRolesService } from "../roles/document-roles.service";
-import { DocumentOperation } from "../roles/enums/document-operation.enum";
 import { FindDocumentsQueryBuilder } from "./utils/find-documents.query-builder";
 import { DocumentStatus } from "common/enums";
 import { getShortDocumentData } from "./helpers/documents.helpers";
@@ -19,9 +17,7 @@ export class DocumentsService {
 
         private readonly tokensService: DocumentAccessTokensService,
 
-        private readonly rolesService: DocumentRolesService,
-
-        @Inject(forwardRef(() => DocumentVersionsService)) private readonly versionsService: DocumentVersionsService
+        private readonly versionsService: DocumentVersionsService
     ) {}
 
     public async create(dto: ICreateDocumentDto) {
@@ -68,15 +64,9 @@ export class DocumentsService {
     }
 
     public async update(dto: IUpdateDocumentDto) {
-        const { documentId, userId, ...data } = dto;
+        const { documentId, userId: _, ...data } = dto;
 
         const document = await this.findOneById(documentId);
-
-        this.rolesService.checkPermissions({
-            token: document.accessToken,
-            userId: userId,
-            operation: DocumentOperation.UPDATE_INFO
-        });
 
         Object.assign(document, data);
 

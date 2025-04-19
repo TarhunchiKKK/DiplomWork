@@ -70,7 +70,7 @@ export interface IFindDocumentsResponse {
 
 export interface IFindDocumentByIdDto {
   documentId: string;
-  userid: string;
+  userId: string;
 }
 
 export interface IFindOneDocumentResponse {

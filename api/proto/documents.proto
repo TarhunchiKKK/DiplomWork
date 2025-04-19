@@ -105,7 +105,7 @@ message IFindDocumentsResponse {
 message IFindDocumentByIdDto {
     string documentId = 1;
 
-    string userid = 2;
+    string userId = 2;
 }
 
 message IFindOneDocumentResponse {
