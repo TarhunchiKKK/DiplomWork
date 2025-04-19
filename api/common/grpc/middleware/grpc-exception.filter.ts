@@ -7,9 +7,15 @@ import { TGrpcResponse } from "../types";
 @Catch()
 export class GrpcExceptionFilter extends BaseRpcExceptionFilter {
     public catch(exception: HttpException): Observable<TGrpcResponse> {
+        const { message, error, statusCode } = exception.getResponse() as IHttpError;
+
         return from([
             {
-                error: exception.getResponse() as IHttpError
+                error: {
+                    message: Array.isArray(message) ? message : [message],
+                    error,
+                    statusCode
+                }
             }
         ]);
     }

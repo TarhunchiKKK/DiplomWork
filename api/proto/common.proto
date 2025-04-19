@@ -5,7 +5,7 @@ import "google/protobuf/empty.proto";
 package common;
 
 message IHttpError {
-    string message = 1;
+    repeated string message = 1;
 
     string error = 2;
 
