@@ -63,7 +63,7 @@ export class DocumentsController {
     public findOneById(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.documentsGrpcService.call("findOneById", {
             documentId: documentId,
-            userid: request.jwtInfo.id
+            userId: request.jwtInfo.id
         });
     }
 
