@@ -2,14 +2,13 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ElectronicDocument } from "./entities/document.entity";
 import { Repository } from "typeorm";
-import { ICreateDocumentDto, IFindDocumentsDto, IUpdateDocumentFileDto, IUpdateDocumentInfoDto } from "common/grpc";
+import { ICreateDocumentDto, IFindDocumentsDto, IUpdateDocumentDto } from "common/grpc";
 import { DocumentAccessTokensService } from "common/modules";
-import * as uuid from "uuid";
-import { DocumentRolesService } from "../document-roles/document-roles.service";
-import { DocumentOperation } from "../document-roles/enums/document-operation.enum";
 import { FindDocumentsQueryBuilder } from "./utils/find-documents.query-builder";
 import { DocumentStatus } from "common/enums";
 import { getShortDocumentData } from "./helpers/documents.helpers";
+import { DocumentVersionsService } from "../versions/document-versions.service";
+import lodash from "lodash";
 
 @Injectable()
 export class DocumentsService {
@@ -18,35 +17,37 @@ export class DocumentsService {
 
         private readonly tokensService: DocumentAccessTokensService,
 
-        private readonly rolesService: DocumentRolesService
+        private readonly versionsService: DocumentVersionsService
     ) {}
 
-    private generateS3Filename(fileExtension: string) {
-        const filename = uuid.v4();
-        return `${filename}.${fileExtension}`;
-    }
-
-    public create(dto: ICreateDocumentDto) {
-        return this.documentsRepository.save({
+    public async create(dto: ICreateDocumentDto) {
+        const document = await this.documentsRepository.save({
             aimId: dto.aimId,
             typeId: dto.typeId,
             authorId: dto.authorId,
             isUrgent: dto.isUrgent,
             title: dto.title,
             status: DocumentStatus.DEFAULT,
-            url: this.generateS3Filename(dto.fileExtension),
             accessToken: this.tokensService.create({
                 authorId: dto.authorId,
                 usersIds: []
             })
         });
+
+        this.versionsService.create({
+            documentId: document.id,
+            fileExtension: dto.fileExtension,
+            userId: dto.authorId
+        });
+
+        return lodash.pick(document, ["id", "authorId", "title", "typeId", "aimId", "status", "isUrgent"]);
     }
 
     public async findAll(dto: IFindDocumentsDto) {
         const documents = await this.documentsRepository.find(new FindDocumentsQueryBuilder(dto).build());
 
         return {
-            data: documents.map(getShortDocumentData)
+            documents: documents.map(getShortDocumentData)
         };
     }
 
@@ -62,37 +63,13 @@ export class DocumentsService {
         return document;
     }
 
-    public async updateInfo(dto: IUpdateDocumentInfoDto) {
-        const { documentId, userId, ...data } = dto;
+    public async update(dto: IUpdateDocumentDto) {
+        const { documentId, userId: _, ...data } = dto;
 
         const document = await this.findOneById(documentId);
-
-        this.rolesService.checkPermissions({
-            token: document.accessToken,
-            userId: userId,
-            operation: DocumentOperation.UPDATE_INFO
-        });
 
         Object.assign(document, data);
 
         await this.documentsRepository.save(document);
-    }
-
-    public async updateFile(dto: IUpdateDocumentFileDto) {
-        const document = await this.findOneById(dto.documentId);
-
-        this.rolesService.checkPermissions({
-            token: document.accessToken,
-            userId: dto.userId,
-            operation: DocumentOperation.UPDATE_FILE
-        });
-
-        document.url = this.generateS3Filename(dto.fileExtension);
-
-        await this.documentsRepository.save(document);
-
-        return {
-            url: document.url
-        };
     }
 }

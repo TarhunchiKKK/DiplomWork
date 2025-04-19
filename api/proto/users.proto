@@ -4,33 +4,14 @@ import "common.proto";
 
 package users;
 
-service UsersService {
+/********************************************Authentication*********************************************************************/
+
+service AuthenticationService {
     rpc RegisterAdmin (IRegisterAdminDto) returns (common.IAuthResponse) {}
 
     rpc Login (ILoginDto) returns (common.IAuthResponse) {}
 
     rpc RefreshProfile (IRefreshProfileDto) returns (common.IAuthResponse) {}
-
-    rpc InviteUsers (IInviteUsersDto) returns (common.IEmptyResponse) {}
-
-    rpc ConfirmInvitation (IConfirmInvitationDto) returns (common.IAuthResponse) {}
-
-    rpc ResetPassword (IResetPasswordDto) returns (common.IEmptyResponse) {}
-
-    rpc UpdatePassword (IUpdatePasswordDto) returns (common.IEmptyResponse) {}
-
-    rpc ActivateAccount (IActivateAccountDto) returns (common.IEmptyResponse) {}
-
-    rpc DeactivateAccount (IDeactivateAccountDto) returns (common.IEmptyResponse) {}
-
-    rpc GenerateTotp (IGenerateTotpDto) returns (IGenerateTotpResponse) {}
-
-    rpc EnableTotp (IEnableTotpDto) returns (common.IEmptyResponse) {}
-
-    rpc DisableTotp (IDisableTotpDto) returns (common.IEmptyResponse) {}
-
-    rpc LoginWithTotp (ILoginWithTotpDto) returns (common.IAuthResponse) {}
-
 }
 
 message IRegisterAdminDto {
@@ -51,6 +32,14 @@ message IRefreshProfileDto {
     string userId = 1;
 }
 
+/********************************************Users Invitations*********************************************************************/
+
+service UsersInvitationService {
+    rpc Invite (IInviteUsersDto) returns (common.IEmptyResponse) {}
+
+    rpc Confirm (IConfirmInvitationDto) returns (common.IAuthResponse) {}
+}
+
 message IInviteUsersDto {
     string organizationId = 1;
 
@@ -67,6 +56,14 @@ message IConfirmInvitationDto {
     string token = 3;
 }
 
+/********************************************Password Recovery*********************************************************************/
+
+service PasswordRecoveryService {
+    rpc Reset (IResetPasswordDto) returns (common.IEmptyResponse) {}
+
+    rpc Update (IUpdatePasswordDto) returns (common.IEmptyResponse) {}
+}
+
 message IResetPasswordDto {
     string userId = 1;
 }
@@ -77,12 +74,32 @@ message IUpdatePasswordDto {
     string password = 2;
 }
 
+/********************************************Account Deactivation*********************************************************************/
+
+service AccountDeactivationService {
+    rpc Activate (IActivateAccountDto) returns (common.IEmptyResponse) {}
+
+    rpc Deactivate (IDeactivateAccountDto) returns (common.IEmptyResponse) {}
+}
+
 message IActivateAccountDto {
     string userId = 1;
 }
 
 message IDeactivateAccountDto {
     string userId = 1;
+}
+
+/********************************************TOTP Authentication*********************************************************************/
+
+service TotpAuthenticationService {
+    rpc Generate (IGenerateTotpDto) returns (IGenerateTotpResponse) {}
+
+    rpc Enable (IEnableTotpDto) returns (common.IEmptyResponse) {}
+
+    rpc Disable (IDisableTotpDto) returns (common.IEmptyResponse) {}
+
+    rpc Login (ILoginWithTotpDto) returns (common.IAuthResponse) {}
 }
 
 message IGenerateTotpDto {

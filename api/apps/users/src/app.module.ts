@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { AuthModule } from "./auth/auth.module";
+import { AuthenticationModule } from "./authentiation/authentiation.module";
 import { UsersModule } from "./users/users.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./users/entities/user.entity";
@@ -9,6 +9,7 @@ import { JwtTokensModule, PasswordRecoveryTokensModule, UserInvitationTokensModu
 import { InvitationsModule } from "./invitations/invitations.module";
 import { PasswordRecoveryModule } from "./password-recovery/password-recovery.module";
 import { AccountDeactivationModule } from "./account-deactivation/account-deactivation.module";
+import { TotpAuthenticationModule } from "./totp-authentication/totp-authentication.module";
 
 @Module({
     imports: [
@@ -34,10 +35,11 @@ import { AccountDeactivationModule } from "./account-deactivation/account-deacti
         PasswordRecoveryTokensModule,
         OrganizationsGrpcModule,
         UsersModule,
-        AuthModule,
+        AuthenticationModule,
         InvitationsModule,
         PasswordRecoveryModule,
-        AccountDeactivationModule
+        AccountDeactivationModule,
+        TotpAuthenticationModule
     ]
 })
 export class AppModule {}

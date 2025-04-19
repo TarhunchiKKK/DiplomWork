@@ -1,20 +1,20 @@
 import { Body, Controller, Patch, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { Role } from "common/enums";
-import { UsersGrpcService } from "common/grpc";
+import { AccountDeactivationGrpcService } from "common/grpc";
 import { RequireRoles, RoleGuard } from "common/middleware";
 import { ActivateAccountDto } from "./dto/activate-account.dto";
 import { DeactivateAccountDto } from "./dto/deactivate-account.dto";
 
 @Controller("/users/account-deactivation")
 export class AccountDeactivationController {
-    public constructor(private readonly usersGrpcService: UsersGrpcService) {}
+    public constructor(private readonly accountdeactivationGrpcService: AccountDeactivationGrpcService) {}
 
     @Patch("/activate")
     @RequireRoles([Role.ADMIN])
     @UseGuards(RoleGuard)
     @UsePipes(ValidationPipe)
     public activate(@Body() dto: ActivateAccountDto) {
-        return this.usersGrpcService.call("activateAccount", dto);
+        return this.accountdeactivationGrpcService.call("activate", dto);
     }
 
     @Patch("/deactivate")
@@ -22,6 +22,6 @@ export class AccountDeactivationController {
     @UseGuards(RoleGuard)
     @UsePipes(ValidationPipe)
     public deactivate(@Body() dto: DeactivateAccountDto) {
-        return this.usersGrpcService.call("deactivateAccount", dto);
+        return this.accountdeactivationGrpcService.call("deactivate", dto);
     }
 }

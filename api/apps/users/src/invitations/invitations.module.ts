@@ -4,10 +4,10 @@ import { NotificationsRmqModule } from "common/rabbitmq";
 import { UsersModule } from "../users/users.module";
 import { InvitationsController } from "./invitations.controller";
 import { InvitationsService } from "./invitations.service";
-import { AuthModule } from "../auth/auth.module";
+import { AuthenticationModule } from "../authentiation/authentiation.module";
 
 @Module({
-    imports: [NotificationsRmqModule, UserInvitationTokensModule, UsersModule, AuthModule],
+    imports: [NotificationsRmqModule, UserInvitationTokensModule, UsersModule, AuthenticationModule],
     controllers: [InvitationsController],
     providers: [InvitationsService]
 })

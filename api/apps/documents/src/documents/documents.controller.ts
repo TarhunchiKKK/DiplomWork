@@ -1,4 +1,4 @@
-import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
+import { Controller, UseFilters, UseGuards, UseInterceptors } from "@nestjs/common";
 import { DocumentsService } from "./documents.service";
 import {
     DocumentsServiceController,
@@ -7,33 +7,41 @@ import {
     ICreateDocumentDto,
     WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
-    IUpdateDocumentInfoDto,
-    IUpdateDocumentFileDto,
-    IFindDocumentsDto
+    IFindDocumentsDto,
+    IUpdateDocumentDto,
+    IFindDocumentByIdDto
 } from "common/grpc";
+import { ExtractFromRequest } from "common/middleware";
+import { DocumentAccessGuard } from "../document-access/middleware/guards/document-access.guard";
+import { ProvideOperation } from "../document-access/middleware/decorators/provide-operation.decorator";
+import { DocumentOperation } from "../document-access/enums/document-operation.enum";
 
-type ServiceController = Pick<DocumentsServiceController, "create" | "updateInfo" | "updateFile" | "findAll">;
-
-@UseFilters(GrpcExceptionFilter)
-@UseInterceptors(WrapGrpcResponseInterceptor)
 @Controller()
 @DocumentsServiceControllerMethods()
-export class DocumentsController implements UnwrapGrpcResponse<ServiceController> {
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(WrapGrpcResponseInterceptor)
+export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceController> {
     public constructor(private readonly documentsService: DocumentsService) {}
 
     public async create(dto: ICreateDocumentDto) {
         return await this.documentsService.create(dto);
     }
 
+    @ProvideOperation(DocumentOperation.READ)
+    @ExtractFromRequest((request: IFindDocumentByIdDto) => ({ documentId: request.documentId, userId: request.userId }))
+    @UseGuards(DocumentAccessGuard)
+    public async findOneById(dto: IFindDocumentByIdDto) {
+        return await this.documentsService.findOneById(dto.documentId);
+    }
+
     public async findAll(dto: IFindDocumentsDto) {
-        return await this.findAll(dto);
+        return await this.documentsService.findAll(dto);
     }
 
-    public async updateInfo(dto: IUpdateDocumentInfoDto) {
-        await this.documentsService.updateInfo(dto);
-    }
-
-    public async updateFile(dto: IUpdateDocumentFileDto) {
-        return await this.documentsService.updateFile(dto);
+    @ProvideOperation(DocumentOperation.UPDATE_INFO)
+    @ExtractFromRequest((request: IUpdateDocumentDto) => ({ documentId: request.documentId, userId: request.userId }))
+    @UseGuards(DocumentAccessGuard)
+    public async update(dto: IUpdateDocumentDto) {
+        await this.documentsService.update(dto);
     }
 }

@@ -5,25 +5,23 @@ import {
     IInviteUsersDto,
     WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
-    UsersServiceController,
-    UsersServiceControllerMethods
+    UsersInvitationServiceController,
+    UsersInvitationServiceControllerMethods
 } from "common/grpc";
 import { InvitationsService } from "./invitations.service";
 
-type ServiceConttroller = Pick<UsersServiceController, "inviteUsers" | "confirmInvitation">;
-
 @Controller()
-@UsersServiceControllerMethods()
+@UsersInvitationServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(WrapGrpcResponseInterceptor)
-export class InvitationsController implements UnwrapGrpcResponse<ServiceConttroller> {
+export class InvitationsController implements UnwrapGrpcResponse<UsersInvitationServiceController> {
     public constructor(private readonly invitationsService: InvitationsService) {}
 
-    public async inviteUsers(dto: IInviteUsersDto) {
+    public async invite(dto: IInviteUsersDto) {
         await this.invitationsService.send(dto);
     }
 
-    public async confirmInvitation(dto: IConfirmInvitationDto) {
+    public async confirm(dto: IConfirmInvitationDto) {
         return await this.invitationsService.confirmInvitation(dto);
     }
 }

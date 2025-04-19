@@ -12,7 +12,7 @@ export class AccountDeactivationService {
         private readonly notificationsRmqService: NotificationsRmqService
     ) {}
 
-    public async activateAccount(dto: IActivateAccountDto) {
+    public async activate(dto: IActivateAccountDto) {
         await this.usersService.update(dto.userId, {
             status: AccountStatus.ACTIVE
         });
@@ -20,7 +20,7 @@ export class AccountDeactivationService {
         this.notificationsRmqService.emit(new ActivateAccountEvent(dto.userId));
     }
 
-    public async deactivateAccount(dto: IDeactivateAccountDto) {
+    public async deactivate(dto: IDeactivateAccountDto) {
         await this.usersService.update(dto.userId, {
             status: AccountStatus.DEACTIVATED
         });

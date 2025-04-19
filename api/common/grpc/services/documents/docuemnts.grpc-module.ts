@@ -3,7 +3,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ClientsModule } from "@nestjs/microservices";
 import { getGrpcConfig } from "common/config";
 import { DOCUMENTS_PACKAGE_NAME } from "common/grpc";
-import { DocumentsGrpcService } from "./documents.grpc-service";
+import { DocumentsGrpcService } from "./services/documents.grpc-service";
+import { DocumentVersionsGrpcService } from "./services/document-versions.grpc-service";
+import { FavouriteDocumentsGrpcService } from "./services/favourite-document.grpc-service";
 
 @Module({
     imports: [
@@ -16,7 +18,7 @@ import { DocumentsGrpcService } from "./documents.grpc-service";
             }
         ])
     ],
-    providers: [DocumentsGrpcService],
-    exports: [DocumentsGrpcService]
+    providers: [DocumentsGrpcService, DocumentVersionsGrpcService, FavouriteDocumentsGrpcService],
+    exports: [DocumentsGrpcService, DocumentVersionsGrpcService, FavouriteDocumentsGrpcService]
 })
 export class DocumentsGrpcModule {}

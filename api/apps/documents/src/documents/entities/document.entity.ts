@@ -1,6 +1,7 @@
 import { DocumentStatus } from "common/enums";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { FavouriteDocumentInfo } from "../favourite/entities/favourite-document-info.entity";
+import { DocumentVersion } from "../../versions/entities/document-version.entity";
 
 @Entity()
 export class ElectronicDocument {
@@ -23,9 +24,6 @@ export class ElectronicDocument {
     public status: DocumentStatus;
 
     @Column()
-    public url: string;
-
-    @Column()
     public authorId: string;
 
     @Column()
@@ -36,4 +34,7 @@ export class ElectronicDocument {
 
     @OneToMany(() => FavouriteDocumentInfo, favourite => favourite.document)
     public favoirites: FavouriteDocumentInfo[];
+
+    @OneToMany(() => DocumentVersion, version => version.document)
+    public versions: DocumentVersion[];
 }

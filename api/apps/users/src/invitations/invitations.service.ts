@@ -4,7 +4,7 @@ import { NotificationsRmqService, UserInvitationEvent } from "common/rabbitmq";
 import { UsersService } from "../users/users.service";
 import { IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
 import { AccountStatus } from "common/enums";
-import { AuthService } from "../auth/auth.service";
+import { AuthenticationService } from "../authentiation/authentiation.service";
 
 @Injectable()
 export class InvitationsService {
@@ -13,7 +13,7 @@ export class InvitationsService {
 
         private readonly notificationsRmqService: NotificationsRmqService,
 
-        private readonly authService: AuthService,
+        private readonly authenticationService: AuthenticationService,
 
         private readonly invitationTokensService: UserInvitationTokensService
     ) {}
@@ -50,7 +50,7 @@ export class InvitationsService {
             email: user.email,
             role: user.role,
             organizationId: user.organizationId,
-            token: this.authService.createJwtFromUser(user)
+            token: this.authenticationService.createJwtFromUser(user)
         };
     }
 }

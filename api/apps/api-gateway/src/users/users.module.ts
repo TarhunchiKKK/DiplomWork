@@ -3,7 +3,7 @@ import { UsersGrpcModule } from "common/grpc";
 import { UsersController } from "./users.controller";
 import { JwtTokensModule, PasswordRecoveryTokensModule, UserInvitationTokensModule } from "common/modules";
 import { InvitationsModule } from "./invitations/invitations.module";
-import { AuthModule } from "./auth/auth.module";
+import { AuthenticationModule } from "./auth/authentication.module";
 import { PasswordRecoveryModule } from "./password-recovery/password-recovery.module";
 import { AccountDeactivationModule } from "./account-deactivation/account-deactivation.module";
 
@@ -13,7 +13,7 @@ import { AccountDeactivationModule } from "./account-deactivation/account-deacti
         JwtTokensModule,
         UserInvitationTokensModule,
         PasswordRecoveryTokensModule,
-        AuthModule,
+        AuthenticationModule,
         InvitationsModule,
         PasswordRecoveryModule,
         AccountDeactivationModule

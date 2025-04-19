@@ -5,25 +5,23 @@ import {
     IResetPasswordDto,
     IUpdatePasswordDto,
     UnwrapGrpcResponse,
-    UsersServiceController,
-    UsersServiceControllerMethods
+    PasswordRecoveryServiceControllerMethods,
+    PasswordRecoveryServiceController
 } from "common/grpc";
 import { PasswordRecoveryService } from "./password-recovery.service";
 
-type ServiceController = Pick<UsersServiceController, "resetPassword" | "updatePassword">;
-
 @Controller()
-@UsersServiceControllerMethods()
+@PasswordRecoveryServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(WrapGrpcResponseInterceptor)
-export class PasswordRecoveryController implements UnwrapGrpcResponse<ServiceController> {
+export class PasswordRecoveryController implements UnwrapGrpcResponse<PasswordRecoveryServiceController> {
     public constructor(private readonly passwordRecoveryService: PasswordRecoveryService) {}
 
-    public async resetPassword(dto: IResetPasswordDto) {
+    public async reset(dto: IResetPasswordDto) {
         await this.passwordRecoveryService.reset(dto.userId);
     }
 
-    public async updatePassword(dto: IUpdatePasswordDto) {
+    public async update(dto: IUpdatePasswordDto) {
         await this.passwordRecoveryService.update(dto);
     }
 }

@@ -4,20 +4,16 @@ import "common.proto";
 
 package documents;
 
+/********************************************Documents*********************************************************************/
+
 service DocumentsService {
     rpc Create (ICreateDocumentDto) returns (ICreateDocumentResponse) {}
 
-    rpc UpdateInfo (IUpdateDocumentInfoDto) returns (common.IEmptyResponse) {}
-
-    rpc UpdateFile (IUpdateDocumentFileDto) returns (IUpdateDocumentFileResponse) {}
+    rpc Update (IUpdateDocumentDto) returns (common.IEmptyResponse) {}
 
     rpc FindAll (IFindDocumentsDto) returns (IFindDocumentsResponse) {}
 
-    rpc AddToFavourite (IAddToFavouriteDto) returns (common.IEmptyResponse) {}
-
-    rpc RemoveFromFavourite (IRemoveFromFavouriteDto) returns (common.IEmptyResponse) {}
-
-    rpc FindFavourite (IFindFavouriteDto) returns (IFindDocumentsResponse) {}
+    rpc FindOneById(IFindDocumentByIdDto) returns (IFindDocumentByIdResponse) {}  
 }
 
 message ICreateDocumentDto {
@@ -39,11 +35,15 @@ message ICreateDocumentResponseData {
 
     string title = 2;
 
-    string typeId = 3;
+    string authorId = 3;
 
-    string authorId = 4;
+    string typeId = 4;
 
-    string url = 5;
+    string aimId = 5; 
+
+    string status = 6;
+
+    bool isUrgent = 7;
 }
 
 message ICreateDocumentResponse {
@@ -54,7 +54,7 @@ message ICreateDocumentResponse {
     }
 }
 
-message IUpdateDocumentInfoDto {
+message IUpdateDocumentDto {
     string documentId = 1;
 
     optional string title = 2;
@@ -66,26 +66,6 @@ message IUpdateDocumentInfoDto {
     optional bool isUrgent = 5;
 
     string userId = 6;
-}
-
-message IUpdateDocumentFileDto {
-    string documentId = 1;
-
-    string fileExtension = 2;
-
-    string userId = 3; 
-}
-
-message IUpdateDocumentFileResponseData {
-    string url = 1;
-}
-
-message IUpdateDocumentFileResponse {
-    oneof response {
-        IUpdateDocumentFileResponseData data = 1;
-        
-        common.IHttpError error = 2;
-    }
 }
 
 message IFindDocumentsDto {
@@ -111,7 +91,7 @@ message IDocumentShortData {
 }
 
 message IFindDocumentResponseData {
-    repeated IDocumentShortData data = 1;
+    repeated IDocumentShortData documents = 1;
 }
 
 message IFindDocumentsResponse {
@@ -120,6 +100,46 @@ message IFindDocumentsResponse {
 
         common.IHttpError error = 2;
     }
+}
+
+message IFindDocumentByIdDto {
+    string documentId = 1;
+
+    string userId = 2;
+}
+
+message IFindOneDocumentResponse {
+    string id = 1;
+
+    string title = 2;
+
+    string typeId = 3;
+
+    string aimId = 4;
+
+    bool isUrgent = 5;
+
+    string status = 6;
+
+    string authorId = 7;
+}
+
+message IFindDocumentByIdResponse {
+    oneof response {
+        IFindOneDocumentResponse data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
+/********************************************Favourite Documents*********************************************************************/
+
+service FavouriteDocumentsService {
+    rpc Add (IAddToFavouriteDto) returns (common.IEmptyResponse) {}
+
+    rpc Remove (IRemoveFromFavouriteDto) returns (common.IEmptyResponse) {}
+
+    rpc FindAll (IFindFavouriteDocumentsDto) returns (IFindDocumentsResponse) {}
 }
 
 message IAddToFavouriteDto {
@@ -135,6 +155,88 @@ message IRemoveFromFavouriteDto {
     string userId = 2;
 }
 
-message IFindFavouriteDto {
+message IFindFavouriteDocumentsDto {
     string userId = 1;
+}
+
+/********************************************Document Versions*********************************************************************/
+
+service DocumentVersionsService {
+    rpc Create (ICreateDocumentVersionDto) returns (ICreateDocumentVersionResponse) {}
+
+    rpc FindAll (IFindAllDocumentVersionsDto) returns (IFindAllDocumentVersionsResponse) {}
+
+    rpc FindOneById (IFindDocumentVersionByIdDto) returns (IFindOneDocumentVersionResponse) {}
+
+    rpc FindLast (IFindLastDocumentVersionDto) returns (IFindOneDocumentVersionResponse) {}
+}
+
+message ICreateDocumentVersionDto {
+    string documentId = 1;
+
+    string fileExtension = 2;
+
+    optional string description = 3;
+
+    string userId = 4; 
+}
+
+message ICreateDocumentVersionResponseData {
+    string url = 1;
+}
+
+message ICreateDocumentVersionResponse {
+    oneof response {
+        ICreateDocumentVersionResponseData data = 1;
+        
+        common.IHttpError error = 2;
+    }
+}
+
+message IFindAllDocumentVersionsDto {
+    string documentId = 1;
+
+    string userId = 2;
+}
+
+message IVersion {
+    string id = 1;
+
+    optional string description = 2;
+
+    string url = 3;
+
+    string createdAt = 4;
+}
+
+message IFindAllVersionsResponseData {
+    repeated IVersion versions = 1;
+}
+
+message IFindAllDocumentVersionsResponse {
+    oneof response {
+        IFindAllVersionsResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
+message IFindDocumentVersionByIdDto {
+    string versionId = 1;
+
+    string userId = 2;
+}
+
+message IFindLastDocumentVersionDto {
+    string documentId = 1;
+
+    string userId = 2;
+}
+
+message IFindOneDocumentVersionResponse {
+    oneof response {
+        IVersion data = 1;
+
+        common.IHttpError error = 2;
+    }
 }

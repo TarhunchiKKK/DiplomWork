@@ -1,17 +1,17 @@
 import { Body, Controller, Patch, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
-import { UsersGrpcService } from "common/grpc";
+import { PasswordRecoveryGrpcService } from "common/grpc";
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { UpdatePasswordDto } from "./dto/update-password.dto";
 
 @Controller("/users/password-recovery")
 export class PasswordRecoveryController {
-    public constructor(private readonly usersGrpcService: UsersGrpcService) {}
+    public constructor(private readonly passwordRecoveryGrpcservice: PasswordRecoveryGrpcService) {}
 
     @Post("/reset")
     @UseGuards(AuthenticationGuard)
     public reset(@Req() request: TAuthenticatedRequest) {
-        return this.usersGrpcService.call("resetPassword", {
+        return this.passwordRecoveryGrpcservice.call("reset", {
             userId: request.jwtInfo.id
         });
     }
@@ -20,6 +20,6 @@ export class PasswordRecoveryController {
     @UseGuards(AuthenticationGuard)
     @UsePipes(ValidationPipe)
     public update(@Body() dto: UpdatePasswordDto) {
-        return this.usersGrpcService.call("updatePassword", dto);
+        return this.passwordRecoveryGrpcservice.call("update", dto);
     }
 }
