@@ -42,8 +42,6 @@ message ICreateDocumentResponseData {
     string status = 6;
 
     bool isUrgent = 7;
-
-    
 }
 
 message ICreateDocumentResponse {
@@ -91,7 +89,7 @@ message IDocumentShortData {
 }
 
 message IFindDocumentResponseData {
-    repeated IDocumentShortData data = 1;
+    repeated IDocumentShortData documents = 1;
 }
 
 message IFindDocumentsResponse {
@@ -133,6 +131,8 @@ message IFindFavouriteDocumentsDto {
 
 service DocumentVersionsService {
     rpc Create (ICreateDocumentVersionDto) returns (ICreateDocumentVersionResponse) {}
+
+    rpc FindAll (IFindAllVersionsDto) returns (IFindAllVersionsResponse) {}
 }
 
 message ICreateDocumentVersionDto {
@@ -153,6 +153,34 @@ message ICreateDocumentVersionResponse {
     oneof response {
         ICreateDocumentVersionResponseData data = 1;
         
+        common.IHttpError error = 2;
+    }
+}
+
+message IFindAllVersionsDto {
+    string documentId = 1;
+
+    string userId = 2;
+}
+
+message IVersion {
+    string id = 1;
+
+    optional string description = 2;
+
+    string url = 3;
+
+    string createdAt = 4;
+}
+
+message IFindAllVersionsResponseData {
+    repeated IVersion versions = 1;
+}
+
+message IFindAllVersionsResponse {
+    oneof response {
+        IFindAllVersionsResponseData data = 1;
+
         common.IHttpError error = 2;
     }
 }

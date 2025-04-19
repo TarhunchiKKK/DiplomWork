@@ -7,7 +7,7 @@ import {
     InternalServerErrorException
 } from "@nestjs/common";
 
-export const exceptionsMap: Map<HttpStatus, new (_: string) => HttpException> = new Map([
+export const exceptionsMap: Map<HttpStatus, new (_: string | string[]) => HttpException> = new Map([
     [HttpStatus.BAD_REQUEST, BadRequestException],
     [HttpStatus.NOT_FOUND, NotFoundException],
     [HttpStatus.UNAUTHORIZED, UnauthorizedException],

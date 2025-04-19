@@ -51,7 +51,7 @@ export class DocumentsService {
         const documents = await this.documentsRepository.find(new FindDocumentsQueryBuilder(dto).build());
 
         return {
-            data: documents.map(getShortDocumentData)
+            documents: documents.map(getShortDocumentData)
         };
     }
 

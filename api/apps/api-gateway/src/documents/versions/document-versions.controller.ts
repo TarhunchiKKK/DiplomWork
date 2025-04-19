@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { CreateDocumentVersionDto } from "./dto/create-document-version.dto";
@@ -14,6 +14,15 @@ export class DocumentVersionsController {
     public create(@Req() request: TAuthenticatedRequest, @Body() dto: CreateDocumentVersionDto) {
         return this.documentVersionsGrpcService.call("create", {
             ...dto,
+            userId: request.jwtInfo.id
+        });
+    }
+
+    @Get(":documentId")
+    @UseGuards(AuthenticationGuard)
+    public findAll(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
+        return this.documentVersionsGrpcService.call("findAll", {
+            documentId: documentId,
             userId: request.jwtInfo.id
         });
     }

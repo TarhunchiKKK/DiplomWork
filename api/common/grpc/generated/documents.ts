@@ -60,7 +60,7 @@ export interface IDocumentShortData {
 }
 
 export interface IFindDocumentResponseData {
-  data: IDocumentShortData[];
+  documents: IDocumentShortData[];
 }
 
 export interface IFindDocumentsResponse {
@@ -95,6 +95,27 @@ export interface ICreateDocumentVersionResponseData {
 
 export interface ICreateDocumentVersionResponse {
   data?: ICreateDocumentVersionResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IFindAllVersionsDto {
+  documentId: string;
+  userId: string;
+}
+
+export interface IVersion {
+  id: string;
+  description?: string | undefined;
+  url: string;
+  createdAt: string;
+}
+
+export interface IFindAllVersionsResponseData {
+  versions: IVersion[];
+}
+
+export interface IFindAllVersionsResponse {
+  data?: IFindAllVersionsResponseData | undefined;
   error?: IHttpError | undefined;
 }
 
@@ -198,6 +219,8 @@ export const FAVOURITE_DOCUMENTS_SERVICE_NAME = "FavouriteDocumentsService";
 
 export interface DocumentVersionsServiceClient {
   create(request: ICreateDocumentVersionDto): Observable<ICreateDocumentVersionResponse>;
+
+  findAll(request: IFindAllVersionsDto): Observable<IFindAllVersionsResponse>;
 }
 
 export interface DocumentVersionsServiceController {
@@ -207,11 +230,15 @@ export interface DocumentVersionsServiceController {
     | Promise<ICreateDocumentVersionResponse>
     | Observable<ICreateDocumentVersionResponse>
     | ICreateDocumentVersionResponse;
+
+  findAll(
+    request: IFindAllVersionsDto,
+  ): Promise<IFindAllVersionsResponse> | Observable<IFindAllVersionsResponse> | IFindAllVersionsResponse;
 }
 
 export function DocumentVersionsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create"];
+    const grpcMethods: string[] = ["create", "findAll"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

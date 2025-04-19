@@ -34,7 +34,7 @@ export class FavouriteDocumentsService {
         const documents = documentsInfo.map(info => info.document);
 
         return {
-            data: documents.map(getShortDocumentData)
+            documents: documents.map(getShortDocumentData)
         };
     }
 

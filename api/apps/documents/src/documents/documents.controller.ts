@@ -23,7 +23,7 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
     }
 
     public async findAll(dto: IFindDocumentsDto) {
-        return await this.findAll(dto);
+        return await this.documentsService.findAll(dto);
     }
 
     public async update(dto: IUpdateDocumentDto) {

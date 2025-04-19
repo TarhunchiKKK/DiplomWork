@@ -2,7 +2,7 @@ import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DocumentVersion } from "./entities/document-version.entity";
 import { Repository } from "typeorm";
-import { ICreateDocumentVersionDto } from "common/grpc";
+import { ICreateDocumentVersionDto, IFindAllVersionsDto } from "common/grpc";
 import { DocumentsService } from "../documents/documents.service";
 import { DocumentRolesService } from "../roles/document-roles.service";
 import { DocumentOperation } from "../roles/enums/document-operation.enum";
@@ -35,6 +35,36 @@ export class DocumentVersionsService {
         return {
             ...version,
             createdAt: version.createdAt.toISOString()
+        };
+    }
+
+    public async findAll(dto: IFindAllVersionsDto) {
+        const document = await this.documentsService.findOneById(dto.documentId);
+
+        this.rolesService.checkPermissions({
+            token: document.accessToken,
+            userId: dto.userId,
+            operation: DocumentOperation.READ_FILE
+        });
+
+        const versions = await this.versionsRepository.find({
+            where: {
+                document: {
+                    id: dto.documentId
+                }
+            },
+            relations: {
+                document: true
+            }
+        });
+
+        return {
+            versions: versions.map(version => ({
+                id: version.id,
+                url: version.url,
+                description: version.description,
+                createdAt: version.createdAt.toISOString()
+            }))
         };
     }
 }
