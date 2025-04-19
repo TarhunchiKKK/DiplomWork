@@ -1,12 +1,18 @@
-import { forwardRef, Inject, Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DocumentVersion } from "./entities/document-version.entity";
 import { Repository } from "typeorm";
-import { ICreateDocumentVersionDto, IFindAllVersionsDto } from "common/grpc";
+import {
+    ICreateDocumentVersionDto,
+    IFindAllDocumentVersionsDto,
+    IFindDocumentVersionByIdDto,
+    IFindLastDocumentVersionDto
+} from "common/grpc";
 import { DocumentsService } from "../documents/documents.service";
 import { DocumentRolesService } from "../roles/document-roles.service";
 import { DocumentOperation } from "../roles/enums/document-operation.enum";
 import { generateS3Filename } from "./helpers/s3.helpers";
+import { version } from "os";
 
 @Injectable()
 export class DocumentVersionsService {
@@ -38,7 +44,7 @@ export class DocumentVersionsService {
         };
     }
 
-    public async findAll(dto: IFindAllVersionsDto) {
+    public async findAll(dto: IFindAllDocumentVersionsDto) {
         const document = await this.documentsService.findOneById(dto.documentId);
 
         this.rolesService.checkPermissions({
@@ -65,6 +71,48 @@ export class DocumentVersionsService {
                 description: version.description,
                 createdAt: version.createdAt.toISOString()
             }))
+        };
+    }
+
+    public async findOneById(dto: IFindDocumentVersionByIdDto) {
+        const version = await this.versionsRepository.findOne({
+            where: {
+                id: dto.versionId
+            }
+        });
+
+        if (!version) {
+            throw new NotFoundException("ерсия не найдена");
+        }
+
+        return {
+            ...version,
+            createdAt: version.createdAt.toISOString()
+        };
+    }
+
+    public async findLast(dto: IFindLastDocumentVersionDto) {
+        const versions = await this.versionsRepository.find({
+            where: {
+                document: {
+                    id: dto.documentId
+                }
+            },
+            relations: {
+                document: true
+            },
+            order: {
+                createdAt: "DESC"
+            }
+        });
+
+        if (versions.length === 0) {
+            throw new NotFoundException("нет версий для документа");
+        }
+
+        return {
+            ...version[0],
+            createdAt: version[0].createdAt.toISOString()
         };
     }
 }

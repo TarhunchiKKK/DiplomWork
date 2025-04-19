@@ -18,7 +18,6 @@ import { TAuthenticatedRequest } from "common/modules";
 import { CreateDocumentDto } from "./dto/create-document.dto";
 import { UpdateDocumentDto } from "./dto/update-document.dto";
 import { DocumentSortOrder, DocumentStatus, Role } from "common/enums";
-import { request } from "http";
 
 @Controller("/documents")
 export class DocumentsController {

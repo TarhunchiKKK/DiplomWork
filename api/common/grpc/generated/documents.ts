@@ -118,7 +118,7 @@ export interface ICreateDocumentVersionResponse {
   error?: IHttpError | undefined;
 }
 
-export interface IFindAllVersionsDto {
+export interface IFindAllDocumentVersionsDto {
   documentId: string;
   userId: string;
 }
@@ -134,8 +134,23 @@ export interface IFindAllVersionsResponseData {
   versions: IVersion[];
 }
 
-export interface IFindAllVersionsResponse {
+export interface IFindAllDocumentVersionsResponse {
   data?: IFindAllVersionsResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IFindDocumentVersionByIdDto {
+  versionId: string;
+  userId: string;
+}
+
+export interface IFindLastDocumentVersionDto {
+  documentId: string;
+  userId: string;
+}
+
+export interface IFindOneDocumentVersionResponse {
+  data?: IVersion | undefined;
   error?: IHttpError | undefined;
 }
 
@@ -246,7 +261,11 @@ export const FAVOURITE_DOCUMENTS_SERVICE_NAME = "FavouriteDocumentsService";
 export interface DocumentVersionsServiceClient {
   create(request: ICreateDocumentVersionDto): Observable<ICreateDocumentVersionResponse>;
 
-  findAll(request: IFindAllVersionsDto): Observable<IFindAllVersionsResponse>;
+  findAll(request: IFindAllDocumentVersionsDto): Observable<IFindAllDocumentVersionsResponse>;
+
+  findOneById(request: IFindDocumentVersionByIdDto): Observable<IFindOneDocumentVersionResponse>;
+
+  findLast(request: IFindLastDocumentVersionDto): Observable<IFindOneDocumentVersionResponse>;
 }
 
 export interface DocumentVersionsServiceController {
@@ -258,13 +277,30 @@ export interface DocumentVersionsServiceController {
     | ICreateDocumentVersionResponse;
 
   findAll(
-    request: IFindAllVersionsDto,
-  ): Promise<IFindAllVersionsResponse> | Observable<IFindAllVersionsResponse> | IFindAllVersionsResponse;
+    request: IFindAllDocumentVersionsDto,
+  ):
+    | Promise<IFindAllDocumentVersionsResponse>
+    | Observable<IFindAllDocumentVersionsResponse>
+    | IFindAllDocumentVersionsResponse;
+
+  findOneById(
+    request: IFindDocumentVersionByIdDto,
+  ):
+    | Promise<IFindOneDocumentVersionResponse>
+    | Observable<IFindOneDocumentVersionResponse>
+    | IFindOneDocumentVersionResponse;
+
+  findLast(
+    request: IFindLastDocumentVersionDto,
+  ):
+    | Promise<IFindOneDocumentVersionResponse>
+    | Observable<IFindOneDocumentVersionResponse>
+    | IFindOneDocumentVersionResponse;
 }
 
 export function DocumentVersionsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll"];
+    const grpcMethods: string[] = ["create", "findAll", "findOneById", "findLast"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

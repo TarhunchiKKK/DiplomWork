@@ -57,6 +57,10 @@ const replacements = [
         to: "documentId"
     },
     {
+        from: "version_id",
+        to: "versionId"
+    },
+    {
         from: "export const GOOGLE_PROTOBUF_PACKAGE_NAME",
         to: "const GOOGLE_PROTOBUF_PACKAGE_NAME"
     },

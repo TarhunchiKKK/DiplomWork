@@ -18,11 +18,29 @@ export class DocumentVersionsController {
         });
     }
 
-    @Get(":documentId")
+    @Get("/all/:documentId")
     @UseGuards(AuthenticationGuard)
     public findAll(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.documentVersionsGrpcService.call("findAll", {
             documentId: documentId,
+            userId: request.jwtInfo.id
+        });
+    }
+
+    @Get("/last/:documentId")
+    @UseGuards(AuthenticationGuard)
+    public findLast(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
+        return this.documentVersionsGrpcService.call("findLast", {
+            documentId: documentId,
+            userId: request.jwtInfo.id
+        });
+    }
+
+    @Get("/:versionId")
+    @UseGuards(AuthenticationGuard)
+    public findOneById(@Req() request: TAuthenticatedRequest, @Param("versionId") versionId: string) {
+        return this.documentVersionsGrpcService.call("findOneById", {
+            versionId: versionId,
             userId: request.jwtInfo.id
         });
     }

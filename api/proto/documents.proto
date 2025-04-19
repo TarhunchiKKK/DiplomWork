@@ -164,7 +164,11 @@ message IFindFavouriteDocumentsDto {
 service DocumentVersionsService {
     rpc Create (ICreateDocumentVersionDto) returns (ICreateDocumentVersionResponse) {}
 
-    rpc FindAll (IFindAllVersionsDto) returns (IFindAllVersionsResponse) {}
+    rpc FindAll (IFindAllDocumentVersionsDto) returns (IFindAllDocumentVersionsResponse) {}
+
+    rpc FindOneById (IFindDocumentVersionByIdDto) returns (IFindOneDocumentVersionResponse) {}
+
+    rpc FindLast (IFindLastDocumentVersionDto) returns (IFindOneDocumentVersionResponse) {}
 }
 
 message ICreateDocumentVersionDto {
@@ -189,7 +193,7 @@ message ICreateDocumentVersionResponse {
     }
 }
 
-message IFindAllVersionsDto {
+message IFindAllDocumentVersionsDto {
     string documentId = 1;
 
     string userId = 2;
@@ -209,9 +213,29 @@ message IFindAllVersionsResponseData {
     repeated IVersion versions = 1;
 }
 
-message IFindAllVersionsResponse {
+message IFindAllDocumentVersionsResponse {
     oneof response {
         IFindAllVersionsResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
+message IFindDocumentVersionByIdDto {
+    string versionId = 1;
+
+    string userId = 2;
+}
+
+message IFindLastDocumentVersionDto {
+    string documentId = 1;
+
+    string userId = 2;
+}
+
+message IFindOneDocumentVersionResponse {
+    oneof response {
+        IVersion data = 1;
 
         common.IHttpError error = 2;
     }
