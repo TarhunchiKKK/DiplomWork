@@ -1,21 +1,18 @@
-import { Body, Controller, Delete, Get, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Controller, Delete, Get, Param, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
-import { AddToFavouriteDto } from "./dto/add-to-favourite.dto";
-import { RemoveFromFavouriteDto } from "./dto/remove-from-favourite.dto";
 import { FavouriteDocumentsGrpcService } from "common/grpc";
 
 @Controller("/documents/favourite")
 export class FavouriteDocumentsController {
     public constructor(private readonly favouriteDocumentsGrpcService: FavouriteDocumentsGrpcService) {}
 
-    @Post()
-    @UsePipes(ValidationPipe)
+    @Post(":documentId")
     @UseGuards(AuthenticationGuard)
-    public add(@Req() request: TAuthenticatedRequest, @Body() dto: AddToFavouriteDto) {
+    public add(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.favouriteDocumentsGrpcService.call("add", {
             userId: request.jwtInfo.id,
-            documentId: dto.documentId
+            documentId: documentId
         });
     }
 
@@ -27,13 +24,13 @@ export class FavouriteDocumentsController {
         });
     }
 
-    @Delete()
+    @Delete(":documentId")
     @UsePipes(ValidationPipe)
     @UseGuards(AuthenticationGuard)
-    public remove(@Req() request: TAuthenticatedRequest, @Body() dto: RemoveFromFavouriteDto) {
+    public remove(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.favouriteDocumentsGrpcService.call("remove", {
             userId: request.jwtInfo.id,
-            documentId: dto.documentId
+            documentId: documentId
         });
     }
 }
