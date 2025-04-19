@@ -68,6 +68,26 @@ export interface IFindDocumentsResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IFindDocumentByIdDto {
+  documentId: string;
+  userid: string;
+}
+
+export interface IFindOneDocumentResponse {
+  id: string;
+  title: string;
+  typeId: string;
+  aimId: string;
+  isUrgent: boolean;
+  status: string;
+  authorId: string;
+}
+
+export interface IFindDocumentByIdResponse {
+  data?: IFindOneDocumentResponse | undefined;
+  error?: IHttpError | undefined;
+}
+
 export interface IAddToFavouriteDto {
   userId: string;
   documentId: string;
@@ -127,6 +147,8 @@ export interface DocumentsServiceClient {
   update(request: IUpdateDocumentDto): Observable<IEmptyResponse>;
 
   findAll(request: IFindDocumentsDto): Observable<IFindDocumentsResponse>;
+
+  findOneById(request: IFindDocumentByIdDto): Observable<IFindDocumentByIdResponse>;
 }
 
 export interface DocumentsServiceController {
@@ -139,11 +161,15 @@ export interface DocumentsServiceController {
   findAll(
     request: IFindDocumentsDto,
   ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
+
+  findOneById(
+    request: IFindDocumentByIdDto,
+  ): Promise<IFindDocumentByIdResponse> | Observable<IFindDocumentByIdResponse> | IFindDocumentByIdResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "update", "findAll"];
+    const grpcMethods: string[] = ["create", "update", "findAll", "findOneById"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

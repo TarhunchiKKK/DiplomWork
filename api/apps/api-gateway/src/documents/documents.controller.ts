@@ -2,6 +2,7 @@ import {
     Body,
     Controller,
     Get,
+    Param,
     ParseBoolPipe,
     Patch,
     Post,
@@ -17,6 +18,7 @@ import { TAuthenticatedRequest } from "common/modules";
 import { CreateDocumentDto } from "./dto/create-document.dto";
 import { UpdateDocumentDto } from "./dto/update-document.dto";
 import { DocumentSortOrder, DocumentStatus, Role } from "common/enums";
+import { request } from "http";
 
 @Controller("/documents")
 export class DocumentsController {
@@ -55,6 +57,15 @@ export class DocumentsController {
         }
 
         return this.documentsGrpcService.call("findAll", dto);
+    }
+
+    @Get(":documentId")
+    @UseGuards(AuthenticationGuard)
+    public findOneById(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
+        return this.documentsGrpcService.call("findOneById", {
+            documentId: documentId,
+            userid: request.jwtInfo.id
+        });
     }
 
     @Patch()

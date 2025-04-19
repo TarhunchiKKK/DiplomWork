@@ -8,7 +8,8 @@ import {
     WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
     IFindDocumentsDto,
-    IUpdateDocumentDto
+    IUpdateDocumentDto,
+    IFindDocumentByIdDto
 } from "common/grpc";
 
 @Controller()
@@ -20,6 +21,10 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
 
     public async create(dto: ICreateDocumentDto) {
         return await this.documentsService.create(dto);
+    }
+
+    public async findOneById(dto: IFindDocumentByIdDto) {
+        return await this.documentsService.findOneById(dto.documentId);
     }
 
     public async findAll(dto: IFindDocumentsDto) {
