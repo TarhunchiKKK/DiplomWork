@@ -41,17 +41,23 @@ export class DocumentCommentsController {
 
     @Patch(":commentId")
     @UsePipes(ValidationPipe)
-    public update(@Param("commentId") commentId: string, @Body() dto: UpdateDocumentCommentDto) {
+    public update(
+        @Req() request: TAuthenticatedRequest,
+        @Param("commentId") commentId: string,
+        @Body() dto: UpdateDocumentCommentDto
+    ) {
         return this.documentCommentsGrpcService.call("update", {
             id: commentId,
-            message: dto.message
+            message: dto.message,
+            userId: request.jwtInfo.id
         });
     }
 
     @Delete(":commentId")
-    public delete(@Param("commentId") commentId: string) {
+    public delete(@Req() request: TAuthenticatedRequest, @Param("commentId") commentId: string) {
         return this.documentCommentsGrpcService.call("delete", {
-            id: commentId
+            id: commentId,
+            userId: request.jwtInfo.id
         });
     }
 }

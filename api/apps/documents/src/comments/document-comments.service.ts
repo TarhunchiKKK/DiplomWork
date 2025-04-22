@@ -81,7 +81,7 @@ export class DocumentCommentsService {
     }
 
     public async update(dto: IUpdateDocumentCommentDto) {
-        const { id, ...data } = dto;
+        const { id, userId: _, ...data } = dto;
 
         const comment = await this.findOne(id);
 

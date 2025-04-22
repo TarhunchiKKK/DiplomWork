@@ -196,10 +196,12 @@ export interface IFindAllCommentsResponse {
 export interface IUpdateDocumentCommentDto {
   id: string;
   message: string;
+  userId: string;
 }
 
 export interface IDeleteDocumentCommentDto {
   id: string;
+  userId: string;
 }
 
 export const DOCUMENTS_PACKAGE_NAME = "documents";

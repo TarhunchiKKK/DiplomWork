@@ -1,4 +1,4 @@
-import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
+import { Controller, UseFilters, UseGuards, UseInterceptors } from "@nestjs/common";
 import {
     DocumentCommentsServiceController,
     DocumentCommentsServiceControllerMethods,
@@ -11,6 +11,8 @@ import {
     WrapGrpcResponseInterceptor
 } from "common/grpc";
 import { DocumentCommentsService } from "./document-comments.service";
+import { ExtractFromRequest } from "common/middleware";
+import { CommentGuard } from "./middleware/comments.guard";
 
 @Controller()
 @DocumentCommentsServiceControllerMethods()
@@ -27,10 +29,20 @@ export class DocumentCommentsController implements UnwrapGrpcResponse<DocumentCo
         return await this.commentsService.findAll(dto);
     }
 
+    @ExtractFromRequest((request: IUpdateDocumentCommentDto) => {
+        commentId: request.id;
+        userId: request.userId;
+    })
+    @UseGuards(CommentGuard)
     public async update(dto: IUpdateDocumentCommentDto) {
         await this.commentsService.update(dto);
     }
 
+    @ExtractFromRequest((request: IDeleteDocumentCommentDto) => {
+        commentId: request.id;
+        userId: request.userId;
+    })
+    @UseGuards(CommentGuard)
     public async delete(dto: IDeleteDocumentCommentDto) {
         await this.commentsService.delete(dto);
     }

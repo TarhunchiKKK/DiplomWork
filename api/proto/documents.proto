@@ -312,9 +312,13 @@ message IUpdateDocumentCommentDto {
     string id = 1;
 
     string message = 2;
+
+    string userId = 3;
 }
 
 message IDeleteDocumentCommentDto {
     string id = 1;
+
+    string userId = 2;
 }
 
