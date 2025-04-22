@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { UserInvitationTokensService } from "common/modules";
-import { NotificationsRmqService, UserInvitationEvent } from "common/rabbitmq";
+import { NotificationsRmqService, UserInvitedRqmEvent } from "common/rabbitmq";
 import { UsersService } from "../users/users.service";
 import { IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
 import { AccountStatus } from "common/enums";
@@ -30,7 +30,7 @@ export class InvitationsService {
 
         storedUsers.forEach(user =>
             this.notificationsRmqService.emit(
-                new UserInvitationEvent(dto.adminEmail, user.email, this.invitationTokensService.create(user))
+                new UserInvitedRqmEvent(dto.adminEmail, user.email, this.invitationTokensService.create(user))
             )
         );
     }

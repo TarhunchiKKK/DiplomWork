@@ -1,29 +1,34 @@
 import { Controller } from "@nestjs/common";
 import { UserNotificationsService } from "./user-notifications.service";
 import { EventPattern } from "@nestjs/microservices";
-import { UserInvitationEvent, ResetPasswordEvent, ActivateAccountEvent, DeactivateAccountEvent } from "common/rabbitmq";
+import {
+    UserInvitedRqmEvent,
+    PasswordResetedRmqEvent,
+    AccountActivatedRmqEvent,
+    AccountDeactivatedRmqEvent
+} from "common/rabbitmq";
 
 @Controller()
 export class UserNotificationsController {
     public constructor(private readonly notificationsService: UserNotificationsService) {}
 
-    @EventPattern(UserInvitationEvent.PATTERN)
-    public handleUserInvitation(event: UserInvitationEvent) {
+    @EventPattern(UserInvitedRqmEvent.PATTERN)
+    public handleUserInvitation(event: UserInvitedRqmEvent) {
         this.notificationsService.handleUserInvitation(event.payload);
     }
 
-    @EventPattern(ResetPasswordEvent.PATTERN)
-    public handleResetPassword(event: ResetPasswordEvent) {
+    @EventPattern(PasswordResetedRmqEvent.PATTERN)
+    public handleResetPassword(event: PasswordResetedRmqEvent) {
         this.notificationsService.handleResetPassword(event.payload);
     }
 
-    @EventPattern(ActivateAccountEvent.PATTERN)
-    public handleActivateAccount(event: ActivateAccountEvent) {
+    @EventPattern(AccountActivatedRmqEvent.PATTERN)
+    public handleActivateAccount(event: AccountActivatedRmqEvent) {
         this.notificationsService.handleActivateAccount(event.payload);
     }
 
-    @EventPattern(DeactivateAccountEvent.PATTERN)
-    public handleDeactivateAccount(event: DeactivateAccountEvent) {
+    @EventPattern(AccountDeactivatedRmqEvent.PATTERN)
+    public handleDeactivateAccount(event: AccountDeactivatedRmqEvent) {
         this.notificationsService.handleDeactivateAccount(event.payload);
     }
 }

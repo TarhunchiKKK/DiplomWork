@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
-import { NotificationsRmqService, ResetPasswordEvent } from "common/rabbitmq";
+import { NotificationsRmqService, PasswordResetedRmqEvent } from "common/rabbitmq";
 import { PasswordRecoveryTokensService } from "common/modules";
 import { IUpdatePasswordDto } from "common/grpc";
 
@@ -27,7 +27,7 @@ export class PasswordRecoveryService {
             password: user.password
         });
 
-        this.notificationsRmqService.emit(new ResetPasswordEvent(user.email, token));
+        this.notificationsRmqService.emit(new PasswordResetedRmqEvent(user.email, token));
     }
 
     public async update(dto: IUpdatePasswordDto) {

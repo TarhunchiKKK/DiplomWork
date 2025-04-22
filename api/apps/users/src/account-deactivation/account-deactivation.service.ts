@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
-import { ActivateAccountEvent, DeactivateAccountEvent, NotificationsRmqService } from "common/rabbitmq";
+import { AccountActivatedRmqEvent, AccountDeactivatedRmqEvent, NotificationsRmqService } from "common/rabbitmq";
 import { IActivateAccountDto, IDeactivateAccountDto } from "common/grpc";
 import { AccountStatus } from "common/enums";
 
@@ -17,7 +17,7 @@ export class AccountDeactivationService {
             status: AccountStatus.ACTIVE
         });
 
-        this.notificationsRmqService.emit(new ActivateAccountEvent(dto.userId));
+        this.notificationsRmqService.emit(new AccountActivatedRmqEvent(dto.userId));
     }
 
     public async deactivate(dto: IDeactivateAccountDto) {
@@ -25,6 +25,6 @@ export class AccountDeactivationService {
             status: AccountStatus.DEACTIVATED
         });
 
-        this.notificationsRmqService.emit(new DeactivateAccountEvent(dto.userId));
+        this.notificationsRmqService.emit(new AccountDeactivatedRmqEvent(dto.userId));
     }
 }

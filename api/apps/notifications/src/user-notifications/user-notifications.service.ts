@@ -2,12 +2,17 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { render } from "@react-email/components";
 import { MailsService } from "common/modules";
-import { UserInvitationEvent, ResetPasswordEvent, ActivateAccountEvent, DeactivateAccountEvent } from "common/rabbitmq";
 import { NotificationSubject } from "../notifications/enums/notification-subjects.enum";
 import { AccountActivationTemplate } from "./templates/account-activation.template";
 import { AccountDeactivationTemplate } from "./templates/account-deactivate.template";
 import { ResetPasswordTemplate } from "./templates/reset-password.template";
 import { UserInvitationTemplate } from "./templates/user-invitation.template";
+import {
+    AccountActivatedRmqEvent,
+    AccountDeactivatedRmqEvent,
+    PasswordResetedRmqEvent,
+    UserInvitedRqmEvent
+} from "common/rabbitmq";
 
 @Injectable()
 export class UserNotificationsService {
@@ -20,7 +25,7 @@ export class UserNotificationsService {
         return this.configService.getOrThrow<string>("APP_DOMAIN");
     }
 
-    public async handleUserInvitation(dto: UserInvitationEvent["payload"]) {
+    public async handleUserInvitation(dto: UserInvitedRqmEvent["payload"]) {
         const domain = this.getDomain();
 
         const html = await render(
@@ -38,7 +43,7 @@ export class UserNotificationsService {
         });
     }
 
-    public async handleResetPassword(dto: ResetPasswordEvent["payload"]) {
+    public async handleResetPassword(dto: PasswordResetedRmqEvent["payload"]) {
         const domain = this.getDomain();
 
         const html = await render(
@@ -55,7 +60,7 @@ export class UserNotificationsService {
         });
     }
 
-    public async handleActivateAccount(dto: ActivateAccountEvent["payload"]) {
+    public async handleActivateAccount(dto: AccountActivatedRmqEvent["payload"]) {
         const html = await render(AccountActivationTemplate());
 
         this.mailsService.sendMail({
@@ -65,7 +70,7 @@ export class UserNotificationsService {
         });
     }
 
-    public async handleDeactivateAccount(dto: DeactivateAccountEvent["payload"]) {
+    public async handleDeactivateAccount(dto: AccountDeactivatedRmqEvent["payload"]) {
         const html = await render(AccountDeactivationTemplate());
 
         this.mailsService.sendMail({
