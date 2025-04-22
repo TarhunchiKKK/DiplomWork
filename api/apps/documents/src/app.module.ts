@@ -7,6 +7,10 @@ import { DocumentAccessTokensModule } from "common/modules";
 import { FavouriteDocumentInfo } from "./documents/favourite/entities/favourite-document-info.entity";
 import { DocumentVersionsModule } from "./versions/document-versions.module";
 import { DocumentVersion } from "./versions/entities/document-version.entity";
+import { DocumentComment } from "./comments/entities/document-comment.entity";
+import { EventEmitterModule } from "@nestjs/event-emitter";
+import { DocumentEventsModule } from "./events/document-events.module";
+import { ScheduleModule } from "@nestjs/schedule";
 
 @Module({
     imports: [
@@ -24,12 +28,15 @@ import { DocumentVersion } from "./versions/entities/document-version.entity";
                 username: configService.getOrThrow<string>("DOCUMENTS_MICROSERVICE_DB_USER"),
                 password: configService.getOrThrow<string>("DOCUMENTS_MICROSERVICE_DB_PASSWORD"),
                 synchronize: true,
-                entities: [ElectronicDocument, FavouriteDocumentInfo, DocumentVersion]
+                entities: [ElectronicDocument, FavouriteDocumentInfo, DocumentVersion, DocumentComment]
             })
         }),
+        EventEmitterModule.forRoot(),
+        ScheduleModule.forRoot(),
         DocumentsModule,
         DocumentVersionsModule,
-        DocumentAccessTokensModule
+        DocumentAccessTokensModule,
+        DocumentEventsModule
     ]
 })
 export class AppModule {}

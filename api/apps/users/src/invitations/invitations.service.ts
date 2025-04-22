@@ -1,25 +1,26 @@
 import { Injectable } from "@nestjs/common";
 import { UserInvitationTokensService } from "common/modules";
-import { NotificationsRmqService, UserInvitationEvent } from "common/rabbitmq";
 import { UsersService } from "../users/users.service";
 import { IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
 import { AccountStatus } from "common/enums";
 import { AuthenticationService } from "../authentiation/authentiation.service";
+import { EventEmitter2 } from "@nestjs/event-emitter";
+import { UsersInvitedEvent } from "../events/events/users-invited.event";
 
 @Injectable()
 export class InvitationsService {
     public constructor(
         private readonly usersService: UsersService,
 
-        private readonly notificationsRmqService: NotificationsRmqService,
-
         private readonly authenticationService: AuthenticationService,
 
-        private readonly invitationTokensService: UserInvitationTokensService
+        private readonly invitationTokensService: UserInvitationTokensService,
+
+        private readonly eventEmitter: EventEmitter2
     ) {}
 
     public async send(dto: IInviteUsersDto): Promise<void> {
-        const storedUsers = await Promise.all(
+        const users = await Promise.all(
             dto.emails.map(email =>
                 this.usersService.save({
                     organizationId: dto.organizationId,
@@ -28,9 +29,11 @@ export class InvitationsService {
             )
         );
 
-        storedUsers.forEach(user =>
-            this.notificationsRmqService.emit(
-                new UserInvitationEvent(dto.adminEmail, user.email, this.invitationTokensService.create(user))
+        this.eventEmitter.emit(
+            UsersInvitedEvent.PATTERN,
+            new UsersInvitedEvent(
+                users.map(user => user.id),
+                dto.adminEmail
             )
         );
     }

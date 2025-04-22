@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { User } from "./entities/user.entity";
 import { CryptoService } from "common/modules";
 import { AccountStatus } from "common/enums";
@@ -39,6 +39,14 @@ export class UsersService {
         return await this.usersRepository.find({
             where: {
                 organizationId
+            }
+        });
+    }
+
+    public async findAllByIds(ids: string[]) {
+        return await this.usersRepository.find({
+            where: {
+                id: In(ids)
             }
         });
     }

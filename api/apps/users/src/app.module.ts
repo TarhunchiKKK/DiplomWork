@@ -10,6 +10,8 @@ import { InvitationsModule } from "./invitations/invitations.module";
 import { PasswordRecoveryModule } from "./password-recovery/password-recovery.module";
 import { AccountDeactivationModule } from "./account-deactivation/account-deactivation.module";
 import { TotpAuthenticationModule } from "./totp-authentication/totp-authentication.module";
+import { EventEmitterModule } from "@nestjs/event-emitter";
+import { UserEventsModule } from "./events/user-events.module";
 
 @Module({
     imports: [
@@ -30,6 +32,7 @@ import { TotpAuthenticationModule } from "./totp-authentication/totp-authenticat
                 entities: [User]
             })
         }),
+        EventEmitterModule.forRoot(),
         JwtTokensModule,
         UserInvitationTokensModule,
         PasswordRecoveryTokensModule,
@@ -39,7 +42,8 @@ import { TotpAuthenticationModule } from "./totp-authentication/totp-authenticat
         InvitationsModule,
         PasswordRecoveryModule,
         AccountDeactivationModule,
-        TotpAuthenticationModule
+        TotpAuthenticationModule,
+        UserEventsModule
     ]
 })
 export class AppModule {}

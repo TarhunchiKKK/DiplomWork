@@ -6,11 +6,11 @@ import { EnableTotpDto } from "./dto/enable-totp.dto";
 import { LoginWithTotpDto } from "./dto/login-with-totp.dto";
 
 @Controller("/users/auth/totp")
+@UseGuards(AuthenticationGuard)
 export class TotpAuthenticationController {
     public constructor(private readonly totpAuthenticationGrpcService: TotpAuthenticationGrpcService) {}
 
     @Post("/generate")
-    @UseGuards(AuthenticationGuard)
     public generate(@Req() request: TAuthenticatedRequest) {
         return this.totpAuthenticationGrpcService.call("generate", {
             userId: request.jwtInfo.id,
@@ -19,7 +19,6 @@ export class TotpAuthenticationController {
     }
 
     @Patch("/enable")
-    @UseGuards(AuthenticationGuard)
     @UsePipes(ValidationPipe)
     public enable(@Req() request: TAuthenticatedRequest, @Body() dto: EnableTotpDto) {
         return this.totpAuthenticationGrpcService.call("enable", {
@@ -30,7 +29,6 @@ export class TotpAuthenticationController {
     }
 
     @Patch("/disable")
-    @UseGuards(AuthenticationGuard)
     public disable(@Req() request: TAuthenticatedRequest) {
         return this.totpAuthenticationGrpcService.call("disable", {
             userId: request.jwtInfo.id
@@ -38,7 +36,6 @@ export class TotpAuthenticationController {
     }
 
     @Post("/login")
-    @UseGuards(AuthenticationGuard)
     @UsePipes(ValidationPipe)
     public login(@Req() request: TAuthenticatedRequest, @Body() dto: LoginWithTotpDto) {
         return this.totpAuthenticationGrpcService.call("login", {

@@ -23,9 +23,9 @@ import { ProvideOperation } from "../document-access/middleware/decorators/provi
 export class DocumentVersionsController implements UnwrapGrpcResponse<DocumentVersionsServiceController> {
     public constructor(private readonly versionsService: DocumentVersionsService) {}
 
-    @ProvideOperation(DocumentOperation.UPDATE_FILE)
+    @ProvideOperation(DocumentOperation.CREATE_VERSION)
     @ExtractFromRequest((request: ICreateDocumentVersionDto) => ({
-        documentId: request.documentId,
+        versionId: request.documentId,
         userId: request.userId
     }))
     @UseGuards(DocumentAccessGuard)

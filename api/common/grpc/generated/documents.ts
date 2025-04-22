@@ -154,6 +154,56 @@ export interface IFindOneDocumentVersionResponse {
   error?: IHttpError | undefined;
 }
 
+export interface ICreateDocumentCommentDto {
+  message: string;
+  creatorId: string;
+  versionId: string;
+}
+
+export interface ICreateDocumentCommentResponseData {
+  id: string;
+  message: string;
+  creatorId: string;
+  createdAt: string;
+}
+
+export interface ICreateDocumentCommentResponse {
+  data?: ICreateDocumentCommentResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IFindAllDocumentCommentsDto {
+  versionId: string;
+  userId: string;
+}
+
+export interface ICommentShortData {
+  id: string;
+  message: string;
+  creatorId: string;
+  createdAt: string;
+}
+
+export interface IFindAllCommentsResponseData {
+  comments: ICommentShortData[];
+}
+
+export interface IFindAllCommentsResponse {
+  data?: IFindAllCommentsResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IUpdateDocumentCommentDto {
+  id: string;
+  message: string;
+  userId: string;
+}
+
+export interface IDeleteDocumentCommentDto {
+  id: string;
+  userId: string;
+}
+
 export const DOCUMENTS_PACKAGE_NAME = "documents";
 
 export interface DocumentsServiceClient {
@@ -326,3 +376,59 @@ export function DocumentVersionsServiceControllerMethods() {
 }
 
 export const DOCUMENT_VERSIONS_SERVICE_NAME = "DocumentVersionsService";
+
+export interface DocumentCommentsServiceClient {
+  create(request: ICreateDocumentCommentDto): Observable<ICreateDocumentCommentResponse>;
+
+  findAll(request: IFindAllDocumentCommentsDto): Observable<IFindAllCommentsResponse>;
+
+  update(request: IUpdateDocumentCommentDto): Observable<IEmptyResponse>;
+
+  delete(request: IDeleteDocumentCommentDto): Observable<IEmptyResponse>;
+}
+
+export interface DocumentCommentsServiceController {
+  create(
+    request: ICreateDocumentCommentDto,
+  ):
+    | Promise<ICreateDocumentCommentResponse>
+    | Observable<ICreateDocumentCommentResponse>
+    | ICreateDocumentCommentResponse;
+
+  findAll(
+    request: IFindAllDocumentCommentsDto,
+  ): Promise<IFindAllCommentsResponse> | Observable<IFindAllCommentsResponse> | IFindAllCommentsResponse;
+
+  update(request: IUpdateDocumentCommentDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  delete(request: IDeleteDocumentCommentDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+}
+
+export function DocumentCommentsServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["create", "findAll", "update", "delete"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("DocumentCommentsService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("DocumentCommentsService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const DOCUMENT_COMMENTS_SERVICE_NAME = "DocumentCommentsService";
