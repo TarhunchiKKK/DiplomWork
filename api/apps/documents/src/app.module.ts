@@ -10,6 +10,7 @@ import { DocumentVersion } from "./versions/entities/document-version.entity";
 import { DocumentComment } from "./comments/entities/document-comment.entity";
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { DocumentEventsModule } from "./events/document-events.module";
+import { ScheduleModule } from "@nestjs/schedule";
 
 @Module({
     imports: [
@@ -31,6 +32,7 @@ import { DocumentEventsModule } from "./events/document-events.module";
             })
         }),
         EventEmitterModule.forRoot(),
+        ScheduleModule.forRoot(),
         DocumentsModule,
         DocumentVersionsModule,
         DocumentAccessTokensModule,

@@ -13,6 +13,7 @@ import { CommentCreatedEvent } from "../events/events/comment-created.event";
 import { CommentUpdatedEvent } from "../events/events/comment-updated.event";
 import { CommentStatus } from "./enums/comment-status.enum";
 import { CommentDeletedEvent } from "../events/events/comment-deleted.event";
+import { Cron } from "@nestjs/schedule";
 
 @Injectable()
 export class DocumentCommentsService {
@@ -99,5 +100,16 @@ export class DocumentCommentsService {
         await this.commentsRepository.save(comment);
 
         this.eventEmitter.emit(CommentDeletedEvent.PATTERN, new CommentDeletedEvent(comment.id));
+    }
+
+    @Cron("0 0 * * *")
+    private async removeDeleted() {
+        const comments = await this.commentsRepository.find({
+            where: {
+                status: CommentStatus.DELETED
+            }
+        });
+
+        await Promise.all(comments.map(comment => this.commentsRepository.remove(comment)));
     }
 }
