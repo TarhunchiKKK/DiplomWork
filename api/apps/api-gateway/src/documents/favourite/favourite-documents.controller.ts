@@ -4,11 +4,11 @@ import { TAuthenticatedRequest } from "common/modules";
 import { FavouriteDocumentsGrpcService } from "common/grpc";
 
 @Controller("/documents/favourite")
+@UseGuards(AuthenticationGuard)
 export class FavouriteDocumentsController {
     public constructor(private readonly favouriteDocumentsGrpcService: FavouriteDocumentsGrpcService) {}
 
     @Post(":documentId")
-    @UseGuards(AuthenticationGuard)
     public add(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.favouriteDocumentsGrpcService.call("add", {
             userId: request.jwtInfo.id,
@@ -17,7 +17,6 @@ export class FavouriteDocumentsController {
     }
 
     @Get()
-    @UseGuards(AuthenticationGuard)
     public findAll(@Req() request: TAuthenticatedRequest) {
         return this.favouriteDocumentsGrpcService.call("findAll", {
             userId: request.jwtInfo.id
@@ -26,7 +25,6 @@ export class FavouriteDocumentsController {
 
     @Delete(":documentId")
     @UsePipes(ValidationPipe)
-    @UseGuards(AuthenticationGuard)
     public remove(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.favouriteDocumentsGrpcService.call("remove", {
             userId: request.jwtInfo.id,

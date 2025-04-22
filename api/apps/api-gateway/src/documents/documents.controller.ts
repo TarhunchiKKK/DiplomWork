@@ -20,12 +20,12 @@ import { UpdateDocumentDto } from "./dto/update-document.dto";
 import { DocumentSortOrder, DocumentStatus, Role } from "common/enums";
 
 @Controller("/documents")
+@UseGuards(AuthenticationGuard)
 export class DocumentsController {
     public constructor(private readonly documentsGrpcService: DocumentsGrpcService) {}
 
     @Post()
     @UsePipes(ValidationPipe)
-    @UseGuards(AuthenticationGuard)
     public create(@Req() request: TAuthenticatedRequest, @Body() dto: CreateDocumentDto) {
         return this.documentsGrpcService.call("create", {
             ...dto,
@@ -34,7 +34,6 @@ export class DocumentsController {
     }
 
     @Get()
-    @UseGuards(AuthenticationGuard)
     public findAll(
         @Req() request: TAuthenticatedRequest,
         @Query("aimId") aimId?: string,
@@ -59,7 +58,6 @@ export class DocumentsController {
     }
 
     @Get(":documentId")
-    @UseGuards(AuthenticationGuard)
     public findOneById(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.documentsGrpcService.call("findOneById", {
             documentId: documentId,
@@ -69,7 +67,6 @@ export class DocumentsController {
 
     @Patch()
     @UsePipes(ValidationPipe)
-    @UseGuards(AuthenticationGuard)
     public updateInfo(@Req() request: TAuthenticatedRequest, @Body() dto: UpdateDocumentDto) {
         return this.documentsGrpcService.call("update", {
             ...dto,

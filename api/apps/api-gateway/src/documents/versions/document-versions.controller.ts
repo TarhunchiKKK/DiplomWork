@@ -5,12 +5,12 @@ import { CreateDocumentVersionDto } from "./dto/create-document-version.dto";
 import { DocumentVersionsGrpcService } from "common/grpc";
 
 @Controller("/documents/versions")
+@UseGuards(AuthenticationGuard)
 export class DocumentVersionsController {
     public constructor(private readonly documentVersionsGrpcService: DocumentVersionsGrpcService) {}
 
     @Post()
     @UsePipes(ValidationPipe)
-    @UseGuards(AuthenticationGuard)
     public create(@Req() request: TAuthenticatedRequest, @Body() dto: CreateDocumentVersionDto) {
         return this.documentVersionsGrpcService.call("create", {
             ...dto,
@@ -19,7 +19,6 @@ export class DocumentVersionsController {
     }
 
     @Get("/all/:documentId")
-    @UseGuards(AuthenticationGuard)
     public findAll(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.documentVersionsGrpcService.call("findAll", {
             documentId: documentId,
@@ -28,7 +27,6 @@ export class DocumentVersionsController {
     }
 
     @Get("/last/:documentId")
-    @UseGuards(AuthenticationGuard)
     public findLast(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.documentVersionsGrpcService.call("findLast", {
             documentId: documentId,
@@ -37,7 +35,6 @@ export class DocumentVersionsController {
     }
 
     @Get("/:versionId")
-    @UseGuards(AuthenticationGuard)
     public findOneById(@Req() request: TAuthenticatedRequest, @Param("versionId") versionId: string) {
         return this.documentVersionsGrpcService.call("findOneById", {
             versionId: versionId,
