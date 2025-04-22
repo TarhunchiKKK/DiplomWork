@@ -38,7 +38,7 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
         return await this.documentsService.findAll(dto);
     }
 
-    @ProvideOperation(DocumentOperation.UPDATE_INFO)
+    @ProvideOperation(DocumentOperation.UPDATE)
     @ExtractFromRequest((request: IUpdateDocumentDto) => ({ documentId: request.documentId, userId: request.userId }))
     @UseGuards(DocumentAccessGuard)
     public async update(dto: IUpdateDocumentDto) {

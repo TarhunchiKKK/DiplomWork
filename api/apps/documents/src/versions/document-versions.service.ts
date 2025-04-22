@@ -59,7 +59,7 @@ export class DocumentVersionsService {
         });
 
         if (!version) {
-            throw new NotFoundException("ерсия не найдена");
+            throw new NotFoundException("Версия не найдена");
         }
 
         return {
@@ -84,12 +84,29 @@ export class DocumentVersionsService {
         });
 
         if (versions.length === 0) {
-            throw new NotFoundException("нет версий для документа");
+            throw new NotFoundException("Нет версий для документа");
         }
 
         return {
             ...version[0],
             createdAt: version[0].createdAt.toISOString()
         };
+    }
+
+    public async findVersionDocument(versionId: string) {
+        const version = await this.versionsRepository.findOne({
+            where: {
+                id: versionId
+            },
+            relations: {
+                document: true
+            }
+        });
+
+        if (!version) {
+            throw new NotFoundException("Версия не найдена");
+        }
+
+        return version.document;
     }
 }

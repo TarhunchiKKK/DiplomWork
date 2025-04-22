@@ -1,18 +1,22 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { DocumentsService } from "../../../documents/documents.service";
 import { Reflector } from "@nestjs/core";
 import { TCheckPermissionsDto } from "../../types/documen-access.types";
 import { DocumentRole } from "../../enums/document-role.enum";
 import { DocumentAccessTokensService } from "common/modules";
-import { documentPermissions } from "../../constants/document-access.constants";
+import { documentPermissions } from "../../constants/documents.constants";
 import { ExtractFromRequest } from "common/middleware";
 import { TRequestData } from "../../types/request.types";
 import { ProvideOperation } from "../decorators/provide-operation.decorator";
+import { DocumentOperation } from "../../enums/document-operation.enum";
+import { DocumentVersionsService } from "apps/documents/src/versions/document-versions.service";
 
 @Injectable()
 export class DocumentAccessGuard implements CanActivate {
     public constructor(
         private readonly documentsService: DocumentsService,
+
+        private readonly versionsService: DocumentVersionsService,
 
         private readonly reflector: Reflector,
 
@@ -22,11 +26,21 @@ export class DocumentAccessGuard implements CanActivate {
     public async canActivate(context: ExecutionContext) {
         const requestData = this.extractRequestData(context);
 
-        const document = await this.documentsService.findOneById(requestData.documentId);
+        const document = await this.findDocument(requestData);
 
         this.checkPermissions(context, { userId: requestData.userId, token: document.accessToken });
 
         return true;
+    }
+
+    public async findDocument(requestData: TRequestData) {
+        if (requestData.type === "Document") {
+            return await this.documentsService.findOneById(requestData.documentId);
+        } else if (requestData.type === "Version") {
+            return await this.versionsService.findVersionDocument(requestData.versionId);
+        }
+
+        throw new NotFoundException("Не найден документ");
     }
 
     private extractRequestData(context: ExecutionContext) {
@@ -38,8 +52,10 @@ export class DocumentAccessGuard implements CanActivate {
 
         if (!requestData.userId) {
             throw new UnauthorizedException("Необходимо авторизоваться");
-        } else if (!requestData.documentId) {
-            throw new UnauthorizedException("Необходимо указать документ");
+        } else if (requestData.type === "Document" && !requestData.documentId) {
+            throw new NotFoundException("Необходимо указать документ");
+        } else if (requestData.type === "Version" && !requestData.versionId) {
+            throw new NotFoundException("Необходимо указать версию");
         }
 
         return requestData;
@@ -48,7 +64,7 @@ export class DocumentAccessGuard implements CanActivate {
     private checkPermissions(context: ExecutionContext, dto: TCheckPermissionsDto) {
         const userRole = this.defineUserRole(dto);
 
-        const operation = this.reflector.get(ProvideOperation, context.getHandler());
+        const operation = this.reflector.get<DocumentOperation>(ProvideOperation, context.getHandler());
 
         const allowOperation = documentPermissions[userRole].includes(operation);
 
@@ -57,7 +73,7 @@ export class DocumentAccessGuard implements CanActivate {
         }
     }
 
-    private defineUserRole(dto: TCheckPermissionsDto): DocumentRole | null {
+    private defineUserRole(dto: TCheckPermissionsDto) {
         const tokenInfo = this.tokensService.verify(dto.token);
 
         let userRole: DocumentRole | null = null;
