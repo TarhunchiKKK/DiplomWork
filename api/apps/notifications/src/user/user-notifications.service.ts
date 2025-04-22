@@ -18,6 +18,7 @@ import {
 export class UserNotificationsService {
     public constructor(
         private readonly mailsService: MailsService,
+
         private readonly configService: ConfigService
     ) {}
 
