@@ -9,6 +9,7 @@ import {
     UserInvitationTokensModule
 } from "common/modules";
 import { NotificationsRmqModule } from "common/rabbitmq";
+import { UsersController } from "./users.controller";
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { NotificationsRmqModule } from "common/rabbitmq";
         PasswordRecoveryTokensModule,
         NotificationsRmqModule
     ],
+    controllers: [UsersController],
     providers: [UsersService],
     exports: [UsersService]
 })

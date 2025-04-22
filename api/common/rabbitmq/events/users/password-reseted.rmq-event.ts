@@ -1,10 +1,10 @@
 import { BaseRmqEvent } from "../base-rmq-event";
 
-export class ResetPasswordEvent extends BaseRmqEvent {
-    public static PATTERN = "RESET_PASSWORD";
+export class PasswordResetedRmqEvent extends BaseRmqEvent {
+    public static PATTERN = "password.reseted";
 
     public constructor(email: string, token: string) {
-        super(ResetPasswordEvent.PATTERN, {
+        super(PasswordResetedRmqEvent.PATTERN, {
             email,
             token
         });

@@ -8,6 +8,8 @@ import { FavouriteDocumentInfo } from "./documents/favourite/entities/favourite-
 import { DocumentVersionsModule } from "./versions/document-versions.module";
 import { DocumentVersion } from "./versions/entities/document-version.entity";
 import { DocumentComment } from "./comments/entities/document-comment.entity";
+import { EventEmitterModule } from "@nestjs/event-emitter";
+import { DocumentEventsModule } from "./events/document-events.module";
 
 @Module({
     imports: [
@@ -28,9 +30,11 @@ import { DocumentComment } from "./comments/entities/document-comment.entity";
                 entities: [ElectronicDocument, FavouriteDocumentInfo, DocumentVersion, DocumentComment]
             })
         }),
+        EventEmitterModule.forRoot(),
         DocumentsModule,
         DocumentVersionsModule,
-        DocumentAccessTokensModule
+        DocumentAccessTokensModule,
+        DocumentEventsModule
     ]
 })
 export class AppModule {}

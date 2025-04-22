@@ -11,6 +11,21 @@ import { IAuthResponse, IEmptyResponse, IHttpError } from "./common";
 
 const protobufPackage = "users";
 
+export interface IFindOneUserDto {
+  id: string;
+}
+
+export interface IFindOneUserResponseData {
+  id: string;
+  username?: string | undefined;
+  email: string;
+}
+
+export interface IFindOneUserResponse {
+  data?: IFindOneUserResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
 export interface IRegisterAdminDto {
   username: string;
   email: string;
@@ -88,6 +103,45 @@ export interface ILoginWithTotpDto {
 }
 
 export const USERS_PACKAGE_NAME = "users";
+
+export interface UsersServiceClient {
+  findOne(request: IFindOneUserDto): Observable<IFindOneUserResponse>;
+}
+
+export interface UsersServiceController {
+  findOne(
+    request: IFindOneUserDto,
+  ): Promise<IFindOneUserResponse> | Observable<IFindOneUserResponse> | IFindOneUserResponse;
+}
+
+export function UsersServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["findOne"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("UsersService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("UsersService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const USERS_SERVICE_NAME = "UsersService";
 
 export interface AuthenticationServiceClient {
   registerAdmin(request: IRegisterAdminDto): Observable<IAuthResponse>;

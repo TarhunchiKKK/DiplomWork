@@ -8,11 +8,18 @@ import {
     IFindAllDocumentCommentsDto,
     IUpdateDocumentCommentDto
 } from "common/grpc";
+import { EventEmitter2 } from "@nestjs/event-emitter";
+import { CommentCreatedEvent } from "../events/events/comment-created.event";
+import { CommentUpdatedEvent } from "../events/events/comment-updated.event";
+import { CommentStatus } from "./enums/comment-status.enum";
+import { CommentDeletedEvent } from "../events/events/comment-deleted.event";
 
 @Injectable()
 export class DocumentCommentsService {
     public constructor(
-        @InjectRepository(DocumentComment) private readonly commentsRepository: Repository<DocumentComment>
+        @InjectRepository(DocumentComment) private readonly commentsRepository: Repository<DocumentComment>,
+
+        private readonly eventEmitter: EventEmitter2
     ) {}
 
     public async create(dto: ICreateDocumentCommentDto) {
@@ -23,6 +30,8 @@ export class DocumentCommentsService {
                 id: dto.versionId
             }
         });
+
+        this.eventEmitter.emit(CommentCreatedEvent.PATTERN, new CommentCreatedEvent(comment.id));
 
         return {
             ...comment,
@@ -35,7 +44,8 @@ export class DocumentCommentsService {
             where: {
                 version: {
                     id: dto.versionId
-                }
+                },
+                status: CommentStatus.ACTIVE
             },
             relations: {
                 version: true
@@ -52,10 +62,13 @@ export class DocumentCommentsService {
         };
     }
 
-    private async findOne(commentId: string) {
+    public async findOne(commentId: string) {
         const comment = await this.commentsRepository.findOne({
             where: {
                 id: commentId
+            },
+            relations: {
+                version: true
             }
         });
 
@@ -74,11 +87,17 @@ export class DocumentCommentsService {
         Object.assign(comment, data);
 
         await this.commentsRepository.save(comment);
+
+        this.eventEmitter.emit(CommentUpdatedEvent.PATTERN, new CommentUpdatedEvent(comment.id));
     }
 
     public async delete(dto: IDeleteDocumentCommentDto) {
         const comment = await this.findOne(dto.id);
 
-        await this.commentsRepository.remove(comment);
+        comment.status = CommentStatus.DELETED;
+
+        await this.commentsRepository.save(comment);
+
+        this.eventEmitter.emit(CommentDeletedEvent.PATTERN, new CommentDeletedEvent(comment.id));
     }
 }
