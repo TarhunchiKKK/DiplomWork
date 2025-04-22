@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { ElectronicDocument } from "../../documents/entities/document.entity";
+import { DocumentComment } from "../../comments/entities/document-comment.entity";
 
 @Entity()
 export class DocumentVersion {
@@ -18,4 +19,7 @@ export class DocumentVersion {
     @ManyToOne(() => ElectronicDocument, document => document.versions)
     @JoinColumn()
     public document: ElectronicDocument;
+
+    @OneToMany(() => DocumentComment, comment => comment.version)
+    public comments: DocumentComment[];
 }
