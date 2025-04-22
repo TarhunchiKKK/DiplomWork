@@ -25,6 +25,21 @@ services:
         networks:
             - documents-network
 
+    notifications-db:
+        container_name: notifications-db
+        image: postgres:15.2
+        restart: always
+        environment:
+            - POSTGRES_DB=${NOTIFICATIONS_MICROSERVICE_DB_NAME}
+            - POSTGRES_USER=${NOTIFICATIONS_MICROSERVICE_DB_USER}
+            - POSTGRES_PASSWORD=${NOTIFICATIONS_MICROSERVICE_DB_PASSWORD}
+        ports:
+            - ${NOTIFICATIONS_MICROSERVICE_DB_PORT}:5432
+        volumes:
+            - notifications-postgres_data:/var/lib/postgresql/data
+        networks:
+            - notifications-network
+
     users-db:
         container_name: users-db
         image: postgres:15.2
@@ -48,8 +63,10 @@ services:
 volumes:
     users-postgres_data:
     documents-postgres_data:
+    notifications-postgres_data:
 
 networks:
     organizations-network:
     documents-network:
     users-network:
+    notifications-network:
