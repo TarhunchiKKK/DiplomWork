@@ -246,6 +246,12 @@ message IFindOneDocumentVersionResponse {
 
 service DocumentCommentsService {
     rpc Create (ICreateDocumentCommentDto) returns (ICreateDocumentCommentResponse) {}
+    
+    rpc FindAll (IFindAllDocumentCommentsDto) returns (IFindAllCommentsResponse) {}
+
+    rpc Update (IUpdateDocumentCommentDto) returns (common.IEmptyResponse) {}
+
+    rpc Delete (IDeleteDocumentCommentDto) returns (common.IEmptyResponse) {}
 }
 
 message ICreateDocumentCommentDto {
@@ -263,7 +269,7 @@ message ICreateDocumentCommentResponseData {
 
     string creatorId = 3;
 
-    string createdAt= 4;
+    string createdAt = 4;
 }
 
 message ICreateDocumentCommentResponse {
@@ -273,3 +279,42 @@ message ICreateDocumentCommentResponse {
         common.IHttpError error = 2;
     }
 }
+
+message IFindAllDocumentCommentsDto {
+    string versionId = 1;
+
+    string userId = 2;
+}
+
+message ICommentShortData {
+    string id = 1;
+
+    string message = 2;
+
+    string creatorId = 3;
+
+    string createdAt= 4;
+}
+
+message IFindAllCommentsResponseData {
+    repeated ICommentShortData comments = 1;
+}
+
+message IFindAllCommentsResponse {
+    oneof response {
+        IFindAllCommentsResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
+message IUpdateDocumentCommentDto {
+    string id = 1;
+
+    string message = 2;
+}
+
+message IDeleteDocumentCommentDto {
+    string id = 1;
+}
+

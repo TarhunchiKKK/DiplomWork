@@ -172,6 +172,36 @@ export interface ICreateDocumentCommentResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IFindAllDocumentCommentsDto {
+  versionId: string;
+  userId: string;
+}
+
+export interface ICommentShortData {
+  id: string;
+  message: string;
+  creatorId: string;
+  createdAt: string;
+}
+
+export interface IFindAllCommentsResponseData {
+  comments: ICommentShortData[];
+}
+
+export interface IFindAllCommentsResponse {
+  data?: IFindAllCommentsResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IUpdateDocumentCommentDto {
+  id: string;
+  message: string;
+}
+
+export interface IDeleteDocumentCommentDto {
+  id: string;
+}
+
 export const DOCUMENTS_PACKAGE_NAME = "documents";
 
 export interface DocumentsServiceClient {
@@ -347,6 +377,12 @@ export const DOCUMENT_VERSIONS_SERVICE_NAME = "DocumentVersionsService";
 
 export interface DocumentCommentsServiceClient {
   create(request: ICreateDocumentCommentDto): Observable<ICreateDocumentCommentResponse>;
+
+  findAll(request: IFindAllDocumentCommentsDto): Observable<IFindAllCommentsResponse>;
+
+  update(request: IUpdateDocumentCommentDto): Observable<IEmptyResponse>;
+
+  delete(request: IDeleteDocumentCommentDto): Observable<IEmptyResponse>;
 }
 
 export interface DocumentCommentsServiceController {
@@ -356,11 +392,19 @@ export interface DocumentCommentsServiceController {
     | Promise<ICreateDocumentCommentResponse>
     | Observable<ICreateDocumentCommentResponse>
     | ICreateDocumentCommentResponse;
+
+  findAll(
+    request: IFindAllDocumentCommentsDto,
+  ): Promise<IFindAllCommentsResponse> | Observable<IFindAllCommentsResponse> | IFindAllCommentsResponse;
+
+  update(request: IUpdateDocumentCommentDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  delete(request: IDeleteDocumentCommentDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function DocumentCommentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create"];
+    const grpcMethods: string[] = ["create", "findAll", "update", "delete"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

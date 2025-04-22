@@ -1,8 +1,13 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DocumentComment } from "./entities/document-comment.entity";
 import { Repository } from "typeorm";
-import { ICreateDocumentCommentDto } from "common/grpc";
+import {
+    ICreateDocumentCommentDto,
+    IDeleteDocumentCommentDto,
+    IFindAllDocumentCommentsDto,
+    IUpdateDocumentCommentDto
+} from "common/grpc";
 
 @Injectable()
 export class DocumentCommentsService {
@@ -23,5 +28,57 @@ export class DocumentCommentsService {
             ...comment,
             createdAt: comment.createdAt.toISOString()
         };
+    }
+
+    public async findAll(dto: IFindAllDocumentCommentsDto) {
+        const comments = await this.commentsRepository.find({
+            where: {
+                version: {
+                    id: dto.versionId
+                }
+            },
+            relations: {
+                version: true
+            }
+        });
+
+        return {
+            comments: comments.map(comment => ({
+                id: comment.id,
+                message: comment.message,
+                creatorId: comment.creatorId,
+                createdAt: comment.createdAt.toISOString()
+            }))
+        };
+    }
+
+    private async findOne(commentId: string) {
+        const comment = await this.commentsRepository.findOne({
+            where: {
+                id: commentId
+            }
+        });
+
+        if (!comment) {
+            throw new NotFoundException("Комментарий не найден");
+        }
+
+        return comment;
+    }
+
+    public async update(dto: IUpdateDocumentCommentDto) {
+        const { id, ...data } = dto;
+
+        const comment = await this.findOne(id);
+
+        Object.assign(comment, data);
+
+        await this.commentsRepository.save(comment);
+    }
+
+    public async delete(dto: IDeleteDocumentCommentDto) {
+        const comment = await this.findOne(dto.id);
+
+        await this.commentsRepository.remove(comment);
     }
 }
