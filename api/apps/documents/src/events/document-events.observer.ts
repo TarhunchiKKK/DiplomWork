@@ -52,7 +52,12 @@ export class DocumentEventsObserver {
         const { document, documentAuthor, commentCreator } = await this.getCommentInfo(event.commentId);
 
         this.notificationsRmqService.emit(
-            new DocumentCommentCreatedRmqEvent(documentAuthor.email, commentCreator.email, document.title)
+            new DocumentCommentCreatedRmqEvent(
+                documentAuthor.id,
+                documentAuthor.email,
+                commentCreator.email,
+                document.title
+            )
         );
     }
 
@@ -61,7 +66,12 @@ export class DocumentEventsObserver {
         const { document, documentAuthor, commentCreator } = await this.getCommentInfo(event.commentId);
 
         this.notificationsRmqService.emit(
-            new DocumentCommentUpdatedRmqEvent(documentAuthor.email, commentCreator.email, document.title)
+            new DocumentCommentUpdatedRmqEvent(
+                documentAuthor.id,
+                documentAuthor.email,
+                commentCreator.email,
+                document.title
+            )
         );
     }
 
@@ -70,7 +80,12 @@ export class DocumentEventsObserver {
         const { document, documentAuthor, commentCreator } = await this.getCommentInfo(event.commentId);
 
         this.notificationsRmqService.emit(
-            new DocumentCommentDeletedRmqEvent(documentAuthor.email, commentCreator.email, document.title)
+            new DocumentCommentDeletedRmqEvent(
+                documentAuthor.id,
+                documentAuthor.email,
+                commentCreator.email,
+                document.title
+            )
         );
     }
 }
