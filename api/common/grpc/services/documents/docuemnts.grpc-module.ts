@@ -6,6 +6,7 @@ import { DOCUMENTS_PACKAGE_NAME } from "common/grpc";
 import { DocumentsGrpcService } from "./services/documents.grpc-service";
 import { DocumentVersionsGrpcService } from "./services/document-versions.grpc-service";
 import { FavouriteDocumentsGrpcService } from "./services/favourite-document.grpc-service";
+import { DocumentCommentsGrpcService } from "./services/document-comments.grpc-service";
 
 @Module({
     imports: [
@@ -18,7 +19,17 @@ import { FavouriteDocumentsGrpcService } from "./services/favourite-document.grp
             }
         ])
     ],
-    providers: [DocumentsGrpcService, DocumentVersionsGrpcService, FavouriteDocumentsGrpcService],
-    exports: [DocumentsGrpcService, DocumentVersionsGrpcService, FavouriteDocumentsGrpcService]
+    providers: [
+        DocumentsGrpcService,
+        DocumentVersionsGrpcService,
+        FavouriteDocumentsGrpcService,
+        DocumentCommentsGrpcService
+    ],
+    exports: [
+        DocumentsGrpcService,
+        DocumentVersionsGrpcService,
+        FavouriteDocumentsGrpcService,
+        DocumentCommentsGrpcService
+    ]
 })
 export class DocumentsGrpcModule {}

@@ -57,6 +57,10 @@ const replacements = [
         to: "documentId"
     },
     {
+        from: "creator_id",
+        to: "creatorId"
+    },
+    {
         from: "version_id",
         to: "versionId"
     },

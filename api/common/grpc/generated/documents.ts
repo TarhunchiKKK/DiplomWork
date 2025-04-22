@@ -154,6 +154,24 @@ export interface IFindOneDocumentVersionResponse {
   error?: IHttpError | undefined;
 }
 
+export interface ICreateDocumentCommentDto {
+  message: string;
+  creatorId: string;
+  versionId: string;
+}
+
+export interface ICreateDocumentCommentResponseData {
+  id: string;
+  message: string;
+  creatorId: string;
+  createdAt: string;
+}
+
+export interface ICreateDocumentCommentResponse {
+  data?: ICreateDocumentCommentResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
 export const DOCUMENTS_PACKAGE_NAME = "documents";
 
 export interface DocumentsServiceClient {
@@ -326,3 +344,45 @@ export function DocumentVersionsServiceControllerMethods() {
 }
 
 export const DOCUMENT_VERSIONS_SERVICE_NAME = "DocumentVersionsService";
+
+export interface DocumentCommentsServiceClient {
+  create(request: ICreateDocumentCommentDto): Observable<ICreateDocumentCommentResponse>;
+}
+
+export interface DocumentCommentsServiceController {
+  create(
+    request: ICreateDocumentCommentDto,
+  ):
+    | Promise<ICreateDocumentCommentResponse>
+    | Observable<ICreateDocumentCommentResponse>
+    | ICreateDocumentCommentResponse;
+}
+
+export function DocumentCommentsServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["create"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("DocumentCommentsService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("DocumentCommentsService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const DOCUMENT_COMMENTS_SERVICE_NAME = "DocumentCommentsService";

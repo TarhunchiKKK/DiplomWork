@@ -240,3 +240,36 @@ message IFindOneDocumentVersionResponse {
         common.IHttpError error = 2;
     }
 }
+
+
+/********************************************Document Comments*********************************************************************/
+
+service DocumentCommentsService {
+    rpc Create (ICreateDocumentCommentDto) returns (ICreateDocumentCommentResponse) {}
+}
+
+message ICreateDocumentCommentDto {
+    string message = 1;
+
+    string creatorId = 2;
+
+    string versionId = 3;
+}
+
+message ICreateDocumentCommentResponseData {
+    string id = 1;
+
+    string message = 2;
+
+    string creatorId = 3;
+
+    string createdAt= 4;
+}
+
+message ICreateDocumentCommentResponse {
+    oneof response {
+        ICreateDocumentCommentResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
