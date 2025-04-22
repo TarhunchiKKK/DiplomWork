@@ -13,22 +13,22 @@ export class UserNotificationsController {
     public constructor(private readonly notificationsService: UserNotificationsService) {}
 
     @EventPattern(UserInvitedRqmEvent.PATTERN)
-    public handleUserInvitation(event: UserInvitedRqmEvent) {
-        this.notificationsService.handleUserInvitation(event.payload);
+    public handleUserhandleUserInvitedInvitation(event: UserInvitedRqmEvent) {
+        this.notificationsService.handleUserInvited(event.payload);
     }
 
     @EventPattern(PasswordResetedRmqEvent.PATTERN)
-    public handleResetPassword(event: PasswordResetedRmqEvent) {
-        this.notificationsService.handleResetPassword(event.payload);
+    public handlePasswordReseted(event: PasswordResetedRmqEvent) {
+        this.notificationsService.handlePasswordReseted(event.payload);
     }
 
     @EventPattern(AccountActivatedRmqEvent.PATTERN)
-    public handleActivateAccount(event: AccountActivatedRmqEvent) {
-        this.notificationsService.handleActivateAccount(event.payload);
+    public handleAccountActivated(event: AccountActivatedRmqEvent) {
+        this.notificationsService.handleAccountActivated(event.payload);
     }
 
     @EventPattern(AccountDeactivatedRmqEvent.PATTERN)
-    public handleDeactivateAccount(event: AccountDeactivatedRmqEvent) {
-        this.notificationsService.handleDeactivateAccount(event.payload);
+    public handleAccountDeactivated(event: AccountDeactivatedRmqEvent) {
+        this.notificationsService.handleAccountDeactivated(event.payload);
     }
 }

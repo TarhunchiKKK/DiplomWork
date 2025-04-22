@@ -3,16 +3,16 @@ import { ConfigService } from "@nestjs/config";
 import { render } from "@react-email/components";
 import { MailsService } from "common/modules";
 import { NotificationSubject } from "../notifications/enums/notification-subjects.enum";
-import { AccountActivationTemplate } from "./templates/account-activation.template";
-import { AccountDeactivationTemplate } from "./templates/account-deactivate.template";
-import { ResetPasswordTemplate } from "./templates/reset-password.template";
-import { UserInvitationTemplate } from "./templates/user-invitation.template";
 import {
     AccountActivatedRmqEvent,
     AccountDeactivatedRmqEvent,
     PasswordResetedRmqEvent,
     UserInvitedRqmEvent
 } from "common/rabbitmq";
+import { UserInvitatedTemplate } from "./templates/user-invitated.template";
+import { PasswordResetedTemplate } from "./templates/password-reseted.template";
+import { AccountActivatedTemplate } from "./templates/account-activated.template";
+import { AccountDeactivatedTemplate } from "./templates/account-deactivated.template";
 
 @Injectable()
 export class UserNotificationsService {
@@ -26,11 +26,11 @@ export class UserNotificationsService {
         return this.configService.getOrThrow<string>("APP_DOMAIN");
     }
 
-    public async handleUserInvitation(dto: UserInvitedRqmEvent["payload"]) {
+    public async handleUserInvited(dto: UserInvitedRqmEvent["payload"]) {
         const domain = this.getDomain();
 
         const html = await render(
-            UserInvitationTemplate({
+            UserInvitatedTemplate({
                 adminEmail: dto.from,
                 domain: domain,
                 token: dto.token
@@ -44,11 +44,11 @@ export class UserNotificationsService {
         });
     }
 
-    public async handleResetPassword(dto: PasswordResetedRmqEvent["payload"]) {
+    public async handlePasswordReseted(dto: PasswordResetedRmqEvent["payload"]) {
         const domain = this.getDomain();
 
         const html = await render(
-            ResetPasswordTemplate({
+            PasswordResetedTemplate({
                 domain: domain,
                 token: dto.token
             })
@@ -61,8 +61,8 @@ export class UserNotificationsService {
         });
     }
 
-    public async handleActivateAccount(dto: AccountActivatedRmqEvent["payload"]) {
-        const html = await render(AccountActivationTemplate());
+    public async handleAccountActivated(dto: AccountActivatedRmqEvent["payload"]) {
+        const html = await render(AccountActivatedTemplate());
 
         this.mailsService.sendMail({
             to: dto.email,
@@ -71,8 +71,8 @@ export class UserNotificationsService {
         });
     }
 
-    public async handleDeactivateAccount(dto: AccountDeactivatedRmqEvent["payload"]) {
-        const html = await render(AccountDeactivationTemplate());
+    public async handleAccountDeactivated(dto: AccountDeactivatedRmqEvent["payload"]) {
+        const html = await render(AccountDeactivatedTemplate());
 
         this.mailsService.sendMail({
             to: dto.email,

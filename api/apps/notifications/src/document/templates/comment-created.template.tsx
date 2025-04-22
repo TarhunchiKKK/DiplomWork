@@ -2,19 +2,29 @@ import * as React from "react";
 import { Body, Head, Heading, Preview, Section, Tailwind, Text } from "@react-email/components";
 import { Html } from "@react-email/html";
 
-export function AccountDeactivationTemplate() {
+type TProps = {
+    creatorUsername: string;
+
+    documentTitle: string;
+};
+
+export function CommentCreatedTemplate({ creatorUsername, documentTitle }: TProps) {
     return (
         <Html>
             <Head />
 
-            <Preview>Деактивация аккаунта</Preview>
+            <Preview>Добавлен комментарий</Preview>
 
             <Tailwind>
                 <Body className="max-w-2xl mx-auto p-6 bg-slate-50">
                     <Section className="text-center mb-8">
-                        <Heading className="text-xl text-black font-bold">
-                            Ваш аккаунт был деактивирован администратором вашей организации.
-                        </Heading>
+                        <Heading className="text-3xl text-black font-bold">Документ {`"${documentTitle}"`}</Heading>
+                    </Section>
+
+                    <Section className="text-center mb-8">
+                        <Text className="text-gray-600">
+                            Пользователь {creatorUsername} создал комментарий к вашему документу {`"${documentTitle}"`}.
+                        </Text>
                     </Section>
 
                     <Section className="text-center mt-8">
