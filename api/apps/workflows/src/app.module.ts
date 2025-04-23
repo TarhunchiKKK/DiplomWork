@@ -5,6 +5,7 @@ import { Workflow } from "./workflows/entities/workflow.entity";
 import { WorkflowsModule } from "./workflows/workflows.module";
 import { WorkflowParticipant } from "./participants/entities/workflow-participant.entity";
 import { WorkflowParticipantsModule } from "./participants/workflow-participants.module";
+import { DocumentsGrpcModule } from "common/grpc";
 
 @Module({
     imports: [
@@ -26,7 +27,8 @@ import { WorkflowParticipantsModule } from "./participants/workflow-participants
             })
         }),
         WorkflowsModule,
-        WorkflowParticipantsModule
+        WorkflowParticipantsModule,
+        DocumentsGrpcModule
     ]
 })
 export class AppModule {}

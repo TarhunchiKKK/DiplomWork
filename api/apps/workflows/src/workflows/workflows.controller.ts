@@ -1,4 +1,4 @@
-import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
+import { Controller, UseFilters, UseGuards, UseInterceptors } from "@nestjs/common";
 import {
     GrpcExceptionFilter,
     ICreateWorkflowDto,
@@ -12,6 +12,9 @@ import {
 } from "common/grpc";
 import { WorkflowsService } from "./workflows.service";
 import { transformWorkflow } from "./helpers/grpc.helpers";
+import { ExtractFromRequest } from "common/middleware";
+import { DocumentAuthorGuard } from "./middleware/document-author.guard";
+import { WorkflowCreatorGuard } from "./middleware/workflow-creator.guard";
 
 @Controller()
 @WorkflowsServiceControllerMethods()
@@ -20,10 +23,20 @@ import { transformWorkflow } from "./helpers/grpc.helpers";
 export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceController> {
     public constructor(private readonly workflowsService: WorkflowsService) {}
 
+    @ExtractFromRequest((request: ICreateWorkflowDto) => ({
+        userId: request.userId,
+        documentId: request.documentId
+    }))
+    @UseGuards(DocumentAuthorGuard)
     public async create(dto: ICreateWorkflowDto) {
         return await this.workflowsService.create(dto).then(transformWorkflow);
     }
 
+    @ExtractFromRequest((request: IStartWorkflowDto) => ({
+        userId: request.userId,
+        workflowId: request.workflowId
+    }))
+    @UseGuards(WorkflowCreatorGuard)
     public async start(dto: IStartWorkflowDto) {
         await this.workflowsService.start(dto);
     }
@@ -32,6 +45,11 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
         return await this.workflowsService.findOneByDocumentId(dto).then(transformWorkflow);
     }
 
+    @ExtractFromRequest((request: IStartWorkflowDto) => ({
+        userId: request.userId,
+        workflowId: request.workflowId
+    }))
+    @UseGuards(WorkflowCreatorGuard)
     public async delete(dto: IDeleteWorkflowDto) {
         await this.workflowsService.delete(dto.workflowId);
     }
