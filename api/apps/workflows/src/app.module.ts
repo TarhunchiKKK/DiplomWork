@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Workflow } from "./workflows/entities/workflow.entity";
 import { WorkflowsModule } from "./workflows/workflows.module";
+import { WorkflowParticipant } from "./participants/entities/workflow-participant.entity";
+import { WorkflowParticipantsModule } from "./participants/workflow-participants.module";
 
 @Module({
     imports: [
@@ -20,10 +22,11 @@ import { WorkflowsModule } from "./workflows/workflows.module";
                 username: configService.getOrThrow<string>("WORKFLOWS_MICROSERVICE_DB_USER"),
                 password: configService.getOrThrow<string>("WORKFLOWS_MICROSERVICE_DB_PASSWORD"),
                 synchronize: true,
-                entities: [Workflow]
+                entities: [Workflow, WorkflowParticipant]
             })
         }),
-        WorkflowsModule
+        WorkflowsModule,
+        WorkflowParticipantsModule
     ]
 })
 export class AppModule {}
