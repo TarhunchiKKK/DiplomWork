@@ -25,6 +25,21 @@ services:
         networks:
             - documents-network
 
+    workflows-db:
+        container_name: workflows-db
+        image: postgres:15.2
+        restart: always
+        environment:
+            - POSTGRES_DB=${WORKFLOWS_MICROSERVICE_DB_NAME}
+            - POSTGRES_USER=${WORKFLOWS_MICROSERVICE_DB_USER}
+            - POSTGRES_PASSWORD=${WORKFLOWS_MICROSERVICE_DB_PASSWORD}
+        ports:
+            - ${WORKFLOWS_MICROSERVICE_DB_PORT}:5432
+        volumes:
+            - workflows-postgres_data:/var/lib/postgresql/data
+        networks:
+            - workflows-network
+
     notifications-db:
         container_name: notifications-db
         image: postgres:15.2
@@ -70,3 +85,4 @@ networks:
     documents-network:
     users-network:
     notifications-network:
+    workflows-network:
