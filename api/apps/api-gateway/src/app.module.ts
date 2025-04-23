@@ -7,6 +7,7 @@ import { NotificationsModule } from "./notifications/notifications.module";
 import { GoogleRecaptchaModule } from "@nestlab/google-recaptcha";
 import { getRecaptchaConfig } from "common/config";
 import { DocumentsModule } from "./documents/documents.module";
+import { WorkflowsModule } from "./workflows/workflows.module";
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { DocumentsModule } from "./documents/documents.module";
         OrganizationsModule,
         NotificationsModule,
         DocumentsModule,
+        WorkflowsModule,
         GoogleRecaptchaModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],

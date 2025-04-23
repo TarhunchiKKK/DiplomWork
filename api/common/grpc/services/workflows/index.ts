@@ -1,2 +1,2 @@
 export { WorkflowsGrpcModule } from "./workflows.grpc-module";
-export { WorkflowsGrpcService } from "./workflows.grpc.service";
+export { WorkflowsGrpcService } from "./services/workflows.grpc.service";

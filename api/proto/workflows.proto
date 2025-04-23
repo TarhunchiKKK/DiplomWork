@@ -9,7 +9,7 @@ service WorkflowsService {
 
     rpc Start (IStartWorkflowDto) returns (common.IEmptyResponse) {}
 
-    rpc FindByDocumentId (IFindWorkflowByDocumentIdDto) returns (IFindWorkflowResponse) {}
+    rpc FindOneByDocumentId (IFindOneWorkflowByDocumentIdDto) returns (IFindOneWorkflowResponse) {}
 
     rpc Delete (IDeleteWorkflowDto) returns (common.IEmptyResponse) {}
 }
@@ -46,13 +46,13 @@ message IStartWorkflowDto {
     string workflowId = 2;
 }
 
-message IFindWorkflowByDocumentIdDto {
+message IFindOneWorkflowByDocumentIdDto {
     string userId = 1;
 
     string documentId = 2;
 }
 
-message IFindWorkflowResponse {
+message IFindOneWorkflowResponse {
     oneof response {
         IWorkflowResponseData data = 1;
 

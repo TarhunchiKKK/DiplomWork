@@ -34,12 +34,12 @@ export interface IStartWorkflowDto {
   workflowId: string;
 }
 
-export interface IFindWorkflowByDocumentIdDto {
+export interface IFindOneWorkflowByDocumentIdDto {
   userId: string;
   documentId: string;
 }
 
-export interface IFindWorkflowResponse {
+export interface IFindOneWorkflowResponse {
   data?: IWorkflowResponseData | undefined;
   error?: IHttpError | undefined;
 }
@@ -56,7 +56,7 @@ export interface WorkflowsServiceClient {
 
   start(request: IStartWorkflowDto): Observable<IEmptyResponse>;
 
-  findByDocumentId(request: IFindWorkflowByDocumentIdDto): Observable<IFindWorkflowResponse>;
+  findOneByDocumentId(request: IFindOneWorkflowByDocumentIdDto): Observable<IFindOneWorkflowResponse>;
 
   delete(request: IDeleteWorkflowDto): Observable<IEmptyResponse>;
 }
@@ -68,16 +68,16 @@ export interface WorkflowsServiceController {
 
   start(request: IStartWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  findByDocumentId(
-    request: IFindWorkflowByDocumentIdDto,
-  ): Promise<IFindWorkflowResponse> | Observable<IFindWorkflowResponse> | IFindWorkflowResponse;
+  findOneByDocumentId(
+    request: IFindOneWorkflowByDocumentIdDto,
+  ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
 
   delete(request: IDeleteWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function WorkflowsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "start", "findByDocumentId", "delete"];
+    const grpcMethods: string[] = ["create", "start", "findOneByDocumentId", "delete"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

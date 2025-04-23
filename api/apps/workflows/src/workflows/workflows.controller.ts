@@ -3,7 +3,7 @@ import {
     GrpcExceptionFilter,
     ICreateWorkflowDto,
     IDeleteWorkflowDto,
-    IFindWorkflowByDocumentIdDto,
+    IFindOneWorkflowByDocumentIdDto,
     IStartWorkflowDto,
     UnwrapGrpcResponse,
     WorkflowsServiceController,
@@ -28,7 +28,7 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
         await this.workflowsService.start(dto);
     }
 
-    public async findByDocumentId(dto: IFindWorkflowByDocumentIdDto) {
+    public async findOneByDocumentId(dto: IFindOneWorkflowByDocumentIdDto) {
         return await this.workflowsService.findOneByDocumentId(dto).then(transformWorkflow);
     }
 
