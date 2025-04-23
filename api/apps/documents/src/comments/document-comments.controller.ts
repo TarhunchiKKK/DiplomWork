@@ -29,19 +29,19 @@ export class DocumentCommentsController implements UnwrapGrpcResponse<DocumentCo
         return await this.commentsService.findAll(dto);
     }
 
-    @ExtractFromRequest((request: IUpdateDocumentCommentDto) => {
-        commentId: request.id;
-        userId: request.userId;
-    })
+    @ExtractFromRequest((request: IUpdateDocumentCommentDto) => ({
+        commentId: request.id,
+        userId: request.userId
+    }))
     @UseGuards(CommentGuard)
     public async update(dto: IUpdateDocumentCommentDto) {
         await this.commentsService.update(dto);
     }
 
-    @ExtractFromRequest((request: IDeleteDocumentCommentDto) => {
-        commentId: request.id;
-        userId: request.userId;
-    })
+    @ExtractFromRequest((request: IDeleteDocumentCommentDto) => ({
+        commentId: request.id,
+        userId: request.userId
+    }))
     @UseGuards(CommentGuard)
     public async delete(dto: IDeleteDocumentCommentDto) {
         await this.commentsService.delete(dto);
