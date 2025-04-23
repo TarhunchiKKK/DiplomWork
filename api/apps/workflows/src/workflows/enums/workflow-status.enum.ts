@@ -1,5 +1,6 @@
 export enum WorkflowStatus {
-    CREATED = "CREATED",
+    DEFAULT = "DEFAULT",
+    STARTED = "STARTED",
     AGREEMENTED = "AGREEMENTED",
     SIGNED = "SIGNED"
 }

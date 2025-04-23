@@ -6,20 +6,78 @@
 
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
+import { Observable } from "rxjs";
+import { IEmptyResponse, IHttpError } from "./common";
 
 const protobufPackage = "workflows";
+
+export interface ICreateWorkflowDto {
+  userId: string;
+  documentId: string;
+}
+
+export interface IWorkflowResponseData {
+  id: string;
+  creatorId: string;
+  documentId: string;
+  status: string;
+  completedAt?: string | undefined;
+}
+
+export interface ICreateWorkflowResponse {
+  data?: IWorkflowResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IStartWorkflowDto {
+  userId: string;
+  workflowId: string;
+}
+
+export interface IFindWorkflowByDocumentIdDto {
+  userId: string;
+  documentId: string;
+}
+
+export interface IFindWorkflowResponse {
+  data?: IWorkflowResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IDeleteWorkflowDto {
+  userId: string;
+  workflowId: string;
+}
 
 export const WORKFLOWS_PACKAGE_NAME = "workflows";
 
 export interface WorkflowsServiceClient {
+  create(request: ICreateWorkflowDto): Observable<ICreateWorkflowResponse>;
+
+  start(request: IStartWorkflowDto): Observable<IEmptyResponse>;
+
+  findByDocumentId(request: IFindWorkflowByDocumentIdDto): Observable<IFindWorkflowResponse>;
+
+  delete(request: IDeleteWorkflowDto): Observable<IEmptyResponse>;
 }
 
 export interface WorkflowsServiceController {
+  create(
+    request: ICreateWorkflowDto,
+  ): Promise<ICreateWorkflowResponse> | Observable<ICreateWorkflowResponse> | ICreateWorkflowResponse;
+
+  start(request: IStartWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  findByDocumentId(
+    request: IFindWorkflowByDocumentIdDto,
+  ): Promise<IFindWorkflowResponse> | Observable<IFindWorkflowResponse> | IFindWorkflowResponse;
+
+  delete(request: IDeleteWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function WorkflowsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = [];
+    const grpcMethods: string[] = ["create", "start", "findByDocumentId", "delete"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

@@ -7,7 +7,7 @@ export class Workflow {
     @PrimaryGeneratedColumn("uuid")
     public id: string;
 
-    @Column({ type: "enum", enum: WorkflowStatus, default: WorkflowStatus.CREATED })
+    @Column({ type: "enum", enum: WorkflowStatus, default: WorkflowStatus.DEFAULT })
     public status: WorkflowStatus;
 
     @Column()
