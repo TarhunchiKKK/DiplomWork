@@ -71,8 +71,6 @@ export interface WorkflowsServiceClient {
   findOneByDocumentId(request: IFindOneWorkflowByDocumentIdDto): Observable<IFindOneWorkflowResponse>;
 
   delete(request: IDeleteWorkflowDto): Observable<IEmptyResponse>;
-
-  upsertParticipants(request: IUpsertWorkflowParticipantsDto): Observable<IEmptyResponse>;
 }
 
 export interface WorkflowsServiceController {
@@ -87,15 +85,11 @@ export interface WorkflowsServiceController {
   ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
 
   delete(request: IDeleteWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  upsertParticipants(
-    request: IUpsertWorkflowParticipantsDto,
-  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function WorkflowsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "start", "findOneByDocumentId", "delete", "upsertParticipants"];
+    const grpcMethods: string[] = ["create", "start", "findOneByDocumentId", "delete"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
@@ -123,14 +117,18 @@ export function WorkflowsServiceControllerMethods() {
 export const WORKFLOWS_SERVICE_NAME = "WorkflowsService";
 
 export interface WorkflowParticipantsServiceClient {
+  upsertWorkflowParticipants(request: IUpsertWorkflowParticipantsDto): Observable<IEmptyResponse>;
 }
 
 export interface WorkflowParticipantsServiceController {
+  upsertWorkflowParticipants(
+    request: IUpsertWorkflowParticipantsDto,
+  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function WorkflowParticipantsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = [];
+    const grpcMethods: string[] = ["upsertWorkflowParticipants"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
