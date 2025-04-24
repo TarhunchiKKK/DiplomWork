@@ -7,13 +7,9 @@ package users;
 /********************************************Users*********************************************************************/
 
 service UsersService {
-    rpc FindOne (IFindOneUserDto) returns (IFindOneUserResponse) {}
+    rpc FindOne (common.IOnlyId) returns (IFindOneUserResponse) {}
 
     rpc FindMany (IFindManyUsersDto) returns (IFindManyUsersResponse) {}
-}
-
-message IFindOneUserDto {
-    string id = 1;
 }
 
 message IFindManyUsersDto {
@@ -55,7 +51,7 @@ service AuthenticationService {
 
     rpc Login (ILoginDto) returns (common.IAuthResponse) {}
 
-    rpc RefreshProfile (IRefreshProfileDto) returns (common.IAuthResponse) {}
+    rpc RefreshProfile (common.IOnlyId) returns (common.IAuthResponse) {}
 }
 
 message IRegisterAdminDto {
@@ -70,10 +66,6 @@ message ILoginDto {
     string login = 1;
 
     string password = 2;
-}
-
-message IRefreshProfileDto {
-    string userId = 1;
 }
 
 /********************************************Users Invitations*********************************************************************/
@@ -103,13 +95,9 @@ message IConfirmInvitationDto {
 /********************************************Password Recovery*********************************************************************/
 
 service PasswordRecoveryService {
-    rpc Reset (IResetPasswordDto) returns (common.IEmptyResponse) {}
+    rpc Reset (common.IOnlyId) returns (common.IEmptyResponse) {}
 
     rpc Update (IUpdatePasswordDto) returns (common.IEmptyResponse) {}
-}
-
-message IResetPasswordDto {
-    string userId = 1;
 }
 
 message IUpdatePasswordDto {
@@ -121,17 +109,9 @@ message IUpdatePasswordDto {
 /********************************************Account Deactivation*********************************************************************/
 
 service AccountDeactivationService {
-    rpc Activate (IActivateAccountDto) returns (common.IEmptyResponse) {}
+    rpc Activate (common.IOnlyId) returns (common.IEmptyResponse) {}
 
-    rpc Deactivate (IDeactivateAccountDto) returns (common.IEmptyResponse) {}
-}
-
-message IActivateAccountDto {
-    string userId = 1;
-}
-
-message IDeactivateAccountDto {
-    string userId = 1;
+    rpc Deactivate (common.IOnlyId) returns (common.IEmptyResponse) {}
 }
 
 /********************************************TOTP Authentication*********************************************************************/
@@ -141,7 +121,7 @@ service TotpAuthenticationService {
 
     rpc Enable (IEnableTotpDto) returns (common.IEmptyResponse) {}
 
-    rpc Disable (IDisableTotpDto) returns (common.IEmptyResponse) {}
+    rpc Disable (common.IOnlyId) returns (common.IEmptyResponse) {}
 
     rpc Login (ILoginWithTotpDto) returns (common.IAuthResponse) {}
 }
@@ -174,10 +154,6 @@ message IEnableTotpDto {
     string secret = 3;
 
     string pin = 4;
-}
-
-message IDisableTotpDto {
-    string userId = 1;
 }
 
 message ILoginWithTotpDto {

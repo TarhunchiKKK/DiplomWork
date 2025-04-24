@@ -7,9 +7,8 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { IEmptyResponse, IHttpError } from "./common";
+import { IEmptyResponse, IHttpError, IOnlyId } from "./common";
 import { Empty } from "./google/protobuf/empty";
-import { StringValue } from "./google/protobuf/wrappers";
 
 const protobufPackage = "organizations";
 
@@ -76,7 +75,7 @@ export const ORGANIZATIONS_PACKAGE_NAME = "organizations";
 export interface OrganizationsServiceClient {
   createDefault(request: Empty): Observable<ICreateDefaultOrganizationResponse>;
 
-  findOneById(request: StringValue): Observable<IFindOneOrganizationResponse>;
+  findOneById(request: IOnlyId): Observable<IFindOneOrganizationResponse>;
 
   updateDocumentAims(request: IUpdateDocumentAimsDto): Observable<IEmptyResponse>;
 
@@ -94,7 +93,7 @@ export interface OrganizationsServiceController {
     | ICreateDefaultOrganizationResponse;
 
   findOneById(
-    request: StringValue,
+    request: IOnlyId,
   ): Promise<IFindOneOrganizationResponse> | Observable<IFindOneOrganizationResponse> | IFindOneOrganizationResponse;
 
   updateDocumentAims(

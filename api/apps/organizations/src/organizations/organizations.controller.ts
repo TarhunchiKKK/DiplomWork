@@ -10,7 +10,7 @@ import {
     IUpdateDocumentTypesDto,
     OrganizationsServiceController,
     OrganizationsServiceControllerMethods,
-    StringValue,
+    IOnlyId,
     UnwrapGrpcResponse
 } from "common/grpc";
 import { defaultOrganization } from "./constants/organization.constants";
@@ -28,8 +28,8 @@ export class OrganizationsController implements UnwrapGrpcResponse<Organizations
         return asType<ICreateDefaultOrganizationResponse["data"]>(organization);
     }
 
-    public async findOneById(dto: StringValue) {
-        const data = await this.organizationsService.findOneById(dto.value);
+    public async findOneById(dto: IOnlyId) {
+        const data = await this.organizationsService.findOneById(dto.id);
         return asType<IFindOneOrganizationResponse["data"]>(data);
     }
 

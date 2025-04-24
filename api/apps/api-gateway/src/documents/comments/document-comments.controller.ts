@@ -32,32 +32,25 @@ export class DocumentCommentsController {
     }
 
     @Get(":versionId")
-    public findAll(@Req() request: TAuthenticatedRequest, @Param("versionId") versionId: string) {
+    public findAll(@Param("versionId") versionId: string) {
         return this.documentCommentsGrpcService.call("findAll", {
-            versionId: versionId,
-            userId: request.jwtInfo.id
+            id: versionId
         });
     }
 
     @Patch(":commentId")
     @UsePipes(ValidationPipe)
-    public update(
-        @Req() request: TAuthenticatedRequest,
-        @Param("commentId") commentId: string,
-        @Body() dto: UpdateDocumentCommentDto
-    ) {
+    public update(@Param("commentId") commentId: string, @Body() dto: UpdateDocumentCommentDto) {
         return this.documentCommentsGrpcService.call("update", {
             id: commentId,
-            message: dto.message,
-            userId: request.jwtInfo.id
+            message: dto.message
         });
     }
 
     @Delete(":commentId")
-    public delete(@Req() request: TAuthenticatedRequest, @Param("commentId") commentId: string) {
+    public delete(@Param("commentId") commentId: string) {
         return this.documentCommentsGrpcService.call("delete", {
-            id: commentId,
-            userId: request.jwtInfo.id
+            id: commentId
         });
     }
 }

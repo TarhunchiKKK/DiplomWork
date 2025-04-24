@@ -1,8 +1,7 @@
 import { IsNotEmpty, IsString } from "class-validator";
 import { IUpdateDocumentCommentDto } from "common/grpc";
-import { IgnoreFields } from "common/utils";
 
-export class UpdateDocumentCommentDto implements IgnoreFields<IUpdateDocumentCommentDto, "userId"> {
+export class UpdateDocumentCommentDto implements IUpdateDocumentCommentDto {
     @IsNotEmpty({ message: "Id комментария не указан" })
     @IsString({ message: "Id комментария должен быть строкой" })
     public id: string;

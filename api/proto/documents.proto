@@ -13,7 +13,7 @@ service DocumentsService {
 
     rpc FindAll (IFindDocumentsDto) returns (IFindDocumentsResponse) {}
 
-    rpc FindOneById(common.IFindOneById) returns (IFindDocumentByIdResponse) {}  
+    rpc FindOneById(common.IOnlyId) returns (IFindDocumentByIdResponse) {}  
 }
 
 message ICreateDocumentDto {
@@ -64,8 +64,6 @@ message IUpdateDocumentDto {
     optional string aimId = 4; 
 
     optional bool isUrgent = 5;
-
-    string userId = 6;
 }
 
 message IFindDocumentsDto {
@@ -158,11 +156,11 @@ message IFindFavouriteDocumentsDto {
 service DocumentVersionsService {
     rpc Create (ICreateDocumentVersionDto) returns (ICreateDocumentVersionResponse) {}
 
-    rpc FindAll (IFindAllDocumentVersionsDto) returns (IFindAllDocumentVersionsResponse) {}
+    rpc FindAll (common.IOnlyId) returns (IFindAllDocumentVersionsResponse) {}
 
-    rpc FindOneById (IFindDocumentVersionByIdDto) returns (IFindOneDocumentVersionResponse) {}
+    rpc FindOneById (common.IOnlyId) returns (IFindOneDocumentVersionResponse) {}
 
-    rpc FindLast (IFindLastDocumentVersionDto) returns (IFindOneDocumentVersionResponse) {}
+    rpc FindLast (common.IOnlyId) returns (IFindOneDocumentVersionResponse) {}
 }
 
 message ICreateDocumentVersionDto {
@@ -171,8 +169,6 @@ message ICreateDocumentVersionDto {
     string fileExtension = 2;
 
     optional string description = 3;
-
-    string userId = 4; 
 }
 
 message ICreateDocumentVersionResponseData {
@@ -185,12 +181,6 @@ message ICreateDocumentVersionResponse {
         
         common.IHttpError error = 2;
     }
-}
-
-message IFindAllDocumentVersionsDto {
-    string documentId = 1;
-
-    string userId = 2;
 }
 
 message IVersion {
@@ -215,18 +205,6 @@ message IFindAllDocumentVersionsResponse {
     }
 }
 
-message IFindDocumentVersionByIdDto {
-    string versionId = 1;
-
-    string userId = 2;
-}
-
-message IFindLastDocumentVersionDto {
-    string documentId = 1;
-
-    string userId = 2;
-}
-
 message IFindOneDocumentVersionResponse {
     oneof response {
         IVersion data = 1;
@@ -240,11 +218,11 @@ message IFindOneDocumentVersionResponse {
 service DocumentCommentsService {
     rpc Create (ICreateDocumentCommentDto) returns (ICreateDocumentCommentResponse) {}
     
-    rpc FindAll (IFindAllDocumentCommentsDto) returns (IFindAllCommentsResponse) {}
+    rpc FindAll (common.IOnlyId) returns (IFindAllCommentsResponse) {}
 
     rpc Update (IUpdateDocumentCommentDto) returns (common.IEmptyResponse) {}
 
-    rpc Delete (IDeleteDocumentCommentDto) returns (common.IEmptyResponse) {}
+    rpc Delete (common.IOnlyId) returns (common.IEmptyResponse) {}
 }
 
 message ICreateDocumentCommentDto {
@@ -273,11 +251,6 @@ message ICreateDocumentCommentResponse {
     }
 }
 
-message IFindAllDocumentCommentsDto {
-    string versionId = 1;
-
-    string userId = 2;
-}
 
 message ICommentShortData {
     string id = 1;
@@ -305,13 +278,4 @@ message IUpdateDocumentCommentDto {
     string id = 1;
 
     string message = 2;
-
-    string userId = 3;
 }
-
-message IDeleteDocumentCommentDto {
-    string id = 1;
-
-    string userId = 2;
-}
-

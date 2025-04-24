@@ -9,7 +9,7 @@ import {
     UnwrapGrpcResponse,
     IFindDocumentsDto,
     IUpdateDocumentDto,
-    IFindOneById
+    IOnlyId
 } from "common/grpc";
 
 @Controller()
@@ -23,7 +23,7 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
         return await this.documentsService.create(dto);
     }
 
-    public async findOneById(dto: IFindOneById) {
+    public async findOneById(dto: IOnlyId) {
         return await this.documentsService.findOneById(dto.id);
     }
 

@@ -1,7 +1,7 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
     GrpcExceptionFilter,
-    IFindOneUserDto,
+    IOnlyId,
     UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods,
@@ -16,7 +16,7 @@ import { UsersService } from "./users.service";
 export class UsersController implements UnwrapGrpcResponse<UsersServiceController> {
     public constructor(private readonly usersService: UsersService) {}
 
-    public async findOne(dto: IFindOneUserDto) {
+    public async findOne(dto: IOnlyId) {
         return await this.usersService.findOneById(dto.id);
     }
 }

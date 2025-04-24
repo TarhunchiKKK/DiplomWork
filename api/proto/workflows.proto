@@ -9,13 +9,13 @@ package workflows;
 service WorkflowsService {
     rpc Create (ICreateWorkflowDto) returns (ICreateWorkflowResponse) {}
 
-    rpc Start (IStartWorkflowDto) returns (common.IEmptyResponse) {}
+    rpc Start (common.IOnlyId) returns (common.IEmptyResponse) {}
 
-    rpc FindOneById (common.IFindOneById) returns (IFindOneWorkflowResponse) {}
+    rpc FindOneById (common.IOnlyId) returns (IFindOneWorkflowResponse) {}
 
-    rpc FindOneByDocumentId (common.IFindOneById) returns (IFindOneWorkflowResponse) {}
+    rpc FindOneByDocumentId (common.IOnlyId) returns (IFindOneWorkflowResponse) {}
 
-    rpc Delete (IDeleteWorkflowDto) returns (common.IEmptyResponse) {}
+    rpc Delete (common.IOnlyId) returns (common.IEmptyResponse) {}
 }
 
 message ICreateWorkflowDto {
@@ -44,17 +44,6 @@ message ICreateWorkflowResponse {
     }
 }
 
-message IStartWorkflowDto {
-    string userId = 1;
-
-    string workflowId = 2;
-}
-
-message IFindOneWorkflowById {
-    string workflowId = 1;
-}
-
-
 message IFindOneWorkflowResponse {
     oneof response {
         IWorkflowResponseData data = 1;
@@ -62,12 +51,6 @@ message IFindOneWorkflowResponse {
         common.IHttpError error = 2;
     }
 }
-
-message IDeleteWorkflowDto {
-    string userId = 1;
-
-    string workflowId = 2;
-}   
 
 /********************************************Workflow Participants*********************************************************************/
 
@@ -88,6 +71,4 @@ message IUpsertWorkflowParticipantsDto {
     repeated IUpsertWorkflowParticipantDto participants = 1;
 
     string workflowId = 2;
-
-    string userId = 3;
 }

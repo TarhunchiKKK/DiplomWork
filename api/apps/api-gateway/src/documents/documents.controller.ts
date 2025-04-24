@@ -75,10 +75,7 @@ export class DocumentsController {
     @ProvideOperation(DocumentOperation.UPDATE)
     @ExtractFromRequest(request => request.body.documentId)
     @UseGuards(DocumentAccessGuard)
-    public update(@Req() request: TAuthenticatedRequest, @Body() dto: UpdateDocumentDto) {
-        return this.documentsGrpcService.call("update", {
-            ...dto,
-            userId: request.jwtInfo.id
-        });
+    public update(@Body() dto: UpdateDocumentDto) {
+        return this.documentsGrpcService.call("update", dto);
     }
 }

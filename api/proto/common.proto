@@ -42,6 +42,6 @@ message IEmptyResponse {
     }
 }
 
-message IFindOneById {
+message IOnlyId {
     string id = 1;
 }

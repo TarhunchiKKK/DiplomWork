@@ -2,12 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DocumentVersion } from "./entities/document-version.entity";
 import { Repository } from "typeorm";
-import {
-    ICreateDocumentVersionDto,
-    IFindAllDocumentVersionsDto,
-    IFindDocumentVersionByIdDto,
-    IFindLastDocumentVersionDto
-} from "common/grpc";
+import { ICreateDocumentVersionDto, IOnlyId } from "common/grpc";
 import { generateS3Filename } from "./helpers/s3.helpers";
 import { version } from "os";
 
@@ -29,11 +24,11 @@ export class DocumentVersionsService {
         };
     }
 
-    public async findAll(dto: IFindAllDocumentVersionsDto) {
+    public async findAll(dto: IOnlyId) {
         const versions = await this.versionsRepository.find({
             where: {
                 document: {
-                    id: dto.documentId
+                    id: dto.id
                 }
             },
             relations: {
@@ -51,10 +46,10 @@ export class DocumentVersionsService {
         };
     }
 
-    public async findOneById(dto: IFindDocumentVersionByIdDto) {
+    public async findOneById(dto: IOnlyId) {
         const version = await this.versionsRepository.findOne({
             where: {
-                id: dto.versionId
+                id: dto.id
             }
         });
 
@@ -68,11 +63,11 @@ export class DocumentVersionsService {
         };
     }
 
-    public async findLast(dto: IFindLastDocumentVersionDto) {
+    public async findLast(dto: IOnlyId) {
         const versions = await this.versionsRepository.find({
             where: {
                 document: {
-                    id: dto.documentId
+                    id: dto.id
                 }
             },
             relations: {

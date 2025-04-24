@@ -36,8 +36,7 @@ export class DocumentsService {
 
         this.versionsService.create({
             documentId: document.id,
-            fileExtension: dto.fileExtension,
-            userId: dto.authorId
+            fileExtension: dto.fileExtension
         });
 
         return lodash.pick(document, ["id", "authorId", "title", "typeId", "aimId", "status", "isUrgent"]);
@@ -64,7 +63,7 @@ export class DocumentsService {
     }
 
     public async update(dto: IUpdateDocumentDto) {
-        const { documentId, userId: _, ...data } = dto;
+        const { documentId, ...data } = dto;
 
         const document = await this.findOneById(documentId);
 

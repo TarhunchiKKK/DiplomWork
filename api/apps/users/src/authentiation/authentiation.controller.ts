@@ -4,7 +4,7 @@ import {
     GrpcExceptionFilter,
     ILoginDto,
     WrapGrpcResponseInterceptor,
-    IRefreshProfileDto,
+    IOnlyId,
     IRegisterAdminDto,
     UnwrapGrpcResponse,
     AuthenticationServiceControllerMethods,
@@ -26,7 +26,7 @@ export class AuthenticationController implements UnwrapGrpcResponse<Authenticati
         return await this.authenticationService.login(dto);
     }
 
-    public async refreshProfile(dto: IRefreshProfileDto) {
+    public async refreshProfile(dto: IOnlyId) {
         return await this.authenticationService.refreshProfile(dto);
     }
 }

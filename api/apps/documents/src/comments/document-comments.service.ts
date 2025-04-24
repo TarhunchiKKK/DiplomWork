@@ -2,12 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DocumentComment } from "./entities/document-comment.entity";
 import { Repository } from "typeorm";
-import {
-    ICreateDocumentCommentDto,
-    IDeleteDocumentCommentDto,
-    IFindAllDocumentCommentsDto,
-    IUpdateDocumentCommentDto
-} from "common/grpc";
+import { ICreateDocumentCommentDto, IOnlyId, IUpdateDocumentCommentDto } from "common/grpc";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { CommentCreatedEvent } from "../events/events/comment-created.event";
 import { CommentUpdatedEvent } from "../events/events/comment-updated.event";
@@ -40,11 +35,11 @@ export class DocumentCommentsService {
         };
     }
 
-    public async findAll(dto: IFindAllDocumentCommentsDto) {
+    public async findAll(dto: IOnlyId) {
         const comments = await this.commentsRepository.find({
             where: {
                 version: {
-                    id: dto.versionId
+                    id: dto.id
                 },
                 status: CommentStatus.ACTIVE
             },
@@ -81,7 +76,7 @@ export class DocumentCommentsService {
     }
 
     public async update(dto: IUpdateDocumentCommentDto) {
-        const { id, userId: _, ...data } = dto;
+        const { id, ...data } = dto;
 
         const comment = await this.findOne(id);
 
@@ -92,7 +87,7 @@ export class DocumentCommentsService {
         this.eventEmitter.emit(CommentUpdatedEvent.PATTERN, new CommentUpdatedEvent(comment.id));
     }
 
-    public async delete(dto: IDeleteDocumentCommentDto) {
+    public async delete(dto: IOnlyId) {
         const comment = await this.findOne(dto.id);
 
         comment.status = CommentStatus.DELETED;

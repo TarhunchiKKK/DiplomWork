@@ -4,8 +4,7 @@ import {
     DocumentCommentsServiceControllerMethods,
     GrpcExceptionFilter,
     ICreateDocumentCommentDto,
-    IDeleteDocumentCommentDto,
-    IFindAllDocumentCommentsDto,
+    IOnlyId,
     IUpdateDocumentCommentDto,
     UnwrapGrpcResponse,
     WrapGrpcResponseInterceptor
@@ -25,25 +24,25 @@ export class DocumentCommentsController implements UnwrapGrpcResponse<DocumentCo
         return await this.commentsService.create(dto);
     }
 
-    public async findAll(dto: IFindAllDocumentCommentsDto) {
+    public async findAll(dto: IOnlyId) {
         return await this.commentsService.findAll(dto);
     }
 
     @ExtractFromRequest((request: IUpdateDocumentCommentDto) => ({
         commentId: request.id,
-        userId: request.userId
+        userId: request.id
     }))
     @UseGuards(CommentGuard)
     public async update(dto: IUpdateDocumentCommentDto) {
         await this.commentsService.update(dto);
     }
 
-    @ExtractFromRequest((request: IDeleteDocumentCommentDto) => ({
+    @ExtractFromRequest((request: IOnlyId) => ({
         commentId: request.id,
-        userId: request.userId
+        userId: request.id
     }))
     @UseGuards(CommentGuard)
-    public async delete(dto: IDeleteDocumentCommentDto) {
+    public async delete(dto: IOnlyId) {
         await this.commentsService.delete(dto);
     }
 }

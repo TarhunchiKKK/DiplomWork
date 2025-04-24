@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { ILoginDto, IRefreshProfileDto, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
+import { ILoginDto, IOnlyId, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
 import { AccountStatus, Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { JwtTokensService } from "common/modules";
@@ -65,8 +65,8 @@ export class AuthenticationService {
         };
     }
 
-    public async refreshProfile(dto: IRefreshProfileDto) {
-        const user = await this.usersService.findOneById(dto.userId);
+    public async refreshProfile(dto: IOnlyId) {
+        const user = await this.usersService.findOneById(dto.id);
 
         return {
             id: user.id,

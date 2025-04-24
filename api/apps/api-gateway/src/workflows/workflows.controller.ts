@@ -1,20 +1,7 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Post,
-    Query,
-    Req,
-    UseGuards,
-    UsePipes,
-    ValidationPipe
-} from "@nestjs/common";
+import { Controller, Delete, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
 import { WorkflowsGrpcService } from "common/grpc";
 import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
-import { CreateWorkflowDto } from "./dto/create-workflow.dto";
 import { DocumentAuthorGuard } from "./middleware/document-author.guard";
 import { WorkflowCreatorGuard } from "./middleware/workflow-creator.guard";
 
@@ -23,13 +10,12 @@ import { WorkflowCreatorGuard } from "./middleware/workflow-creator.guard";
 export class WorkflowsController {
     public constructor(private readonly workflowsGrpcService: WorkflowsGrpcService) {}
 
-    @Post()
-    @UsePipes(ValidationPipe)
+    @Post(":documentId")
     @ExtractFromRequest(request => request.body.documentId)
     @UseGuards(DocumentAuthorGuard)
-    public create(@Req() request: TAuthenticatedRequest, @Body() dto: CreateWorkflowDto) {
+    public create(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.workflowsGrpcService.call("create", {
-            documentId: dto.documentId,
+            documentId: documentId,
             userId: request.jwtInfo.id
         });
     }
@@ -37,15 +23,14 @@ export class WorkflowsController {
     @Post("/start/:workflowId")
     @ExtractFromRequest(request => request.body.workflowId)
     @UseGuards(WorkflowCreatorGuard)
-    public start(@Req() request: TAuthenticatedRequest, @Param("workflowId") workflowId: string) {
+    public start(@Param("workflowId") workflowId: string) {
         return this.workflowsGrpcService.call("start", {
-            workflowId: workflowId,
-            userId: request.jwtInfo.id
+            id: workflowId
         });
     }
 
-    @Get()
-    public findOneByDocumentId(@Query("documentId") documentId: string) {
+    @Get("/documents/:documentId")
+    public findOneByDocumentId(@Param("documentId") documentId: string) {
         return this.workflowsGrpcService.call("findOneByDocumentId", {
             id: documentId
         });
@@ -54,10 +39,9 @@ export class WorkflowsController {
     @Delete(":workflowId")
     @ExtractFromRequest(request => request.body.workflowId)
     @UseGuards(WorkflowCreatorGuard)
-    public delete(@Req() request: TAuthenticatedRequest, @Param("workflowId") workflowId: string) {
+    public delete(@Param("workflowId") workflowId: string) {
         return this.workflowsGrpcService.call("delete", {
-            workflowId: workflowId,
-            userId: request.jwtInfo.id
+            id: workflowId
         });
     }
 }

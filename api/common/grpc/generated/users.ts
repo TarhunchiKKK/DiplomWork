@@ -7,13 +7,9 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { IAuthResponse, IEmptyResponse, IHttpError } from "./common";
+import { IAuthResponse, IEmptyResponse, IHttpError, IOnlyId } from "./common";
 
 const protobufPackage = "users";
-
-export interface IFindOneUserDto {
-  id: string;
-}
 
 export interface IFindManyUsersDto {
   ids: string[];
@@ -50,10 +46,6 @@ export interface ILoginDto {
   password: string;
 }
 
-export interface IRefreshProfileDto {
-  userId: string;
-}
-
 export interface IInviteUsersDto {
   organizationId: string;
   adminEmail: string;
@@ -66,21 +58,9 @@ export interface IConfirmInvitationDto {
   token: string;
 }
 
-export interface IResetPasswordDto {
-  userId: string;
-}
-
 export interface IUpdatePasswordDto {
   token: string;
   password: string;
-}
-
-export interface IActivateAccountDto {
-  userId: string;
-}
-
-export interface IDeactivateAccountDto {
-  userId: string;
 }
 
 export interface IGenerateTotpDto {
@@ -105,10 +85,6 @@ export interface IEnableTotpDto {
   pin: string;
 }
 
-export interface IDisableTotpDto {
-  userId: string;
-}
-
 export interface ILoginWithTotpDto {
   userId: string;
   userEmail: string;
@@ -118,15 +94,13 @@ export interface ILoginWithTotpDto {
 export const USERS_PACKAGE_NAME = "users";
 
 export interface UsersServiceClient {
-  findOne(request: IFindOneUserDto): Observable<IFindOneUserResponse>;
+  findOne(request: IOnlyId): Observable<IFindOneUserResponse>;
 
   findMany(request: IFindManyUsersDto): Observable<IFindManyUsersResponse>;
 }
 
 export interface UsersServiceController {
-  findOne(
-    request: IFindOneUserDto,
-  ): Promise<IFindOneUserResponse> | Observable<IFindOneUserResponse> | IFindOneUserResponse;
+  findOne(request: IOnlyId): Promise<IFindOneUserResponse> | Observable<IFindOneUserResponse> | IFindOneUserResponse;
 
   findMany(
     request: IFindManyUsersDto,
@@ -167,7 +141,7 @@ export interface AuthenticationServiceClient {
 
   login(request: ILoginDto): Observable<IAuthResponse>;
 
-  refreshProfile(request: IRefreshProfileDto): Observable<IAuthResponse>;
+  refreshProfile(request: IOnlyId): Observable<IAuthResponse>;
 }
 
 export interface AuthenticationServiceController {
@@ -175,7 +149,7 @@ export interface AuthenticationServiceController {
 
   login(request: ILoginDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 
-  refreshProfile(request: IRefreshProfileDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
+  refreshProfile(request: IOnlyId): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 }
 
 export function AuthenticationServiceControllerMethods() {
@@ -249,13 +223,13 @@ export function UsersInvitationServiceControllerMethods() {
 export const USERS_INVITATION_SERVICE_NAME = "UsersInvitationService";
 
 export interface PasswordRecoveryServiceClient {
-  reset(request: IResetPasswordDto): Observable<IEmptyResponse>;
+  reset(request: IOnlyId): Observable<IEmptyResponse>;
 
   update(request: IUpdatePasswordDto): Observable<IEmptyResponse>;
 }
 
 export interface PasswordRecoveryServiceController {
-  reset(request: IResetPasswordDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+  reset(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   update(request: IUpdatePasswordDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
@@ -290,15 +264,15 @@ export function PasswordRecoveryServiceControllerMethods() {
 export const PASSWORD_RECOVERY_SERVICE_NAME = "PasswordRecoveryService";
 
 export interface AccountDeactivationServiceClient {
-  activate(request: IActivateAccountDto): Observable<IEmptyResponse>;
+  activate(request: IOnlyId): Observable<IEmptyResponse>;
 
-  deactivate(request: IDeactivateAccountDto): Observable<IEmptyResponse>;
+  deactivate(request: IOnlyId): Observable<IEmptyResponse>;
 }
 
 export interface AccountDeactivationServiceController {
-  activate(request: IActivateAccountDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+  activate(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  deactivate(request: IDeactivateAccountDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+  deactivate(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function AccountDeactivationServiceControllerMethods() {
@@ -335,7 +309,7 @@ export interface TotpAuthenticationServiceClient {
 
   enable(request: IEnableTotpDto): Observable<IEmptyResponse>;
 
-  disable(request: IDisableTotpDto): Observable<IEmptyResponse>;
+  disable(request: IOnlyId): Observable<IEmptyResponse>;
 
   login(request: ILoginWithTotpDto): Observable<IAuthResponse>;
 }
@@ -347,7 +321,7 @@ export interface TotpAuthenticationServiceController {
 
   enable(request: IEnableTotpDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  disable(request: IDisableTotpDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+  disable(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   login(request: ILoginWithTotpDto): Promise<IAuthResponse> | Observable<IAuthResponse> | IAuthResponse;
 }

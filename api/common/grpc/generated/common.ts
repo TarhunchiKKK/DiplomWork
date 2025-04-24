@@ -34,7 +34,7 @@ export interface IEmptyResponse {
   error?: IHttpError | undefined;
 }
 
-export interface IFindOneById {
+export interface IOnlyId {
   id: string;
 }
 
