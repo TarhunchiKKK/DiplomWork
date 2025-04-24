@@ -1,4 +1,4 @@
-import { Controller, UseFilters, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
     GrpcExceptionFilter,
     IUpsertWorkflowParticipantsDto,
@@ -8,8 +8,6 @@ import {
     WrapGrpcResponseInterceptor
 } from "common/grpc";
 import { WorkflowParticipantsService } from "./workflow-participants.service";
-import { ExtractFromRequest } from "common/middleware";
-import { WorkflowCreatorGuard } from "../workflows/middleware/workflow-creator.guard";
 
 @Controller()
 @WorkflowParticipantsServiceControllerMethods()
@@ -18,11 +16,6 @@ import { WorkflowCreatorGuard } from "../workflows/middleware/workflow-creator.g
 export class WorkflowParticipantsController implements UnwrapGrpcResponse<WorkflowParticipantsServiceController> {
     public constructor(private readonly participantsService: WorkflowParticipantsService) {}
 
-    @ExtractFromRequest((request: IUpsertWorkflowParticipantsDto) => ({
-        userId: request.userId,
-        workflowId: request.workflowId
-    }))
-    @UseGuards(WorkflowCreatorGuard)
     public async upsertWorkflowParticipants(dto: IUpsertWorkflowParticipantsDto) {
         await this.participantsService.upsertWorkflowParticipants(dto.workflowId, dto.participants);
     }

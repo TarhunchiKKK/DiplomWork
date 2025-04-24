@@ -1,12 +1,13 @@
 import { CanActivate, ExecutionContext, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
+import { WorkflowsGrpcService } from "common/grpc";
 import { ExtractFromRequest } from "common/middleware";
-import { WorkflowsService } from "../workflows.service";
+import { firstValueFrom } from "rxjs";
 
 @Injectable()
 export class WorkflowCreatorGuard implements CanActivate {
     public constructor(
-        private readonly workflowsService: WorkflowsService,
+        private readonly workflowsGrpcService: WorkflowsGrpcService,
 
         private readonly reflector: Reflector
     ) {}
@@ -14,7 +15,11 @@ export class WorkflowCreatorGuard implements CanActivate {
     public async canActivate(context: ExecutionContext) {
         const requestData = this.exractRequestData(context);
 
-        const workflow = await this.workflowsService.findOneById(requestData.workflowId);
+        const workflow = await firstValueFrom(
+            this.workflowsGrpcService.call("findOneById", {
+                id: requestData.workflowId
+            })
+        );
 
         if (workflow.creatorId !== requestData.userId) {
             throw new UnauthorizedException("У вас недостаточно прав");
@@ -26,16 +31,20 @@ export class WorkflowCreatorGuard implements CanActivate {
     private exractRequestData(context: ExecutionContext) {
         const request = context.switchToHttp().getRequest();
 
+        const userId = request.jwtInfo.id as string;
+
+        if (!request.userId) {
+            throw new UnauthorizedException("Недостаточно прав");
+        }
+
         const extractFromRequest = this.reflector.get(ExtractFromRequest, context.getHandler());
 
-        const requestData = extractFromRequest(request) as { workflowId: string; userId: string };
+        const workflowId = extractFromRequest(request) as string | null;
 
-        if (!requestData.userId) {
-            throw new UnauthorizedException("Недостаточно прав");
-        } else if (!requestData.workflowId) {
+        if (workflowId) {
             throw new NotFoundException("Маршрут не найден");
         }
 
-        return requestData;
+        return { userId, workflowId };
     }
 }

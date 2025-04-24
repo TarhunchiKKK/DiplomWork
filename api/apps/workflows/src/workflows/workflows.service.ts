@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { InjectRepository } from "@nestjs/typeorm";
 import { Workflow } from "./entities/workflow.entity";
 import { Repository } from "typeorm";
-import { ICreateWorkflowDto, IFindOneWorkflowByDocumentIdDto, IStartWorkflowDto } from "common/grpc";
+import { ICreateWorkflowDto, IFindOneById, IStartWorkflowDto } from "common/grpc";
 import { UpdateWorkflowDto } from "./dto/update-workflow-dto";
 import { WorkflowStatus } from "./enums/workflow-status.enum";
 
@@ -45,10 +45,10 @@ export class WorkflowsService {
         return workflow;
     }
 
-    public async findOneByDocumentId(dto: IFindOneWorkflowByDocumentIdDto) {
+    public async findOneByDocumentId(dto: IFindOneById) {
         const workflow = await this.workflowsRepository.findOne({
             where: {
-                documentId: dto.documentId
+                documentId: dto.id
             },
             relations: {
                 participants: true

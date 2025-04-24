@@ -15,7 +15,15 @@ export class DocumentAuthorGuard implements CanActivate {
     public async canActivate(context: ExecutionContext) {
         const requestData = this.exractRequestData(context);
 
-        await firstValueFrom(this.documentsGrpcService.call("findOneById", requestData));
+        const document = await firstValueFrom(
+            this.documentsGrpcService.call("findOneById", {
+                id: requestData.documentId
+            })
+        );
+
+        if (document.authorId !== requestData.userId) {
+            throw new UnauthorizedException("Недостаточно прав");
+        }
 
         return true;
     }
@@ -23,16 +31,20 @@ export class DocumentAuthorGuard implements CanActivate {
     private exractRequestData(context: ExecutionContext) {
         const request = context.switchToHttp().getRequest();
 
+        const userId = request.jwtInfo.id as string;
+
+        if (!request.userId) {
+            throw new UnauthorizedException("Недостаточно прав");
+        }
+
         const extractFromRequest = this.reflector.get(ExtractFromRequest, context.getHandler());
 
-        const requestData = extractFromRequest(request) as { documentId: string; userId: string };
+        const documentId = extractFromRequest(request) as string | null;
 
-        if (!requestData.userId) {
-            throw new UnauthorizedException("Недостаточно прав");
-        } else if (!requestData.documentId) {
+        if (documentId) {
             throw new NotFoundException("Документ не найден");
         }
 
-        return requestData;
+        return { userId, documentId };
     }
 }

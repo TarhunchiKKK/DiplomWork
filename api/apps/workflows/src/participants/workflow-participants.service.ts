@@ -15,7 +15,10 @@ export class WorkflowParticipantsService {
     ) {}
 
     private async createMany(dtos: ICreateParticipantDto[]) {
-        return await this.participantsRepository.save(dtos);
+        const participants = await this.participantsRepository.save(dtos);
+
+        if (participants.length) {
+        }
     }
 
     private async updateMany(dtos: IUpdateParticipantDto[]) {

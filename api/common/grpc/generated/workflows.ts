@@ -7,7 +7,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { IEmptyResponse, IHttpError } from "./common";
+import { IEmptyResponse, IFindOneById, IHttpError } from "./common";
 
 const protobufPackage = "workflows";
 
@@ -34,9 +34,8 @@ export interface IStartWorkflowDto {
   workflowId: string;
 }
 
-export interface IFindOneWorkflowByDocumentIdDto {
-  userId: string;
-  documentId: string;
+export interface IFindOneWorkflowById {
+  workflowId: string;
 }
 
 export interface IFindOneWorkflowResponse {
@@ -68,7 +67,9 @@ export interface WorkflowsServiceClient {
 
   start(request: IStartWorkflowDto): Observable<IEmptyResponse>;
 
-  findOneByDocumentId(request: IFindOneWorkflowByDocumentIdDto): Observable<IFindOneWorkflowResponse>;
+  findOneById(request: IFindOneById): Observable<IFindOneWorkflowResponse>;
+
+  findOneByDocumentId(request: IFindOneById): Observable<IFindOneWorkflowResponse>;
 
   delete(request: IDeleteWorkflowDto): Observable<IEmptyResponse>;
 }
@@ -80,8 +81,12 @@ export interface WorkflowsServiceController {
 
   start(request: IStartWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
+  findOneById(
+    request: IFindOneById,
+  ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
+
   findOneByDocumentId(
-    request: IFindOneWorkflowByDocumentIdDto,
+    request: IFindOneById,
   ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
 
   delete(request: IDeleteWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
@@ -89,7 +94,7 @@ export interface WorkflowsServiceController {
 
 export function WorkflowsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "start", "findOneByDocumentId", "delete"];
+    const grpcMethods: string[] = ["create", "start", "findOneById", "findOneByDocumentId", "delete"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

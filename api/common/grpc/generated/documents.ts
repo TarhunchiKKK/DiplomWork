@@ -7,7 +7,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { IEmptyResponse, IHttpError } from "./common";
+import { IEmptyResponse, IFindOneById, IHttpError } from "./common";
 
 const protobufPackage = "documents";
 
@@ -66,11 +66,6 @@ export interface IFindDocumentResponseData {
 export interface IFindDocumentsResponse {
   data?: IFindDocumentResponseData | undefined;
   error?: IHttpError | undefined;
-}
-
-export interface IFindDocumentByIdDto {
-  documentId: string;
-  userId: string;
 }
 
 export interface IFindOneDocumentResponse {
@@ -213,7 +208,7 @@ export interface DocumentsServiceClient {
 
   findAll(request: IFindDocumentsDto): Observable<IFindDocumentsResponse>;
 
-  findOneById(request: IFindDocumentByIdDto): Observable<IFindDocumentByIdResponse>;
+  findOneById(request: IFindOneById): Observable<IFindDocumentByIdResponse>;
 }
 
 export interface DocumentsServiceController {
@@ -228,7 +223,7 @@ export interface DocumentsServiceController {
   ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
 
   findOneById(
-    request: IFindDocumentByIdDto,
+    request: IFindOneById,
   ): Promise<IFindDocumentByIdResponse> | Observable<IFindDocumentByIdResponse> | IFindDocumentByIdResponse;
 }
 

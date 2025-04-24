@@ -13,7 +13,7 @@ service DocumentsService {
 
     rpc FindAll (IFindDocumentsDto) returns (IFindDocumentsResponse) {}
 
-    rpc FindOneById(IFindDocumentByIdDto) returns (IFindDocumentByIdResponse) {}  
+    rpc FindOneById(common.IFindOneById) returns (IFindDocumentByIdResponse) {}  
 }
 
 message ICreateDocumentDto {
@@ -100,12 +100,6 @@ message IFindDocumentsResponse {
 
         common.IHttpError error = 2;
     }
-}
-
-message IFindDocumentByIdDto {
-    string documentId = 1;
-
-    string userId = 2;
 }
 
 message IFindOneDocumentResponse {

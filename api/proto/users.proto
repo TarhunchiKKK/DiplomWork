@@ -7,13 +7,18 @@ package users;
 /********************************************Users*********************************************************************/
 
 service UsersService {
-    rpc findOne (IFindOneUserDto) returns (IFindOneUserResponse) {}
+    rpc FindOne (IFindOneUserDto) returns (IFindOneUserResponse) {}
+
+    rpc FindMany (IFindManyUsersDto) returns (IFindManyUsersResponse) {}
 }
 
 message IFindOneUserDto {
     string id = 1;
 }
 
+message IFindManyUsersDto {
+    repeated string ids = 1;
+}
 
 message IFindOneUserResponseData {
     string id = 1;
@@ -26,6 +31,18 @@ message IFindOneUserResponseData {
 message IFindOneUserResponse {
     oneof response {
         IFindOneUserResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
+message IFindManyUsersResponseData {
+    repeated IFindOneUserResponseData users = 1;
+}
+
+message IFindManyUsersResponse {
+    oneof response {
+        IFindManyUsersResponseData data = 1;
 
         common.IHttpError error = 2;
     }

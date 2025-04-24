@@ -15,6 +15,10 @@ export interface IFindOneUserDto {
   id: string;
 }
 
+export interface IFindManyUsersDto {
+  ids: string[];
+}
+
 export interface IFindOneUserResponseData {
   id: string;
   username?: string | undefined;
@@ -23,6 +27,15 @@ export interface IFindOneUserResponseData {
 
 export interface IFindOneUserResponse {
   data?: IFindOneUserResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IFindManyUsersResponseData {
+  users: IFindOneUserResponseData[];
+}
+
+export interface IFindManyUsersResponse {
+  data?: IFindManyUsersResponseData | undefined;
   error?: IHttpError | undefined;
 }
 
@@ -106,17 +119,23 @@ export const USERS_PACKAGE_NAME = "users";
 
 export interface UsersServiceClient {
   findOne(request: IFindOneUserDto): Observable<IFindOneUserResponse>;
+
+  findMany(request: IFindManyUsersDto): Observable<IFindManyUsersResponse>;
 }
 
 export interface UsersServiceController {
   findOne(
     request: IFindOneUserDto,
   ): Promise<IFindOneUserResponse> | Observable<IFindOneUserResponse> | IFindOneUserResponse;
+
+  findMany(
+    request: IFindManyUsersDto,
+  ): Promise<IFindManyUsersResponse> | Observable<IFindManyUsersResponse> | IFindManyUsersResponse;
 }
 
 export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["findOne"];
+    const grpcMethods: string[] = ["findOne", "findMany"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

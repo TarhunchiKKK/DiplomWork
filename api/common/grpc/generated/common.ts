@@ -34,4 +34,8 @@ export interface IEmptyResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IFindOneById {
+  id: string;
+}
+
 export const COMMON_PACKAGE_NAME = "common";

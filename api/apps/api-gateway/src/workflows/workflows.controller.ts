@@ -12,9 +12,11 @@ import {
     ValidationPipe
 } from "@nestjs/common";
 import { WorkflowsGrpcService } from "common/grpc";
-import { AuthenticationGuard } from "common/middleware";
+import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { CreateWorkflowDto } from "./dto/create-workflow.dto";
+import { DocumentAuthorGuard } from "./middleware/document-author.guard";
+import { WorkflowCreatorGuard } from "./middleware/workflow-creator.guard";
 
 @Controller("/workflows")
 @UseGuards(AuthenticationGuard)
@@ -23,6 +25,8 @@ export class WorkflowsController {
 
     @Post()
     @UsePipes(ValidationPipe)
+    @ExtractFromRequest(request => request.body.documentId)
+    @UseGuards(DocumentAuthorGuard)
     public create(@Req() request: TAuthenticatedRequest, @Body() dto: CreateWorkflowDto) {
         return this.workflowsGrpcService.call("create", {
             documentId: dto.documentId,
@@ -31,6 +35,8 @@ export class WorkflowsController {
     }
 
     @Post("/start/:workflowId")
+    @ExtractFromRequest(request => request.body.workflowId)
+    @UseGuards(WorkflowCreatorGuard)
     public start(@Req() request: TAuthenticatedRequest, @Param("workflowId") workflowId: string) {
         return this.workflowsGrpcService.call("start", {
             workflowId: workflowId,
@@ -39,14 +45,15 @@ export class WorkflowsController {
     }
 
     @Get()
-    public findOneByDocumentId(@Req() request: TAuthenticatedRequest, @Query("documentId") documentId: string) {
+    public findOneByDocumentId(@Query("documentId") documentId: string) {
         return this.workflowsGrpcService.call("findOneByDocumentId", {
-            documentId: documentId,
-            userId: request.jwtInfo.id
+            id: documentId
         });
     }
 
     @Delete(":workflowId")
+    @ExtractFromRequest(request => request.body.workflowId)
+    @UseGuards(WorkflowCreatorGuard)
     public delete(@Req() request: TAuthenticatedRequest, @Param("workflowId") workflowId: string) {
         return this.workflowsGrpcService.call("delete", {
             workflowId: workflowId,

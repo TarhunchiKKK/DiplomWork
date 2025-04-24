@@ -13,11 +13,14 @@ import {
     ValidationPipe
 } from "@nestjs/common";
 import { DocumentsGrpcService, IFindDocumentsDto } from "common/grpc";
-import { AuthenticationGuard } from "common/middleware";
+import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { CreateDocumentDto } from "./dto/create-document.dto";
 import { UpdateDocumentDto } from "./dto/update-document.dto";
 import { DocumentSortOrder, DocumentStatus, Role } from "common/enums";
+import { ProvideOperation } from "./middleware/decorators/provide-operation.decorator";
+import { DocumentOperation } from "./middleware/enums/document-operation.enum";
+import { DocumentAccessGuard } from "./middleware/guards/document-access.guard";
 
 @Controller("/documents")
 @UseGuards(AuthenticationGuard)
@@ -58,16 +61,21 @@ export class DocumentsController {
     }
 
     @Get(":documentId")
-    public findOneById(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
+    @ProvideOperation(DocumentOperation.READ)
+    @ExtractFromRequest(request => request.body.documentId)
+    @UseGuards(DocumentAccessGuard)
+    public findOneById(@Param("documentId") documentId: string) {
         return this.documentsGrpcService.call("findOneById", {
-            documentId: documentId,
-            userId: request.jwtInfo.id
+            id: documentId
         });
     }
 
     @Patch()
     @UsePipes(ValidationPipe)
-    public updateInfo(@Req() request: TAuthenticatedRequest, @Body() dto: UpdateDocumentDto) {
+    @ProvideOperation(DocumentOperation.UPDATE)
+    @ExtractFromRequest(request => request.body.documentId)
+    @UseGuards(DocumentAccessGuard)
+    public update(@Req() request: TAuthenticatedRequest, @Body() dto: UpdateDocumentDto) {
         return this.documentsGrpcService.call("update", {
             ...dto,
             userId: request.jwtInfo.id

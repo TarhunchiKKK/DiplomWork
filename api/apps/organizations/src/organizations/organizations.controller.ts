@@ -16,10 +16,10 @@ import {
 import { defaultOrganization } from "./constants/organization.constants";
 import { asType } from "common/utils";
 
-@UseFilters(GrpcExceptionFilter)
-@UseInterceptors(WrapGrpcResponseInterceptor)
 @Controller()
 @OrganizationsServiceControllerMethods()
+@UseFilters(GrpcExceptionFilter)
+@UseInterceptors(WrapGrpcResponseInterceptor)
 export class OrganizationsController implements UnwrapGrpcResponse<OrganizationsServiceController> {
     public constructor(private readonly organizationsService: OrganizationsService) {}
 
