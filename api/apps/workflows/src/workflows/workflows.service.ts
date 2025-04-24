@@ -5,6 +5,8 @@ import { Repository } from "typeorm";
 import { ICreateWorkflowDto, IFindOneWorkflowByDocumentIdDto, IStartWorkflowDto } from "common/grpc";
 import { UpdateWorkflowDto } from "./dto/update-workflow-dto";
 import { WorkflowStatus } from "./enums/workflow-status.enum";
+import { ISaveParticipantDto } from "../participants/dto/save-participant.dto";
+import { WorkflowParticipant } from "../participants/entities/workflow-participant.entity";
 
 @Injectable()
 export class WorkflowsService {
@@ -32,6 +34,9 @@ export class WorkflowsService {
         const workflow = await this.workflowsRepository.findOne({
             where: {
                 id: workflowId
+            },
+            relations: {
+                participants: true
             }
         });
 
@@ -71,5 +76,18 @@ export class WorkflowsService {
         const workflow = await this.findOneById(workflowId);
 
         await this.workflowsRepository.delete(workflow);
+    }
+
+    public async upsertParticipants(workflowId: string, participants: ISaveParticipantDto[]) {
+        const workflow = await this.findOneById(workflowId);
+
+        workflow.participants = participants.map(participant => ({
+            ...participant,
+            workflow: {
+                id: workflowId
+            }
+        })) as WorkflowParticipant[];
+
+        await this.workflowsRepository.save(workflow);
     }
 }

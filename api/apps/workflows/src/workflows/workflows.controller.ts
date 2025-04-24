@@ -5,6 +5,7 @@ import {
     IDeleteWorkflowDto,
     IFindOneWorkflowByDocumentIdDto,
     IStartWorkflowDto,
+    IUpsertWorkflowParticipantsDto,
     UnwrapGrpcResponse,
     WorkflowsServiceController,
     WorkflowsServiceControllerMethods,
@@ -15,6 +16,7 @@ import { transformWorkflow } from "./helpers/grpc.helpers";
 import { ExtractFromRequest } from "common/middleware";
 import { DocumentAuthorGuard } from "./middleware/document-author.guard";
 import { WorkflowCreatorGuard } from "./middleware/workflow-creator.guard";
+import { ISaveParticipantDto } from "../participants/dto/save-participant.dto";
 
 @Controller()
 @WorkflowsServiceControllerMethods()
@@ -52,5 +54,14 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
     @UseGuards(WorkflowCreatorGuard)
     public async delete(dto: IDeleteWorkflowDto) {
         await this.workflowsService.delete(dto.workflowId);
+    }
+
+    @ExtractFromRequest((request: IUpsertWorkflowParticipantsDto) => ({
+        userId: request.userId,
+        workflowId: request.workflowId
+    }))
+    @UseGuards(WorkflowCreatorGuard)
+    public async upsertParticipants(dto: IUpsertWorkflowParticipantsDto) {
+        await this.workflowsService.upsertParticipants(dto.workflowId, dto.participants as ISaveParticipantDto[]);
     }
 }

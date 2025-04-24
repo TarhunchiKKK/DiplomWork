@@ -49,14 +49,14 @@ export interface IDeleteWorkflowDto {
   workflowId: string;
 }
 
-export interface IUpsertParticipantDto {
+export interface IUpsertWorkflowParticipantDto {
   id?: string | undefined;
   role: string;
   userId: string;
 }
 
-export interface IUpsertManyParticipantsDto {
-  participants: IUpsertParticipantDto[];
+export interface IUpsertWorkflowParticipantsDto {
+  participants: IUpsertWorkflowParticipantDto[];
   workflowId: string;
   userId: string;
 }
@@ -71,6 +71,8 @@ export interface WorkflowsServiceClient {
   findOneByDocumentId(request: IFindOneWorkflowByDocumentIdDto): Observable<IFindOneWorkflowResponse>;
 
   delete(request: IDeleteWorkflowDto): Observable<IEmptyResponse>;
+
+  upsertParticipants(request: IUpsertWorkflowParticipantsDto): Observable<IEmptyResponse>;
 }
 
 export interface WorkflowsServiceController {
@@ -85,11 +87,15 @@ export interface WorkflowsServiceController {
   ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
 
   delete(request: IDeleteWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  upsertParticipants(
+    request: IUpsertWorkflowParticipantsDto,
+  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function WorkflowsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "start", "findOneByDocumentId", "delete"];
+    const grpcMethods: string[] = ["create", "start", "findOneByDocumentId", "delete", "upsertParticipants"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
@@ -117,18 +123,14 @@ export function WorkflowsServiceControllerMethods() {
 export const WORKFLOWS_SERVICE_NAME = "WorkflowsService";
 
 export interface WorkflowParticipantsServiceClient {
-  upsertMany(request: IUpsertManyParticipantsDto): Observable<IEmptyResponse>;
 }
 
 export interface WorkflowParticipantsServiceController {
-  upsertMany(
-    request: IUpsertManyParticipantsDto,
-  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function WorkflowParticipantsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["upsertMany"];
+    const grpcMethods: string[] = [];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

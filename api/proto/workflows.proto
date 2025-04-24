@@ -14,6 +14,8 @@ service WorkflowsService {
     rpc FindOneByDocumentId (IFindOneWorkflowByDocumentIdDto) returns (IFindOneWorkflowResponse) {}
 
     rpc Delete (IDeleteWorkflowDto) returns (common.IEmptyResponse) {}
+
+    rpc UpsertParticipants (IUpsertWorkflowParticipantsDto) returns (common.IEmptyResponse) {}
 }
 
 message ICreateWorkflowDto {
@@ -68,14 +70,7 @@ message IDeleteWorkflowDto {
     string workflowId = 2;
 }   
 
-
-/********************************************Workflow Participants*********************************************************************/
-
-service WorkflowParticipantsService {
-    rpc UpsertMany (IUpsertManyParticipantsDto) returns (common.IEmptyResponse) {}
-}
-
-message IUpsertParticipantDto  {
+message IUpsertWorkflowParticipantDto   {
     optional string id = 1;
 
     string role = 2;
@@ -83,10 +78,18 @@ message IUpsertParticipantDto  {
     string userId = 3;
 }
 
-message IUpsertManyParticipantsDto {
-    repeated IUpsertParticipantDto participants = 1;
+message IUpsertWorkflowParticipantsDto {
+    repeated IUpsertWorkflowParticipantDto participants = 1;
 
     string workflowId = 2;
 
     string userId = 3;
 }
+
+
+/********************************************Workflow Participants*********************************************************************/
+
+service WorkflowParticipantsService {
+}
+
+
