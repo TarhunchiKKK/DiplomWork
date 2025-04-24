@@ -241,7 +241,6 @@ message IFindOneDocumentVersionResponse {
     }
 }
 
-
 /********************************************Document Comments*********************************************************************/
 
 service DocumentCommentsService {

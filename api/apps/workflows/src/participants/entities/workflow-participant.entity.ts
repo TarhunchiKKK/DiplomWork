@@ -1,11 +1,11 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { WorkflowParticipantRole } from "../enums/workflow-participant-role.enum";
 import { Workflow } from "../../workflows/entities/workflow.entity";
 
 @Entity()
 export class WorkflowParticipant {
     @PrimaryGeneratedColumn()
-    public id: number;
+    public id: string;
 
     @Column()
     public userId: string;
@@ -13,6 +13,7 @@ export class WorkflowParticipant {
     @Column({ type: "enum", enum: WorkflowParticipantRole })
     public role: WorkflowParticipantRole;
 
-    @ManyToMany(() => Workflow, workflow => workflow.participants)
-    public workflows: Workflow[];
+    @ManyToOne(() => Workflow, workflow => workflow.participants)
+    @JoinColumn()
+    public workflow: Workflow;
 }

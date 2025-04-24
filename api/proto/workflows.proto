@@ -4,6 +4,8 @@ import "common.proto";
 
 package workflows;
 
+/********************************************Workflows*********************************************************************/
+
 service WorkflowsService {
     rpc Create (ICreateWorkflowDto) returns (ICreateWorkflowResponse) {}
 
@@ -65,3 +67,26 @@ message IDeleteWorkflowDto {
 
     string workflowId = 2;
 }   
+
+
+/********************************************Workflow Participants*********************************************************************/
+
+service WorkflowParticipantsService {
+    rpc UpsertMany (IUpsertManyParticipantsDto) returns (common.IEmptyResponse) {}
+}
+
+message IUpsertParticipantDto  {
+    optional string id = 1;
+
+    string role = 2;
+
+    string userId = 3;
+}
+
+message IUpsertManyParticipantsDto {
+    repeated IUpsertParticipantDto participants = 1;
+
+    string workflowId = 2;
+
+    string userId = 3;
+}

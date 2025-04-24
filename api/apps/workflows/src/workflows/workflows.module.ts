@@ -8,6 +8,7 @@ import { DocumentsGrpcModule } from "common/grpc";
 @Module({
     imports: [TypeOrmModule.forFeature([Workflow]), DocumentsGrpcModule],
     controllers: [WorkflowsController],
-    providers: [WorkflowsService]
+    providers: [WorkflowsService],
+    exports: [WorkflowsService]
 })
 export class WorkflowsModule {}

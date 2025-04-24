@@ -49,6 +49,18 @@ export interface IDeleteWorkflowDto {
   workflowId: string;
 }
 
+export interface IUpsertParticipantDto {
+  id?: string | undefined;
+  role: string;
+  userId: string;
+}
+
+export interface IUpsertManyParticipantsDto {
+  participants: IUpsertParticipantDto[];
+  workflowId: string;
+  userId: string;
+}
+
 export const WORKFLOWS_PACKAGE_NAME = "workflows";
 
 export interface WorkflowsServiceClient {
@@ -103,3 +115,42 @@ export function WorkflowsServiceControllerMethods() {
 }
 
 export const WORKFLOWS_SERVICE_NAME = "WorkflowsService";
+
+export interface WorkflowParticipantsServiceClient {
+  upsertMany(request: IUpsertManyParticipantsDto): Observable<IEmptyResponse>;
+}
+
+export interface WorkflowParticipantsServiceController {
+  upsertMany(
+    request: IUpsertManyParticipantsDto,
+  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+}
+
+export function WorkflowParticipantsServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["upsertMany"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("WorkflowParticipantsService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("WorkflowParticipantsService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const WORKFLOW_PARTICIPANTS_SERVICE_NAME = "WorkflowParticipantsService";

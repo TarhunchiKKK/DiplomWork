@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { WorkflowStatus } from "../enums/workflow-status.enum";
 import { WorkflowParticipant } from "../../participants/entities/workflow-participant.entity";
 
@@ -22,7 +22,6 @@ export class Workflow {
     @CreateDateColumn()
     public createdAt: Date;
 
-    @ManyToMany(() => WorkflowParticipant, participant => participant.workflows)
-    @JoinTable()
+    @OneToMany(() => WorkflowParticipant, participant => participant.workflow)
     public participants: WorkflowParticipant[];
 }
