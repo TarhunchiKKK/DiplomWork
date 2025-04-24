@@ -1,7 +1,93 @@
 syntax = "proto3";
 
+import "common.proto";
+
 package workflows;
 
-service WorkflowsService {
+/********************************************Workflows*********************************************************************/
 
+service WorkflowsService {
+    rpc Create (ICreateWorkflowDto) returns (ICreateWorkflowResponse) {}
+
+    rpc Start (IStartWorkflowDto) returns (common.IEmptyResponse) {}
+
+    rpc FindOneById (common.IFindOneById) returns (IFindOneWorkflowResponse) {}
+
+    rpc FindOneByDocumentId (common.IFindOneById) returns (IFindOneWorkflowResponse) {}
+
+    rpc Delete (IDeleteWorkflowDto) returns (common.IEmptyResponse) {}
+}
+
+message ICreateWorkflowDto {
+    string userId = 1;
+
+    string documentId = 2;
+}
+
+message IWorkflowResponseData {
+    string id = 1;
+
+    string creatorId = 2;
+
+    string documentId = 3;
+
+    string status = 4;
+
+    optional string completedAt = 5;
+}
+
+message ICreateWorkflowResponse {
+    oneof response {
+        IWorkflowResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
+message IStartWorkflowDto {
+    string userId = 1;
+
+    string workflowId = 2;
+}
+
+message IFindOneWorkflowById {
+    string workflowId = 1;
+}
+
+
+message IFindOneWorkflowResponse {
+    oneof response {
+        IWorkflowResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
+message IDeleteWorkflowDto {
+    string userId = 1;
+
+    string workflowId = 2;
+}   
+
+/********************************************Workflow Participants*********************************************************************/
+
+service WorkflowParticipantsService {
+    rpc UpsertWorkflowParticipants (IUpsertWorkflowParticipantsDto) returns (common.IEmptyResponse) {}
+
+}
+
+message IUpsertWorkflowParticipantDto   {
+    optional string id = 1;
+
+    string role = 2;
+
+    string userId = 3;
+}
+
+message IUpsertWorkflowParticipantsDto {
+    repeated IUpsertWorkflowParticipantDto participants = 1;
+
+    string workflowId = 2;
+
+    string userId = 3;
 }

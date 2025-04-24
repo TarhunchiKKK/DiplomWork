@@ -41,3 +41,7 @@ message IEmptyResponse {
         common.IHttpError error = 2;
     }
 }
+
+message IFindOneById {
+    string id = 1;
+}

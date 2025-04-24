@@ -6,20 +6,95 @@
 
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
+import { Observable } from "rxjs";
+import { IEmptyResponse, IFindOneById, IHttpError } from "./common";
 
 const protobufPackage = "workflows";
+
+export interface ICreateWorkflowDto {
+  userId: string;
+  documentId: string;
+}
+
+export interface IWorkflowResponseData {
+  id: string;
+  creatorId: string;
+  documentId: string;
+  status: string;
+  completedAt?: string | undefined;
+}
+
+export interface ICreateWorkflowResponse {
+  data?: IWorkflowResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IStartWorkflowDto {
+  userId: string;
+  workflowId: string;
+}
+
+export interface IFindOneWorkflowById {
+  workflowId: string;
+}
+
+export interface IFindOneWorkflowResponse {
+  data?: IWorkflowResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IDeleteWorkflowDto {
+  userId: string;
+  workflowId: string;
+}
+
+export interface IUpsertWorkflowParticipantDto {
+  id?: string | undefined;
+  role: string;
+  userId: string;
+}
+
+export interface IUpsertWorkflowParticipantsDto {
+  participants: IUpsertWorkflowParticipantDto[];
+  workflowId: string;
+  userId: string;
+}
 
 export const WORKFLOWS_PACKAGE_NAME = "workflows";
 
 export interface WorkflowsServiceClient {
+  create(request: ICreateWorkflowDto): Observable<ICreateWorkflowResponse>;
+
+  start(request: IStartWorkflowDto): Observable<IEmptyResponse>;
+
+  findOneById(request: IFindOneById): Observable<IFindOneWorkflowResponse>;
+
+  findOneByDocumentId(request: IFindOneById): Observable<IFindOneWorkflowResponse>;
+
+  delete(request: IDeleteWorkflowDto): Observable<IEmptyResponse>;
 }
 
 export interface WorkflowsServiceController {
+  create(
+    request: ICreateWorkflowDto,
+  ): Promise<ICreateWorkflowResponse> | Observable<ICreateWorkflowResponse> | ICreateWorkflowResponse;
+
+  start(request: IStartWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  findOneById(
+    request: IFindOneById,
+  ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
+
+  findOneByDocumentId(
+    request: IFindOneById,
+  ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
+
+  delete(request: IDeleteWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function WorkflowsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = [];
+    const grpcMethods: string[] = ["create", "start", "findOneById", "findOneByDocumentId", "delete"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
@@ -45,3 +120,42 @@ export function WorkflowsServiceControllerMethods() {
 }
 
 export const WORKFLOWS_SERVICE_NAME = "WorkflowsService";
+
+export interface WorkflowParticipantsServiceClient {
+  upsertWorkflowParticipants(request: IUpsertWorkflowParticipantsDto): Observable<IEmptyResponse>;
+}
+
+export interface WorkflowParticipantsServiceController {
+  upsertWorkflowParticipants(
+    request: IUpsertWorkflowParticipantsDto,
+  ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+}
+
+export function WorkflowParticipantsServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["upsertWorkflowParticipants"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("WorkflowParticipantsService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("WorkflowParticipantsService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const WORKFLOW_PARTICIPANTS_SERVICE_NAME = "WorkflowParticipantsService";

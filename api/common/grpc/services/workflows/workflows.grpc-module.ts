@@ -3,7 +3,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ClientsModule } from "@nestjs/microservices";
 import { getGrpcConfig } from "common/config";
 import { WORKFLOWS_PACKAGE_NAME } from "common/grpc/generated";
-import { WorkflowsGrpcService } from "./workflows.grpc.service";
+import { WorkflowsGrpcService } from "./services/workflows.grpc.service";
+import { WorkflowParticipantsGrpcService } from "./services/workflow-participants.grpc-service";
 
 @Module({
     imports: [
@@ -16,7 +17,7 @@ import { WorkflowsGrpcService } from "./workflows.grpc.service";
             }
         ])
     ],
-    providers: [WorkflowsGrpcService],
-    exports: [WorkflowsGrpcService]
+    providers: [WorkflowsGrpcService, WorkflowParticipantsGrpcService],
+    exports: [WorkflowsGrpcService, WorkflowParticipantsGrpcService]
 })
 export class WorkflowsGrpcModule {}
