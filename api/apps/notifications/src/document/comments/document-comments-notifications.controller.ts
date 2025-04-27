@@ -1,15 +1,15 @@
 import { Controller } from "@nestjs/common";
-import { DocumentNotificationsService } from "./document-notifications.service";
 import { EventPattern } from "@nestjs/microservices";
 import {
     DocumentCommentCreatedRmqEvent,
-    DocumentCommentDeletedRmqEvent,
-    DocumentCommentUpdatedRmqEvent
+    DocumentCommentUpdatedRmqEvent,
+    DocumentCommentDeletedRmqEvent
 } from "common/rabbitmq";
+import { DocumentCommentsNotificationsService } from "./document-comments-notifications.service";
 
 @Controller()
-export class DocumentNotificationsController {
-    public constructor(private readonly notificationsService: DocumentNotificationsService) {}
+export class DocumentCommentsNotificationsController {
+    public constructor(private readonly notificationsService: DocumentCommentsNotificationsService) {}
 
     @EventPattern(DocumentCommentCreatedRmqEvent.PATTERN)
     public async handleCommentCreated(event: DocumentCommentCreatedRmqEvent) {
