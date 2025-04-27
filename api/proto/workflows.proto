@@ -11,6 +11,8 @@ service WorkflowsService {
 
     rpc Start (common.IOnlyId) returns (common.IEmptyResponse) {}
 
+    rpc FindAllByCreatorId (common.IOnlyId) returns (IFindWorkflowsResponse) {}
+
     rpc FindOneById (common.IOnlyId) returns (IFindOneWorkflowResponse) {}
 
     rpc FindOneByDocumentId (common.IOnlyId) returns (IFindOneWorkflowResponse) {}
@@ -52,11 +54,24 @@ message IFindOneWorkflowResponse {
     }
 }
 
+message IFindWorkflowsResponseData {
+    repeated IWorkflowResponseData workflows = 1;
+}
+
+message IFindWorkflowsResponse {
+    oneof response {
+        IFindWorkflowsResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
 /********************************************Workflow Participants*********************************************************************/
 
 service WorkflowParticipantsService {
     rpc UpsertWorkflowParticipants (IUpsertWorkflowParticipantsDto) returns (common.IEmptyResponse) {}
 
+    rpc FindAllUserWorkflows (common.IOnlyId) returns (IFindWorkflowsResponse) {}
 }
 
 message IUpsertWorkflowParticipantDto   {

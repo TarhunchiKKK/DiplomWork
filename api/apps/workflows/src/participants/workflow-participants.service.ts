@@ -21,6 +21,16 @@ export class WorkflowParticipantsService {
         }
     }
 
+    public async findAllUserWorkflows(userId: string) {
+        const participants = await this.participantsRepository.find({
+            where: {
+                userId: userId
+            }
+        });
+
+        return participants.map(participant => participant.workflow);
+    }
+
     private async updateMany(dtos: IUpdateParticipantDto[]) {
         const participants = await this.participantsRepository.find({
             where: {

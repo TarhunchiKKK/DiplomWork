@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Put, UseGuards } from "@nestjs/common";
 import { WorkflowParticipantsGrpcService } from "common/grpc";
 import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
 import { WorkflowCreatorGuard } from "../middleware/workflow-creator.guard";
@@ -19,6 +19,13 @@ export class WorkflowParticipantsController {
         return this.participantsGrpcService.call("upsertWorkflowParticipants", {
             ...dto,
             workflowId: workflowId
+        });
+    }
+
+    @Get("/user/:userId")
+    public async findAllUserWorkflows(@Param("userId") userId: string) {
+        return this.participantsGrpcService.call("findAllUserWorkflows", {
+            id: userId
         });
     }
 }

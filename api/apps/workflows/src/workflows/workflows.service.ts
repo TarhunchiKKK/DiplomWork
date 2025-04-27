@@ -28,6 +28,14 @@ export class WorkflowsService {
         await this.update(workflowId, { status: WorkflowStatus.STARTED });
     }
 
+    public async findAllByCreatorId(creatorId: string) {
+        return await this.workflowsRepository.find({
+            where: {
+                creatorId: creatorId
+            }
+        });
+    }
+
     public async findOneById(workflowId: string) {
         const workflow = await this.workflowsRepository.findOne({
             where: {
