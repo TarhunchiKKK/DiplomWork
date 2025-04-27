@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { ILoginDto, IRefreshProfileDto, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
+import { ILoginDto, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
 import { AccountStatus, Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { JwtTokensService } from "common/modules";
@@ -17,7 +17,7 @@ export class AuthenticationService {
         private readonly tokensService: JwtTokensService
     ) {}
 
-    public createJwtFromUser(user: User) {
+    private createJwtFromUser(user: User) {
         return this.tokensService.create({
             id: user.id,
             username: user.username,
@@ -26,6 +26,17 @@ export class AuthenticationService {
             status: user.status,
             organizationId: user.organizationId
         });
+    }
+
+    public createAuthResponse(user: User) {
+        return {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            role: user.role,
+            organizationId: user.organizationId,
+            token: this.createJwtFromUser(user)
+        };
     }
 
     public async registerAdmin(dto: IRegisterAdminDto) {
@@ -38,14 +49,7 @@ export class AuthenticationService {
             status: AccountStatus.ACTIVE
         });
 
-        return {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            role: user.role,
-            organizationId: user.organizationId,
-            token: this.createJwtFromUser(user)
-        };
+        return this.createAuthResponse(user);
     }
 
     public async login(dto: ILoginDto) {
@@ -55,26 +59,12 @@ export class AuthenticationService {
             throw new BadRequestException("Неверный пароль.");
         }
 
-        return {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            role: user.role,
-            organizationId: user.organizationId,
-            token: user.useBasicAuth ? this.createJwtFromUser(user) : ""
-        };
+        return this.createAuthResponse(user);
     }
 
-    public async refreshProfile(dto: IRefreshProfileDto) {
-        const user = await this.usersService.findOneById(dto.userId);
+    public async refreshProfile(userId: string) {
+        const user = await this.usersService.findOneById(userId);
 
-        return {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            role: user.role,
-            organizationId: user.organizationId,
-            token: this.createJwtFromUser(user)
-        };
+        return this.createAuthResponse(user);
     }
 }

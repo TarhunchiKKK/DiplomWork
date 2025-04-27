@@ -1,18 +1,16 @@
-import { Controller, UseFilters, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
     DocumentCommentsServiceController,
     DocumentCommentsServiceControllerMethods,
     GrpcExceptionFilter,
     ICreateDocumentCommentDto,
-    IDeleteDocumentCommentDto,
-    IFindAllDocumentCommentsDto,
+    IOnlyId,
     IUpdateDocumentCommentDto,
     UnwrapGrpcResponse,
     WrapGrpcResponseInterceptor
 } from "common/grpc";
 import { DocumentCommentsService } from "./document-comments.service";
-import { ExtractFromRequest } from "common/middleware";
-import { CommentGuard } from "./middleware/comments.guard";
+import { transformCommentsArray, transfromComment } from "./helpers/grpc.helpers";
 
 @Controller()
 @DocumentCommentsServiceControllerMethods()
@@ -22,28 +20,23 @@ export class DocumentCommentsController implements UnwrapGrpcResponse<DocumentCo
     public constructor(private readonly commentsService: DocumentCommentsService) {}
 
     public async create(dto: ICreateDocumentCommentDto) {
-        return await this.commentsService.create(dto);
+        return await this.commentsService.create(dto).then(transfromComment);
     }
 
-    public async findAll(dto: IFindAllDocumentCommentsDto) {
-        return await this.commentsService.findAll(dto);
+    public async findOneById(dto: IOnlyId) {
+        return await this.commentsService.findOne(dto.id).then(transfromComment);
     }
 
-    @ExtractFromRequest((request: IUpdateDocumentCommentDto) => ({
-        commentId: request.id,
-        userId: request.userId
-    }))
-    @UseGuards(CommentGuard)
+    public async findAll(dto: IOnlyId) {
+        return await this.commentsService.findAll(dto.id).then(transformCommentsArray);
+    }
+
     public async update(dto: IUpdateDocumentCommentDto) {
-        await this.commentsService.update(dto);
+        const { id, ...data } = dto;
+        await this.commentsService.update(id, data);
     }
 
-    @ExtractFromRequest((request: IDeleteDocumentCommentDto) => ({
-        commentId: request.id,
-        userId: request.userId
-    }))
-    @UseGuards(CommentGuard)
-    public async delete(dto: IDeleteDocumentCommentDto) {
-        await this.commentsService.delete(dto);
+    public async delete(dto: IOnlyId) {
+        await this.commentsService.delete(dto.id);
     }
 }

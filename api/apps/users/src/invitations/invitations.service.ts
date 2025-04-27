@@ -5,7 +5,7 @@ import { IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
 import { AccountStatus } from "common/enums";
 import { AuthenticationService } from "../authentiation/authentiation.service";
 import { EventEmitter2 } from "@nestjs/event-emitter";
-import { UsersInvitedEvent } from "../events/events/users-invited.event";
+import { UsersInvitedEvent } from "./events/users-invited.event";
 
 @Injectable()
 export class InvitationsService {
@@ -47,13 +47,6 @@ export class InvitationsService {
             status: AccountStatus.INVITED
         });
 
-        return {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            role: user.role,
-            organizationId: user.organizationId,
-            token: this.authenticationService.createJwtFromUser(user)
-        };
+        return this.authenticationService.createAuthResponse(user);
     }
 }

@@ -31,7 +31,7 @@ export class TotpAuthenticationController {
     @Patch("/disable")
     public disable(@Req() request: TAuthenticatedRequest) {
         return this.totpAuthenticationGrpcService.call("disable", {
-            userId: request.jwtInfo.id
+            id: request.jwtInfo.id
         });
     }
 

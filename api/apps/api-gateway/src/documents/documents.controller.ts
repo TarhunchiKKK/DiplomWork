@@ -20,7 +20,7 @@ import { UpdateDocumentDto } from "./dto/update-document.dto";
 import { DocumentSortOrder, DocumentStatus, Role } from "common/enums";
 import { ProvideOperation } from "./middleware/decorators/provide-operation.decorator";
 import { DocumentOperation } from "./middleware/enums/document-operation.enum";
-import { DocumentAccessGuard } from "./middleware/guards/document-access.guard";
+import { DocumentOperationGuard } from "./middleware/guards/document-operation.guard";
 
 @Controller("/documents")
 @UseGuards(AuthenticationGuard)
@@ -62,8 +62,8 @@ export class DocumentsController {
 
     @Get(":documentId")
     @ProvideOperation(DocumentOperation.READ)
-    @ExtractFromRequest(request => request.body.documentId)
-    @UseGuards(DocumentAccessGuard)
+    @ExtractFromRequest(request => request.params.documentId)
+    @UseGuards(DocumentOperationGuard)
     public findOneById(@Param("documentId") documentId: string) {
         return this.documentsGrpcService.call("findOneById", {
             id: documentId
@@ -74,11 +74,8 @@ export class DocumentsController {
     @UsePipes(ValidationPipe)
     @ProvideOperation(DocumentOperation.UPDATE)
     @ExtractFromRequest(request => request.body.documentId)
-    @UseGuards(DocumentAccessGuard)
-    public update(@Req() request: TAuthenticatedRequest, @Body() dto: UpdateDocumentDto) {
-        return this.documentsGrpcService.call("update", {
-            ...dto,
-            userId: request.jwtInfo.id
-        });
+    @UseGuards(DocumentOperationGuard)
+    public update(@Body() dto: UpdateDocumentDto) {
+        return this.documentsGrpcService.call("update", dto);
     }
 }

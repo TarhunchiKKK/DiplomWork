@@ -1,8 +1,7 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
     GrpcExceptionFilter,
-    IActivateAccountDto,
-    IDeactivateAccountDto,
+    IOnlyId,
     WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
     AccountDeactivationServiceController,
@@ -17,11 +16,11 @@ import { AccountDeactivationService } from "./account-deactivation.service";
 export class AccountDeactivationController implements UnwrapGrpcResponse<AccountDeactivationServiceController> {
     public constructor(private readonly accountDeactivationService: AccountDeactivationService) {}
 
-    public async activate(dto: IActivateAccountDto) {
-        await this.accountDeactivationService.activate(dto);
+    public async activate(dto: IOnlyId) {
+        await this.accountDeactivationService.activate(dto.id);
     }
 
-    public async deactivate(dto: IDeactivateAccountDto) {
-        await this.accountDeactivationService.deactivate(dto);
+    public async deactivate(dto: IOnlyId) {
+        await this.accountDeactivationService.deactivate(dto.id);
     }
 }

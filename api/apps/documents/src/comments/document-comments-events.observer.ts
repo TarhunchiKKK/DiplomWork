@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { DocumentsService } from "../documents/documents.service";
 import { DocumentVersionsService } from "../versions/document-versions.service";
-import { DocumentCommentsService } from "../comments/document-comments.service";
+import { DocumentCommentsService } from "./document-comments.service";
 import {
     DocumentCommentCreatedRmqEvent,
     DocumentCommentDeletedRmqEvent,
@@ -16,10 +15,8 @@ import { CommentUpdatedEvent } from "./events/comment-updated.event";
 import { CommentDeletedEvent } from "./events/comment-deleted.event";
 
 @Injectable()
-export class DocumentEventsObserver {
+export class DocumentCommentsEventsObserver {
     public constructor(
-        private readonly documentsService: DocumentsService,
-
         private readonly versionsService: DocumentVersionsService,
 
         private readonly commentsService: DocumentCommentsService,

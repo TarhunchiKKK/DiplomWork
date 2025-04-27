@@ -2,18 +2,14 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DocumentComment } from "./entities/document-comment.entity";
 import { Repository } from "typeorm";
-import {
-    ICreateDocumentCommentDto,
-    IDeleteDocumentCommentDto,
-    IFindAllDocumentCommentsDto,
-    IUpdateDocumentCommentDto
-} from "common/grpc";
+import { ICreateDocumentCommentDto, IUpdateDocumentCommentDto } from "common/grpc";
 import { EventEmitter2 } from "@nestjs/event-emitter";
-import { CommentCreatedEvent } from "../events/events/comment-created.event";
-import { CommentUpdatedEvent } from "../events/events/comment-updated.event";
+import { CommentCreatedEvent } from "./events/comment-created.event";
+import { CommentUpdatedEvent } from "./events/comment-updated.event";
 import { CommentStatus } from "./enums/comment-status.enum";
-import { CommentDeletedEvent } from "../events/events/comment-deleted.event";
+import { CommentDeletedEvent } from "./events/comment-deleted.event";
 import { Cron } from "@nestjs/schedule";
+import { IgnoreFields } from "common/utils";
 
 @Injectable()
 export class DocumentCommentsService {
@@ -34,17 +30,14 @@ export class DocumentCommentsService {
 
         this.eventEmitter.emit(CommentCreatedEvent.PATTERN, new CommentCreatedEvent(comment.id));
 
-        return {
-            ...comment,
-            createdAt: comment.createdAt.toISOString()
-        };
+        return comment;
     }
 
-    public async findAll(dto: IFindAllDocumentCommentsDto) {
-        const comments = await this.commentsRepository.find({
+    public async findAll(versionId: string) {
+        return await this.commentsRepository.find({
             where: {
                 version: {
-                    id: dto.versionId
+                    id: versionId
                 },
                 status: CommentStatus.ACTIVE
             },
@@ -52,15 +45,6 @@ export class DocumentCommentsService {
                 version: true
             }
         });
-
-        return {
-            comments: comments.map(comment => ({
-                id: comment.id,
-                message: comment.message,
-                creatorId: comment.creatorId,
-                createdAt: comment.createdAt.toISOString()
-            }))
-        };
     }
 
     public async findOne(commentId: string) {
@@ -80,20 +64,18 @@ export class DocumentCommentsService {
         return comment;
     }
 
-    public async update(dto: IUpdateDocumentCommentDto) {
-        const { id, userId: _, ...data } = dto;
+    public async update(commentId: string, dto: IgnoreFields<IUpdateDocumentCommentDto, "id">) {
+        const comment = await this.findOne(commentId);
 
-        const comment = await this.findOne(id);
-
-        Object.assign(comment, data);
+        Object.assign(comment, dto);
 
         await this.commentsRepository.save(comment);
 
         this.eventEmitter.emit(CommentUpdatedEvent.PATTERN, new CommentUpdatedEvent(comment.id));
     }
 
-    public async delete(dto: IDeleteDocumentCommentDto) {
-        const comment = await this.findOne(dto.id);
+    public async delete(commentId: string) {
+        const comment = await this.findOne(commentId);
 
         comment.status = CommentStatus.DELETED;
 

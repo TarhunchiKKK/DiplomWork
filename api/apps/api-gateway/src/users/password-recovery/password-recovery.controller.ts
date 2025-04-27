@@ -12,7 +12,7 @@ export class PasswordRecoveryController {
     @Post("/reset")
     public reset(@Req() request: TAuthenticatedRequest) {
         return this.passwordRecoveryGrpcservice.call("reset", {
-            userId: request.jwtInfo.id
+            id: request.jwtInfo.id
         });
     }
 

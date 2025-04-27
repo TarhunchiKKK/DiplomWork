@@ -28,7 +28,7 @@ export class AuthenticationController {
     @UseGuards(AuthenticationGuard)
     public me(@Req() request: TAuthenticatedRequest) {
         return this.authenticationGrpcService.call("refreshProfile", {
-            userId: request.jwtInfo.id
+            id: request.jwtInfo.id
         });
     }
 }

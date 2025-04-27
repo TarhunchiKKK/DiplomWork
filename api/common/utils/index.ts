@@ -1,4 +1,4 @@
-export { omit, pick } from "./object";
-export { allObservables } from "./observable";
-export { firstOrDefault } from "./array";
+export * from "./object";
+export * from "./observable";
+export * from "./array";
 export * from "./typing";

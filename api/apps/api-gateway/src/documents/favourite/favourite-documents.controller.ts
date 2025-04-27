@@ -19,7 +19,7 @@ export class FavouriteDocumentsController {
     @Get()
     public findAll(@Req() request: TAuthenticatedRequest) {
         return this.favouriteDocumentsGrpcService.call("findAll", {
-            userId: request.jwtInfo.id
+            id: request.jwtInfo.id
         });
     }
 

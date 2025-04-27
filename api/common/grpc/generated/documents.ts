@@ -7,7 +7,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { IEmptyResponse, IFindOneById, IHttpError } from "./common";
+import { IEmptyResponse, IHttpError, IOnlyId } from "./common";
 
 const protobufPackage = "documents";
 
@@ -36,12 +36,11 @@ export interface ICreateDocumentResponse {
 }
 
 export interface IUpdateDocumentDto {
-  documentId: string;
+  id: string;
   title?: string | undefined;
   typeId?: string | undefined;
   aimId?: string | undefined;
   isUrgent?: boolean | undefined;
-  userId: string;
 }
 
 export interface IFindDocumentsDto {
@@ -83,6 +82,27 @@ export interface IFindDocumentByIdResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IFullDocumentResponseData {
+  id: string;
+  title: string;
+  typeId: string;
+  aimId: string;
+  isUrgent: boolean;
+  status: string;
+  authorId: string;
+  accessToken: string;
+}
+
+export interface IFullDocumentResponse {
+  data?: IFullDocumentResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IFindAccessTokenResponse {
+  data?: string | undefined;
+  error?: IHttpError | undefined;
+}
+
 export interface IAddToFavouriteDto {
   userId: string;
   documentId: string;
@@ -93,15 +113,10 @@ export interface IRemoveFromFavouriteDto {
   userId: string;
 }
 
-export interface IFindFavouriteDocumentsDto {
-  userId: string;
-}
-
 export interface ICreateDocumentVersionDto {
   documentId: string;
   fileExtension: string;
   description?: string | undefined;
-  userId: string;
 }
 
 export interface ICreateDocumentVersionResponseData {
@@ -111,11 +126,6 @@ export interface ICreateDocumentVersionResponseData {
 export interface ICreateDocumentVersionResponse {
   data?: ICreateDocumentVersionResponseData | undefined;
   error?: IHttpError | undefined;
-}
-
-export interface IFindAllDocumentVersionsDto {
-  documentId: string;
-  userId: string;
 }
 
 export interface IVersion {
@@ -132,16 +142,6 @@ export interface IFindAllVersionsResponseData {
 export interface IFindAllDocumentVersionsResponse {
   data?: IFindAllVersionsResponseData | undefined;
   error?: IHttpError | undefined;
-}
-
-export interface IFindDocumentVersionByIdDto {
-  versionId: string;
-  userId: string;
-}
-
-export interface IFindLastDocumentVersionDto {
-  documentId: string;
-  userId: string;
 }
 
 export interface IFindOneDocumentVersionResponse {
@@ -167,16 +167,16 @@ export interface ICreateDocumentCommentResponse {
   error?: IHttpError | undefined;
 }
 
-export interface IFindAllDocumentCommentsDto {
-  versionId: string;
-  userId: string;
-}
-
 export interface ICommentShortData {
   id: string;
   message: string;
   creatorId: string;
   createdAt: string;
+}
+
+export interface IFindOneDocumentCommentResponse {
+  data?: ICommentShortData | undefined;
+  error?: IHttpError | undefined;
 }
 
 export interface IFindAllCommentsResponseData {
@@ -191,12 +191,6 @@ export interface IFindAllCommentsResponse {
 export interface IUpdateDocumentCommentDto {
   id: string;
   message: string;
-  userId: string;
-}
-
-export interface IDeleteDocumentCommentDto {
-  id: string;
-  userId: string;
 }
 
 export const DOCUMENTS_PACKAGE_NAME = "documents";
@@ -208,7 +202,9 @@ export interface DocumentsServiceClient {
 
   findAll(request: IFindDocumentsDto): Observable<IFindDocumentsResponse>;
 
-  findOneById(request: IFindOneById): Observable<IFindDocumentByIdResponse>;
+  findOneById(request: IOnlyId): Observable<IFindDocumentByIdResponse>;
+
+  findAccessToken(request: IOnlyId): Observable<IFindAccessTokenResponse>;
 }
 
 export interface DocumentsServiceController {
@@ -223,13 +219,17 @@ export interface DocumentsServiceController {
   ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
 
   findOneById(
-    request: IFindOneById,
+    request: IOnlyId,
   ): Promise<IFindDocumentByIdResponse> | Observable<IFindDocumentByIdResponse> | IFindDocumentByIdResponse;
+
+  findAccessToken(
+    request: IOnlyId,
+  ): Promise<IFindAccessTokenResponse> | Observable<IFindAccessTokenResponse> | IFindAccessTokenResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "update", "findAll", "findOneById"];
+    const grpcMethods: string[] = ["create", "update", "findAll", "findOneById", "findAccessToken"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
@@ -261,7 +261,7 @@ export interface FavouriteDocumentsServiceClient {
 
   remove(request: IRemoveFromFavouriteDto): Observable<IEmptyResponse>;
 
-  findAll(request: IFindFavouriteDocumentsDto): Observable<IFindDocumentsResponse>;
+  findAll(request: IOnlyId): Observable<IFindDocumentsResponse>;
 }
 
 export interface FavouriteDocumentsServiceController {
@@ -270,7 +270,7 @@ export interface FavouriteDocumentsServiceController {
   remove(request: IRemoveFromFavouriteDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   findAll(
-    request: IFindFavouriteDocumentsDto,
+    request: IOnlyId,
   ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
 }
 
@@ -306,11 +306,13 @@ export const FAVOURITE_DOCUMENTS_SERVICE_NAME = "FavouriteDocumentsService";
 export interface DocumentVersionsServiceClient {
   create(request: ICreateDocumentVersionDto): Observable<ICreateDocumentVersionResponse>;
 
-  findAll(request: IFindAllDocumentVersionsDto): Observable<IFindAllDocumentVersionsResponse>;
+  findAll(request: IOnlyId): Observable<IFindAllDocumentVersionsResponse>;
 
-  findOneById(request: IFindDocumentVersionByIdDto): Observable<IFindOneDocumentVersionResponse>;
+  findOneById(request: IOnlyId): Observable<IFindOneDocumentVersionResponse>;
 
-  findLast(request: IFindLastDocumentVersionDto): Observable<IFindOneDocumentVersionResponse>;
+  findLast(request: IOnlyId): Observable<IFindOneDocumentVersionResponse>;
+
+  findDocument(request: IOnlyId): Observable<IFullDocumentResponse>;
 }
 
 export interface DocumentVersionsServiceController {
@@ -322,30 +324,34 @@ export interface DocumentVersionsServiceController {
     | ICreateDocumentVersionResponse;
 
   findAll(
-    request: IFindAllDocumentVersionsDto,
+    request: IOnlyId,
   ):
     | Promise<IFindAllDocumentVersionsResponse>
     | Observable<IFindAllDocumentVersionsResponse>
     | IFindAllDocumentVersionsResponse;
 
   findOneById(
-    request: IFindDocumentVersionByIdDto,
+    request: IOnlyId,
   ):
     | Promise<IFindOneDocumentVersionResponse>
     | Observable<IFindOneDocumentVersionResponse>
     | IFindOneDocumentVersionResponse;
 
   findLast(
-    request: IFindLastDocumentVersionDto,
+    request: IOnlyId,
   ):
     | Promise<IFindOneDocumentVersionResponse>
     | Observable<IFindOneDocumentVersionResponse>
     | IFindOneDocumentVersionResponse;
+
+  findDocument(
+    request: IOnlyId,
+  ): Promise<IFullDocumentResponse> | Observable<IFullDocumentResponse> | IFullDocumentResponse;
 }
 
 export function DocumentVersionsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll", "findOneById", "findLast"];
+    const grpcMethods: string[] = ["create", "findAll", "findOneById", "findLast", "findDocument"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
@@ -375,11 +381,13 @@ export const DOCUMENT_VERSIONS_SERVICE_NAME = "DocumentVersionsService";
 export interface DocumentCommentsServiceClient {
   create(request: ICreateDocumentCommentDto): Observable<ICreateDocumentCommentResponse>;
 
-  findAll(request: IFindAllDocumentCommentsDto): Observable<IFindAllCommentsResponse>;
+  findOneById(request: IOnlyId): Observable<IFindOneDocumentCommentResponse>;
+
+  findAll(request: IOnlyId): Observable<IFindAllCommentsResponse>;
 
   update(request: IUpdateDocumentCommentDto): Observable<IEmptyResponse>;
 
-  delete(request: IDeleteDocumentCommentDto): Observable<IEmptyResponse>;
+  delete(request: IOnlyId): Observable<IEmptyResponse>;
 }
 
 export interface DocumentCommentsServiceController {
@@ -390,18 +398,25 @@ export interface DocumentCommentsServiceController {
     | Observable<ICreateDocumentCommentResponse>
     | ICreateDocumentCommentResponse;
 
+  findOneById(
+    request: IOnlyId,
+  ):
+    | Promise<IFindOneDocumentCommentResponse>
+    | Observable<IFindOneDocumentCommentResponse>
+    | IFindOneDocumentCommentResponse;
+
   findAll(
-    request: IFindAllDocumentCommentsDto,
+    request: IOnlyId,
   ): Promise<IFindAllCommentsResponse> | Observable<IFindAllCommentsResponse> | IFindAllCommentsResponse;
 
   update(request: IUpdateDocumentCommentDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  delete(request: IDeleteDocumentCommentDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+  delete(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function DocumentCommentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll", "update", "delete"];
+    const grpcMethods: string[] = ["create", "findOneById", "findAll", "update", "delete"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

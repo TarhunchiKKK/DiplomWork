@@ -9,8 +9,9 @@ import {
     UnwrapGrpcResponse,
     IFindDocumentsDto,
     IUpdateDocumentDto,
-    IFindOneById
+    IOnlyId
 } from "common/grpc";
+import { transformDocumentsArray } from "./helpers/grpc.helpers";
 
 @Controller()
 @DocumentsServiceControllerMethods()
@@ -23,15 +24,20 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
         return await this.documentsService.create(dto);
     }
 
-    public async findOneById(dto: IFindOneById) {
+    public async findOneById(dto: IOnlyId) {
         return await this.documentsService.findOneById(dto.id);
     }
 
     public async findAll(dto: IFindDocumentsDto) {
-        return await this.documentsService.findAll(dto);
+        return await this.documentsService.findAll(dto).then(transformDocumentsArray);
     }
 
     public async update(dto: IUpdateDocumentDto) {
-        await this.documentsService.update(dto);
+        const { id, ...data } = dto;
+        await this.documentsService.update(id, data);
+    }
+
+    public async findAccessToken(dto: IOnlyId) {
+        return (await this.documentsService.findOneById(dto.id)).accessToken;
     }
 }

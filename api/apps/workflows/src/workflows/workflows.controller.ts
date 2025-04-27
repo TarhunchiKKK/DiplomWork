@@ -2,9 +2,7 @@ import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
     GrpcExceptionFilter,
     ICreateWorkflowDto,
-    IDeleteWorkflowDto,
-    IFindOneById,
-    IStartWorkflowDto,
+    IOnlyId,
     UnwrapGrpcResponse,
     WorkflowsServiceController,
     WorkflowsServiceControllerMethods,
@@ -24,19 +22,19 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
         return await this.workflowsService.create(dto).then(transformWorkflow);
     }
 
-    public async start(dto: IStartWorkflowDto) {
-        await this.workflowsService.start(dto);
+    public async start(dto: IOnlyId) {
+        await this.workflowsService.start(dto.id);
     }
 
-    public async findOneById(dto: IFindOneById) {
+    public async findOneById(dto: IOnlyId) {
         return await this.workflowsService.findOneById(dto.id).then(transformWorkflow);
     }
 
-    public async findOneByDocumentId(dto: IFindOneById) {
-        return await this.workflowsService.findOneByDocumentId(dto).then(transformWorkflow);
+    public async findOneByDocumentId(dto: IOnlyId) {
+        return await this.workflowsService.findOneByDocumentId(dto.id).then(transformWorkflow);
     }
 
-    public async delete(dto: IDeleteWorkflowDto) {
-        await this.workflowsService.delete(dto.workflowId);
+    public async delete(dto: IOnlyId) {
+        await this.workflowsService.delete(dto.id);
     }
 }

@@ -5,12 +5,11 @@ import {
     DocumentVersionsServiceControllerMethods,
     GrpcExceptionFilter,
     ICreateDocumentVersionDto,
-    IFindAllDocumentVersionsDto,
-    IFindDocumentVersionByIdDto,
-    IFindLastDocumentVersionDto,
+    IOnlyId,
     UnwrapGrpcResponse,
     WrapGrpcResponseInterceptor
 } from "common/grpc";
+import { transformVersion, transfromVrsionsArray } from "./helpers/grpc.helpers";
 
 @Controller()
 @DocumentVersionsServiceControllerMethods()
@@ -23,15 +22,19 @@ export class DocumentVersionsController implements UnwrapGrpcResponse<DocumentVe
         return await this.versionsService.create(dto);
     }
 
-    public async findAll(dto: IFindAllDocumentVersionsDto) {
-        return await this.versionsService.findAll(dto);
+    public async findAll(dto: IOnlyId) {
+        return await this.versionsService.findAll(dto.id).then(transfromVrsionsArray);
     }
 
-    public async findOneById(dto: IFindDocumentVersionByIdDto) {
-        return await this.versionsService.findOneById(dto);
+    public async findOneById(dto: IOnlyId) {
+        return await this.versionsService.findOneById(dto.id).then(transformVersion);
     }
 
-    public async findLast(dto: IFindLastDocumentVersionDto) {
-        return await this.versionsService.findLast(dto);
+    public async findLast(dto: IOnlyId) {
+        return await this.versionsService.findLast(dto.id).then(transformVersion);
+    }
+
+    public async findDocument(dto: IOnlyId) {
+        return await this.versionsService.findVersionDocument(dto.id);
     }
 }

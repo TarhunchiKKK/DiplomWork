@@ -14,7 +14,7 @@ export class OrganizationsController {
     @Get(":id")
     @UseGuards(AuthenticationGuard)
     public async findOneById(@Req() request: TAuthenticatedRequest) {
-        return this.organizationsGrpcService.call("findOneById", { value: request.jwtInfo.organizationId });
+        return this.organizationsGrpcService.call("findOneById", { id: request.jwtInfo.organizationId });
     }
 
     @Patch("document-aims")

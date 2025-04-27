@@ -2,7 +2,7 @@ import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
     GrpcExceptionFilter,
     WrapGrpcResponseInterceptor,
-    IResetPasswordDto,
+    IOnlyId,
     IUpdatePasswordDto,
     UnwrapGrpcResponse,
     PasswordRecoveryServiceControllerMethods,
@@ -17,8 +17,8 @@ import { PasswordRecoveryService } from "./password-recovery.service";
 export class PasswordRecoveryController implements UnwrapGrpcResponse<PasswordRecoveryServiceController> {
     public constructor(private readonly passwordRecoveryService: PasswordRecoveryService) {}
 
-    public async reset(dto: IResetPasswordDto) {
-        await this.passwordRecoveryService.reset(dto.userId);
+    public async reset(dto: IOnlyId) {
+        await this.passwordRecoveryService.reset(dto.id);
     }
 
     public async update(dto: IUpdatePasswordDto) {

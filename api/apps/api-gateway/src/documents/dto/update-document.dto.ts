@@ -1,11 +1,10 @@
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { IUpdateDocumentDto } from "common/grpc";
-import { IgnoreFields } from "common/utils";
 
-export class UpdateDocumentDto implements IgnoreFields<IUpdateDocumentDto, "userId"> {
+export class UpdateDocumentDto implements IUpdateDocumentDto {
     @IsNotEmpty({ message: "Идентификатор документа не указан" })
     @IsString({ message: "Идентификатор документа должен быть строкой" })
-    public documentId: string;
+    public id: string;
 
     @IsOptional()
     @IsString({ message: "Название документа должно быть строкой" })

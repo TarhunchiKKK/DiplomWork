@@ -7,7 +7,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { IEmptyResponse, IFindOneById, IHttpError } from "./common";
+import { IEmptyResponse, IHttpError, IOnlyId } from "./common";
 
 const protobufPackage = "workflows";
 
@@ -29,23 +29,9 @@ export interface ICreateWorkflowResponse {
   error?: IHttpError | undefined;
 }
 
-export interface IStartWorkflowDto {
-  userId: string;
-  workflowId: string;
-}
-
-export interface IFindOneWorkflowById {
-  workflowId: string;
-}
-
 export interface IFindOneWorkflowResponse {
   data?: IWorkflowResponseData | undefined;
   error?: IHttpError | undefined;
-}
-
-export interface IDeleteWorkflowDto {
-  userId: string;
-  workflowId: string;
 }
 
 export interface IUpsertWorkflowParticipantDto {
@@ -57,7 +43,6 @@ export interface IUpsertWorkflowParticipantDto {
 export interface IUpsertWorkflowParticipantsDto {
   participants: IUpsertWorkflowParticipantDto[];
   workflowId: string;
-  userId: string;
 }
 
 export const WORKFLOWS_PACKAGE_NAME = "workflows";
@@ -65,13 +50,13 @@ export const WORKFLOWS_PACKAGE_NAME = "workflows";
 export interface WorkflowsServiceClient {
   create(request: ICreateWorkflowDto): Observable<ICreateWorkflowResponse>;
 
-  start(request: IStartWorkflowDto): Observable<IEmptyResponse>;
+  start(request: IOnlyId): Observable<IEmptyResponse>;
 
-  findOneById(request: IFindOneById): Observable<IFindOneWorkflowResponse>;
+  findOneById(request: IOnlyId): Observable<IFindOneWorkflowResponse>;
 
-  findOneByDocumentId(request: IFindOneById): Observable<IFindOneWorkflowResponse>;
+  findOneByDocumentId(request: IOnlyId): Observable<IFindOneWorkflowResponse>;
 
-  delete(request: IDeleteWorkflowDto): Observable<IEmptyResponse>;
+  delete(request: IOnlyId): Observable<IEmptyResponse>;
 }
 
 export interface WorkflowsServiceController {
@@ -79,17 +64,17 @@ export interface WorkflowsServiceController {
     request: ICreateWorkflowDto,
   ): Promise<ICreateWorkflowResponse> | Observable<ICreateWorkflowResponse> | ICreateWorkflowResponse;
 
-  start(request: IStartWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+  start(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   findOneById(
-    request: IFindOneById,
+    request: IOnlyId,
   ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
 
   findOneByDocumentId(
-    request: IFindOneById,
+    request: IOnlyId,
   ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
 
-  delete(request: IDeleteWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+  delete(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function WorkflowsServiceControllerMethods() {

@@ -1,14 +1,14 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
     GrpcExceptionFilter,
-    IDisableTotpDto,
     IEnableTotpDto,
     IGenerateTotpDto,
     ILoginWithTotpDto,
     WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
     TotpAuthenticationServiceControllerMethods,
-    TotpAuthenticationServiceController
+    TotpAuthenticationServiceController,
+    IOnlyId
 } from "common/grpc";
 import { TotpAuthenticationService } from "./totp-authentication.service";
 
@@ -27,8 +27,8 @@ export class TotpAuthenticationController implements UnwrapGrpcResponse<TotpAuth
         await this.totpAuthenticationService.enable(dto);
     }
 
-    public async disable(dto: IDisableTotpDto) {
-        await this.totpAuthenticationService.disable(dto);
+    public async disable(dto: IOnlyId) {
+        await this.totpAuthenticationService.disable(dto.id);
     }
 
     public async login(dto: ILoginWithTotpDto) {

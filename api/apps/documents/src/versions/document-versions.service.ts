@@ -2,14 +2,8 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DocumentVersion } from "./entities/document-version.entity";
 import { Repository } from "typeorm";
-import {
-    ICreateDocumentVersionDto,
-    IFindAllDocumentVersionsDto,
-    IFindDocumentVersionByIdDto,
-    IFindLastDocumentVersionDto
-} from "common/grpc";
+import { ICreateDocumentVersionDto } from "common/grpc";
 import { generateS3Filename } from "./helpers/s3.helpers";
-import { version } from "os";
 
 @Injectable()
 export class DocumentVersionsService {
@@ -18,43 +12,29 @@ export class DocumentVersionsService {
     ) {}
 
     public async create(dto: ICreateDocumentVersionDto) {
-        const version = await this.versionsRepository.save({
+        return await this.versionsRepository.save({
             url: generateS3Filename(dto.fileExtension),
             description: dto.description
         });
-
-        return {
-            ...version,
-            createdAt: version.createdAt.toISOString()
-        };
     }
 
-    public async findAll(dto: IFindAllDocumentVersionsDto) {
-        const versions = await this.versionsRepository.find({
+    public async findAll(documentId: string) {
+        return await this.versionsRepository.find({
             where: {
                 document: {
-                    id: dto.documentId
+                    id: documentId
                 }
             },
             relations: {
                 document: true
             }
         });
-
-        return {
-            versions: versions.map(version => ({
-                id: version.id,
-                url: version.url,
-                description: version.description,
-                createdAt: version.createdAt.toISOString()
-            }))
-        };
     }
 
-    public async findOneById(dto: IFindDocumentVersionByIdDto) {
+    public async findOneById(versionId: string) {
         const version = await this.versionsRepository.findOne({
             where: {
-                id: dto.versionId
+                id: versionId
             }
         });
 
@@ -62,17 +42,14 @@ export class DocumentVersionsService {
             throw new NotFoundException("Версия не найдена");
         }
 
-        return {
-            ...version,
-            createdAt: version.createdAt.toISOString()
-        };
+        return version;
     }
 
-    public async findLast(dto: IFindLastDocumentVersionDto) {
+    public async findLast(documentId: string) {
         const versions = await this.versionsRepository.find({
             where: {
                 document: {
-                    id: dto.documentId
+                    id: documentId
                 }
             },
             relations: {
@@ -87,10 +64,7 @@ export class DocumentVersionsService {
             throw new NotFoundException("Нет версий для документа");
         }
 
-        return {
-            ...version[0],
-            createdAt: version[0].createdAt.toISOString()
-        };
+        return versions[0];
     }
 
     public async findVersionDocument(versionId: string) {

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
-import { IDisableTotpDto, IEnableTotpDto, IGenerateTotpDto, ILoginWithTotpDto } from "common/grpc";
+import { IEnableTotpDto, IGenerateTotpDto, ILoginWithTotpDto } from "common/grpc";
 import { generateTotpSecret } from "./helpers/encoding.helpers";
 import { ConfigService } from "@nestjs/config";
 import { ICreateTotpInstanceDto } from "./interfaces/create-totp-instance.dto";
@@ -66,8 +66,8 @@ export class TotpAuthenticationService {
         });
     }
 
-    public async disable(dto: IDisableTotpDto) {
-        await this.usersService.update(dto.userId, {
+    public async disable(userId: string) {
+        await this.usersService.update(userId, {
             authType: AuthType.BASIC,
             totpSecret: null
         });
@@ -82,13 +82,6 @@ export class TotpAuthenticationService {
             pin: dto.pin
         });
 
-        return {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            role: user.role,
-            organizationId: user.organizationId,
-            token: this.authenticationService.createJwtFromUser(user)
-        };
+        return this.authenticationService.createAuthResponse(user);
     }
 }
