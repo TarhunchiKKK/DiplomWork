@@ -213,6 +213,8 @@ message IFindOneDocumentVersionResponse {
 
 service DocumentCommentsService {
     rpc Create (ICreateDocumentCommentDto) returns (ICreateDocumentCommentResponse) {}
+
+    rpc FindOneById (common.IOnlyId) returns (IFindOneDocumentCommentResponse) {}
     
     rpc FindAll (common.IOnlyId) returns (IFindAllCommentsResponse) {}
 
@@ -256,6 +258,14 @@ message ICommentShortData {
     string creatorId = 3;
 
     string createdAt= 4;
+}
+
+message IFindOneDocumentCommentResponse {
+    oneof response {
+        ICommentShortData data = 1;
+
+        common.IHttpError error = 2;
+    }
 }
 
 message IFindAllCommentsResponseData {

@@ -11,7 +11,7 @@ export class WorkflowsController {
     public constructor(private readonly workflowsGrpcService: WorkflowsGrpcService) {}
 
     @Post(":documentId")
-    @ExtractFromRequest(request => request.body.documentId)
+    @ExtractFromRequest(request => request.params.documentId)
     @UseGuards(DocumentAuthorGuard)
     public create(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
         return this.workflowsGrpcService.call("create", {
@@ -21,7 +21,7 @@ export class WorkflowsController {
     }
 
     @Post("/start/:workflowId")
-    @ExtractFromRequest(request => request.body.workflowId)
+    @ExtractFromRequest(request => request.params.workflowId)
     @UseGuards(WorkflowCreatorGuard)
     public start(@Param("workflowId") workflowId: string) {
         return this.workflowsGrpcService.call("start", {
@@ -37,7 +37,7 @@ export class WorkflowsController {
     }
 
     @Delete(":workflowId")
-    @ExtractFromRequest(request => request.body.workflowId)
+    @ExtractFromRequest(request => request.params.workflowId)
     @UseGuards(WorkflowCreatorGuard)
     public delete(@Param("workflowId") workflowId: string) {
         return this.workflowsGrpcService.call("delete", {

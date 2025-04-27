@@ -14,7 +14,7 @@ export class DocumentVersionsController {
     @Post()
     @UsePipes(ValidationPipe)
     @ProvideOperation(DocumentOperation.CREATE_VERSION)
-    @ExtractFromRequest(request => request.body.versionId)
+    @ExtractFromRequest(request => request.params.versionId)
     @UseGuards(DocumentAccessGuard)
     public create(@Body() dto: CreateDocumentVersionDto) {
         return this.documentVersionsGrpcService.call("create", dto);
@@ -22,7 +22,7 @@ export class DocumentVersionsController {
 
     @Get("/all/:documentId")
     @ProvideOperation(DocumentOperation.READ)
-    @ExtractFromRequest(request => request.body.documentId)
+    @ExtractFromRequest(request => request.params.documentId)
     @UseGuards(DocumentAccessGuard)
     public findAll(@Param("documentId") documentId: string) {
         return this.documentVersionsGrpcService.call("findAll", {
@@ -39,7 +39,7 @@ export class DocumentVersionsController {
 
     @Get("/:versionId")
     @ProvideOperation(DocumentOperation.READ)
-    @ExtractFromRequest(request => request.body.documentId)
+    @ExtractFromRequest(request => request.params.versionId)
     @UseGuards(DocumentAccessGuard)
     public findOneById(@Param("versionId") versionId: string) {
         return this.documentVersionsGrpcService.call("findOneById", {

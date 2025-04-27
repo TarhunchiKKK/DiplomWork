@@ -12,10 +12,11 @@ import {
     ValidationPipe
 } from "@nestjs/common";
 import { DocumentCommentsGrpcService } from "common/grpc/services/documents/services/document-comments.grpc-service";
-import { AuthenticationGuard } from "common/middleware";
+import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { CreateDocumentCommentDto } from "./dto/create-document-comment.dto";
 import { UpdateDocumentCommentDto } from "./dto/update-document-comment.dto";
+import { CommentGuard } from "./middleware/comments.guard";
 
 @Controller("/documents/comments")
 @UseGuards(AuthenticationGuard)
@@ -40,6 +41,8 @@ export class DocumentCommentsController {
 
     @Patch(":commentId")
     @UsePipes(ValidationPipe)
+    @ExtractFromRequest(request => request.params.commentId)
+    @UseGuards(CommentGuard)
     public update(@Param("commentId") commentId: string, @Body() dto: UpdateDocumentCommentDto) {
         return this.documentCommentsGrpcService.call("update", {
             id: commentId,
@@ -48,6 +51,8 @@ export class DocumentCommentsController {
     }
 
     @Delete(":commentId")
+    @ExtractFromRequest(request => request.params.commentId)
+    @UseGuards(CommentGuard)
     public delete(@Param("commentId") commentId: string) {
         return this.documentCommentsGrpcService.call("delete", {
             id: commentId

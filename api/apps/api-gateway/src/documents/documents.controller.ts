@@ -62,7 +62,7 @@ export class DocumentsController {
 
     @Get(":documentId")
     @ProvideOperation(DocumentOperation.READ)
-    @ExtractFromRequest(request => request.body.documentId)
+    @ExtractFromRequest(request => request.params.documentId)
     @UseGuards(DocumentAccessGuard)
     public findOneById(@Param("documentId") documentId: string) {
         return this.documentsGrpcService.call("findOneById", {

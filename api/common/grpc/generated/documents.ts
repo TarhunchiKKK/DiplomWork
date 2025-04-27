@@ -153,6 +153,11 @@ export interface ICommentShortData {
   createdAt: string;
 }
 
+export interface IFindOneDocumentCommentResponse {
+  data?: ICommentShortData | undefined;
+  error?: IHttpError | undefined;
+}
+
 export interface IFindAllCommentsResponseData {
   comments: ICommentShortData[];
 }
@@ -343,6 +348,8 @@ export const DOCUMENT_VERSIONS_SERVICE_NAME = "DocumentVersionsService";
 export interface DocumentCommentsServiceClient {
   create(request: ICreateDocumentCommentDto): Observable<ICreateDocumentCommentResponse>;
 
+  findOneById(request: IOnlyId): Observable<IFindOneDocumentCommentResponse>;
+
   findAll(request: IOnlyId): Observable<IFindAllCommentsResponse>;
 
   update(request: IUpdateDocumentCommentDto): Observable<IEmptyResponse>;
@@ -358,6 +365,13 @@ export interface DocumentCommentsServiceController {
     | Observable<ICreateDocumentCommentResponse>
     | ICreateDocumentCommentResponse;
 
+  findOneById(
+    request: IOnlyId,
+  ):
+    | Promise<IFindOneDocumentCommentResponse>
+    | Observable<IFindOneDocumentCommentResponse>
+    | IFindOneDocumentCommentResponse;
+
   findAll(
     request: IOnlyId,
   ): Promise<IFindAllCommentsResponse> | Observable<IFindAllCommentsResponse> | IFindAllCommentsResponse;
@@ -369,7 +383,7 @@ export interface DocumentCommentsServiceController {
 
 export function DocumentCommentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll", "update", "delete"];
+    const grpcMethods: string[] = ["create", "findOneById", "findAll", "update", "delete"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
