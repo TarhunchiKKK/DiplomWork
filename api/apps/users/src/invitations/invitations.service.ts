@@ -47,13 +47,6 @@ export class InvitationsService {
             status: AccountStatus.INVITED
         });
 
-        return {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            role: user.role,
-            organizationId: user.organizationId,
-            token: this.authenticationService.createJwtFromUser(user)
-        };
+        return this.authenticationService.createAuthResponse(user);
     }
 }
