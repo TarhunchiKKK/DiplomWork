@@ -33,7 +33,7 @@ export class CommentGuard implements CanActivate {
 
         const userId = request.jwtInfo.id as string;
 
-        if (!request.userId) {
+        if (!userId) {
             throw new UnauthorizedException("Недостаточно прав");
         }
 
@@ -42,7 +42,7 @@ export class CommentGuard implements CanActivate {
         const commentId = extractFromRequest(request) as string | null;
 
         if (commentId) {
-            throw new NotFoundException("Документ не найден");
+            throw new NotFoundException("Комментарий не найден");
         }
 
         return { userId, commentId };

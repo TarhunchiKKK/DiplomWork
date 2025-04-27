@@ -82,6 +82,27 @@ export interface IFindDocumentByIdResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IFullDocumentResponseData {
+  id: string;
+  title: string;
+  typeId: string;
+  aimId: string;
+  isUrgent: boolean;
+  status: string;
+  authorId: string;
+  accessToken: string;
+}
+
+export interface IFullDocumentResponse {
+  data?: IFullDocumentResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IFindAccessTokenResponse {
+  data?: string | undefined;
+  error?: IHttpError | undefined;
+}
+
 export interface IAddToFavouriteDto {
   userId: string;
   documentId: string;
@@ -182,6 +203,8 @@ export interface DocumentsServiceClient {
   findAll(request: IFindDocumentsDto): Observable<IFindDocumentsResponse>;
 
   findOneById(request: IOnlyId): Observable<IFindDocumentByIdResponse>;
+
+  findAccessToken(request: IOnlyId): Observable<IFindAccessTokenResponse>;
 }
 
 export interface DocumentsServiceController {
@@ -198,11 +221,15 @@ export interface DocumentsServiceController {
   findOneById(
     request: IOnlyId,
   ): Promise<IFindDocumentByIdResponse> | Observable<IFindDocumentByIdResponse> | IFindDocumentByIdResponse;
+
+  findAccessToken(
+    request: IOnlyId,
+  ): Promise<IFindAccessTokenResponse> | Observable<IFindAccessTokenResponse> | IFindAccessTokenResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "update", "findAll", "findOneById"];
+    const grpcMethods: string[] = ["create", "update", "findAll", "findOneById", "findAccessToken"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
@@ -284,6 +311,8 @@ export interface DocumentVersionsServiceClient {
   findOneById(request: IOnlyId): Observable<IFindOneDocumentVersionResponse>;
 
   findLast(request: IOnlyId): Observable<IFindOneDocumentVersionResponse>;
+
+  findDocument(request: IOnlyId): Observable<IFullDocumentResponse>;
 }
 
 export interface DocumentVersionsServiceController {
@@ -314,11 +343,15 @@ export interface DocumentVersionsServiceController {
     | Promise<IFindOneDocumentVersionResponse>
     | Observable<IFindOneDocumentVersionResponse>
     | IFindOneDocumentVersionResponse;
+
+  findDocument(
+    request: IOnlyId,
+  ): Promise<IFullDocumentResponse> | Observable<IFullDocumentResponse> | IFullDocumentResponse;
 }
 
 export function DocumentVersionsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll", "findOneById", "findLast"];
+    const grpcMethods: string[] = ["create", "findAll", "findOneById", "findLast", "findDocument"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

@@ -36,4 +36,8 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
         const { id, ...data } = dto;
         await this.documentsService.update(id, data);
     }
+
+    public async findAccessToken(dto: IOnlyId) {
+        return (await this.documentsService.findOneById(dto.id)).accessToken;
+    }
 }

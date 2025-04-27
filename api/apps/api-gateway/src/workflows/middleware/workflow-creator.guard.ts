@@ -13,7 +13,7 @@ export class WorkflowCreatorGuard implements CanActivate {
     ) {}
 
     public async canActivate(context: ExecutionContext) {
-        const requestData = this.exractRequestData(context);
+        const requestData = this.extractRequestData(context);
 
         const workflow = await firstValueFrom(
             this.workflowsGrpcService.call("findOneById", {
@@ -28,12 +28,12 @@ export class WorkflowCreatorGuard implements CanActivate {
         return true;
     }
 
-    private exractRequestData(context: ExecutionContext) {
+    private extractRequestData(context: ExecutionContext) {
         const request = context.switchToHttp().getRequest();
 
         const userId = request.jwtInfo.id as string;
 
-        if (!request.userId) {
+        if (userId) {
             throw new UnauthorizedException("Недостаточно прав");
         }
 

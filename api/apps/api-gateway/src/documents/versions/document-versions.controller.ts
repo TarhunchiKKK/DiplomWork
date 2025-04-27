@@ -4,7 +4,7 @@ import { CreateDocumentVersionDto } from "./dto/create-document-version.dto";
 import { DocumentVersionsGrpcService } from "common/grpc";
 import { ProvideOperation } from "../middleware/decorators/provide-operation.decorator";
 import { DocumentOperation } from "../middleware/enums/document-operation.enum";
-import { DocumentAccessGuard } from "../middleware/guards/document-access.guard";
+import { VersionOperationGuard } from "../middleware/guards/version-operation.guard";
 
 @Controller("/documents/versions")
 @UseGuards(AuthenticationGuard)
@@ -15,7 +15,7 @@ export class DocumentVersionsController {
     @UsePipes(ValidationPipe)
     @ProvideOperation(DocumentOperation.CREATE_VERSION)
     @ExtractFromRequest(request => request.params.versionId)
-    @UseGuards(DocumentAccessGuard)
+    @UseGuards(VersionOperationGuard)
     public create(@Body() dto: CreateDocumentVersionDto) {
         return this.documentVersionsGrpcService.call("create", dto);
     }
@@ -23,7 +23,7 @@ export class DocumentVersionsController {
     @Get("/all/:documentId")
     @ProvideOperation(DocumentOperation.READ)
     @ExtractFromRequest(request => request.params.documentId)
-    @UseGuards(DocumentAccessGuard)
+    @UseGuards(VersionOperationGuard)
     public findAll(@Param("documentId") documentId: string) {
         return this.documentVersionsGrpcService.call("findAll", {
             id: documentId
@@ -40,7 +40,7 @@ export class DocumentVersionsController {
     @Get("/:versionId")
     @ProvideOperation(DocumentOperation.READ)
     @ExtractFromRequest(request => request.params.versionId)
-    @UseGuards(DocumentAccessGuard)
+    @UseGuards(VersionOperationGuard)
     public findOneById(@Param("versionId") versionId: string) {
         return this.documentVersionsGrpcService.call("findOneById", {
             id: versionId

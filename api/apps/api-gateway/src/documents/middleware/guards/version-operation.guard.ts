@@ -1,28 +1,38 @@
-import { Injectable, CanActivate, ExecutionContext, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
+import { DocumentVersionsGrpcService } from "common/grpc";
 import { ExtractFromRequest } from "common/middleware";
-import { DocumentAccessTokensService } from "common/modules";
-import { documentPermissions } from "../constants/documents.constants";
-import { ProvideOperation } from "../decorators/provide-operation.decorator";
-import { DocumentOperation } from "../enums/document-operation.enum";
-import { DocumentRole } from "../enums/document-role.enum";
+import { firstValueFrom } from "rxjs";
 import { TCheckPermissionsDto } from "../types/documen-access.types";
-import { TRequestData } from "../types/request.types";
+import { documentPermissions } from "../constants/documents.constants";
+import { DocumentOperation } from "../enums/document-operation.enum";
+import { ProvideOperation } from "../decorators/provide-operation.decorator";
+import { DocumentAccessTokensService } from "common/modules";
+import { DocumentRole } from "../enums/document-role.enum";
 
 @Injectable()
-export class DocumentAccessGuard implements CanActivate {
+export class VersionOperationGuard implements CanActivate {
     public constructor(
+        private readonly versionsGrpcService: DocumentVersionsGrpcService,
+
         private readonly reflector: Reflector,
 
         private readonly tokensService: DocumentAccessTokensService
     ) {}
 
     public async canActivate(context: ExecutionContext) {
-        // const requestData = this.extractRequestData(context);
+        const requestData = this.extractRequestData(context);
 
-        // const document = await this.findDocument(requestData);
+        const document = await firstValueFrom(
+            this.versionsGrpcService.call("findDocument", {
+                id: requestData.versionId
+            })
+        );
 
-        // this.checkPermissions(context, { userId: requestData.userId, token: document.accessToken });
+        this.checkPermissions(context, {
+            userId: requestData.userId,
+            token: document.accessToken
+        });
 
         return true;
     }
@@ -30,19 +40,21 @@ export class DocumentAccessGuard implements CanActivate {
     private extractRequestData(context: ExecutionContext) {
         const request = context.switchToHttp().getRequest();
 
-        const extractFromRequest = this.reflector.get(ExtractFromRequest, context.getHandler());
+        const userId = request.jwtInfo.id as string;
 
-        const requestData = extractFromRequest(request) as TRequestData;
-
-        if (!requestData.userId) {
-            throw new UnauthorizedException("Необходимо авторизоваться");
-        } else if (requestData.type === "Document" && !requestData.documentId) {
-            throw new NotFoundException("Необходимо указать документ");
-        } else if (requestData.type === "Version" && !requestData.versionId) {
-            throw new NotFoundException("Необходимо указать версию");
+        if (userId) {
+            throw new UnauthorizedException("Недостаточно прав");
         }
 
-        return requestData;
+        const extractFromRequest = this.reflector.get(ExtractFromRequest, context.getHandler());
+
+        const versionId = extractFromRequest(request) as string;
+
+        if (versionId) {
+            throw new NotFoundException("Версия не найдена");
+        }
+
+        return { userId, versionId };
     }
 
     private checkPermissions(context: ExecutionContext, dto: TCheckPermissionsDto) {

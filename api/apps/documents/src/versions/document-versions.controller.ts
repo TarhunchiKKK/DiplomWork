@@ -33,4 +33,8 @@ export class DocumentVersionsController implements UnwrapGrpcResponse<DocumentVe
     public async findLast(dto: IOnlyId) {
         return await this.versionsService.findLast(dto.id).then(transformVersion);
     }
+
+    public async findDocument(dto: IOnlyId) {
+        return await this.versionsService.findVersionDocument(dto.id);
+    }
 }
