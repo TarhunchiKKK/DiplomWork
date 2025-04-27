@@ -7,13 +7,9 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { IAuthResponse, IEmptyResponse, IHttpError, IOnlyId } from "./common";
+import { IAuthResponse, IEmptyResponse, IHttpError, IOnlyId, IOnlyIds } from "./common";
 
 const protobufPackage = "users";
-
-export interface IFindManyUsersDto {
-  ids: string[];
-}
 
 export interface IFindOneUserResponseData {
   id: string;
@@ -96,20 +92,20 @@ export const USERS_PACKAGE_NAME = "users";
 export interface UsersServiceClient {
   findOne(request: IOnlyId): Observable<IFindOneUserResponse>;
 
-  findMany(request: IFindManyUsersDto): Observable<IFindManyUsersResponse>;
+  findAllByIds(request: IOnlyIds): Observable<IFindManyUsersResponse>;
 }
 
 export interface UsersServiceController {
   findOne(request: IOnlyId): Promise<IFindOneUserResponse> | Observable<IFindOneUserResponse> | IFindOneUserResponse;
 
-  findMany(
-    request: IFindManyUsersDto,
+  findAllByIds(
+    request: IOnlyIds,
   ): Promise<IFindManyUsersResponse> | Observable<IFindManyUsersResponse> | IFindManyUsersResponse;
 }
 
 export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["findOne", "findMany"];
+    const grpcMethods: string[] = ["findOne", "findAllByIds"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

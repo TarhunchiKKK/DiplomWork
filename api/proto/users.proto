@@ -9,11 +9,7 @@ package users;
 service UsersService {
     rpc FindOne (common.IOnlyId) returns (IFindOneUserResponse) {}
 
-    rpc FindMany (IFindManyUsersDto) returns (IFindManyUsersResponse) {}
-}
-
-message IFindManyUsersDto {
-    repeated string ids = 1;
+    rpc FindAllByIds (common.IOnlyIds) returns (IFindManyUsersResponse) {}
 }
 
 message IFindOneUserResponseData {

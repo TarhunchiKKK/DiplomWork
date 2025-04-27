@@ -38,4 +38,8 @@ export interface IOnlyId {
   id: string;
 }
 
+export interface IOnlyIds {
+  ids: string[];
+}
+
 export const COMMON_PACKAGE_NAME = "common";

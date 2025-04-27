@@ -45,3 +45,7 @@ message IEmptyResponse {
 message IOnlyId {
     string id = 1;
 }
+
+message IOnlyIds {
+    repeated string ids = 1;
+}
