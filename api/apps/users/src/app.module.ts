@@ -11,7 +11,6 @@ import { PasswordRecoveryModule } from "./password-recovery/password-recovery.mo
 import { AccountDeactivationModule } from "./account-deactivation/account-deactivation.module";
 import { TotpAuthenticationModule } from "./totp-authentication/totp-authentication.module";
 import { EventEmitterModule } from "@nestjs/event-emitter";
-import { UserEventsModule } from "./events/user-events.module";
 
 @Module({
     imports: [
@@ -42,8 +41,7 @@ import { UserEventsModule } from "./events/user-events.module";
         InvitationsModule,
         PasswordRecoveryModule,
         AccountDeactivationModule,
-        TotpAuthenticationModule,
-        UserEventsModule
+        TotpAuthenticationModule
     ]
 })
 export class AppModule {}

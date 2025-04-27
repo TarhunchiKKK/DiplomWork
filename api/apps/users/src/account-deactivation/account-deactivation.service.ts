@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
 import { AccountStatus } from "common/enums";
 import { EventEmitter2 } from "@nestjs/event-emitter";
-import { AccountActivatedEvent } from "../events/events/account-activated.event";
-import { AccountDeactivatedEvent } from "../events/events/account-deactivated.event";
+import { AccountActivatedEvent } from "./events/account-activated.event";
+import { AccountDeactivatedEvent } from "./events/account-deactivated.event";
 
 @Injectable()
 export class AccountDeactivationService {

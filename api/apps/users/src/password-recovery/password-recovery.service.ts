@@ -2,15 +2,14 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
 import { PasswordRecoveryTokensService } from "common/modules";
 import { IUpdatePasswordDto } from "common/grpc";
-import { EventEmitter2 } from "@nestjs/event-emitter";
-import { PasswordResetedEvent } from "../events/events/password-reseted.event";
+import { NotificationsRmqService, PasswordResetedRmqEvent } from "common/rabbitmq";
 
 @Injectable()
 export class PasswordRecoveryService {
     public constructor(
         private readonly usersService: UsersService,
 
-        private readonly eventEmitter: EventEmitter2,
+        private notificationsRmqService: NotificationsRmqService,
 
         private readonly tokensService: PasswordRecoveryTokensService
     ) {}
@@ -28,7 +27,7 @@ export class PasswordRecoveryService {
             password: user.password
         });
 
-        this.eventEmitter.emit(PasswordResetedEvent.PATTERN, new PasswordResetedEvent(user.id, token));
+        this.notificationsRmqService.emit(new PasswordResetedRmqEvent(user.email, token));
     }
 
     public async update(dto: IUpdatePasswordDto) {

@@ -4,10 +4,10 @@ import { DocumentComment } from "./entities/document-comment.entity";
 import { Repository } from "typeorm";
 import { ICreateDocumentCommentDto, IUpdateDocumentCommentDto } from "common/grpc";
 import { EventEmitter2 } from "@nestjs/event-emitter";
-import { CommentCreatedEvent } from "../events/events/comment-created.event";
-import { CommentUpdatedEvent } from "../events/events/comment-updated.event";
+import { CommentCreatedEvent } from "./events/comment-created.event";
+import { CommentUpdatedEvent } from "./events/comment-updated.event";
 import { CommentStatus } from "./enums/comment-status.enum";
-import { CommentDeletedEvent } from "../events/events/comment-deleted.event";
+import { CommentDeletedEvent } from "./events/comment-deleted.event";
 import { Cron } from "@nestjs/schedule";
 import { IgnoreFields } from "common/utils";
 

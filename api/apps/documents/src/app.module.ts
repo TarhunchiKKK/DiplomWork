@@ -9,7 +9,6 @@ import { DocumentVersionsModule } from "./versions/document-versions.module";
 import { DocumentVersion } from "./versions/entities/document-version.entity";
 import { DocumentComment } from "./comments/entities/document-comment.entity";
 import { EventEmitterModule } from "@nestjs/event-emitter";
-import { DocumentEventsModule } from "./events/document-events.module";
 import { ScheduleModule } from "@nestjs/schedule";
 
 @Module({
@@ -35,8 +34,7 @@ import { ScheduleModule } from "@nestjs/schedule";
         ScheduleModule.forRoot(),
         DocumentsModule,
         DocumentVersionsModule,
-        DocumentAccessTokensModule,
-        DocumentEventsModule
+        DocumentAccessTokensModule
     ]
 })
 export class AppModule {}
