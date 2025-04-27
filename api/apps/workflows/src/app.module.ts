@@ -6,6 +6,7 @@ import { WorkflowsModule } from "./workflows/workflows.module";
 import { WorkflowParticipant } from "./participants/entities/workflow-participant.entity";
 import { WorkflowParticipantsModule } from "./participants/workflow-participants.module";
 import { DocumentsGrpcModule } from "common/grpc";
+import { EventEmitterModule } from "@nestjs/event-emitter";
 
 @Module({
     imports: [
@@ -26,6 +27,7 @@ import { DocumentsGrpcModule } from "common/grpc";
                 entities: [Workflow, WorkflowParticipant]
             })
         }),
+        EventEmitterModule.forRoot(),
         WorkflowsModule,
         WorkflowParticipantsModule,
         DocumentsGrpcModule
