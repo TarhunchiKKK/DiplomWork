@@ -16,7 +16,7 @@ export class WorkflowParticipantsObserver {
         private readonly notificationsRmqService: NotificationsRmqService
     ) {}
 
-    private async getWorkflowInfo(documentId: string, usersIds: string[]) {
+    private async getWorkflowInfo(documentId: string, participantsIds: string[]) {
         const [document, users] = await Promise.all([
             firstValueFrom(
                 this.documentsGrpcService.call("findOneById", {
@@ -25,7 +25,7 @@ export class WorkflowParticipantsObserver {
             ),
             firstValueFrom(
                 this.usersGrpcService.call("findAllByIds", {
-                    ids: usersIds
+                    ids: participantsIds
                 })
             )
         ]);
@@ -35,7 +35,7 @@ export class WorkflowParticipantsObserver {
 
     @OnEvent(ParticipantsCreatedEvent.PATTERN)
     public async handleParticipantsCreated(event: ParticipantsCreatedEvent) {
-        const { users, document } = await this.getWorkflowInfo(event.documentId, event.usersIds);
+        const { users, document } = await this.getWorkflowInfo(event.documentId, event.participantsIds);
 
         users.users.forEach(user => {
             this.notificationsRmqService.emit(new ParticipantAddedRmqEvent(document.title, user.email));
@@ -44,7 +44,7 @@ export class WorkflowParticipantsObserver {
 
     @OnEvent(ParticipantsDeletedEvent.PATTERN)
     public async handleParticipantsDeleted(event: ParticipantsCreatedEvent) {
-        const { users, document } = await this.getWorkflowInfo(event.documentId, event.usersIds);
+        const { users, document } = await this.getWorkflowInfo(event.documentId, event.participantsIds);
 
         users.users.forEach(user => {
             this.notificationsRmqService.emit(new ParticipantDeletedRmqEvent(document.title, user.email));
