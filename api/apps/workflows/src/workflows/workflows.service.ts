@@ -5,10 +5,15 @@ import { Repository } from "typeorm";
 import { ICreateWorkflowDto } from "common/grpc";
 import { UpdateWorkflowDto } from "./dto/update-workflow-dto";
 import { WorkflowStatus } from "./enums/workflow-status.enum";
+import { EventEmitter2 } from "@nestjs/event-emitter";
+import { WorkflowDeletedEvent } from "./events/workflow-deleted.event";
 
 @Injectable()
 export class WorkflowsService {
-    public constructor(@InjectRepository(Workflow) private readonly workflowsRepository: Repository<Workflow>) {}
+    public constructor(
+        @InjectRepository(Workflow) private readonly workflowsRepository: Repository<Workflow>,
+        private readonly eventEmitter: EventEmitter2
+    ) {}
 
     public async create(dto: ICreateWorkflowDto) {
         const existingWorkflow = await this.workflowsRepository.findOne({
@@ -26,6 +31,14 @@ export class WorkflowsService {
 
     public async start(workflowId: string) {
         await this.update(workflowId, { status: WorkflowStatus.STARTED });
+    }
+
+    public async findAllByCreatorId(creatorId: string) {
+        return await this.workflowsRepository.find({
+            where: {
+                creatorId: creatorId
+            }
+        });
     }
 
     public async findOneById(workflowId: string) {
@@ -72,6 +85,14 @@ export class WorkflowsService {
 
     public async delete(workflowId: string) {
         const workflow = await this.findOneById(workflowId);
+
+        this.eventEmitter.emit(
+            WorkflowDeletedEvent.pattern,
+            new WorkflowDeletedEvent(
+                workflow.documentId,
+                workflow.participants.map(p => p.id)
+            )
+        );
 
         await this.workflowsRepository.delete(workflow);
     }

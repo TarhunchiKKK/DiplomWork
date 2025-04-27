@@ -1,19 +1,19 @@
 import { Injectable } from "@nestjs/common";
+import { render } from "@react-email/components";
 import { MailsService } from "common/modules";
-import { NotificationsService } from "../notifications/notifications.service";
 import {
     DocumentCommentCreatedRmqEvent,
-    DocumentCommentDeletedRmqEvent,
-    DocumentCommentUpdatedRmqEvent
+    DocumentCommentUpdatedRmqEvent,
+    DocumentCommentDeletedRmqEvent
 } from "common/rabbitmq";
-import { NotificationSubject } from "../notifications/enums/notification-subjects.enum";
-import { render } from "@react-email/components";
+import { NotificationSubject } from "../../notifications/enums/notification-subjects.enum";
+import { NotificationsService } from "../../notifications/notifications.service";
 import { CommentCreatedTemplate } from "./templates/comment-created.template";
-import { CommentUpdatedTemplate } from "./templates/comment-updated.template";
 import { CommentDeletedTemplate } from "./templates/comment-deleted.template";
+import { CommentUpdatedTemplate } from "./templates/comment-updated.template";
 
 @Injectable()
-export class DocumentNotificationsService {
+export class DocumentCommentsNotificationsService {
     public constructor(
         private readonly mailsService: MailsService,
 

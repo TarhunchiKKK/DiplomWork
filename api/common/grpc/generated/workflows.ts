@@ -34,6 +34,15 @@ export interface IFindOneWorkflowResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IFindWorkflowsResponseData {
+  workflows: IWorkflowResponseData[];
+}
+
+export interface IFindWorkflowsResponse {
+  data?: IFindWorkflowsResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
 export interface IUpsertWorkflowParticipantDto {
   id?: string | undefined;
   role: string;
@@ -52,6 +61,8 @@ export interface WorkflowsServiceClient {
 
   start(request: IOnlyId): Observable<IEmptyResponse>;
 
+  findAllByCreatorId(request: IOnlyId): Observable<IFindWorkflowsResponse>;
+
   findOneById(request: IOnlyId): Observable<IFindOneWorkflowResponse>;
 
   findOneByDocumentId(request: IOnlyId): Observable<IFindOneWorkflowResponse>;
@@ -66,6 +77,10 @@ export interface WorkflowsServiceController {
 
   start(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
+  findAllByCreatorId(
+    request: IOnlyId,
+  ): Promise<IFindWorkflowsResponse> | Observable<IFindWorkflowsResponse> | IFindWorkflowsResponse;
+
   findOneById(
     request: IOnlyId,
   ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
@@ -79,7 +94,14 @@ export interface WorkflowsServiceController {
 
 export function WorkflowsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "start", "findOneById", "findOneByDocumentId", "delete"];
+    const grpcMethods: string[] = [
+      "create",
+      "start",
+      "findAllByCreatorId",
+      "findOneById",
+      "findOneByDocumentId",
+      "delete",
+    ];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
@@ -108,17 +130,23 @@ export const WORKFLOWS_SERVICE_NAME = "WorkflowsService";
 
 export interface WorkflowParticipantsServiceClient {
   upsertWorkflowParticipants(request: IUpsertWorkflowParticipantsDto): Observable<IEmptyResponse>;
+
+  findAllUserWorkflows(request: IOnlyId): Observable<IFindWorkflowsResponse>;
 }
 
 export interface WorkflowParticipantsServiceController {
   upsertWorkflowParticipants(
     request: IUpsertWorkflowParticipantsDto,
   ): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  findAllUserWorkflows(
+    request: IOnlyId,
+  ): Promise<IFindWorkflowsResponse> | Observable<IFindWorkflowsResponse> | IFindWorkflowsResponse;
 }
 
 export function WorkflowParticipantsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["upsertWorkflowParticipants"];
+    const grpcMethods: string[] = ["upsertWorkflowParticipants", "findAllUserWorkflows"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

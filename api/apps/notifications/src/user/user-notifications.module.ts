@@ -1,12 +1,13 @@
 import { Module } from "@nestjs/common";
-import { UserNotificationsController } from "./user-notifications.controller";
-import { UserNotificationsService } from "./user-notifications.service";
-import { MailsModule } from "common/modules";
-import { NotificationsModule } from "../notifications/notifications.module";
+import { UserInvitationNotificationsModule } from "./user-invitation/user-invitation-notifications.module";
+import { PasswordRecoveryNotificationsModule } from "./password-recovery/password-recovery-notifiations.module";
+import { AccountDeactivationNotificationsModule } from "./account-deactivation/account-deactivation-notifications.module";
 
 @Module({
-    imports: [MailsModule, NotificationsModule],
-    controllers: [UserNotificationsController],
-    providers: [UserNotificationsService]
+    imports: [
+        UserInvitationNotificationsModule,
+        PasswordRecoveryNotificationsModule,
+        AccountDeactivationNotificationsModule
+    ]
 })
 export class UserNotificationsModule {}

@@ -7,3 +7,9 @@ export const transformWorkflow = (workflow: Workflow) => {
         completedAt: workflow.completedAt.toISOString() ?? null
     };
 };
+
+export const transformWorkflowsArray = (workflows: Workflow[]) => {
+    return {
+        workflows: workflows.map(transformWorkflow)
+    };
+};

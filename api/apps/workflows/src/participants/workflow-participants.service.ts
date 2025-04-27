@@ -6,19 +6,43 @@ import { ICreateParticipantDto } from "./dto/create-participant.dto";
 import { IUpdateParticipantDto } from "./dto/update-participant.dto";
 import { IUpsertWorkflowParticipantsDto } from "common/grpc";
 import { diffParticipants } from "./helpers/upserting.helpers";
+import { EventEmitter2 } from "@nestjs/event-emitter";
+import { ParticipantsDeletedEvent } from "./events/participants-deleted.event";
+import { ParticipantsCreatedEvent } from "./events/participants-created.event";
 
 @Injectable()
 export class WorkflowParticipantsService {
     public constructor(
         @InjectRepository(WorkflowParticipant)
-        private readonly participantsRepository: Repository<WorkflowParticipant>
+        private readonly participantsRepository: Repository<WorkflowParticipant>,
+
+        private readonly eventEmitter: EventEmitter2
     ) {}
 
     private async createMany(dtos: ICreateParticipantDto[]) {
         const participants = await this.participantsRepository.save(dtos);
 
         if (participants.length) {
+            this.eventEmitter.emit(
+                ParticipantsCreatedEvent.PATTERN,
+                new ParticipantsCreatedEvent(
+                    participants.map(p => p.id),
+                    participants[0].workflow.documentId
+                )
+            );
         }
+
+        return participants;
+    }
+
+    public async findAllUserWorkflows(userId: string) {
+        const participants = await this.participantsRepository.find({
+            where: {
+                userId: userId
+            }
+        });
+
+        return participants.map(participant => participant.workflow);
     }
 
     private async updateMany(dtos: IUpdateParticipantDto[]) {
@@ -84,9 +108,22 @@ export class WorkflowParticipantsService {
         const participants = await this.participantsRepository.find({
             where: {
                 id: In(ids)
+            },
+            relations: {
+                workflow: true
             }
         });
 
-        await Promise.all(participants.map(participant => this.participantsRepository.delete(participant)));
+        if (participants.length) {
+            this.eventEmitter.emit(
+                ParticipantsDeletedEvent.PATTERN,
+                new ParticipantsDeletedEvent(
+                    participants.map(p => p.id),
+                    participants[0].workflow.documentId
+                )
+            );
+
+            await Promise.all(participants.map(participant => this.participantsRepository.delete(participant)));
+        }
     }
 }

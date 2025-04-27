@@ -44,4 +44,11 @@ export class WorkflowsController {
             id: workflowId
         });
     }
+
+    @Get("/user/:userId")
+    public async findAllByCreatorId(@Param("userId") userId: string) {
+        return this.workflowsGrpcService.call("findAllByCreatorId", {
+            id: userId
+        });
+    }
 }
