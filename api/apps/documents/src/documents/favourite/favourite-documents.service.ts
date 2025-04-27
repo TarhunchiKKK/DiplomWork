@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FavouriteDocumentInfo } from "./entities/favourite-document-info.entity";
 import { Repository } from "typeorm";
-import { IAddToFavouriteDto, IFindFavouriteDocumentsDto, IRemoveFromFavouriteDto } from "common/grpc";
+import { IAddToFavouriteDto, IRemoveFromFavouriteDto } from "common/grpc";
 import { getShortDocumentData } from "../helpers/documents.helpers";
 
 @Injectable()
@@ -21,10 +21,10 @@ export class FavouriteDocumentsService {
         });
     }
 
-    public async findAll(dto: IFindFavouriteDocumentsDto) {
+    public async findAll(userId: string) {
         const documentsInfo = await this.favouriteDocumentsRepository.find({
             where: {
-                userId: dto.userId
+                userId: userId
             },
             relations: {
                 document: true

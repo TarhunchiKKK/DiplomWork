@@ -4,7 +4,7 @@ import {
     FavouriteDocumentsServiceController,
     GrpcExceptionFilter,
     IAddToFavouriteDto,
-    IFindFavouriteDocumentsDto,
+    IOnlyId,
     IRemoveFromFavouriteDto,
     UnwrapGrpcResponse,
     WrapGrpcResponseInterceptor
@@ -22,8 +22,8 @@ export class FavouriteDocumentsController implements UnwrapGrpcResponse<Favourit
         await this.favouriteDocumentsService.add(dto);
     }
 
-    public async findAll(dto: IFindFavouriteDocumentsDto) {
-        return await this.favouriteDocumentsService.findAll(dto);
+    public async findAll(dto: IOnlyId) {
+        return await this.favouriteDocumentsService.findAll(dto.id);
     }
 
     public async remove(dto: IRemoveFromFavouriteDto) {

@@ -22,14 +22,14 @@ export class DocumentVersionsController implements UnwrapGrpcResponse<DocumentVe
     }
 
     public async findAll(dto: IOnlyId) {
-        return await this.versionsService.findAll(dto);
+        return await this.versionsService.findAll(dto.id);
     }
 
     public async findOneById(dto: IOnlyId) {
-        return await this.versionsService.findOneById(dto);
+        return await this.versionsService.findOneById(dto.id);
     }
 
     public async findLast(dto: IOnlyId) {
-        return await this.versionsService.findLast(dto);
+        return await this.versionsService.findLast(dto.id);
     }
 }

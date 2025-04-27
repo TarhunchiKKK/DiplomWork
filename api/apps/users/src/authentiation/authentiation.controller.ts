@@ -27,6 +27,6 @@ export class AuthenticationController implements UnwrapGrpcResponse<Authenticati
     }
 
     public async refreshProfile(dto: IOnlyId) {
-        return await this.authenticationService.refreshProfile(dto);
+        return await this.authenticationService.refreshProfile(dto.id);
     }
 }

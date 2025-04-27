@@ -9,6 +9,7 @@ import { DocumentStatus } from "common/enums";
 import { getShortDocumentData } from "./helpers/documents.helpers";
 import { DocumentVersionsService } from "../versions/document-versions.service";
 import lodash from "lodash";
+import { IgnoreFields } from "common/utils";
 
 @Injectable()
 export class DocumentsService {
@@ -50,9 +51,9 @@ export class DocumentsService {
         };
     }
 
-    public async findOneById(id: string) {
+    public async findOneById(documentId: string) {
         const document = await this.documentsRepository.findOne({
-            where: { id: id }
+            where: { id: documentId }
         });
 
         if (!document) {
@@ -62,12 +63,10 @@ export class DocumentsService {
         return document;
     }
 
-    public async update(dto: IUpdateDocumentDto) {
-        const { documentId, ...data } = dto;
-
+    public async update(documentId: string, dto: IgnoreFields<IUpdateDocumentDto, "id">) {
         const document = await this.findOneById(documentId);
 
-        Object.assign(document, data);
+        Object.assign(document, dto);
 
         await this.documentsRepository.save(document);
     }

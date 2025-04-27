@@ -28,7 +28,7 @@ export class TotpAuthenticationController implements UnwrapGrpcResponse<TotpAuth
     }
 
     public async disable(dto: IOnlyId) {
-        await this.totpAuthenticationService.disable(dto);
+        await this.totpAuthenticationService.disable(dto.id);
     }
 
     public async login(dto: ILoginWithTotpDto) {

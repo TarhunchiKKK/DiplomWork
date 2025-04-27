@@ -2,13 +2,14 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DocumentComment } from "./entities/document-comment.entity";
 import { Repository } from "typeorm";
-import { ICreateDocumentCommentDto, IOnlyId, IUpdateDocumentCommentDto } from "common/grpc";
+import { ICreateDocumentCommentDto, IUpdateDocumentCommentDto } from "common/grpc";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { CommentCreatedEvent } from "../events/events/comment-created.event";
 import { CommentUpdatedEvent } from "../events/events/comment-updated.event";
 import { CommentStatus } from "./enums/comment-status.enum";
 import { CommentDeletedEvent } from "../events/events/comment-deleted.event";
 import { Cron } from "@nestjs/schedule";
+import { IgnoreFields } from "common/utils";
 
 @Injectable()
 export class DocumentCommentsService {
@@ -35,11 +36,11 @@ export class DocumentCommentsService {
         };
     }
 
-    public async findAll(dto: IOnlyId) {
+    public async findAll(versionId: string) {
         const comments = await this.commentsRepository.find({
             where: {
                 version: {
-                    id: dto.id
+                    id: versionId
                 },
                 status: CommentStatus.ACTIVE
             },
@@ -75,20 +76,18 @@ export class DocumentCommentsService {
         return comment;
     }
 
-    public async update(dto: IUpdateDocumentCommentDto) {
-        const { id, ...data } = dto;
+    public async update(commentId: string, dto: IgnoreFields<IUpdateDocumentCommentDto, "id">) {
+        const comment = await this.findOne(commentId);
 
-        const comment = await this.findOne(id);
-
-        Object.assign(comment, data);
+        Object.assign(comment, dto);
 
         await this.commentsRepository.save(comment);
 
         this.eventEmitter.emit(CommentUpdatedEvent.PATTERN, new CommentUpdatedEvent(comment.id));
     }
 
-    public async delete(dto: IOnlyId) {
-        const comment = await this.findOne(dto.id);
+    public async delete(commentId: string) {
+        const comment = await this.findOne(commentId);
 
         comment.status = CommentStatus.DELETED;
 

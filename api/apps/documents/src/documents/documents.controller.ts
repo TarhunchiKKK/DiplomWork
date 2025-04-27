@@ -32,6 +32,7 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
     }
 
     public async update(dto: IUpdateDocumentDto) {
-        await this.documentsService.update(dto);
+        const { id, ...data } = dto;
+        await this.documentsService.update(id, data);
     }
 }

@@ -25,7 +25,7 @@ export class DocumentCommentsController implements UnwrapGrpcResponse<DocumentCo
     }
 
     public async findAll(dto: IOnlyId) {
-        return await this.commentsService.findAll(dto);
+        return await this.commentsService.findAll(dto.id);
     }
 
     @ExtractFromRequest((request: IUpdateDocumentCommentDto) => ({
@@ -34,7 +34,8 @@ export class DocumentCommentsController implements UnwrapGrpcResponse<DocumentCo
     }))
     @UseGuards(CommentGuard)
     public async update(dto: IUpdateDocumentCommentDto) {
-        await this.commentsService.update(dto);
+        const { id, ...data } = dto;
+        await this.commentsService.update(id, data);
     }
 
     @ExtractFromRequest((request: IOnlyId) => ({
@@ -43,6 +44,6 @@ export class DocumentCommentsController implements UnwrapGrpcResponse<DocumentCo
     }))
     @UseGuards(CommentGuard)
     public async delete(dto: IOnlyId) {
-        await this.commentsService.delete(dto);
+        await this.commentsService.delete(dto.id);
     }
 }

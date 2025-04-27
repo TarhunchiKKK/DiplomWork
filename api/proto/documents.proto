@@ -55,7 +55,7 @@ message ICreateDocumentResponse {
 }
 
 message IUpdateDocumentDto {
-    string documentId = 1;
+    string id = 1;
 
     optional string title = 2;
 
@@ -131,7 +131,7 @@ service FavouriteDocumentsService {
 
     rpc Remove (IRemoveFromFavouriteDto) returns (common.IEmptyResponse) {}
 
-    rpc FindAll (IFindFavouriteDocumentsDto) returns (IFindDocumentsResponse) {}
+    rpc FindAll (common.IOnlyId) returns (IFindDocumentsResponse) {}
 }
 
 message IAddToFavouriteDto {
@@ -145,10 +145,6 @@ message IRemoveFromFavouriteDto {
     string documentId = 1;
 
     string userId = 2;
-}
-
-message IFindFavouriteDocumentsDto {
-    string userId = 1;
 }
 
 /********************************************Document Versions*********************************************************************/

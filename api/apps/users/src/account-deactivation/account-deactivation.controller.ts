@@ -17,10 +17,10 @@ export class AccountDeactivationController implements UnwrapGrpcResponse<Account
     public constructor(private readonly accountDeactivationService: AccountDeactivationService) {}
 
     public async activate(dto: IOnlyId) {
-        await this.accountDeactivationService.activate(dto);
+        await this.accountDeactivationService.activate(dto.id);
     }
 
     public async deactivate(dto: IOnlyId) {
-        await this.accountDeactivationService.deactivate(dto);
+        await this.accountDeactivationService.deactivate(dto.id);
     }
 }

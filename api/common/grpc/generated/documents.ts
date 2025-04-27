@@ -36,7 +36,7 @@ export interface ICreateDocumentResponse {
 }
 
 export interface IUpdateDocumentDto {
-  documentId: string;
+  id: string;
   title?: string | undefined;
   typeId?: string | undefined;
   aimId?: string | undefined;
@@ -89,10 +89,6 @@ export interface IAddToFavouriteDto {
 
 export interface IRemoveFromFavouriteDto {
   documentId: string;
-  userId: string;
-}
-
-export interface IFindFavouriteDocumentsDto {
   userId: string;
 }
 
@@ -233,7 +229,7 @@ export interface FavouriteDocumentsServiceClient {
 
   remove(request: IRemoveFromFavouriteDto): Observable<IEmptyResponse>;
 
-  findAll(request: IFindFavouriteDocumentsDto): Observable<IFindDocumentsResponse>;
+  findAll(request: IOnlyId): Observable<IFindDocumentsResponse>;
 }
 
 export interface FavouriteDocumentsServiceController {
@@ -242,7 +238,7 @@ export interface FavouriteDocumentsServiceController {
   remove(request: IRemoveFromFavouriteDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   findAll(
-    request: IFindFavouriteDocumentsDto,
+    request: IOnlyId,
   ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
 }
 
