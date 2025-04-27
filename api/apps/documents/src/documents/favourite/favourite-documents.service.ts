@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FavouriteDocumentInfo } from "./entities/favourite-document-info.entity";
 import { Repository } from "typeorm";
 import { IAddToFavouriteDto, IRemoveFromFavouriteDto } from "common/grpc";
-import { getShortDocumentData } from "../helpers/documents.helpers";
 
 @Injectable()
 export class FavouriteDocumentsService {
@@ -31,11 +30,7 @@ export class FavouriteDocumentsService {
             }
         });
 
-        const documents = documentsInfo.map(info => info.document);
-
-        return {
-            documents: documents.map(getShortDocumentData)
-        };
+        return documentsInfo.map(info => info.document);
     }
 
     public async remove(dto: IRemoveFromFavouriteDto) {

@@ -11,6 +11,7 @@ import {
     IUpdateDocumentDto,
     IOnlyId
 } from "common/grpc";
+import { transformDocumentsArray } from "./helpers/grpc.helpers";
 
 @Controller()
 @DocumentsServiceControllerMethods()
@@ -28,7 +29,7 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
     }
 
     public async findAll(dto: IFindDocumentsDto) {
-        return await this.documentsService.findAll(dto);
+        return await this.documentsService.findAll(dto).then(transformDocumentsArray);
     }
 
     public async update(dto: IUpdateDocumentDto) {

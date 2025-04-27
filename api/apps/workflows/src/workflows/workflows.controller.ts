@@ -23,7 +23,7 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
     }
 
     public async start(dto: IOnlyId) {
-        await this.workflowsService.start(dto);
+        await this.workflowsService.start(dto.id);
     }
 
     public async findOneById(dto: IOnlyId) {
@@ -31,7 +31,7 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
     }
 
     public async findOneByDocumentId(dto: IOnlyId) {
-        return await this.workflowsService.findOneByDocumentId(dto).then(transformWorkflow);
+        return await this.workflowsService.findOneByDocumentId(dto.id).then(transformWorkflow);
     }
 
     public async delete(dto: IOnlyId) {

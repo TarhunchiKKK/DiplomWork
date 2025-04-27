@@ -10,6 +10,7 @@ import {
     WrapGrpcResponseInterceptor
 } from "common/grpc";
 import { FavouriteDocumentsService } from "./favourite-documents.service";
+import { transformDocumentsArray } from "./helpers/grpc.helpers";
 
 @Controller()
 @DocumentsServiceControllerMethods()
@@ -23,7 +24,7 @@ export class FavouriteDocumentsController implements UnwrapGrpcResponse<Favourit
     }
 
     public async findAll(dto: IOnlyId) {
-        return await this.favouriteDocumentsService.findAll(dto.id);
+        return await this.favouriteDocumentsService.findAll(dto.id).then(transformDocumentsArray);
     }
 
     public async remove(dto: IRemoveFromFavouriteDto) {

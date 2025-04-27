@@ -30,14 +30,11 @@ export class DocumentCommentsService {
 
         this.eventEmitter.emit(CommentCreatedEvent.PATTERN, new CommentCreatedEvent(comment.id));
 
-        return {
-            ...comment,
-            createdAt: comment.createdAt.toISOString()
-        };
+        return comment;
     }
 
     public async findAll(versionId: string) {
-        const comments = await this.commentsRepository.find({
+        return await this.commentsRepository.find({
             where: {
                 version: {
                     id: versionId
@@ -48,15 +45,6 @@ export class DocumentCommentsService {
                 version: true
             }
         });
-
-        return {
-            comments: comments.map(comment => ({
-                id: comment.id,
-                message: comment.message,
-                creatorId: comment.creatorId,
-                createdAt: comment.createdAt.toISOString()
-            }))
-        };
     }
 
     public async findOne(commentId: string) {

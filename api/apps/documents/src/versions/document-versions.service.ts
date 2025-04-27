@@ -4,7 +4,6 @@ import { DocumentVersion } from "./entities/document-version.entity";
 import { Repository } from "typeorm";
 import { ICreateDocumentVersionDto } from "common/grpc";
 import { generateS3Filename } from "./helpers/s3.helpers";
-import { version } from "os";
 
 @Injectable()
 export class DocumentVersionsService {
@@ -13,19 +12,14 @@ export class DocumentVersionsService {
     ) {}
 
     public async create(dto: ICreateDocumentVersionDto) {
-        const version = await this.versionsRepository.save({
+        return await this.versionsRepository.save({
             url: generateS3Filename(dto.fileExtension),
             description: dto.description
         });
-
-        return {
-            ...version,
-            createdAt: version.createdAt.toISOString()
-        };
     }
 
     public async findAll(documentId: string) {
-        const versions = await this.versionsRepository.find({
+        return await this.versionsRepository.find({
             where: {
                 document: {
                     id: documentId
@@ -35,15 +29,6 @@ export class DocumentVersionsService {
                 document: true
             }
         });
-
-        return {
-            versions: versions.map(version => ({
-                id: version.id,
-                url: version.url,
-                description: version.description,
-                createdAt: version.createdAt.toISOString()
-            }))
-        };
     }
 
     public async findOneById(versionId: string) {
@@ -57,10 +42,7 @@ export class DocumentVersionsService {
             throw new NotFoundException("Версия не найдена");
         }
 
-        return {
-            ...version,
-            createdAt: version.createdAt.toISOString()
-        };
+        return version;
     }
 
     public async findLast(documentId: string) {
@@ -82,10 +64,7 @@ export class DocumentVersionsService {
             throw new NotFoundException("Нет версий для документа");
         }
 
-        return {
-            ...version[0],
-            createdAt: version[0].createdAt.toISOString()
-        };
+        return versions[0];
     }
 
     public async findVersionDocument(versionId: string) {

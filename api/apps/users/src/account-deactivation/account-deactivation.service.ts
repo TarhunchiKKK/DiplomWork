@@ -18,7 +18,7 @@ export class AccountDeactivationService {
             status: AccountStatus.ACTIVE
         });
 
-        this.eventEmitter.emit(AccountActivatedEvent.PATTERN, new AccountActivatedEvent(dto.id));
+        this.eventEmitter.emit(AccountActivatedEvent.PATTERN, new AccountActivatedEvent(userId));
     }
 
     public async deactivate(userId: string) {
@@ -26,6 +26,6 @@ export class AccountDeactivationService {
             status: AccountStatus.DEACTIVATED
         });
 
-        this.eventEmitter.emit(AccountDeactivatedEvent.PATTERN, new AccountDeactivatedEvent(dto.id));
+        this.eventEmitter.emit(AccountDeactivatedEvent.PATTERN, new AccountDeactivatedEvent(userId));
     }
 }

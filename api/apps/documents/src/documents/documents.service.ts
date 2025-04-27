@@ -6,7 +6,6 @@ import { ICreateDocumentDto, IFindDocumentsDto, IUpdateDocumentDto } from "commo
 import { DocumentAccessTokensService } from "common/modules";
 import { FindDocumentsQueryBuilder } from "./utils/find-documents.query-builder";
 import { DocumentStatus } from "common/enums";
-import { getShortDocumentData } from "./helpers/documents.helpers";
 import { DocumentVersionsService } from "../versions/document-versions.service";
 import lodash from "lodash";
 import { IgnoreFields } from "common/utils";
@@ -44,11 +43,7 @@ export class DocumentsService {
     }
 
     public async findAll(dto: IFindDocumentsDto) {
-        const documents = await this.documentsRepository.find(new FindDocumentsQueryBuilder(dto).build());
-
-        return {
-            documents: documents.map(getShortDocumentData)
-        };
+        return await this.documentsRepository.find(new FindDocumentsQueryBuilder(dto).build());
     }
 
     public async findOneById(documentId: string) {

@@ -12,6 +12,7 @@ import {
 import { DocumentCommentsService } from "./document-comments.service";
 import { ExtractFromRequest } from "common/middleware";
 import { CommentGuard } from "./middleware/comments.guard";
+import { transformCommentsArray, transfromComment } from "./helpers/grpc.helpers";
 
 @Controller()
 @DocumentCommentsServiceControllerMethods()
@@ -21,11 +22,11 @@ export class DocumentCommentsController implements UnwrapGrpcResponse<DocumentCo
     public constructor(private readonly commentsService: DocumentCommentsService) {}
 
     public async create(dto: ICreateDocumentCommentDto) {
-        return await this.commentsService.create(dto);
+        return await this.commentsService.create(dto).then(transfromComment);
     }
 
     public async findAll(dto: IOnlyId) {
-        return await this.commentsService.findAll(dto.id);
+        return await this.commentsService.findAll(dto.id).then(transformCommentsArray);
     }
 
     @ExtractFromRequest((request: IUpdateDocumentCommentDto) => ({
