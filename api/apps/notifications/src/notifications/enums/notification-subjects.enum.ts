@@ -11,5 +11,7 @@ export enum NotificationSubject {
     COMMENT_DELETED = "Комментарий удален",
 
     // Workflows
-    WORKFLOW_DELETED = "Маршрут согласования удален"
+    WORKFLOW_DELETED = "Маршрут согласования удален",
+    PARTICIPANT_ADDED = "Добавление к маршруту согласования",
+    PARTICIPANT_DELETED = "Исключение из маршрута согласования"
 }
