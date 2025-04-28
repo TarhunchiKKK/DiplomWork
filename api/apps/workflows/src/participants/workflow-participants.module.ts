@@ -18,6 +18,6 @@ import { NotificationsRmqModule } from "common/rabbitmq";
     ],
     controllers: [WorkflowParticipantsController],
     providers: [WorkflowParticipantsService, WorkflowParticipantsObserver],
-    exports: [WorkflowParticipantsModule]
+    exports: [WorkflowParticipantsService]
 })
 export class WorkflowParticipantsModule {}

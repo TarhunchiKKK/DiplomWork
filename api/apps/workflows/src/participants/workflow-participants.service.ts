@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { WorkflowParticipant } from "./entities/workflow-participant.entity";
 import { In, Repository } from "typeorm";
@@ -33,6 +33,24 @@ export class WorkflowParticipantsService {
         }
 
         return participants;
+    }
+
+    public async findOneById(participantId: string) {
+        const participant = await this.participantsRepository.findOne({
+            where: {
+                id: participantId
+            },
+            relations: {
+                workflow: true,
+                approval: true
+            }
+        });
+
+        if (!participant) {
+            throw new NotFoundException("Участник маршрута не найден");
+        }
+
+        return participant;
     }
 
     public async findAllUserWorkflows(userId: string) {

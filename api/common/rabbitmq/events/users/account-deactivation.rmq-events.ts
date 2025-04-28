@@ -7,3 +7,11 @@ export class AccountActivatedRmqEvent extends BaseRmqEvent {
         super(AccountActivatedRmqEvent.PATTERN, { email });
     }
 }
+
+export class AccountDeactivatedRmqEvent extends BaseRmqEvent {
+    public static PATTERN = "account.deactivated";
+
+    public constructor(email: string) {
+        super(AccountDeactivatedRmqEvent.PATTERN, { email });
+    }
+}

@@ -1,4 +1,3 @@
-export { UserInvitedRqmEvent } from "./user-invited.rmq-event";
-export { PasswordResetedRmqEvent } from "./password-reseted.rmq-event";
-export { AccountActivatedRmqEvent } from "./account-activated.emq-event";
-export { AccountDeactivatedRmqEvent } from "./deactivate-account.event";
+export * from "./user-invitation.rmq-events";
+export * from "./password-recovery.rmq-events";
+export * from "./account-deactivation.rmq-events";

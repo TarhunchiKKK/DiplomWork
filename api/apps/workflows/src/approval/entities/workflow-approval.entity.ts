@@ -17,7 +17,7 @@ export class Approval {
     @PrimaryGeneratedColumn("uuid")
     public id: string;
 
-    @Column({ type: "enum", enum: ApprovalStatus })
+    @Column({ type: "enum", enum: ApprovalStatus, default: ApprovalStatus.DEFAULT })
     public status: ApprovalStatus;
 
     @CreateDateColumn()
