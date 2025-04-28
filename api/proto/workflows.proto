@@ -87,3 +87,43 @@ message IUpsertWorkflowParticipantsDto {
 
     string workflowId = 2;
 }
+
+/********************************************Approvals*********************************************************************/
+
+service ApprovalsService {
+    rpc Upsert (IUpsertApprovalDto) returns (IApprovalResponse) {}
+
+    rpc FindOne (IFindOneApprovalDto) returns (IApprovalResponse) {} 
+}
+
+message IUpsertApprovalDto {
+    string workflowId = 1;
+
+    string participantId = 2;
+
+    string status = 3;
+}
+
+message IFindOneApprovalDto {
+    string workflowId = 1;
+
+    string participantId = 2;
+}
+
+message IApproval {
+    string id = 1;
+
+    string status = 2;
+
+    string createdAt = 3;
+
+    string updatedAt = 4;
+}
+
+message IApprovalResponse {
+    oneof response {
+        IApproval data = 1;
+
+        common.IEmptyResponse empty = 2;
+    }
+}

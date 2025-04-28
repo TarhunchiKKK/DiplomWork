@@ -29,7 +29,9 @@ export class Approval {
     @OneToOne(() => WorkflowParticipant, participant => participant.approval)
     public participant: WorkflowParticipant;
 
-    @ManyToOne(() => Workflow, workflow => workflow.approvals)
+    @ManyToOne(() => Workflow, workflow => workflow.approvals, {
+        onDelete: "CASCADE"
+    })
     @JoinColumn()
     public workflow: Workflow;
 }

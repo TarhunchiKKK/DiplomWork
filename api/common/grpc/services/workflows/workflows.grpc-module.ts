@@ -5,6 +5,7 @@ import { getGrpcConfig } from "common/config";
 import { WORKFLOWS_PACKAGE_NAME } from "common/grpc/generated";
 import { WorkflowsGrpcService } from "./services/workflows.grpc.service";
 import { WorkflowParticipantsGrpcService } from "./services/workflow-participants.grpc-service";
+import { ApprovalsGrpcService } from "./services/approvals.grpc-service";
 
 @Module({
     imports: [
@@ -17,7 +18,7 @@ import { WorkflowParticipantsGrpcService } from "./services/workflow-participant
             }
         ])
     ],
-    providers: [WorkflowsGrpcService, WorkflowParticipantsGrpcService],
-    exports: [WorkflowsGrpcService, WorkflowParticipantsGrpcService]
+    providers: [WorkflowsGrpcService, WorkflowParticipantsGrpcService, ApprovalsGrpcService],
+    exports: [WorkflowsGrpcService, WorkflowParticipantsGrpcService, ApprovalsGrpcService]
 })
 export class WorkflowsGrpcModule {}
