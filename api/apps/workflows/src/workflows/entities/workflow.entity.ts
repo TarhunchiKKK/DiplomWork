@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { WorkflowStatus } from "../enums/workflow-status.enum";
 import { WorkflowParticipant } from "../../participants/entities/workflow-participant.entity";
+import { Approval } from "../../approval/entities/workflow-approval.entity";
 
 @Entity()
 export class Workflow {
@@ -24,4 +25,7 @@ export class Workflow {
 
     @OneToMany(() => WorkflowParticipant, participant => participant.workflow)
     public participants: WorkflowParticipant[];
+
+    @OneToMany(() => Approval, approval => approval.workflow)
+    public approvals: Approval[];
 }

@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { WorkflowParticipantRole } from "../enums/workflow-participant-role.enum";
 import { Workflow } from "../../workflows/entities/workflow.entity";
+import { Approval } from "../../approval/entities/workflow-approval.entity";
 
 @Entity()
 export class WorkflowParticipant {
@@ -16,4 +17,7 @@ export class WorkflowParticipant {
     @ManyToOne(() => Workflow, workflow => workflow.participants)
     @JoinColumn()
     public workflow: Workflow;
+
+    @OneToOne(() => Approval, approval => approval.participant)
+    public approval: Approval;
 }
