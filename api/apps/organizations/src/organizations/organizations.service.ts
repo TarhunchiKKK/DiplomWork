@@ -1,9 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Organization } from "./schemas/organization.schema";
 import { Model } from "mongoose";
 import { ICreateOrganizationDto } from "./interfaces/create-organization.dto";
-import { IUpdateAdministrativeDivisionsDto, IUpdateDocumentAimsDto, IUpdateDocumentTypesDto } from "common/grpc";
+import { IUpdateOrganizationDto } from "./interfaces/update-organization.dto";
 
 @Injectable()
 export class OrganizationsService {
@@ -14,36 +14,20 @@ export class OrganizationsService {
     }
 
     public async findOneById(organizationId: string) {
-        return await this.organizationModel.findById(organizationId);
+        const organization = await this.organizationModel.findById(organizationId);
+
+        if (!organization) {
+            throw new NotFoundException("Организация не найдена");
+        }
+
+        return organization;
     }
 
-    public async updateDocumentAims(dto: IUpdateDocumentAimsDto) {
-        const organization = await this.findOneById(dto.organizationId);
+    public async update(organizationId: string, dto: IUpdateOrganizationDto) {
+        const organization = await this.findOneById(organizationId);
 
-        if (organization) {
-            organization.documentAims = dto.documentAims;
+        Object.assign(organization, dto);
 
-            await organization.save();
-        }
-    }
-
-    public async updateDocumentTypes(dto: IUpdateDocumentTypesDto) {
-        const organization = await this.findOneById(dto.organizationId);
-
-        if (organization) {
-            organization.documentTypes = dto.documentTypes;
-
-            await organization.save();
-        }
-    }
-
-    public async updateAdministrativeDivisions(dto: IUpdateAdministrativeDivisionsDto) {
-        const organization = await this.findOneById(dto.organizationId);
-
-        if (organization) {
-            organization.administrativeDivisions = dto.administrativeDivisions;
-
-            await organization.save();
-        }
+        await organization.save();
     }
 }

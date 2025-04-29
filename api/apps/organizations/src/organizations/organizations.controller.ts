@@ -29,19 +29,22 @@ export class OrganizationsController implements UnwrapGrpcResponse<Organizations
     }
 
     public async findOneById(dto: IOnlyId) {
-        const data = await this.organizationsService.findOneById(dto.id);
-        return asType<IFindOneOrganizationResponse["data"]>(data);
+        const organization = await this.organizationsService.findOneById(dto.id);
+        return asType<IFindOneOrganizationResponse["data"]>(organization);
     }
 
     public async updateDocumentAims(dto: IUpdateDocumentAimsDto) {
-        await this.organizationsService.updateDocumentAims(dto);
+        const { organizationId, ...data } = dto;
+        await this.organizationsService.update(organizationId, data);
     }
 
     public async updateDocumentTypes(dto: IUpdateDocumentTypesDto) {
-        await this.organizationsService.updateDocumentTypes(dto);
+        const { organizationId, ...data } = dto;
+        await this.organizationsService.update(organizationId, data);
     }
 
     public async updateAdministrativeDivisions(dto: IUpdateAdministrativeDivisionsDto) {
-        await this.organizationsService.updateAdministrativeDivisions(dto);
+        const { organizationId, ...data } = dto;
+        await this.organizationsService.update(organizationId, data);
     }
 }
