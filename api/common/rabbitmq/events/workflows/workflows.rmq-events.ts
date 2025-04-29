@@ -17,8 +17,8 @@ export class WorkflowCompletedRmqEvent extends BaseRmqEvent {
     public constructor(
         public title: string,
 
-        public creatorEmail: string
+        public creator: { id: string; email: string }
     ) {
-        super(WorkflowCompletedRmqEvent.PATTERN, { title, creatorEmail });
+        super(WorkflowCompletedRmqEvent.PATTERN, { title, creator });
     }
 }

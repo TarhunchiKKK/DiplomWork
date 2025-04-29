@@ -86,6 +86,8 @@ export class WorkflowStatusObserver {
             })
         );
 
-        this.notificationsRmqService.emit(new WorkflowCompletedRmqEvent(workflow.title, user.email));
+        this.notificationsRmqService.emit(
+            new WorkflowCompletedRmqEvent(workflow.title, { id: user.id, email: user.email })
+        );
     }
 }
