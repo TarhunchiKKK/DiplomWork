@@ -7,13 +7,21 @@ import { WorkflowParticipantRole } from "../../participants/enums/workflow-parti
 import { ApprovalStatus } from "../../approval/enums/approval.-status.enum";
 import { WorkflowStatus } from "../enums/workflow-status.enum";
 import { WorkflowsService } from "../workflows.service";
+import { UpdateWorkflowDto } from "../dto/update-workflow-dto";
+import { NotificationsRmqService, WorkflowCompletedRmqEvent } from "common/rabbitmq";
+import { UsersGrpcService } from "common/grpc";
+import { firstValueFrom } from "rxjs";
 
 @Injectable()
 export class WorkflowStatusObserver {
     public constructor(
         private readonly workflowsService: WorkflowsService,
 
-        private readonly participantsService: WorkflowParticipantsService
+        private readonly participantsService: WorkflowParticipantsService,
+
+        private readonly notificationsRmqService: NotificationsRmqService,
+
+        private readonly usersGrpcService: UsersGrpcService
     ) {}
 
     private checkForFullyApproved(participants: WorkflowParticipant[]) {
@@ -40,24 +48,44 @@ export class WorkflowStatusObserver {
         return participants.some(participant => participant.approval.status === ApprovalStatus.REJECTED);
     }
 
+    private getUpdateWorkflowDto(participants: WorkflowParticipant[]) {
+        let dto: UpdateWorkflowDto | null = null;
+
+        if (this.checkForCompleted(participants)) {
+            dto = { status: WorkflowStatus.COMPLETED, completedAt: new Date() };
+        } else if (this.checkForFullyApproved(participants)) {
+            dto = { status: WorkflowStatus.FULLY_APPROVED };
+        } else if (this.checkForRejected(participants)) {
+            dto = { status: WorkflowStatus.REJECTED };
+        }
+
+        return dto;
+    }
+
     @OnEvent(RecalculateWorkflowStatusEvent.pattern)
     public async handleRecalculateWorkflowStatus(event: RecalculateWorkflowStatusEvent) {
         const participants = await this.participantsService.findAllByWorkflowId(event.workflowId);
 
-        let newStatus: WorkflowStatus | null = null;
+        const dto = this.getUpdateWorkflowDto(participants);
 
-        if (this.checkForCompleted(participants)) {
-            newStatus = WorkflowStatus.COMPLETED;
-        } else if (this.checkForFullyApproved(participants)) {
-            newStatus = WorkflowStatus.FULLY_APPROVED;
-        } else if (this.checkForRejected(participants)) {
-            newStatus = WorkflowStatus.REJECTED;
-        }
+        if (dto) {
+            await this.workflowsService.update(event.workflowId, dto);
 
-        if (newStatus) {
-            await this.workflowsService.update(event.workflowId, {
-                status: newStatus
-            });
+            if (dto.status === WorkflowStatus.COMPLETED) {
+                this.handleWorkflowCompletedEvent(event.workflowId);
+            }
         }
+    }
+
+    public async handleWorkflowCompletedEvent(workflowId: string) {
+        const workflow = await this.workflowsService.findOneById(workflowId);
+
+        const user = await firstValueFrom(
+            this.usersGrpcService.call("findOne", {
+                id: workflow.creatorId
+            })
+        );
+
+        this.notificationsRmqService.emit(new WorkflowCompletedRmqEvent(workflow.title, user.email));
     }
 }
