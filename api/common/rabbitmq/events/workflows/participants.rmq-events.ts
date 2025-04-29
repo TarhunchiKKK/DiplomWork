@@ -10,3 +10,14 @@ export class ParticipantAddedRmqEvent extends BaseRmqEvent {
         super(ParticipantAddedRmqEvent.PATTERN, { documentTitle, userEmail });
     }
 }
+
+export class ParticipantDeletedRmqEvent extends BaseRmqEvent {
+    public static PATTERN = "participant.deleted";
+
+    public constructor(
+        public documentTitle: string,
+        public userEmail: string
+    ) {
+        super(ParticipantDeletedRmqEvent.PATTERN, { documentTitle, userEmail });
+    }
+}

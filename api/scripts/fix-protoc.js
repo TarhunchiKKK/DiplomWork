@@ -69,6 +69,10 @@ const replacements = [
         to: "workflowId"
     },
     {
+        from: "participant_id",
+        to: "participantId"
+    },
+    {
         from: "export const GOOGLE_PROTOBUF_PACKAGE_NAME",
         to: "const GOOGLE_PROTOBUF_PACKAGE_NAME"
     },

@@ -54,6 +54,29 @@ export interface IUpsertWorkflowParticipantsDto {
   workflowId: string;
 }
 
+export interface IUpsertApprovalDto {
+  workflowId: string;
+  participantId: string;
+  status: string;
+}
+
+export interface IFindOneApprovalDto {
+  workflowId: string;
+  participantId: string;
+}
+
+export interface IApproval {
+  id: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IApprovalResponse {
+  data?: IApproval | undefined;
+  empty?: IEmptyResponse | undefined;
+}
+
 export const WORKFLOWS_PACKAGE_NAME = "workflows";
 
 export interface WorkflowsServiceClient {
@@ -172,3 +195,44 @@ export function WorkflowParticipantsServiceControllerMethods() {
 }
 
 export const WORKFLOW_PARTICIPANTS_SERVICE_NAME = "WorkflowParticipantsService";
+
+export interface ApprovalsServiceClient {
+  upsert(request: IUpsertApprovalDto): Observable<IApprovalResponse>;
+
+  findOne(request: IFindOneApprovalDto): Observable<IApprovalResponse>;
+}
+
+export interface ApprovalsServiceController {
+  upsert(request: IUpsertApprovalDto): Promise<IApprovalResponse> | Observable<IApprovalResponse> | IApprovalResponse;
+
+  findOne(request: IFindOneApprovalDto): Promise<IApprovalResponse> | Observable<IApprovalResponse> | IApprovalResponse;
+}
+
+export function ApprovalsServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["upsert", "findOne"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("ApprovalsService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("ApprovalsService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const APPROVALS_SERVICE_NAME = "ApprovalsService";
