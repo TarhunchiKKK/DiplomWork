@@ -24,18 +24,22 @@ message ICreateWorkflowDto {
     string userId = 1;
 
     string documentId = 2;
+
+    string title = 3;
 }
 
 message IWorkflowResponseData {
     string id = 1;
 
-    string creatorId = 2;
+    string title = 2;
 
-    string documentId = 3;
+    string creatorId = 3;
 
-    string status = 4;
+    string documentId = 4;
 
-    optional string completedAt = 5;
+    string status = 5;
+
+    optional string completedAt = 6;
 }
 
 message ICreateWorkflowResponse {
