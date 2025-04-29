@@ -10,3 +10,15 @@ export class WorkflowDeletedRmqEvent extends BaseRmqEvent {
         super(WorkflowDeletedRmqEvent.PATTERN, { documentTitle, userEmail });
     }
 }
+
+export class WorkflowCompletedRmqEvent extends BaseRmqEvent {
+    public static PATTERN = "workflow.completed";
+
+    public constructor(
+        public title: string,
+
+        public creator: { id: string; email: string }
+    ) {
+        super(WorkflowCompletedRmqEvent.PATTERN, { title, creator });
+    }
+}

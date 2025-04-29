@@ -1,4 +1,3 @@
-import { DocumentStatus } from "common/enums";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { FavouriteDocumentInfo } from "../favourite/entities/favourite-document-info.entity";
 import { DocumentVersion } from "../../versions/entities/document-version.entity";
@@ -19,9 +18,6 @@ export class ElectronicDocument {
 
     @Column({ default: false })
     public isUrgent: boolean;
-
-    @Column({ type: "enum", enum: DocumentStatus, default: DocumentStatus.DEFAULT })
-    public status: DocumentStatus;
 
     @Column()
     public authorId: string;

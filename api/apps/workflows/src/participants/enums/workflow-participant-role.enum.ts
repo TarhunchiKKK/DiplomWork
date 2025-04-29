@@ -1,5 +1,5 @@
 export enum WorkflowParticipantRole {
     CREATOR = "CREATOR",
-    CONCORDANT = "CONCORDANT",
+    APPROVER = "APPROVER",
     SIGNER = "SIGNER"
 }

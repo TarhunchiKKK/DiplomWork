@@ -26,7 +26,6 @@ export interface ICreateDocumentResponseData {
   authorId: string;
   typeId: string;
   aimId: string;
-  status: string;
   isUrgent: boolean;
 }
 
@@ -47,7 +46,6 @@ export interface IFindDocumentsDto {
   authorId?: string | undefined;
   typeId?: string | undefined;
   aimId?: string | undefined;
-  status?: string | undefined;
   isUrgent?: boolean | undefined;
   sortOrder?: string | undefined;
 }
@@ -73,7 +71,6 @@ export interface IFindOneDocumentResponse {
   typeId: string;
   aimId: string;
   isUrgent: boolean;
-  status: string;
   authorId: string;
 }
 
@@ -88,7 +85,6 @@ export interface IFullDocumentResponseData {
   typeId: string;
   aimId: string;
   isUrgent: boolean;
-  status: string;
   authorId: string;
   accessToken: string;
 }

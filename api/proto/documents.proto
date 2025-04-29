@@ -43,9 +43,7 @@ message ICreateDocumentResponseData {
 
     string aimId = 5; 
 
-    string status = 6;
-
-    bool isUrgent = 7;
+    bool isUrgent = 6;
 }
 
 message ICreateDocumentResponse {
@@ -75,11 +73,9 @@ message IFindDocumentsDto {
 
     optional string aimId = 3;
 
-    optional string status = 4;
+    optional bool isUrgent = 4;
 
-    optional bool isUrgent = 5;
-
-    optional string sortOrder = 6;
+    optional string sortOrder = 5;
 }
 
 message IDocumentShortData {
@@ -113,9 +109,7 @@ message IFindOneDocumentResponse {
 
     bool isUrgent = 5;
 
-    string status = 6;
-
-    string authorId = 7;
+    string authorId = 6;
 }
 
 message IFindDocumentByIdResponse {
@@ -137,11 +131,9 @@ message IFullDocumentResponseData {
 
     bool isUrgent = 5;
 
-    string status = 6;
+    string authorId = 6;
 
-    string authorId = 7;
-
-    string accessToken = 8;
+    string accessToken = 7;
 }
 
 message IFullDocumentResponse {

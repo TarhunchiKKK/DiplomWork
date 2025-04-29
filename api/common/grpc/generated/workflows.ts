@@ -14,10 +14,12 @@ const protobufPackage = "workflows";
 export interface ICreateWorkflowDto {
   userId: string;
   documentId: string;
+  title: string;
 }
 
 export interface IWorkflowResponseData {
   id: string;
+  title: string;
   creatorId: string;
   documentId: string;
   status: string;
