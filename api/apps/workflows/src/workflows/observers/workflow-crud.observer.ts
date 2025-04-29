@@ -3,10 +3,10 @@ import { OnEvent } from "@nestjs/event-emitter";
 import { UsersGrpcService, DocumentsGrpcService } from "common/grpc";
 import { NotificationsRmqService, WorkflowDeletedRmqEvent } from "common/rabbitmq";
 import { firstValueFrom } from "rxjs";
-import { WorkflowDeletedEvent } from "./events/workflow-deleted.event";
+import { WorkflowDeletedEvent } from "../events/workflow-deleted.event";
 
 @Injectable()
-export class WorkflowsEventsObserver {
+export class WorkflowCrudObserver {
     public constructor(
         private readonly usersGrpcService: UsersGrpcService,
 

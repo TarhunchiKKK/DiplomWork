@@ -53,6 +53,20 @@ export class WorkflowParticipantsService {
         return participant;
     }
 
+    public async findAllByWorkflowId(workflowId: string) {
+        return await this.participantsRepository.find({
+            where: {
+                workflow: {
+                    id: workflowId
+                }
+            },
+            relations: {
+                workflow: true,
+                approval: true
+            }
+        });
+    }
+
     public async findAllUserWorkflows(userId: string) {
         const participants = await this.participantsRepository.find({
             where: {
