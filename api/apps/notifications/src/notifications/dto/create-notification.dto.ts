@@ -1,4 +1,4 @@
-import { NotificationSubject } from "../enums/notification-subjects.enum";
+import { NotificationSubject } from "../../../../../common/enums/notifications/notification-subjects.enum";
 
 export class CreateNotificationdto {
     public subject: NotificationSubject;

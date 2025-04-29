@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { NotificationsService } from "../notifications/notifications.service";
 import { MailsService } from "common/modules";
-import { WorkflowDeletedRmqEvent } from "common/rabbitmq";
-import { NotificationSubject } from "../notifications/enums/notification-subjects.enum";
+import { WorkflowCompletedRmqEvent, WorkflowDeletedRmqEvent } from "common/rabbitmq";
+import { NotificationSubject } from "../../../../common/enums/notifications/notification-subjects.enum";
 import { render } from "@react-email/components";
 import { WorkflowDeletedTemplate } from "./templates/workflow-deleted.template";
 import { WorkflowCompletedTemplate } from "./templates/workflow-completed.template";
@@ -15,41 +15,41 @@ export class WorkflowsNotificationsService {
         private readonly mailsService: MailsService
     ) {}
 
-    public async handleWorkflowDeleted(dto: WorkflowDeletedRmqEvent["payload"]) {
+    public async handleWorkflowDeleted(event: WorkflowDeletedRmqEvent) {
         const [, html] = await Promise.all([
             this.notificationsService.create({
-                receiverId: dto.userEmail,
+                receiverId: event.participant.id,
                 subject: NotificationSubject.WORKFLOW_DELETED
             }),
             render(
                 WorkflowDeletedTemplate({
-                    documentTitle: dto.documentTitle
+                    documentTitle: event.workflowTitle
                 })
             )
         ]);
 
         this.mailsService.sendMail({
-            to: dto.userEmail,
+            to: event.participant.email,
             subject: NotificationSubject.WORKFLOW_DELETED,
             html: html
         });
     }
 
-    public async handleWorkflowCompleted(dto: WorkflowDeletedRmqEvent["payload"]) {
+    public async handleWorkflowCompleted(event: WorkflowCompletedRmqEvent) {
         const [, html] = await Promise.all([
             this.notificationsService.create({
-                receiverId: dto.creator.id,
+                receiverId: event.creator.id,
                 subject: NotificationSubject.WORKFLOW_COMPLETED
             }),
             render(
                 WorkflowCompletedTemplate({
-                    workflowTitle: dto.title
+                    workflowTitle: event.workflowTitle
                 })
             )
         ]);
 
         this.mailsService.sendMail({
-            to: dto.creator.email,
+            to: event.creator.email,
             subject: NotificationSubject.WORKFLOW_COMPLETED,
             html: html
         });

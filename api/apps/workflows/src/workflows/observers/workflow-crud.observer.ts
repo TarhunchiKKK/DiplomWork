@@ -37,7 +37,9 @@ export class WorkflowCrudObserver {
         const { document, users } = await this.getWorkflowInfo(event.documentId, event.participantsIds);
 
         users.users.forEach(user => {
-            this.notificationsRmqService.emit(new WorkflowDeletedRmqEvent(document.title, user.email));
+            this.notificationsRmqService.emit(
+                new WorkflowDeletedRmqEvent(document.title, { id: user.id, email: user.email })
+            );
         });
     }
 }

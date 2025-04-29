@@ -9,11 +9,11 @@ export class AccountDeactivationNotificationsController {
 
     @EventPattern(AccountActivatedRmqEvent.PATTERN)
     public handleAccountActivated(event: AccountActivatedRmqEvent) {
-        this.notificationsService.handleAccountActivated(event.payload);
+        this.notificationsService.handleAccountActivated(event);
     }
 
     @EventPattern(AccountDeactivatedRmqEvent.PATTERN)
     public handleAccountDeactivated(event: AccountDeactivatedRmqEvent) {
-        this.notificationsService.handleAccountDeactivated(event.payload);
+        this.notificationsService.handleAccountDeactivated(event);
     }
 }

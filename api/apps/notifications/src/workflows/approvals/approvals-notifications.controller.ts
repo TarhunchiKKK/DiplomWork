@@ -9,16 +9,16 @@ export class ApprovalsNotificationsController {
 
     @EventPattern(DocumentApprovedRmqEvent.PATTERN)
     public async handleDocumentApproved(event: DocumentApprovedRmqEvent) {
-        await this.notificationsService.handleDocumentApproved(event.payload);
+        await this.notificationsService.handleDocumentApproved(event);
     }
 
     @EventPattern(DocumentSignedRmqEvent.PATTERN)
     public async handleDocumentSigned(event: DocumentSignedRmqEvent) {
-        await this.notificationsService.handleDocumentSigned(event.payload);
+        await this.notificationsService.handleDocumentSigned(event);
     }
 
     @EventPattern(DocumentRejectedRmqEvent.PATTERN)
     public async handleDocumentRejected(event: DocumentRejectedRmqEvent) {
-        await this.notificationsService.handleDocumentRejected(event.payload);
+        await this.notificationsService.handleDocumentRejected(event);
     }
 }

@@ -38,7 +38,9 @@ export class WorkflowParticipantsObserver {
         const { users, document } = await this.getWorkflowInfo(event.documentId, event.participantsIds);
 
         users.users.forEach(user => {
-            this.notificationsRmqService.emit(new ParticipantAddedRmqEvent(document.title, user.email));
+            this.notificationsRmqService.emit(
+                new ParticipantAddedRmqEvent(document.title, { id: user.id, email: user.email })
+            );
         });
     }
 
@@ -47,7 +49,9 @@ export class WorkflowParticipantsObserver {
         const { users, document } = await this.getWorkflowInfo(event.documentId, event.participantsIds);
 
         users.users.forEach(user => {
-            this.notificationsRmqService.emit(new ParticipantDeletedRmqEvent(document.title, user.email));
+            this.notificationsRmqService.emit(
+                new ParticipantDeletedRmqEvent(document.title, { id: user.id, email: user.email })
+            );
         });
     }
 }

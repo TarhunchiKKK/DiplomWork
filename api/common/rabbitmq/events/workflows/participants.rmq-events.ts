@@ -1,23 +1,25 @@
-import { BaseRmqEvent } from "../base-rmq-event";
+import { IReceiverData, IRmqEvent } from "../interfaces";
 
-export class ParticipantAddedRmqEvent extends BaseRmqEvent {
+export class ParticipantAddedRmqEvent implements IRmqEvent {
     public static PATTERN = "participant.added";
 
+    public pattern = ParticipantAddedRmqEvent.PATTERN;
+
     public constructor(
         public documentTitle: string,
-        public userEmail: string
-    ) {
-        super(ParticipantAddedRmqEvent.PATTERN, { documentTitle, userEmail });
-    }
+
+        public participant: IReceiverData
+    ) {}
 }
 
-export class ParticipantDeletedRmqEvent extends BaseRmqEvent {
+export class ParticipantDeletedRmqEvent implements IRmqEvent {
     public static PATTERN = "participant.deleted";
+
+    public pattern = ParticipantDeletedRmqEvent.PATTERN;
 
     public constructor(
         public documentTitle: string,
-        public userEmail: string
-    ) {
-        super(ParticipantDeletedRmqEvent.PATTERN, { documentTitle, userEmail });
-    }
+
+        public participant: IReceiverData
+    ) {}
 }

@@ -6,20 +6,62 @@
 
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
+import { Observable } from "rxjs";
+import { IEmptyResponse, IHttpError, IOnlyId } from "./common";
 
 const protobufPackage = "notifications";
+
+export interface IFindAllNotificationsDto {
+  userId: string;
+  subject?: string | undefined;
+  status?: string | undefined;
+}
+
+export interface INotification {
+  id: string;
+  subject: string;
+  message?: string | undefined;
+  status: string;
+  createdAt: string;
+}
+
+export interface IFindAllNotificationsResponseData {
+  notifications: INotification[];
+}
+
+export interface IFindAllNotificationsResponse {
+  data?: IFindAllNotificationsResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
+export interface IUpdateNotificationDto {
+  id: string;
+  status?: string | undefined;
+}
 
 export const NOTIFICATIONS_PACKAGE_NAME = "notifications";
 
 export interface NotificationsServiceClient {
+  findAll(request: IFindAllNotificationsDto): Observable<IFindAllNotificationsResponse>;
+
+  update(request: IUpdateNotificationDto): Observable<IEmptyResponse>;
+
+  delete(request: IOnlyId): Observable<IEmptyResponse>;
 }
 
 export interface NotificationsServiceController {
+  findAll(
+    request: IFindAllNotificationsDto,
+  ): Promise<IFindAllNotificationsResponse> | Observable<IFindAllNotificationsResponse> | IFindAllNotificationsResponse;
+
+  update(request: IUpdateNotificationDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  delete(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function NotificationsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = [];
+    const grpcMethods: string[] = ["findAll", "update", "delete"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

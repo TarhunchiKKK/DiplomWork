@@ -6,7 +6,7 @@ import {
     DocumentCommentUpdatedRmqEvent,
     DocumentCommentDeletedRmqEvent
 } from "common/rabbitmq";
-import { NotificationSubject } from "../../notifications/enums/notification-subjects.enum";
+import { NotificationSubject } from "../../../../../common/enums/notifications/notification-subjects.enum";
 import { NotificationsService } from "../../notifications/notifications.service";
 import { CommentCreatedTemplate } from "./templates/comment-created.template";
 import { CommentDeletedTemplate } from "./templates/comment-deleted.template";
@@ -20,64 +20,64 @@ export class DocumentCommentsNotificationsService {
         private readonly notificationsservice: NotificationsService
     ) {}
 
-    public async handleCommentCreated(dto: DocumentCommentCreatedRmqEvent["payload"]) {
+    public async handleCommentCreated(event: DocumentCommentCreatedRmqEvent) {
         const [, html] = await Promise.all([
             this.notificationsservice.create({
-                receiverId: dto.documentOwnerid,
+                receiverId: event.documentOwner.id,
                 subject: NotificationSubject.COMMENT_CREATED
             }),
             render(
                 CommentCreatedTemplate({
-                    creatorUsername: dto.creatorUsername,
-                    documentTitle: dto.documentTitle
+                    creatorUsername: event.creatorUsername,
+                    documentTitle: event.documentTitle
                 })
             )
         ]);
 
         this.mailsService.sendMail({
-            to: dto.documentOwnerEmail,
+            to: event.documentOwner.email,
             subject: NotificationSubject.COMMENT_CREATED,
             html: html
         });
     }
 
-    public async handleCommentUpdated(dto: DocumentCommentUpdatedRmqEvent["payload"]) {
+    public async handleCommentUpdated(event: DocumentCommentUpdatedRmqEvent) {
         const [, html] = await Promise.all([
             this.notificationsservice.create({
-                receiverId: dto.documentOwnerid,
+                receiverId: event.documentOwner.id,
                 subject: NotificationSubject.COMMENT_UPDATED
             }),
             render(
                 CommentUpdatedTemplate({
-                    creatorUsername: dto.creatorUsername,
-                    documentTitle: dto.documentTitle
+                    creatorUsername: event.creatorUsername,
+                    documentTitle: event.documentTitle
                 })
             )
         ]);
 
         this.mailsService.sendMail({
-            to: dto.documentOwnerEmail,
+            to: event.documentOwner.email,
             subject: NotificationSubject.COMMENT_UPDATED,
             html: html
         });
     }
 
-    public async handleCommentDeleted(dto: DocumentCommentDeletedRmqEvent["payload"]) {
+    public async handleCommentDeleted(event: DocumentCommentDeletedRmqEvent) {
         const [, html] = await Promise.all([
             this.notificationsservice.create({
-                receiverId: dto.documentOwnerid,
+                receiverId: event.documentOwner.id,
                 subject: NotificationSubject.COMMENT_DELETED
             }),
             render(
                 CommentDeletedTemplate({
-                    creatorUsername: dto.creatorUsername,
-                    documentTitle: dto.documentTitle
+                    creatorUsername: event.creatorUsername,
+                    documentTitle: event.documentTitle
                 })
             )
         ]);
 
         this.mailsService.sendMail({
-            to: dto.documentOwnerEmail,
+            to: event.documentOwner.email,
             subject: NotificationSubject.COMMENT_DELETED,
             html: html
         });

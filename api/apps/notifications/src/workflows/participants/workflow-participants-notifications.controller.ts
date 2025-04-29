@@ -9,11 +9,11 @@ export class WorkflowParticipantsNotificationsController {
 
     @EventPattern(ParticipantAddedRmqEvent.PATTERN)
     public async handleParticipantAdded(event: ParticipantAddedRmqEvent) {
-        await this.notificationsService.handleParticipantAdded(event.payload);
+        await this.notificationsService.handleParticipantAdded(event);
     }
 
     @EventPattern(ParticipantDeletedRmqEvent.PATTERN)
     public async handleParticipantDeleted(event: ParticipantDeletedRmqEvent) {
-        await this.notificationsService.handleParticipantDeleted(event.payload);
+        await this.notificationsService.handleParticipantDeleted(event);
     }
 }

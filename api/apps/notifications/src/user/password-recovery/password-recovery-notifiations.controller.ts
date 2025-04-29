@@ -9,6 +9,6 @@ export class PasswordRecoveryNotificationsController {
 
     @EventPattern(PasswordResetedRmqEvent.PATTERN)
     public handlePasswordReseted(event: PasswordResetedRmqEvent) {
-        this.notificationsService.handlePasswordReseted(event.payload);
+        this.notificationsService.handlePasswordReseted(event);
     }
 }

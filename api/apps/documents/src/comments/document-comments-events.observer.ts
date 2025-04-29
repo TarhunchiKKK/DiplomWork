@@ -50,8 +50,7 @@ export class DocumentCommentsEventsObserver {
 
         this.notificationsRmqService.emit(
             new DocumentCommentCreatedRmqEvent(
-                documentAuthor.id,
-                documentAuthor.email,
+                { id: documentAuthor.id, email: documentAuthor.email },
                 commentCreator.email,
                 document.title
             )
@@ -64,8 +63,7 @@ export class DocumentCommentsEventsObserver {
 
         this.notificationsRmqService.emit(
             new DocumentCommentUpdatedRmqEvent(
-                documentAuthor.id,
-                documentAuthor.email,
+                { id: documentAuthor.id, email: documentAuthor.email },
                 commentCreator.email,
                 document.title
             )
@@ -78,8 +76,7 @@ export class DocumentCommentsEventsObserver {
 
         this.notificationsRmqService.emit(
             new DocumentCommentDeletedRmqEvent(
-                documentAuthor.id,
-                documentAuthor.email,
+                { id: documentAuthor.id, email: documentAuthor.email },
                 commentCreator.email,
                 document.title
             )

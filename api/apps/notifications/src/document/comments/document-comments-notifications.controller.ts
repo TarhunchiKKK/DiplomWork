@@ -13,16 +13,16 @@ export class DocumentCommentsNotificationsController {
 
     @EventPattern(DocumentCommentCreatedRmqEvent.PATTERN)
     public async handleCommentCreated(event: DocumentCommentCreatedRmqEvent) {
-        await this.notificationsService.handleCommentCreated(event.payload);
+        await this.notificationsService.handleCommentCreated(event);
     }
 
     @EventPattern(DocumentCommentUpdatedRmqEvent.PATTERN)
     public async handleCommentUpdated(event: DocumentCommentUpdatedRmqEvent) {
-        await this.notificationsService.handleCommentUpdated(event.payload);
+        await this.notificationsService.handleCommentUpdated(event);
     }
 
     @EventPattern(DocumentCommentDeletedRmqEvent.PATTERN)
     public async handleCommentDeleted(event: DocumentCommentDeletedRmqEvent) {
-        await this.notificationsService.handleCommentDeleted(event.payload);
+        await this.notificationsService.handleCommentDeleted(event);
     }
 }

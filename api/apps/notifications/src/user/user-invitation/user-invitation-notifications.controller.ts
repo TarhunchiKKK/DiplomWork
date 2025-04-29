@@ -9,6 +9,6 @@ export class UserInvitationNotificationsController {
 
     @EventPattern(UserInvitedRqmEvent.PATTERN)
     public handleUserInvited(event: UserInvitedRqmEvent) {
-        this.notificationsService.handleUserInvited(event.payload);
+        this.notificationsService.handleUserInvited(event);
     }
 }

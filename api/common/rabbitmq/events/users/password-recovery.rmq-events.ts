@@ -1,12 +1,13 @@
-import { BaseRmqEvent } from "../base-rmq-event";
+import { IRmqEvent } from "../interfaces";
 
-export class PasswordResetedRmqEvent extends BaseRmqEvent {
+export class PasswordResetedRmqEvent implements IRmqEvent {
     public static PATTERN = "password.reseted";
 
-    public constructor(email: string, token: string) {
-        super(PasswordResetedRmqEvent.PATTERN, {
-            email,
-            token
-        });
-    }
+    public pattern = PasswordResetedRmqEvent.PATTERN;
+
+    public constructor(
+        public email: string,
+
+        public token: string
+    ) {}
 }

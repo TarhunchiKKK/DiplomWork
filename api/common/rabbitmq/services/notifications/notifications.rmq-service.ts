@@ -1,13 +1,13 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { NOTIFICATIONS_RMQ_SERVICE } from "common/rabbitmq/constants";
-import { BaseRmqEvent } from "common/rabbitmq/events/base-rmq-event";
+import { IRmqEvent } from "common/rabbitmq/events/interfaces";
 
 @Injectable()
 export class NotificationsRmqService {
     public constructor(@Inject(NOTIFICATIONS_RMQ_SERVICE) private readonly client: ClientProxy) {}
 
-    public emit(event: BaseRmqEvent) {
+    public emit(event: IRmqEvent) {
         this.client.emit(event.pattern, event);
     }
 }

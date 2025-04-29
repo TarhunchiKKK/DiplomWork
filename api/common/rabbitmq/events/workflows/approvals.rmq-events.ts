@@ -1,37 +1,43 @@
-import { BaseRmqEvent } from "../base-rmq-event";
+import { IReceiverData, IRmqEvent } from "../interfaces";
 
-export class DocumentApprovedRmqEvent extends BaseRmqEvent {
+export class DocumentApprovedRmqEvent implements IRmqEvent {
     public static PATTERN = "document.approved";
 
+    public pattern = DocumentApprovedRmqEvent.PATTERN;
+
     public constructor(
         public documentTitle: string,
-        public workflowOwnerEmail: string,
+
+        public workflowOwner: IReceiverData,
+
         public participantUsername: string
-    ) {
-        super(DocumentApprovedRmqEvent.PATTERN, { documentTitle, workflowOwnerEmail, participantUsername });
-    }
+    ) {}
 }
 
-export class DocumentSignedRmqEvent extends BaseRmqEvent {
+export class DocumentSignedRmqEvent implements IRmqEvent {
     public static PATTERN = "document.signed";
 
+    public pattern = DocumentSignedRmqEvent.PATTERN;
+
     public constructor(
         public documentTitle: string,
-        public workflowOwnerEmail: string,
+
+        public workflowOwner: IReceiverData,
+
         public participantUsername: string
-    ) {
-        super(DocumentSignedRmqEvent.PATTERN, { documentTitle, workflowOwnerEmail, participantUsername });
-    }
+    ) {}
 }
 
-export class DocumentRejectedRmqEvent extends BaseRmqEvent {
+export class DocumentRejectedRmqEvent implements IRmqEvent {
     public static PATTERN = "document.rejected";
+
+    public pattern = DocumentRejectedRmqEvent.PATTERN;
 
     public constructor(
         public documentTitle: string,
-        public workflowOwnerEmail: string,
+
+        public workflowOwner: IReceiverData,
+
         public participantUsername: string
-    ) {
-        super(DocumentRejectedRmqEvent.PATTERN, { documentTitle, workflowOwnerEmail, participantUsername });
-    }
+    ) {}
 }

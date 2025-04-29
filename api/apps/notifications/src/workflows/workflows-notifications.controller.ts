@@ -9,11 +9,11 @@ export class WorkflowsNotificationsController {
 
     @EventPattern(WorkflowDeletedRmqEvent.PATTERN)
     public async handleWorkflowDeleted(event: WorkflowDeletedRmqEvent) {
-        await this.notificationsService.handleWorkflowDeleted(event.payload);
+        await this.notificationsService.handleWorkflowDeleted(event);
     }
 
     @EventPattern(WorkflowCompletedRmqEvent.PATTERN)
     public async handleWorkflowCompleted(event: WorkflowCompletedRmqEvent) {
-        await this.notificationsService.handleWorkflowCompleted(event.payload);
+        await this.notificationsService.handleWorkflowCompleted(event);
     }
 }
