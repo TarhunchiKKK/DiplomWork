@@ -17,7 +17,7 @@ import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { CreateDocumentDto } from "./dto/create-document.dto";
 import { UpdateDocumentDto } from "./dto/update-document.dto";
-import { DocumentSortOrder, DocumentStatus, Role } from "common/enums";
+import { DocumentSortOrder, Role } from "common/enums";
 import { ProvideOperation } from "./middleware/decorators/provide-operation.decorator";
 import { DocumentOperation } from "./middleware/enums/document-operation.enum";
 import { DocumentOperationGuard } from "./middleware/guards/document-operation.guard";
@@ -41,14 +41,12 @@ export class DocumentsController {
         @Req() request: TAuthenticatedRequest,
         @Query("aimId") aimId?: string,
         @Query("typeId") typeId?: string,
-        @Query("status") status?: string,
         @Query("isUrgent", ParseBoolPipe) isUrgent?: boolean,
         @Query("sortOrder") sortOrder?: string
     ) {
         const dto: IFindDocumentsDto = {
             aimId,
             typeId,
-            status: status as DocumentStatus,
             isUrgent,
             sortOrder: sortOrder as DocumentSortOrder
         };

@@ -5,9 +5,7 @@ import { Repository } from "typeorm";
 import { ICreateDocumentDto, IFindDocumentsDto, IUpdateDocumentDto } from "common/grpc";
 import { DocumentAccessTokensService } from "common/modules";
 import { FindDocumentsQueryBuilder } from "./utils/find-documents.query-builder";
-import { DocumentStatus } from "common/enums";
 import { DocumentVersionsService } from "../versions/document-versions.service";
-import lodash from "lodash";
 import { IgnoreFields } from "common/utils";
 
 @Injectable()
@@ -27,7 +25,6 @@ export class DocumentsService {
             authorId: dto.authorId,
             isUrgent: dto.isUrgent,
             title: dto.title,
-            status: DocumentStatus.DEFAULT,
             accessToken: this.tokensService.create({
                 authorId: dto.authorId,
                 usersIds: []
@@ -39,7 +36,7 @@ export class DocumentsService {
             fileExtension: dto.fileExtension
         });
 
-        return lodash.pick(document, ["id", "authorId", "title", "typeId", "aimId", "status", "isUrgent"]);
+        return document;
     }
 
     public async findAll(dto: IFindDocumentsDto) {
