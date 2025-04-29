@@ -1,17 +1,17 @@
-import { BaseRmqEvent } from "../base-rmq-event";
+import { IRmqEvent } from "../interfaces";
 
-export class AccountActivatedRmqEvent extends BaseRmqEvent {
+export class AccountActivatedRmqEvent implements IRmqEvent {
     public static PATTERN = "account.activated";
 
-    public constructor(email: string) {
-        super(AccountActivatedRmqEvent.PATTERN, { email });
-    }
+    public pattern = AccountActivatedRmqEvent.PATTERN;
+
+    public constructor(public email: string) {}
 }
 
-export class AccountDeactivatedRmqEvent extends BaseRmqEvent {
+export class AccountDeactivatedRmqEvent implements IRmqEvent {
     public static PATTERN = "account.deactivated";
 
-    public constructor(email: string) {
-        super(AccountDeactivatedRmqEvent.PATTERN, { email });
-    }
+    public pattern = AccountDeactivatedRmqEvent.PATTERN;
+
+    public constructor(public email: string) {}
 }

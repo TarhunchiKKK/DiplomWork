@@ -1,4 +1,4 @@
-export { BaseRmqEvent } from "./base-rmq-event";
+export * from "./interfaces";
 export * from "./users";
 export * from "./documents";
 export * from "./workflows";

@@ -59,7 +59,7 @@ export class ApprovalsEventsObserver {
             this.notificationsRmqService.emit(
                 new RmqEventConstructor(
                     document.title,
-                    workflowOwner.email,
+                    { id: workflowOwner.id, email: workflowOwner.email },
                     participantUser.username ?? participantUser.email
                 )
             );

@@ -1,55 +1,43 @@
-import { BaseRmqEvent } from "../base-rmq-event";
+import { IReceiverData, IRmqEvent } from "../interfaces";
 
-export class DocumentCommentCreatedRmqEvent extends BaseRmqEvent {
+export class DocumentCommentCreatedRmqEvent implements IRmqEvent {
     public static PATTERN = "document.comment.created";
 
+    public pattern = DocumentCommentCreatedRmqEvent.PATTERN;
+
     public constructor(
-        documentOwnerId: string,
-        documentOwnerEmail: string,
-        creatorUsername: string,
-        documentTitle: string
-    ) {
-        super(DocumentCommentCreatedRmqEvent.PATTERN, {
-            documentOwnerId,
-            documentOwnerEmail,
-            creatorUsername,
-            documentTitle
-        });
-    }
+        public documentOwner: IReceiverData,
+
+        public creatorUsername: string,
+
+        public documentTitle: string
+    ) {}
 }
 
-export class DocumentCommentUpdatedRmqEvent extends BaseRmqEvent {
+export class DocumentCommentUpdatedRmqEvent implements IRmqEvent {
     public static PATTERN = "document.comment.created";
 
+    public pattern = DocumentCommentUpdatedRmqEvent.PATTERN;
+
     public constructor(
-        documentOwnerId: string,
-        documentOwnerEmail: string,
-        creatorUsername: string,
-        documentTitle: string
-    ) {
-        super(DocumentCommentUpdatedRmqEvent.PATTERN, {
-            documentOwnerId,
-            documentOwnerEmail,
-            creatorUsername,
-            documentTitle
-        });
-    }
+        public documentOwner: IReceiverData,
+
+        public creatorUsername: string,
+
+        public documentTitle: string
+    ) {}
 }
 
-export class DocumentCommentDeletedRmqEvent extends BaseRmqEvent {
+export class DocumentCommentDeletedRmqEvent implements IRmqEvent {
     public static PATTERN = "document.comment.deleted";
 
+    public pattern = DocumentCommentDeletedRmqEvent.PATTERN;
+
     public constructor(
-        documentOwnerId: string,
-        documentOwnerEmail: string,
-        creatorUsername: string,
-        documentTitle: string
-    ) {
-        super(DocumentCommentDeletedRmqEvent.PATTERN, {
-            documentOwnerId,
-            documentOwnerEmail,
-            creatorUsername,
-            documentTitle
-        });
-    }
+        public documentOwner: IReceiverData,
+
+        public creatorUsername: string,
+
+        public documentTitle: string
+    ) {}
 }

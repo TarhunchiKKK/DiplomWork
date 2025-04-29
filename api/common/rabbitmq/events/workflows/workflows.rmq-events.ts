@@ -1,24 +1,25 @@
-import { BaseRmqEvent } from "../base-rmq-event";
+import { IReceiverData, type IRmqEvent } from "../interfaces";
 
-export class WorkflowDeletedRmqEvent extends BaseRmqEvent {
+export class WorkflowDeletedRmqEvent implements IRmqEvent {
     public static PATTERN = "workflow.deleted";
 
+    public pattern = WorkflowDeletedRmqEvent.PATTERN;
+
     public constructor(
-        public documentTitle: string,
-        public userEmail: string
-    ) {
-        super(WorkflowDeletedRmqEvent.PATTERN, { documentTitle, userEmail });
-    }
+        public workflowTitle: string,
+
+        public participant: IReceiverData
+    ) {}
 }
 
-export class WorkflowCompletedRmqEvent extends BaseRmqEvent {
+export class WorkflowCompletedRmqEvent implements IRmqEvent {
     public static PATTERN = "workflow.completed";
 
-    public constructor(
-        public title: string,
+    public pattern = WorkflowCompletedRmqEvent.PATTERN;
 
-        public creator: { id: string; email: string }
-    ) {
-        super(WorkflowCompletedRmqEvent.PATTERN, { title, creator });
-    }
+    public constructor(
+        public workflowTitle: string,
+
+        public creator: IReceiverData
+    ) {}
 }

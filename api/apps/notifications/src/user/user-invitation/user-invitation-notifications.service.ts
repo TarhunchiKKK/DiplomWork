@@ -18,19 +18,19 @@ export class UserInvitationNotificationsService {
         return this.configService.getOrThrow<string>("APP_DOMAIN");
     }
 
-    public async handleUserInvited(dto: UserInvitedRqmEvent["payload"]) {
+    public async handleUserInvited(event: UserInvitedRqmEvent) {
         const domain = this.getDomain();
 
         const html = await render(
             UserInvitatedTemplate({
-                adminEmail: dto.from,
+                adminEmail: event.from,
                 domain: domain,
-                token: dto.token
+                token: event.token
             })
         );
 
         this.mailsService.sendMail({
-            to: dto.to,
+            to: event.to,
             subject: NotificationSubject.USER_INVITATION,
             html: html
         });

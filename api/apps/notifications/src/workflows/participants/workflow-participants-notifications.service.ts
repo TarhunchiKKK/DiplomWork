@@ -15,41 +15,41 @@ export class WorkflowParticipantsNotificationsService {
         private readonly mailsService: MailsService
     ) {}
 
-    public async handleParticipantAdded(dto: ParticipantAddedRmqEvent["payload"]) {
+    public async handleParticipantAdded(event: ParticipantAddedRmqEvent) {
         const [, html] = await Promise.all([
             this.notificationsService.create({
-                receiverId: dto.userEmail,
+                receiverId: event.participant.id,
                 subject: NotificationSubject.PARTICIPANT_ADDED
             }),
             render(
                 ParticipantAddedTemplate({
-                    documentTitle: dto.documentTitle
+                    documentTitle: event.documentTitle
                 })
             )
         ]);
 
         this.mailsService.sendMail({
-            to: dto.userEmail,
+            to: event.participant.email,
             subject: NotificationSubject.PARTICIPANT_ADDED,
             html: html
         });
     }
 
-    public async handleParticipantDeleted(dto: ParticipantDeletedRmqEvent["payload"]) {
+    public async handleParticipantDeleted(event: ParticipantDeletedRmqEvent) {
         const [, html] = await Promise.all([
             this.notificationsService.create({
-                receiverId: dto.userEmail,
+                receiverId: event.participant.id,
                 subject: NotificationSubject.PARTICIPANT_DELETED
             }),
             render(
                 ParticipantDeletedTemplate({
-                    documentTitle: dto.documentTitle
+                    documentTitle: event.documentTitle
                 })
             )
         ]);
 
         this.mailsService.sendMail({
-            to: dto.userEmail,
+            to: event.participant.email,
             subject: NotificationSubject.PARTICIPANT_DELETED,
             html: html
         });

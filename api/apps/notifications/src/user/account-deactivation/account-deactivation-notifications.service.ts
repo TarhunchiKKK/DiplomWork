@@ -20,38 +20,38 @@ export class AccountDeactivationNotificationsService {
         return this.configService.getOrThrow<string>("APP_DOMAIN");
     }
 
-    public async handlePasswordReseted(dto: PasswordResetedRmqEvent["payload"]) {
+    public async handlePasswordReseted(event: PasswordResetedRmqEvent) {
         const domain = this.getDomain();
 
         const html = await render(
             PasswordResetedTemplate({
                 domain: domain,
-                token: dto.token
+                token: event.token
             })
         );
 
         this.mailsService.sendMail({
-            to: dto.email,
+            to: event.email,
             subject: NotificationSubject.PASSWORD_RECOVERY,
             html: html
         });
     }
 
-    public async handleAccountActivated(dto: AccountActivatedRmqEvent["payload"]) {
+    public async handleAccountActivated(event: AccountActivatedRmqEvent) {
         const html = await render(AccountActivatedTemplate());
 
         this.mailsService.sendMail({
-            to: dto.email,
+            to: event.email,
             subject: NotificationSubject.ACCOUNT_ACTIVATION,
             html: html
         });
     }
 
-    public async handleAccountDeactivated(dto: AccountDeactivatedRmqEvent["payload"]) {
+    public async handleAccountDeactivated(event: AccountDeactivatedRmqEvent) {
         const html = await render(AccountDeactivatedTemplate());
 
         this.mailsService.sendMail({
-            to: dto.email,
+            to: event.email,
             subject: NotificationSubject.ACCOUNT_DEACTIVATION,
             html: html
         });

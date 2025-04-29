@@ -18,18 +18,18 @@ export class PasswordRecoveryNotificationsService {
         return this.configService.getOrThrow<string>("APP_DOMAIN");
     }
 
-    public async handlePasswordReseted(dto: PasswordResetedRmqEvent["payload"]) {
+    public async handlePasswordReseted(event: PasswordResetedRmqEvent) {
         const domain = this.getDomain();
 
         const html = await render(
             PasswordResetedTemplate({
                 domain: domain,
-                token: dto.token
+                token: event.token
             })
         );
 
         this.mailsService.sendMail({
-            to: dto.email,
+            to: event.email,
             subject: NotificationSubject.PASSWORD_RECOVERY,
             html: html
         });
