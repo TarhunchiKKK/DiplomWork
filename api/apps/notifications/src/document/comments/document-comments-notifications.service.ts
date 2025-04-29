@@ -6,7 +6,7 @@ import {
     DocumentCommentUpdatedRmqEvent,
     DocumentCommentDeletedRmqEvent
 } from "common/rabbitmq";
-import { NotificationSubject } from "../../notifications/enums/notification-subjects.enum";
+import { NotificationSubject } from "../../../../../common/enums/notifications/notification-subjects.enum";
 import { NotificationsService } from "../../notifications/notifications.service";
 import { CommentCreatedTemplate } from "./templates/comment-created.template";
 import { CommentDeletedTemplate } from "./templates/comment-deleted.template";

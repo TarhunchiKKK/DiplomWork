@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { MailsService } from "common/modules";
 import { NotificationsService } from "../../notifications/notifications.service";
 import { ParticipantAddedRmqEvent, ParticipantDeletedRmqEvent } from "common/rabbitmq";
-import { NotificationSubject } from "../../notifications/enums/notification-subjects.enum";
+import { NotificationSubject } from "../../../../../common/enums/notifications/notification-subjects.enum";
 import { render } from "@react-email/components";
 import { ParticipantAddedTemplate } from "./templates/participant-added.template";
 import { ParticipantDeletedTemplate } from "./templates/participant-deleted.template";

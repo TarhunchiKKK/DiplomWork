@@ -1,21 +1,22 @@
-import { Controller, Delete, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
 import { WorkflowsGrpcService } from "common/grpc";
 import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { DocumentAuthorGuard } from "./middleware/document-author.guard";
 import { WorkflowCreatorGuard } from "./middleware/workflow-creator.guard";
+import { CreateWorkflowDto } from "./dto/create-workflow.dto";
 
 @Controller("/workflows")
 @UseGuards(AuthenticationGuard)
 export class WorkflowsController {
     public constructor(private readonly workflowsGrpcService: WorkflowsGrpcService) {}
 
-    @Post(":documentId")
+    @Post()
     @ExtractFromRequest(request => request.params.documentId)
     @UseGuards(DocumentAuthorGuard)
-    public create(@Req() request: TAuthenticatedRequest, @Param("documentId") documentId: string) {
+    public create(@Req() request: TAuthenticatedRequest, @Body() dto: CreateWorkflowDto) {
         return this.workflowsGrpcService.call("create", {
-            documentId: documentId,
+            ...dto,
             userId: request.jwtInfo.id
         });
     }

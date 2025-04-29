@@ -3,7 +3,7 @@ import { UserInvitedRqmEvent } from "common/rabbitmq";
 import { ConfigService } from "@nestjs/config";
 import { render } from "@react-email/components";
 import { MailsService } from "common/modules";
-import { NotificationSubject } from "../../notifications/enums/notification-subjects.enum";
+import { NotificationSubject } from "../../../../../common/enums/notifications/notification-subjects.enum";
 import { UserInvitatedTemplate } from "./templates/user-invitated.template";
 
 @Injectable()

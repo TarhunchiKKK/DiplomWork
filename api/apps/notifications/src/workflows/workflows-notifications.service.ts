@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { NotificationsService } from "../notifications/notifications.service";
 import { MailsService } from "common/modules";
 import { WorkflowCompletedRmqEvent, WorkflowDeletedRmqEvent } from "common/rabbitmq";
-import { NotificationSubject } from "../notifications/enums/notification-subjects.enum";
+import { NotificationSubject } from "../../../../common/enums/notifications/notification-subjects.enum";
 import { render } from "@react-email/components";
 import { WorkflowDeletedTemplate } from "./templates/workflow-deleted.template";
 import { WorkflowCompletedTemplate } from "./templates/workflow-completed.template";

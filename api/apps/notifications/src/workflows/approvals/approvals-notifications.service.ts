@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { NotificationsService } from "../../notifications/notifications.service";
 import { DocumentApprovedRmqEvent, DocumentRejectedRmqEvent, DocumentSignedRmqEvent } from "common/rabbitmq";
-import { NotificationSubject } from "../../notifications/enums/notification-subjects.enum";
+import { NotificationSubject } from "../../../../../common/enums/notifications/notification-subjects.enum";
 
 @Injectable()
 export class ApprovalsnotificationsService {

@@ -1,7 +1,51 @@
 syntax = "proto3";
 
+import "common.proto";
+
 package notifications;
 
 service NotificationsService {
+    rpc FindAll (IFindAllNotificationsDto) returns (IFindAllNotificationsResponse) {}
+
+    rpc Update(IUpdateNotificationDto) returns (common.IEmptyResponse) {}
+
+    rpc Delete (common.IOnlyId) returns (common.IEmptyResponse) {}
 }
 
+message IFindAllNotificationsDto {
+    string userId = 1;
+
+    optional string subject = 2;
+
+    optional string status = 3;
+}
+
+message INotification {
+    string id = 1;
+
+    string subject = 2;
+
+    optional string message = 3;
+
+    string status = 4;
+
+    string createdAt = 5;
+}
+
+message IFindAllNotificationsResponseData {
+    repeated INotification notifications = 1;
+}
+
+message IFindAllNotificationsResponse {
+    oneof response {
+        IFindAllNotificationsResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
+message IUpdateNotificationDto {
+    string id = 1;
+
+    optional string status = 2;
+}

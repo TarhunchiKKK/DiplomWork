@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { render } from "@react-email/components";
 import { MailsService } from "common/modules";
 import { PasswordResetedRmqEvent, AccountActivatedRmqEvent, AccountDeactivatedRmqEvent } from "common/rabbitmq";
-import { NotificationSubject } from "../../notifications/enums/notification-subjects.enum";
+import { NotificationSubject } from "../../../../../common/enums/notifications/notification-subjects.enum";
 import { PasswordResetedTemplate } from "../password-recovery/templates/password-reseted.template";
 import { AccountActivatedTemplate } from "./templates/account-activated.template";
 import { AccountDeactivatedTemplate } from "./templates/account-deactivated.template";
