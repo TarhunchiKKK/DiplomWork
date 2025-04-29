@@ -9,7 +9,6 @@
         "dev": "docker compose up & pnpm start:all",
         "start": "nest start",
         "start:dev": "nest start --watch",
-        "start:all": "concurrently \"pnpm start:dev api-gateway\" \"pnpm start:dev organizations\" \"pnpm start:dev users\" \"pnpm start:dev notifications\"",
         "build": "nest build",
         "format": "prettier --write \"apps/**/*.ts\" \"common/**/*.ts\"",
         "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
