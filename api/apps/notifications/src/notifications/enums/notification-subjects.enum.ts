@@ -13,5 +13,8 @@ export enum NotificationSubject {
     // Workflows
     WORKFLOW_DELETED = "Маршрут согласования удален",
     PARTICIPANT_ADDED = "Добавление к маршруту согласования",
-    PARTICIPANT_DELETED = "Исключение из маршрута согласования"
+    PARTICIPANT_DELETED = "Исключение из маршрута согласования",
+    DOCUMENT_APPROVED = "Документ утвержден участником маршрута",
+    DOCUMENT_SIGNED = "Документ подписан участником маршрута",
+    DOCUMENT_REJECTED = "Документ отклонен участником маршрута"
 }
