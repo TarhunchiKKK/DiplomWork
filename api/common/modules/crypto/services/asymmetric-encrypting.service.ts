@@ -26,6 +26,10 @@ export class AsymmetricEncryptionService {
         });
     }
 
+    public encrypt(text: string, publicKey: string) {
+        return crypto.publicEncrypt(publicKey, Buffer.from(text, "utf8")).toString("base64");
+    }
+
     public decrypt(encriptedText: string, privateKey: string) {
         return crypto
             .privateDecrypt(
