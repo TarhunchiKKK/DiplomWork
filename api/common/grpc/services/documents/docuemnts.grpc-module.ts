@@ -7,6 +7,7 @@ import { DocumentsGrpcService } from "./services/documents.grpc-service";
 import { DocumentVersionsGrpcService } from "./services/document-versions.grpc-service";
 import { FavouriteDocumentsGrpcService } from "./services/favourite-document.grpc-service";
 import { DocumentCommentsGrpcService } from "./services/document-comments.grpc-service";
+import { DocumentHashingGrpcService } from "./services/document-hashing.grpc-service";
 
 @Module({
     imports: [
@@ -23,13 +24,15 @@ import { DocumentCommentsGrpcService } from "./services/document-comments.grpc-s
         DocumentsGrpcService,
         DocumentVersionsGrpcService,
         FavouriteDocumentsGrpcService,
-        DocumentCommentsGrpcService
+        DocumentCommentsGrpcService,
+        DocumentHashingGrpcService
     ],
     exports: [
         DocumentsGrpcService,
         DocumentVersionsGrpcService,
         FavouriteDocumentsGrpcService,
-        DocumentCommentsGrpcService
+        DocumentCommentsGrpcService,
+        DocumentHashingGrpcService
     ]
 })
 export class DocumentsGrpcModule {}

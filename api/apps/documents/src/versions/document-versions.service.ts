@@ -4,18 +4,30 @@ import { DocumentVersion } from "./entities/document-version.entity";
 import { Repository } from "typeorm";
 import { ICreateDocumentVersionDto } from "common/grpc";
 import { generateS3Filename } from "./helpers/s3.helpers";
+import { EventEmitter2 } from "@nestjs/event-emitter";
+import { VersionCreatedEvent } from "./events/version-created.evnet";
+import { UpdateDocumentDto } from "./dto/update-version.dto";
 
 @Injectable()
 export class DocumentVersionsService {
     public constructor(
-        @InjectRepository(DocumentVersion) private readonly versionsRepository: Repository<DocumentVersion>
+        @InjectRepository(DocumentVersion) private readonly versionsRepository: Repository<DocumentVersion>,
+
+        private readonly eventEmitter: EventEmitter2
     ) {}
 
     public async create(dto: ICreateDocumentVersionDto) {
-        return await this.versionsRepository.save({
+        const version = await this.versionsRepository.save({
             url: generateS3Filename(dto.fileExtension),
-            description: dto.description
+            description: dto.description,
+            document: {
+                id: dto.documentId
+            }
         });
+
+        this.eventEmitter.emit(VersionCreatedEvent.pattern, version.document.id);
+
+        return version;
     }
 
     public async findAll(documentId: string) {
@@ -82,5 +94,13 @@ export class DocumentVersionsService {
         }
 
         return version.document;
+    }
+
+    public async update(versionId: string, dto: UpdateDocumentDto) {
+        const version = await this.findOneById(versionId);
+
+        Object.assign(version, dto);
+
+        await this.versionsRepository.save(version);
     }
 }

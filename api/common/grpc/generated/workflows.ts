@@ -45,6 +45,12 @@ export interface IFindWorkflowsResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IUpdateWorkflowDto {
+  id: string;
+  title?: string | undefined;
+  stautus?: string | undefined;
+}
+
 export interface IUpsertWorkflowParticipantDto {
   id?: string | undefined;
   role: string;
@@ -92,6 +98,8 @@ export interface WorkflowsServiceClient {
 
   findOneByDocumentId(request: IOnlyId): Observable<IFindOneWorkflowResponse>;
 
+  update(request: IUpdateWorkflowDto): Observable<IEmptyResponse>;
+
   delete(request: IOnlyId): Observable<IEmptyResponse>;
 }
 
@@ -114,6 +122,8 @@ export interface WorkflowsServiceController {
     request: IOnlyId,
   ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
 
+  update(request: IUpdateWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
   delete(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
@@ -125,6 +135,7 @@ export function WorkflowsServiceControllerMethods() {
       "findAllByCreatorId",
       "findOneById",
       "findOneByDocumentId",
+      "update",
       "delete",
     ];
     for (const method of grpcMethods) {
@@ -202,17 +213,21 @@ export interface ApprovalsServiceClient {
   upsert(request: IUpsertApprovalDto): Observable<IApprovalResponse>;
 
   findOne(request: IFindOneApprovalDto): Observable<IApprovalResponse>;
+
+  resetAllByWorkflowId(request: IOnlyId): Observable<IEmptyResponse>;
 }
 
 export interface ApprovalsServiceController {
   upsert(request: IUpsertApprovalDto): Promise<IApprovalResponse> | Observable<IApprovalResponse> | IApprovalResponse;
 
   findOne(request: IFindOneApprovalDto): Promise<IApprovalResponse> | Observable<IApprovalResponse> | IApprovalResponse;
+
+  resetAllByWorkflowId(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function ApprovalsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["upsert", "findOne"];
+    const grpcMethods: string[] = ["upsert", "findOne", "resetAllByWorkflowId"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

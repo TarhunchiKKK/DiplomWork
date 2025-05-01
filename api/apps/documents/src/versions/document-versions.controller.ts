@@ -6,6 +6,7 @@ import {
     GrpcExceptionFilter,
     ICreateDocumentVersionDto,
     IOnlyId,
+    IUpdateDocumentVersionDto,
     UnwrapGrpcResponse,
     WrapGrpcResponseInterceptor
 } from "common/grpc";
@@ -36,5 +37,10 @@ export class DocumentVersionsController implements UnwrapGrpcResponse<DocumentVe
 
     public async findDocument(dto: IOnlyId) {
         return await this.versionsService.findVersionDocument(dto.id);
+    }
+
+    public async update(dto: IUpdateDocumentVersionDto) {
+        const { id, ...data } = dto;
+        await this.versionsService.update(id, data);
     }
 }

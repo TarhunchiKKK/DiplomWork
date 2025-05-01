@@ -17,6 +17,7 @@ import { NotificationsRmqModule } from "common/rabbitmq";
         NotificationsRmqModule
     ],
     controllers: [ApprovalsController],
-    providers: [ApprovalsService, ApprovalsEventsObserver]
+    providers: [ApprovalsService, ApprovalsEventsObserver],
+    exports: [ApprovalsService]
 })
 export class ApprovalsModule {}

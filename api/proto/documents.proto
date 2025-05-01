@@ -30,6 +30,8 @@ message ICreateDocumentDto {
     bool isUrgent = 5;
 
     string fileExtension = 6;
+
+    string hash = 7;
 }
 
 message ICreateDocumentResponseData {
@@ -187,6 +189,8 @@ service DocumentVersionsService {
     rpc FindLast (common.IOnlyId) returns (IFindOneDocumentVersionResponse) {}
 
     rpc FindDocument (common.IOnlyId) returns (IFullDocumentResponse) {}
+
+    rpc Update (IUpdateDocumentVersionDto) returns (common.IEmptyResponse) {}
 }
 
 message ICreateDocumentVersionDto {
@@ -195,6 +199,8 @@ message ICreateDocumentVersionDto {
     string fileExtension = 2;
 
     optional string description = 3;
+
+    string hash = 4;
 }
 
 message ICreateDocumentVersionResponseData {
@@ -239,6 +245,46 @@ message IFindOneDocumentVersionResponse {
     }
 }
 
+message IUpdateDocumentVersionDto {
+    string id = 1;
+
+    optional string description = 2;
+}
+
+/********************************************Document Hashing*********************************************************************/
+
+service DocumentHashingService {
+    rpc Update (IUpdateDocumentHashDto) returns (common.IEmptyResponse) {}
+
+    rpc Verify (IVerifyDocumentHashDto) returns (ICheckDocumentHashResponse) {}
+}
+
+message IUpdateDocumentHashDto {
+    string versionId = 1;
+
+    string hash = 2;
+
+    string sign = 3;
+}
+
+message IVerifyDocumentHashDto {
+    string hash = 1;
+
+    string sign = 2;
+}
+
+message IVerifyDocumentHashResponseData {
+    bool valid = 1;
+}
+
+message ICheckDocumentHashResponse {
+    oneof response {
+        IVerifyDocumentHashResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
 /********************************************Document Comments*********************************************************************/
 
 service DocumentCommentsService {
@@ -278,7 +324,6 @@ message ICreateDocumentCommentResponse {
         common.IHttpError error = 2;
     }
 }
-
 
 message ICommentShortData {
     string id = 1;

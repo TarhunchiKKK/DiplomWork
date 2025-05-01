@@ -3,6 +3,7 @@ import {
     GrpcExceptionFilter,
     ICreateWorkflowDto,
     IOnlyId,
+    IUpdateWorkflowDto,
     UnwrapGrpcResponse,
     WorkflowsServiceController,
     WorkflowsServiceControllerMethods,
@@ -36,6 +37,11 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
 
     public async findOneByDocumentId(dto: IOnlyId) {
         return await this.workflowsService.findOneByDocumentId(dto.id).then(transformWorkflow);
+    }
+
+    public async update(dto: IUpdateWorkflowDto) {
+        const { id, ...data } = dto;
+        await this.workflowsService.update(id, data);
     }
 
     public async delete(dto: IOnlyId) {

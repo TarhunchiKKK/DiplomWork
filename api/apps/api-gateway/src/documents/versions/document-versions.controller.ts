@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Post, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
 import { CreateDocumentVersionDto } from "./dto/create-document-version.dto";
 import { DocumentVersionsGrpcService } from "common/grpc";
 import { ProvideOperation } from "../middleware/decorators/provide-operation.decorator";
 import { DocumentOperation } from "../middleware/enums/document-operation.enum";
 import { VersionOperationGuard } from "../middleware/guards/version-operation.guard";
+import { UpdateDocumentVersionDto } from "./dto/update-document-version.dto";
 
 @Controller("/documents/versions")
 @UseGuards(AuthenticationGuard)
@@ -43,6 +44,15 @@ export class DocumentVersionsController {
     @UseGuards(VersionOperationGuard)
     public findOneById(@Param("versionId") versionId: string) {
         return this.documentVersionsGrpcService.call("findOneById", {
+            id: versionId
+        });
+    }
+
+    @Patch(":versionId")
+    @UsePipes(ValidationPipe)
+    public update(@Param("versionId") versionId: string, @Body() dto: UpdateDocumentVersionDto) {
+        return this.documentVersionsGrpcService.call("update", {
+            ...dto,
             id: versionId
         });
     }

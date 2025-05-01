@@ -5,15 +5,18 @@ import { DocumentVersionsController } from "./document-versions.controller";
 import { DocumentVersionsService } from "./document-versions.service";
 import { DocumentAccessTokensModule } from "common/modules";
 import { DocumentsModule } from "../documents/documents.module";
+import { DocumentVersionsEventsObserver } from "./document-versions-events.observer";
+import { WorkflowsGrpcModule } from "common/grpc";
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([DocumentVersion]),
         forwardRef(() => DocumentsModule),
-        DocumentAccessTokensModule
+        DocumentAccessTokensModule,
+        WorkflowsGrpcModule
     ],
     controllers: [DocumentVersionsController],
-    providers: [DocumentVersionsService],
+    providers: [DocumentVersionsService, DocumentVersionsEventsObserver],
     exports: [DocumentVersionsService]
 })
 export class DocumentVersionsModule {}

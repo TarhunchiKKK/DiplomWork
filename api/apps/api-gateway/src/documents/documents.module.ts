@@ -5,6 +5,7 @@ import { DocumentAccessTokensModule, JwtTokensModule } from "common/modules";
 import { FavouriteDocumentsModule } from "./favourite/favourite-documents.module";
 import { DocumentVersionsModule } from "./versions/document-versions.module";
 import { DocumentCommentsModule } from "./comments/document-comments.module";
+import { DocumentHashingModule } from "./hashing/document-hashing.module";
 
 @Module({
     imports: [
@@ -13,7 +14,8 @@ import { DocumentCommentsModule } from "./comments/document-comments.module";
         DocumentAccessTokensModule,
         FavouriteDocumentsModule,
         DocumentVersionsModule,
-        DocumentCommentsModule
+        DocumentCommentsModule,
+        DocumentHashingModule
     ],
     controllers: [DocumentsController]
 })

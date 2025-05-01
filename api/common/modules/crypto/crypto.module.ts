@@ -1,10 +1,11 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { CryptoService } from "./crypto.service";
+import { AsymmetricEncryptionService } from "./services/asymmetric-encrypting.service";
+import { HmacService } from "./services/hmac.service";
 
 @Module({
     imports: [ConfigModule.forRoot()],
-    providers: [CryptoService],
-    exports: [CryptoService]
+    providers: [AsymmetricEncryptionService, HmacService],
+    exports: [AsymmetricEncryptionService, HmacService]
 })
 export class CryptoModule {}
