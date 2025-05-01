@@ -145,6 +145,27 @@ export interface IFindOneDocumentVersionResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IUpdateDocumentHashDto {
+  id: string;
+  hash: string;
+  sign: string;
+}
+
+export interface ICheckDocumentHashDto {
+  id: string;
+  hash: string;
+  sign: string;
+}
+
+export interface ICheckDocumentHashResponseData {
+  valid: boolean;
+}
+
+export interface ICheckDocumentHashResponse {
+  data?: ICheckDocumentHashResponseData | undefined;
+  error?: IHttpError | undefined;
+}
+
 export interface ICreateDocumentCommentDto {
   message: string;
   creatorId: string;
@@ -373,6 +394,49 @@ export function DocumentVersionsServiceControllerMethods() {
 }
 
 export const DOCUMENT_VERSIONS_SERVICE_NAME = "DocumentVersionsService";
+
+export interface DocumentHashingServiceClient {
+  update(request: IUpdateDocumentHashDto): Observable<IEmptyResponse>;
+
+  check(request: ICheckDocumentHashDto): Observable<ICheckDocumentHashResponse>;
+}
+
+export interface DocumentHashingServiceController {
+  update(request: IUpdateDocumentHashDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  check(
+    request: ICheckDocumentHashDto,
+  ): Promise<ICheckDocumentHashResponse> | Observable<ICheckDocumentHashResponse> | ICheckDocumentHashResponse;
+}
+
+export function DocumentHashingServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["update", "check"];
+    for (const method of grpcMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcMethod("DocumentHashingService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      
+        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+
+        if (!descriptor) {
+            continue;
+        }
+        
+      GrpcStreamMethod("DocumentHashingService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const DOCUMENT_HASHING_SERVICE_NAME = "DocumentHashingService";
 
 export interface DocumentCommentsServiceClient {
   create(request: ICreateDocumentCommentDto): Observable<ICreateDocumentCommentResponse>;

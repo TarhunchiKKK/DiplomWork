@@ -239,6 +239,42 @@ message IFindOneDocumentVersionResponse {
     }
 }
 
+/********************************************Document Hashing*********************************************************************/
+
+service DocumentHashingService {
+    rpc Update (IUpdateDocumentHashDto) returns (common.IEmptyResponse) {}
+
+    rpc Check (ICheckDocumentHashDto) returns (ICheckDocumentHashResponse) {}
+}
+
+message IUpdateDocumentHashDto {
+    string id = 1;
+
+    string hash = 2;
+
+    string sign =3;
+}
+
+message ICheckDocumentHashDto {
+    string id = 1;
+
+    string hash = 2;
+
+    string sign =3;
+}
+
+message ICheckDocumentHashResponseData {
+    bool valid = 1;
+}
+
+message ICheckDocumentHashResponse {
+    oneof response {
+        ICheckDocumentHashResponseData data = 1;
+
+        common.IHttpError error = 2;
+    }
+}
+
 /********************************************Document Comments*********************************************************************/
 
 service DocumentCommentsService {
@@ -278,7 +314,6 @@ message ICreateDocumentCommentResponse {
         common.IHttpError error = 2;
     }
 }
-
 
 message ICommentShortData {
     string id = 1;
