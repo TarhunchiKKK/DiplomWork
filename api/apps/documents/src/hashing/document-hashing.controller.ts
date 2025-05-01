@@ -1,11 +1,29 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
-import { DocumentHashingServiceControllerMethods, GrpcExceptionFilter, WrapGrpcResponseInterceptor } from "common/grpc";
+import {
+    DocumentHashingServiceController,
+    DocumentHashingServiceControllerMethods,
+    GrpcExceptionFilter,
+    IUpdateDocumentHashDto,
+    IVerifyDocumentHashDto,
+    UnwrapGrpcResponse,
+    WrapGrpcResponseInterceptor
+} from "common/grpc";
 import { DocumentHashingService } from "./document-hashing.service";
+import { transfromVerifyResponse } from "./helpers/grpc.helpers";
 
 @Controller()
 @DocumentHashingServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(WrapGrpcResponseInterceptor)
-export class DocumentHashingController {
-    public constructor(hashingService: DocumentHashingService) {}
+export class DocumentHashingController implements UnwrapGrpcResponse<DocumentHashingServiceController> {
+    public constructor(private readonly hashingService: DocumentHashingService) {}
+
+    public async update(dto: IUpdateDocumentHashDto) {
+        await this.hashingService.update(dto);
+    }
+
+    public verify(dto: IVerifyDocumentHashDto) {
+        const isValid = this.hashingService.verify(dto);
+        return transfromVerifyResponse(isValid);
+    }
 }

@@ -33,7 +33,8 @@ export class DocumentsService {
 
         this.versionsService.create({
             documentId: document.id,
-            fileExtension: dto.fileExtension
+            fileExtension: dto.fileExtension,
+            hash: dto.hash
         });
 
         return document;

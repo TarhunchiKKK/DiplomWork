@@ -30,6 +30,8 @@ message ICreateDocumentDto {
     bool isUrgent = 5;
 
     string fileExtension = 6;
+
+    string hash = 7;
 }
 
 message ICreateDocumentResponseData {
@@ -187,6 +189,8 @@ service DocumentVersionsService {
     rpc FindLast (common.IOnlyId) returns (IFindOneDocumentVersionResponse) {}
 
     rpc FindDocument (common.IOnlyId) returns (IFullDocumentResponse) {}
+
+    rpc Update (IUpdateDocumentVersionDto) returns (common.IEmptyResponse) {}
 }
 
 message ICreateDocumentVersionDto {
@@ -195,6 +199,8 @@ message ICreateDocumentVersionDto {
     string fileExtension = 2;
 
     optional string description = 3;
+
+    string hash = 4;
 }
 
 message ICreateDocumentVersionResponseData {
@@ -239,12 +245,18 @@ message IFindOneDocumentVersionResponse {
     }
 }
 
+message IUpdateDocumentVersionDto {
+    string id = 1;
+
+    optional string description = 2;
+}
+
 /********************************************Document Hashing*********************************************************************/
 
 service DocumentHashingService {
     rpc Update (IUpdateDocumentHashDto) returns (common.IEmptyResponse) {}
 
-    rpc Check (ICheckDocumentHashDto) returns (ICheckDocumentHashResponse) {}
+    rpc Verify (IVerifyDocumentHashDto) returns (ICheckDocumentHashResponse) {}
 }
 
 message IUpdateDocumentHashDto {
@@ -252,22 +264,22 @@ message IUpdateDocumentHashDto {
 
     string hash = 2;
 
-    string sign =3;
+    string sign = 3;
 }
 
-message ICheckDocumentHashDto {
-    string versionId = 1;
+message IVerifyDocumentHashDto {
+    string hash = 1;
 
     string sign = 2;
 }
 
-message ICheckDocumentHashResponseData {
+message IVerifyDocumentHashResponseData {
     bool valid = 1;
 }
 
 message ICheckDocumentHashResponse {
     oneof response {
-        ICheckDocumentHashResponseData data = 1;
+        IVerifyDocumentHashResponseData data = 1;
 
         common.IHttpError error = 2;
     }

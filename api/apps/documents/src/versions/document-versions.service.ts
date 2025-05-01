@@ -6,6 +6,7 @@ import { ICreateDocumentVersionDto } from "common/grpc";
 import { generateS3Filename } from "./helpers/s3.helpers";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { VersionCreatedEvent } from "./events/version-created.evnet";
+import { UpdateDocumentDto } from "./dto/update-version.dto";
 
 @Injectable()
 export class DocumentVersionsService {
@@ -93,5 +94,13 @@ export class DocumentVersionsService {
         }
 
         return version.document;
+    }
+
+    public async update(versionId: string, dto: UpdateDocumentDto) {
+        const version = await this.findOneById(versionId);
+
+        Object.assign(version, dto);
+
+        await this.versionsRepository.save(version);
     }
 }

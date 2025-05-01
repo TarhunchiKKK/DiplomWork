@@ -22,4 +22,8 @@ export class CreateDocumentDto implements IgnoreFields<ICreateDocumentDto, "auth
     @IsNotEmpty({ message: "Расширение файла документа не указано" })
     @IsString({ message: "Расширение файла документа должно быть строкой" })
     public fileExtension: string;
+
+    @IsNotEmpty({ message: "Хеш документа не указан" })
+    @IsString({ message: "Хеш документа должен быть строкой " })
+    public hash: string;
 }

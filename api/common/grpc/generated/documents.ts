@@ -18,6 +18,7 @@ export interface ICreateDocumentDto {
   aimId: string;
   isUrgent: boolean;
   fileExtension: string;
+  hash: string;
 }
 
 export interface ICreateDocumentResponseData {
@@ -113,6 +114,7 @@ export interface ICreateDocumentVersionDto {
   documentId: string;
   fileExtension: string;
   description?: string | undefined;
+  hash: string;
 }
 
 export interface ICreateDocumentVersionResponseData {
@@ -145,23 +147,28 @@ export interface IFindOneDocumentVersionResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IUpdateDocumentVersionDto {
+  id: string;
+  description?: string | undefined;
+}
+
 export interface IUpdateDocumentHashDto {
   versionId: string;
   hash: string;
   sign: string;
 }
 
-export interface ICheckDocumentHashDto {
-  versionId: string;
+export interface IVerifyDocumentHashDto {
+  hash: string;
   sign: string;
 }
 
-export interface ICheckDocumentHashResponseData {
+export interface IVerifyDocumentHashResponseData {
   valid: boolean;
 }
 
 export interface ICheckDocumentHashResponse {
-  data?: ICheckDocumentHashResponseData | undefined;
+  data?: IVerifyDocumentHashResponseData | undefined;
   error?: IHttpError | undefined;
 }
 
@@ -329,6 +336,8 @@ export interface DocumentVersionsServiceClient {
   findLast(request: IOnlyId): Observable<IFindOneDocumentVersionResponse>;
 
   findDocument(request: IOnlyId): Observable<IFullDocumentResponse>;
+
+  update(request: IUpdateDocumentVersionDto): Observable<IEmptyResponse>;
 }
 
 export interface DocumentVersionsServiceController {
@@ -363,11 +372,13 @@ export interface DocumentVersionsServiceController {
   findDocument(
     request: IOnlyId,
   ): Promise<IFullDocumentResponse> | Observable<IFullDocumentResponse> | IFullDocumentResponse;
+
+  update(request: IUpdateDocumentVersionDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function DocumentVersionsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll", "findOneById", "findLast", "findDocument"];
+    const grpcMethods: string[] = ["create", "findAll", "findOneById", "findLast", "findDocument", "update"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
@@ -397,20 +408,20 @@ export const DOCUMENT_VERSIONS_SERVICE_NAME = "DocumentVersionsService";
 export interface DocumentHashingServiceClient {
   update(request: IUpdateDocumentHashDto): Observable<IEmptyResponse>;
 
-  check(request: ICheckDocumentHashDto): Observable<ICheckDocumentHashResponse>;
+  verify(request: IVerifyDocumentHashDto): Observable<ICheckDocumentHashResponse>;
 }
 
 export interface DocumentHashingServiceController {
   update(request: IUpdateDocumentHashDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  check(
-    request: ICheckDocumentHashDto,
+  verify(
+    request: IVerifyDocumentHashDto,
   ): Promise<ICheckDocumentHashResponse> | Observable<ICheckDocumentHashResponse> | ICheckDocumentHashResponse;
 }
 
 export function DocumentHashingServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["update", "check"];
+    const grpcMethods: string[] = ["update", "verify"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
