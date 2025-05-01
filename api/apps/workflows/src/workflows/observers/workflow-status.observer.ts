@@ -77,7 +77,7 @@ export class WorkflowStatusObserver {
             if (dto.status === WorkflowStatus.COMPLETED) {
                 this.handleWorkflowCompletedEvent(event.workflowId);
             } else if (dto.status === WorkflowStatus.REJECTED) {
-                this.approvalsService.rejectAllByWorkflowId(event.workflowId);
+                this.approvalsService.resetAllByWorkflowId(event.workflowId);
             }
         }
     }

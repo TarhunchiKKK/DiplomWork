@@ -26,7 +26,7 @@ export class DocumentVersionsEventsObserver {
                 id: workflow.id,
                 stautus: WorkflowStatus.REJECTED
             }),
-            this.approvalsGrpcService.call("rejectAllByWorkflowId", {
+            this.approvalsGrpcService.call("resetAllByWorkflowId", {
                 id: workflow.id
             })
         ]);

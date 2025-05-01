@@ -109,7 +109,7 @@ service ApprovalsService {
 
     rpc FindOne (IFindOneApprovalDto) returns (IApprovalResponse) {} 
 
-    rpc RejectAllByWorkflowId (common.IOnlyId) returns (common.IEmptyResponse) {}
+    rpc ResetAllByWorkflowId (common.IOnlyId) returns (common.IEmptyResponse) {}
 }
 
 message IUpsertApprovalDto {

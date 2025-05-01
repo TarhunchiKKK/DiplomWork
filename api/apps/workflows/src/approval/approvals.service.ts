@@ -64,7 +64,7 @@ export class ApprovalsService {
         }
     }
 
-    public async rejectAllByWorkflowId(workflowId: string) {
+    public async resetAllByWorkflowId(workflowId: string) {
         await this.approvalsRepository.update(
             {
                 workflow: {
@@ -72,7 +72,7 @@ export class ApprovalsService {
                 }
             },
             {
-                status: ApprovalStatus.REJECTED
+                status: ApprovalStatus.DEFAULT
             }
         );
     }

@@ -214,7 +214,7 @@ export interface ApprovalsServiceClient {
 
   findOne(request: IFindOneApprovalDto): Observable<IApprovalResponse>;
 
-  rejectAllByWorkflowId(request: IOnlyId): Observable<IEmptyResponse>;
+  resetAllByWorkflowId(request: IOnlyId): Observable<IEmptyResponse>;
 }
 
 export interface ApprovalsServiceController {
@@ -222,12 +222,12 @@ export interface ApprovalsServiceController {
 
   findOne(request: IFindOneApprovalDto): Promise<IApprovalResponse> | Observable<IApprovalResponse> | IApprovalResponse;
 
-  rejectAllByWorkflowId(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+  resetAllByWorkflowId(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function ApprovalsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["upsert", "findOne", "rejectAllByWorkflowId"];
+    const grpcMethods: string[] = ["upsert", "findOne", "resetAllByWorkflowId"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
