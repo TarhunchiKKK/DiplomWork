@@ -24,12 +24,6 @@ export class User {
     @Column()
     public organizationId: string;
 
-    @Column({ nullable: true, default: null })
-    public privateKey?: string;
-
-    @Column({ nullable: true, default: null })
-    public publicKey?: string;
-
     @CreateDateColumn()
     public createdAt: Date;
 

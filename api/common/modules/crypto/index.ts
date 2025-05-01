@@ -1,2 +1,2 @@
 export { CryptoModule } from "./crypto.module";
-export { CryptoService } from "./crypto.service";
+export { AsymmetricEncryptionService } from "./services/asymmetric-encrypting.service";

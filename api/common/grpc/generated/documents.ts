@@ -146,14 +146,13 @@ export interface IFindOneDocumentVersionResponse {
 }
 
 export interface IUpdateDocumentHashDto {
-  id: string;
+  versionId: string;
   hash: string;
   sign: string;
 }
 
 export interface ICheckDocumentHashDto {
-  id: string;
-  hash: string;
+  versionId: string;
   sign: string;
 }
 

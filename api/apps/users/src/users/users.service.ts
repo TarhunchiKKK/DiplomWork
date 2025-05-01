@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { CryptoService } from "common/modules";
 import { AccountStatus } from "common/enums";
 import { IUpdateUserDto } from "./interfaces/update-user.dto";
 import { ISaveUserDto } from "./interfaces/save-user.dto";
@@ -10,25 +9,10 @@ import { withHashedPassword } from "./helpers/hashing.helpers";
 
 @Injectable()
 export class UsersService {
-    public constructor(
-        @InjectRepository(User) private readonly usersRepository: Repository<User>,
-
-        private readonly cryptoService: CryptoService
-    ) {}
-
-    private generateAssymetricKeys() {
-        return this.cryptoService.generateAssymetricKeys();
-    }
+    public constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>) {}
 
     public async create(dto: ISaveUserDto) {
-        const keys = this.generateAssymetricKeys();
-
-        return await this.usersRepository.save(
-            withHashedPassword({
-                ...dto,
-                ...keys
-            })
-        );
+        return await this.usersRepository.save(withHashedPassword(dto));
     }
 
     public async save(dto: ISaveUserDto): Promise<User> {

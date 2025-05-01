@@ -248,7 +248,7 @@ service DocumentHashingService {
 }
 
 message IUpdateDocumentHashDto {
-    string id = 1;
+    string versionId = 1;
 
     string hash = 2;
 
@@ -256,11 +256,9 @@ message IUpdateDocumentHashDto {
 }
 
 message ICheckDocumentHashDto {
-    string id = 1;
+    string versionId = 1;
 
-    string hash = 2;
-
-    string sign =3;
+    string sign = 2;
 }
 
 message ICheckDocumentHashResponseData {
