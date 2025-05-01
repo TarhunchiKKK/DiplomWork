@@ -10,7 +10,7 @@ import { DocumentVersion } from "./versions/entities/document-version.entity";
 import { DocumentComment } from "./comments/entities/document-comment.entity";
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { ScheduleModule } from "@nestjs/schedule";
-import { DocumentHashingModule } from "./hashing/document-hashing..module";
+import { DocumentHashingModule } from "./hashing/document-hashing.module";
 
 @Module({
     imports: [

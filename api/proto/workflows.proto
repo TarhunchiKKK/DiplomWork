@@ -17,6 +17,8 @@ service WorkflowsService {
 
     rpc FindOneByDocumentId (common.IOnlyId) returns (IFindOneWorkflowResponse) {}
 
+    rpc Update (IUpdateWorkflowDto) returns (common.IEmptyResponse) {}
+
     rpc Delete (common.IOnlyId) returns (common.IEmptyResponse) {}
 }
 
@@ -70,6 +72,14 @@ message IFindWorkflowsResponse {
     }
 }
 
+message IUpdateWorkflowDto {
+    string id = 1;
+
+    optional string title = 2;
+
+    optional string stautus = 3;
+}
+
 /********************************************Workflow Participants*********************************************************************/
 
 service WorkflowParticipantsService {
@@ -98,6 +108,8 @@ service ApprovalsService {
     rpc Upsert (IUpsertApprovalDto) returns (IApprovalResponse) {}
 
     rpc FindOne (IFindOneApprovalDto) returns (IApprovalResponse) {} 
+
+    rpc RejectAllByWorkflowId (common.IOnlyId) returns (common.IEmptyResponse) {}
 }
 
 message IUpsertApprovalDto {

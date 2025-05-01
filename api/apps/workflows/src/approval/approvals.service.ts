@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { IFindOneApprovalDto, IUpsertApprovalDto } from "common/grpc";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { ApprovalUpsertedEvent } from "./events/approval-upserted.event";
+import { ApprovalStatus } from "./enums/approval.-status.enum";
 
 @Injectable()
 export class ApprovalsService {
@@ -61,5 +62,18 @@ export class ApprovalsService {
         } finally {
             this.eventEmitter.emit(ApprovalUpsertedEvent.pattern, new ApprovalUpsertedEvent(participantId));
         }
+    }
+
+    public async rejectAllByWorkflowId(workflowId: string) {
+        await this.approvalsRepository.update(
+            {
+                workflow: {
+                    id: workflowId
+                }
+            },
+            {
+                status: ApprovalStatus.REJECTED
+            }
+        );
     }
 }

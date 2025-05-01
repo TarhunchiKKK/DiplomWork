@@ -11,6 +11,7 @@ import { UpdateWorkflowDto } from "../dto/update-workflow-dto";
 import { NotificationsRmqService, WorkflowCompletedRmqEvent } from "common/rabbitmq";
 import { UsersGrpcService } from "common/grpc";
 import { firstValueFrom } from "rxjs";
+import { ApprovalsService } from "../../approval/approvals.service";
 
 @Injectable()
 export class WorkflowStatusObserver {
@@ -18,6 +19,8 @@ export class WorkflowStatusObserver {
         private readonly workflowsService: WorkflowsService,
 
         private readonly participantsService: WorkflowParticipantsService,
+
+        private readonly approvalsService: ApprovalsService,
 
         private readonly notificationsRmqService: NotificationsRmqService,
 
@@ -73,6 +76,8 @@ export class WorkflowStatusObserver {
 
             if (dto.status === WorkflowStatus.COMPLETED) {
                 this.handleWorkflowCompletedEvent(event.workflowId);
+            } else if (dto.status === WorkflowStatus.REJECTED) {
+                this.approvalsService.rejectAllByWorkflowId(event.workflowId);
             }
         }
     }

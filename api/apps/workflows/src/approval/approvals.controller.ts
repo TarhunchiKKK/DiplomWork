@@ -4,6 +4,7 @@ import {
     ApprovalsServiceControllerMethods,
     GrpcExceptionFilter,
     IFindOneApprovalDto,
+    IOnlyId,
     IUpsertApprovalDto,
     UnwrapGrpcResponse,
     WrapGrpcResponseInterceptor
@@ -24,5 +25,9 @@ export class ApprovalsController implements UnwrapGrpcResponse<ApprovalsServiceC
 
     public async upsert(dto: IUpsertApprovalDto) {
         return await this.approvalsService.upsert(dto).then(transformApproval);
+    }
+
+    public async rejectAllByWorkflowId(dto: IOnlyId) {
+        await this.approvalsService.rejectAllByWorkflowId(dto.id);
     }
 }
