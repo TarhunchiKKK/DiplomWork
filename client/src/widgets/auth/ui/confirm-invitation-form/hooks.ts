@@ -1,17 +1,23 @@
-import axios, { AxiosError } from "axios";
-import { useMutation } from "@tanstack/react-query";
-import { queryUrls } from "@/shared/api";
-import { toast } from "sonner";
-import { extractValidationMessages, TValidationError } from "@/shared/validation";
-import { TRegisterDto, TRegisterResponse } from "./types";
 import { authCredentialsManager, useProfileStore } from "@/features/auth";
+import { useMutation } from "@tanstack/react-query";
+import { TConfirmInvitationFormState, TConfirmInvitationResponse } from "./types";
+import axios, { AxiosError } from "axios";
+import { queryUrls } from "@/shared/api";
+import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { toast } from "sonner";
+import { useParams } from "next/navigation";
 
-export function useRegister() {
+export function useConfirmInvitation() {
     const setProfile = useProfileStore(state => state.setProfile);
 
+    const { token } = useParams();
+
     const { mutate, isPending } = useMutation({
-        mutationFn: async (dto: TRegisterDto) => {
-            const response = await axios.post<TRegisterResponse>(queryUrls.auth.registerAdmin, dto);
+        mutationFn: async (dto: TConfirmInvitationFormState) => {
+            const response = await axios.post<TConfirmInvitationResponse>(queryUrls.auth.confirmInvitation, {
+                ...dto,
+                token
+            });
             return response.data;
         },
         onSuccess: response => {
@@ -29,7 +35,7 @@ export function useRegister() {
     });
 
     return {
-        register: mutate,
+        confirmInvitation: mutate,
         isPending
     };
 }

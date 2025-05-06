@@ -8,4 +8,6 @@ export type TProfile = {
     email: string;
 
     role: Role;
+
+    organizationId: string;
 };

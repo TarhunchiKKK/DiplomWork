@@ -1,35 +1,33 @@
-import axios, { AxiosError } from "axios";
+import { authCredentialsManager, useProfileStore } from "@/features/auth";
 import { useMutation } from "@tanstack/react-query";
+import { TLoginDto, TLoginResponse } from "./types";
+import axios, { AxiosError } from "axios";
 import { queryUrls } from "@/shared/api";
 import { toast } from "sonner";
 import { extractValidationMessages, TValidationError } from "@/shared/validation";
-import { TRegisterDto, TRegisterResponse } from "./types";
-import { authCredentialsManager, useProfileStore } from "@/features/auth";
 
-export function useRegister() {
+export function useLogin() {
     const setProfile = useProfileStore(state => state.setProfile);
 
     const { mutate, isPending } = useMutation({
-        mutationFn: async (dto: TRegisterDto) => {
-            const response = await axios.post<TRegisterResponse>(queryUrls.auth.registerAdmin, dto);
+        mutationFn: async (dto: TLoginDto) => {
+            const response = await axios.post<TLoginResponse>(queryUrls.auth.login, dto);
             return response.data;
         },
         onSuccess: response => {
-            toast.success("Успешная регистрация");
+            toast.success("Успешный вход");
 
             authCredentialsManager.jwt.set(response.token);
 
             setProfile(response);
         },
         onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => {
-                toast.error(message);
-            });
+            extractValidationMessages(error).forEach(message => toast.error(message));
         }
     });
 
     return {
-        register: mutate,
+        login: mutate,
         isPending
     };
 }
