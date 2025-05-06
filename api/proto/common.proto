@@ -24,6 +24,8 @@ message IProfile {
     string organizationId = 5;
 
     string token = 6;
+
+    string authType = 7;
 }
 
 message IAuthResponse {
