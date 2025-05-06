@@ -13,13 +13,13 @@ export function Wrapper({ heading, description, backButtonLabel, backButtonHref,
 
             <CardContent>{children}</CardContent>
 
-            <CardFooter>
-                {backButtonLabel && backButtonHref && (
+            {backButtonLabel && backButtonHref && (
+                <CardFooter>
                     <Button variant="link" className="w-full font-normal">
                         <Link href={backButtonHref}>{backButtonLabel}</Link>
                     </Button>
-                )}
-            </CardFooter>
+                </CardFooter>
+            )}
         </Card>
     );
 }
