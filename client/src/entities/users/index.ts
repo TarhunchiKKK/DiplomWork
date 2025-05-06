@@ -1,1 +1,1 @@
-export { Role } from "./enums";
+export { Role, AuthType } from "./enums";

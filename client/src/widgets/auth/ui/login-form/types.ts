@@ -1,4 +1,4 @@
-import { Role } from "@/entities/users";
+import { TProfile } from "@/features/auth";
 
 export type TLoginDto = {
     login: string;
@@ -6,16 +6,6 @@ export type TLoginDto = {
     password: string;
 };
 
-export type TLoginResponse = {
-    id: string;
-
-    username: string;
-
-    email: string;
-
-    role: Role;
-
-    organizationId: string;
-
+export type TLoginResponse = TProfile & {
     token: string;
 };

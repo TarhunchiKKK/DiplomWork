@@ -1,4 +1,4 @@
-import { Role } from "@/entities/users";
+import { AuthType, Role } from "@/entities/users";
 
 export type TProfile = {
     id: string;
@@ -10,4 +10,6 @@ export type TProfile = {
     role: Role;
 
     organizationId: string;
+
+    authType: AuthType;
 };

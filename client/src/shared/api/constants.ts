@@ -14,6 +14,7 @@ export const queryUrls = {
     auth: {
         registerAdmin: `${environment.apiUrl}/users/auth/register/admin`,
         login: `${environment.apiUrl}/users/auth/login`,
+        totpLogin: `${environment.apiUrl}/users/auth/totp/login`,
         confirmInvitation: `${environment.apiUrl}/users/invitations/confirm`
     },
     organizations: {

@@ -1,4 +1,4 @@
-import { Role } from "@/entities/users";
+import { TProfile } from "@/features/auth";
 
 export type TRegisterDto = {
     username: string;
@@ -8,16 +8,6 @@ export type TRegisterDto = {
     password: string;
 };
 
-export type TRegisterResponse = {
-    id: string;
-
-    username: string;
-
-    email: string;
-
-    role: Role;
-
-    organizationId: string;
-
+export type TRegisterResponse = TProfile & {
     token: string;
 };

@@ -1,4 +1,4 @@
-import { Role } from "@/entities/users";
+import { TProfile } from "@/features/auth";
 
 export type TConfirmInvitationFormState = {
     username: string;
@@ -14,16 +14,6 @@ export type TConfirmInvitationDto = {
     token: string;
 };
 
-export type TConfirmInvitationResponse = {
-    id: string;
-
-    username: string;
-
-    email: string;
-
-    role: Role;
-
-    organizationId: string;
-
+export type TConfirmInvitationResponse = TProfile & {
     token: string;
 };
