@@ -12,7 +12,8 @@ export const queryClient = new QueryClient({
 
 export const queryUrls = {
     auth: {
-        registerAdmin: `${environment.apiUrl}/auth/register/admin`
+        registerAdmin: `${environment.apiUrl}/auth/register/admin`,
+        login: `${environment.apiUrl}/auth/login`
     },
     organizations: {
         updateUrgencyInterval: `${environment.apiUrl}/organizations/urgency-interval`,

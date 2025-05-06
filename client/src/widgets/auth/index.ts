@@ -1,1 +1,1 @@
-export { RegisterAdminForm } from "./ui";
+export * from "./ui";
