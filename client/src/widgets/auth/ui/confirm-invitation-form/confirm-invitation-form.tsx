@@ -35,7 +35,7 @@ export function ConfirmInvitationForm() {
                                     </FormControl>
                                 </FormItem>
                             )}
-                        ></FormField>
+                        />
                     ))}
 
                     <Button type="submit" disabled={isPending} className="w-full">
