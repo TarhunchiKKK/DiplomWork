@@ -3,6 +3,7 @@ import { TWithTempId } from "../../helpers";
 import { TUpdateItemDto } from "./types";
 
 export const getTagRenderer = (onClick: (tempId: string) => void) => {
+    // eslint-disable-next-line react/display-name
     return (data: TWithTempId<TUpdateItemDto>) => {
         return (
             <Tag

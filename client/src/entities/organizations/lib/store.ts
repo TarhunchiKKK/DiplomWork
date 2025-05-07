@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { TDocumentType, TOrganization } from "../types";
 
 type TStore = {
-    organization: TOrganization | {};
+    organization: TOrganization | object;
 
     setUrgencyInterval: (_: number) => void;
 

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { TConfirmInvitationFormState } from "./types";
 import { defaultValues, formFields } from "./constants";
 import { useConfirmInvitation } from "./hooks";
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, Wrapper } from "@/shared/ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, FormWrapper } from "@/shared/ui";
 
 export function ConfirmInvitationForm() {
     const form = useForm<TConfirmInvitationFormState>({
@@ -18,7 +18,7 @@ export function ConfirmInvitationForm() {
     };
 
     return (
-        <Wrapper heading="Приглашение" description="Чтобы окончить регистрацию введите необходимые данные">
+        <FormWrapper heading="Приглашение" description="Чтобы окончить регистрацию введите необходимые данные">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     {formFields.map(formField => (
@@ -43,6 +43,6 @@ export function ConfirmInvitationForm() {
                     </Button>
                 </form>
             </Form>
-        </Wrapper>
+        </FormWrapper>
     );
 }

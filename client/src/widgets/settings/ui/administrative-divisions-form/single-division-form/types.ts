@@ -1,5 +1,3 @@
-import { TSingleDivisionState } from "../types";
-
 export type TFormState = {
     title: string;
 };

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { TLoginDto } from "./types";
 import { defaultValues, formFields } from "./constants";
 import { useLogin } from "./hooks";
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, Wrapper } from "@/shared/ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, FormWrapper } from "@/shared/ui";
 import { routes } from "@/shared/routing";
 
 export function LoginForm() {
@@ -19,7 +19,7 @@ export function LoginForm() {
     const { login, isPending } = useLogin();
 
     return (
-        <Wrapper
+        <FormWrapper
             heading="Вход в аккаунт"
             description="Введите необходимые данные для входа в профиль"
             backButtonLabel="Нет организации? Создайте"
@@ -49,6 +49,6 @@ export function LoginForm() {
                     </Button>
                 </form>
             </Form>
-        </Wrapper>
+        </FormWrapper>
     );
 }

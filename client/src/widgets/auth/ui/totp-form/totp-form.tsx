@@ -14,7 +14,7 @@ import {
     InputOTPGroup,
     InputOTPSeparator,
     InputOTPSlot,
-    Wrapper
+    FormWrapper
 } from "@/shared/ui";
 
 export function TotpLoginForm() {
@@ -29,7 +29,7 @@ export function TotpLoginForm() {
     };
 
     return (
-        <Wrapper heading="Аутентификация TOTP" description="Введите код, сгенерированный ашим приложением">
+        <FormWrapper heading="Аутентификация TOTP" description="Введите код, сгенерированный ашим приложением">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <FormField
@@ -61,6 +61,6 @@ export function TotpLoginForm() {
                     </Button>
                 </form>
             </Form>
-        </Wrapper>
+        </FormWrapper>
     );
 }
