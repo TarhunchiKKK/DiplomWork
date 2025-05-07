@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { TTotpLoginFormState } from "./types";
 import { defaultValues, TOTP_LENGTH } from "./constants";
 import { useTotpLogin } from "./hooks";
-import { Wrapper } from "../wrapper";
 import {
     Button,
     Form,
@@ -14,7 +13,8 @@ import {
     InputOTP,
     InputOTPGroup,
     InputOTPSeparator,
-    InputOTPSlot
+    InputOTPSlot,
+    Wrapper
 } from "@/shared/ui";
 
 export function TotpLoginForm() {

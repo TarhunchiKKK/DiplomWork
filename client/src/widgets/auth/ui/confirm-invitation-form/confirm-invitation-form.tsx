@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form";
 import { TConfirmInvitationFormState } from "./types";
 import { defaultValues, formFields } from "./constants";
 import { useConfirmInvitation } from "./hooks";
-import { Wrapper } from "../wrapper";
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input } from "@/shared/ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, Wrapper } from "@/shared/ui";
 
 export function ConfirmInvitationForm() {
     const form = useForm<TConfirmInvitationFormState>({

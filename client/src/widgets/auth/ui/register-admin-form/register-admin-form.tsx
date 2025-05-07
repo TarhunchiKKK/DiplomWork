@@ -2,9 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { defaultValues, formFields } from "./constants";
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input } from "@/shared/ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, Wrapper } from "@/shared/ui";
 import { routes } from "@/shared/routing";
-import { Wrapper } from "../wrapper";
 import { TRegisterDto } from "./types";
 import { useRegister } from "./hooks";
 

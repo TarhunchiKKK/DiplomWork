@@ -17,6 +17,10 @@ export const queryUrls = {
         totpLogin: `${environment.apiUrl}/users/auth/totp/login`,
         confirmInvitation: `${environment.apiUrl}/users/invitations/confirm`
     },
+    passwordRecovery: {
+        reset: `${environment.apiUrl}/users/password-recovery/reset`,
+        update: `${environment.apiUrl}/users/password-recovery/update`
+    },
     organizations: {
         updateUrgencyInterval: `${environment.apiUrl}/organizations/urgency-interval`,
         updateDocumentTypes: `${environment.apiUrl}/organizations/document-types`,
