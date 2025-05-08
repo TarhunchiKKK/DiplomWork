@@ -1,5 +1,5 @@
-import { LoginForm } from "@/widgets/auth";
+import { LoginProcess } from "@/processes";
 
 export default function LoginPage() {
-    return <LoginForm />;
+    return <LoginProcess />;
 }

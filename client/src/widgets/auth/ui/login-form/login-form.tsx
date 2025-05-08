@@ -1,13 +1,13 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { TLoginDto } from "./types";
+import { TLoginDto, TProps } from "./types";
 import { defaultValues, formFields } from "./constants";
 import { useLogin } from "./hooks";
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, FormWrapper } from "@/shared/ui";
 import { routes } from "@/shared/routing";
 
-export function LoginForm() {
+export function LoginForm(props: TProps) {
     const form = useForm<TLoginDto>({
         defaultValues: defaultValues
     });
@@ -16,7 +16,7 @@ export function LoginForm() {
         login(values);
     };
 
-    const { login, isPending } = useLogin();
+    const { login, isPending } = useLogin(props);
 
     return (
         <FormWrapper

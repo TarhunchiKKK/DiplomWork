@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { TTotpLoginFormState } from "./types";
+import { TProps, TTotpLoginFormState } from "./types";
 import { defaultValues, TOTP_LENGTH } from "./constants";
 import { useTotpLogin } from "./hooks";
 import {
@@ -17,12 +17,12 @@ import {
     FormWrapper
 } from "@/shared/ui";
 
-export function TotpLoginForm() {
+export function TotpLoginForm(props: TProps) {
     const form = useForm<TTotpLoginFormState>({
         defaultValues: defaultValues
     });
 
-    const { login, isPending } = useTotpLogin();
+    const { login, isPending } = useTotpLogin(props);
 
     const onSubmit = (values: TTotpLoginFormState) => {
         login(values.pin);
