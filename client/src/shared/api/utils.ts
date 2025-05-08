@@ -1,4 +1,5 @@
 export class HttpHeadersBuilder {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private headers: Record<string, any> = {};
 
     public setBearerToken(token: string | null): this {

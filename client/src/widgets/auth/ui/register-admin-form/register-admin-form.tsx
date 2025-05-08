@@ -2,9 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { defaultValues, formFields } from "./constants";
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input } from "@/shared/ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, FormWrapper } from "@/shared/ui";
 import { routes } from "@/shared/routing";
-import { Wrapper } from "../wrapper";
 import { TRegisterDto } from "./types";
 import { useRegister } from "./hooks";
 
@@ -20,7 +19,7 @@ export function RegisterAdminForm() {
     const { register, isPending } = useRegister();
 
     return (
-        <Wrapper
+        <FormWrapper
             heading="Регистрация"
             description="Чтобы зарегистрироваться в сервисе введите необходимые данные."
             backButtonLabel="Есть аккаунт? Войти"
@@ -50,6 +49,6 @@ export function RegisterAdminForm() {
                     </Button>
                 </form>
             </Form>
-        </Wrapper>
+        </FormWrapper>
     );
 }

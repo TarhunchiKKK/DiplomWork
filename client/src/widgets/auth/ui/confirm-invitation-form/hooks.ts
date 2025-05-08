@@ -14,7 +14,7 @@ export function useConfirmInvitation() {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async (dto: TConfirmInvitationFormState) => {
-            const response = await axios.post<TConfirmInvitationResponse>(queryUrls.auth.confirmInvitation, {
+            const response = await axios.patch<TConfirmInvitationResponse>(queryUrls.auth.confirmInvitation, {
                 ...dto,
                 token
             });

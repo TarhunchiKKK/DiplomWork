@@ -1,6 +1,6 @@
 import { removeTempId } from "../../helpers";
 import { TStore } from "./store";
-import { TUpdateDto, TUpdateItemDto } from "./types";
+import { TUpdateItemDto } from "./types";
 
 export const generateDivisionTitle = (divisions: TUpdateItemDto[]) => {
     const count = divisions.length;

@@ -1,4 +1,5 @@
 import { TProfile } from "@/features/auth";
+import { TProcessProps } from "@/shared/types";
 
 export type TLoginDto = {
     login: string;
@@ -9,3 +10,5 @@ export type TLoginDto = {
 export type TLoginResponse = TProfile & {
     token: string;
 };
+
+export type TProps = TProcessProps<TLoginResponse, null>;

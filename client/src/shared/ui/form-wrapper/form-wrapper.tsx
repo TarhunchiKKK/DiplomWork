@@ -2,7 +2,7 @@ import { Button, Card, CardContent, CardDescription, CardFooter, CardHeader, Car
 import { TProps } from "./types";
 import Link from "next/link";
 
-export function Wrapper({ heading, description, backButtonLabel, backButtonHref, children }: TProps) {
+export function FormWrapper({ heading, description, backButtonLabel, backButtonHref, children }: TProps) {
     return (
         <Card className="w-[300px] sm:w-[400px]">
             <CardHeader className="space-y-2">

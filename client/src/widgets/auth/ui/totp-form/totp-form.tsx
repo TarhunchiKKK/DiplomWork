@@ -1,10 +1,9 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { TTotpLoginFormState } from "./types";
+import { TProps, TTotpLoginFormState } from "./types";
 import { defaultValues, TOTP_LENGTH } from "./constants";
 import { useTotpLogin } from "./hooks";
-import { Wrapper } from "../wrapper";
 import {
     Button,
     Form,
@@ -14,22 +13,23 @@ import {
     InputOTP,
     InputOTPGroup,
     InputOTPSeparator,
-    InputOTPSlot
+    InputOTPSlot,
+    FormWrapper
 } from "@/shared/ui";
 
-export function TotpLoginForm() {
+export function TotpLoginForm(props: TProps) {
     const form = useForm<TTotpLoginFormState>({
         defaultValues: defaultValues
     });
 
-    const { login, isPending } = useTotpLogin();
+    const { login, isPending } = useTotpLogin(props);
 
     const onSubmit = (values: TTotpLoginFormState) => {
         login(values.pin);
     };
 
     return (
-        <Wrapper heading="Аутентификация TOTP" description="Введите код, сгенерированный ашим приложением">
+        <FormWrapper heading="Аутентификация TOTP" description="Введите код, сгенерированный ашим приложением">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <FormField
@@ -61,6 +61,6 @@ export function TotpLoginForm() {
                     </Button>
                 </form>
             </Form>
-        </Wrapper>
+        </FormWrapper>
     );
 }

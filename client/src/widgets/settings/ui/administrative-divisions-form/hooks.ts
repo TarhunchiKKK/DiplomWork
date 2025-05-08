@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { TUpdateDto } from "./types";
 import { authCredentialsManager } from "@/features/auth";
 import axios, { AxiosError } from "axios";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
@@ -8,7 +7,7 @@ import { TValidationError, extractValidationMessages } from "@/shared/validation
 import { useDivisionsStore } from "./store";
 import { trimStoreData } from "./helpers";
 import { TOrganization, useOrganizationStore } from "@/entities/organizations";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 
 export function useUpdate() {
     const queryClient = useQueryClient();
@@ -54,5 +53,5 @@ export function useSetup() {
 
     useEffect(() => {
         setDivisions(organization.administrativeDivisions);
-    }, [organization]);
+    }, [organization, setDivisions]);
 }
