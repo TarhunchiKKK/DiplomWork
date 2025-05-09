@@ -38,25 +38,25 @@ message ICreateDefaultOrganizationResponse {
 }
 
 message IDocumentAim {
-    string _id = 1;
+    optional string _id = 1;
 
-    int32 __v = 2;
+    optional int32 __v = 2;
 
     string value = 3;
 }
 
 message IDocumentType {
-    string _id = 1;
+    optional string _id = 1;
     
-    int32 __v = 2;
+    optional int32 __v = 2;
 
     string value = 3;
 }
 
 message IAdministrativeDivision {
-    string _id = 1;
+    optional string _id = 1;
     
-    int32 __v = 2;
+    optional int32 __v = 2;
 
     string title = 3;
 
@@ -64,9 +64,9 @@ message IAdministrativeDivision {
 }
 
 message IPost {
-    string _id = 1;
+    optional string _id = 1;
     
-    int32 __v = 2;
+    optional int32 __v = 2;
 
     string title = 3;
 }

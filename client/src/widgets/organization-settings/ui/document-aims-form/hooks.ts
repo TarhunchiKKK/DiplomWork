@@ -1,25 +1,65 @@
-import { authCredentialsManager } from "@/features/auth";
+import { authCredentialsManager, TProfile, useProfileStore } from "@/features/auth";
 import { queryUrls, HttpHeadersBuilder, queryKeys } from "@/shared/api";
 import { TValidationError, extractValidationMessages } from "@/shared/validation";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
-import { TFormState, TUpdateDto, TUpdateItemDto } from "./types";
-import { useOrganizationStore, TOrganization } from "@/entities/organizations";
-import { useState } from "react";
+import { TFormState, TUpdateItemDto } from "./types";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { TWithTempId, addTempId } from "../../helpers";
+import { useOrganization } from "../../hooks";
+import { useCompareableSet } from "@/shared/hooks";
+
+export function useDocumentAimsForm() {
+    const { organization, isLoading } = useOrganization();
+
+    const extractValue = useCallback((aim: TUpdateItemDto) => aim.value, []);
+
+    const documentAimsSet = useCompareableSet<TUpdateItemDto, string>(organization?.documentAims || [], extractValue);
+
+    const form = useForm<TFormState>({
+        defaultValues: {
+            value: ""
+        }
+    });
+
+    const onSubmit = form.handleSubmit((data: TFormState) => {
+        const result = documentAimsSet.add(data);
+
+        if (!result) {
+            toast.warning("Цель уже существует");
+        }
+
+        form.reset();
+    });
+
+    return {
+        documentAimsSet,
+        form,
+        onSubmit,
+        isLoading
+    };
+}
 
 export function useUpdate() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: async (dto: TUpdateDto) => {
-            const jwtToken = authCredentialsManager.jwt.get();
+    const profile = useProfileStore(state => state.profile) as TProfile;
 
-            await axios.patch(queryUrls.organizations.updateDocumentAims, dto, {
-                headers: new HttpHeadersBuilder().setBearerToken(jwtToken).get()
-            });
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (documentAims: TUpdateItemDto[]) => {
+            const token = authCredentialsManager.jwt.get();
+
+            await axios.patch(
+                queryUrls.organizations.updateDocumentAims,
+                {
+                    organizationId: profile.organizationId,
+                    documentAims: documentAims
+                },
+                {
+                    headers: new HttpHeadersBuilder().setBearerToken(token).get()
+                }
+            );
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.organizations.base });
@@ -37,45 +77,5 @@ export function useUpdate() {
     return {
         update: mutate,
         isPending
-    };
-}
-
-export function useFormState() {
-    const organization = useOrganizationStore(state => state.organization) as TOrganization;
-
-    const [documentAims, setDocumentAims] = useState<TWithTempId<TUpdateItemDto>[]>(
-        (organization.documentAims || []).map(addTempId)
-    );
-
-    const addDocumentAim = (data: TUpdateItemDto) => {
-        setDocumentAims([...documentAims, addTempId(data)]);
-    };
-
-    const removeDocumentAim = (tempId: string) => {
-        setDocumentAims(documentAims.filter(documentAims => documentAims.tempId !== tempId));
-    };
-
-    const form = useForm<TFormState>({
-        defaultValues: {
-            value: ""
-        }
-    });
-
-    const onSubmit = (data: TFormState) => {
-        if (form.getValues().value) {
-            addDocumentAim(data);
-            form.reset();
-        }
-    };
-
-    return {
-        form,
-        onSubmit,
-        documentAims: {
-            data: documentAims,
-            add: addDocumentAim,
-            remove: removeDocumentAim
-        },
-        organization
     };
 }

@@ -1,15 +1,14 @@
 import { Button, Tag } from "@/shared/ui";
-import { TWithTempId } from "../../helpers";
 import { TUpdateItemDto } from "./types";
 
-export const getTagRenderer = (onClick: (tempId: string) => void) => {
+export const getTagRenderer = (onClick: (item: TUpdateItemDto) => void) => {
     // eslint-disable-next-line react/display-name
-    return (data: TWithTempId<TUpdateItemDto>) => {
+    return (data: TUpdateItemDto) => {
         return (
             <Tag
-                key={data.tempId}
+                key={data.value}
                 tooltip={
-                    <Button variant="default" className="p-0" onClick={() => onClick(data.tempId)}>
+                    <Button variant="default" className="p-0" onClick={onClick.bind(null, data)}>
                         Удалить
                     </Button>
                 }

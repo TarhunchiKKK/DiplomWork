@@ -26,27 +26,27 @@ export interface ICreateDefaultOrganizationResponse {
 }
 
 export interface IDocumentAim {
-  _id: string;
-  __v: number;
+  Id?: string | undefined;
+  V?: number | undefined;
   value: string;
 }
 
 export interface IDocumentType {
-  _id: string;
-  __v: number;
+  Id?: string | undefined;
+  V?: number | undefined;
   value: string;
 }
 
 export interface IAdministrativeDivision {
-  _id: string;
-  __v: number;
+  Id?: string | undefined;
+  V?: number | undefined;
   title: string;
   posts: IPost[];
 }
 
 export interface IPost {
-  _id: string;
-  __v: number;
+  Id?: string | undefined;
+  V?: number | undefined;
   title: string;
 }
 

@@ -1,2 +1,2 @@
 export { Tag } from "./ui";
-export { TagsCloud } from "./tags-cloud";
+export { TagsCloud, TagsCloudSkeleton } from "./tags-cloud";

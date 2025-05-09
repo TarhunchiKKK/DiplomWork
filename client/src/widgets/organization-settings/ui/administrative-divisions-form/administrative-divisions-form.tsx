@@ -1,33 +1,29 @@
 "use client";
 
-import { SingleDivisionForm } from "./single-division-form";
-import { AddDivisionButton } from "./add-division-button";
-import { useDivisionsStore } from "./store";
 import { Button } from "@/shared/ui";
-import { useSetup, useUpdate } from "./hooks";
+import { useDivisionsForm } from "./hooks";
+import { AddDivisionButton, SingleDivisionForm } from "./ui";
 
 export function AdministrativeDivisionsForm() {
-    useSetup();
-
-    const divisions = useDivisionsStore(state => state.data);
-
-    const { update, isPending } = useUpdate();
+    const { divisions, update, isPending } = useDivisionsForm();
 
     return (
         <>
-            <h3 className="text-lg mb-4">Административные подразделения:</h3>
+            <h3 className="text-lg mb-4">Административные подразделения</h3>
 
             <div className="flex flex-col items-start gap-4 mb-4">
-                {divisions.map((division, index) => (
-                    <SingleDivisionForm key={index} divisionTempId={division.tempId} />
+                {divisions.map((_, index) => (
+                    <SingleDivisionForm key={index} index={index} />
                 ))}
             </div>
 
-            <Button onClick={() => update()} disabled={isPending}>
+            <div className="flex justify-center">
+                <AddDivisionButton />
+            </div>
+
+            <Button disabled={isPending} onClick={() => update()}>
                 Сохранить
             </Button>
-
-            <AddDivisionButton className="fixed top-8 right-8" />
         </>
     );
 }
