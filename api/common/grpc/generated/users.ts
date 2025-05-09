@@ -32,6 +32,11 @@ export interface IFindManyUsersResponse {
   error?: IHttpError | undefined;
 }
 
+export interface IUpdateProfileDto {
+  id: string;
+  username?: string | undefined;
+}
+
 export interface IRegisterAdminDto {
   username: string;
   email: string;
@@ -96,6 +101,8 @@ export interface UsersServiceClient {
   findAllByIds(request: IOnlyIds): Observable<IFindManyUsersResponse>;
 
   findAllByOrganizationId(request: IOnlyId): Observable<IFindManyUsersResponse>;
+
+  updateProfile(request: IUpdateProfileDto): Observable<IEmptyResponse>;
 }
 
 export interface UsersServiceController {
@@ -108,11 +115,13 @@ export interface UsersServiceController {
   findAllByOrganizationId(
     request: IOnlyId,
   ): Promise<IFindManyUsersResponse> | Observable<IFindManyUsersResponse> | IFindManyUsersResponse;
+
+  updateProfile(request: IUpdateProfileDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["findOne", "findAllByIds", "findAllByOrganizationId"];
+    const grpcMethods: string[] = ["findOne", "findAllByIds", "findAllByOrganizationId", "updateProfile"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

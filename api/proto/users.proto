@@ -12,6 +12,8 @@ service UsersService {
     rpc FindAllByIds (common.IOnlyIds) returns (IFindManyUsersResponse) {}
 
     rpc FindAllByOrganizationId (common.IOnlyId) returns (IFindManyUsersResponse) {}
+
+    rpc UpdateProfile (IUpdateProfileDto) returns (common.IEmptyResponse) {}
 }
 
 message IFindOneUserResponseData {
@@ -42,6 +44,12 @@ message IFindManyUsersResponse {
 
         common.IHttpError error = 2;
     }
+}
+
+message IUpdateProfileDto {
+    string id = 1;
+
+    optional string username = 2;
 }
 
 /********************************************Authentication*********************************************************************/
