@@ -11,7 +11,7 @@ import { UpdateAdministrativeDivisionsDto } from "./dto/update-administrative-di
 export class OrganizationsController {
     public constructor(private readonly organizationsGrpcService: OrganizationsGrpcService) {}
 
-    @Get(":id")
+    @Get()
     @UseGuards(AuthenticationGuard)
     public async findOneById(@Req() request: TAuthenticatedRequest) {
         return this.organizationsGrpcService.call("findOneById", { id: request.jwtInfo.organizationId });
