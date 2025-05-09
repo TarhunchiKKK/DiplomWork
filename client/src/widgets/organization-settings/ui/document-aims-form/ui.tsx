@@ -8,7 +8,7 @@ export const getTagRenderer = (onClick: (item: TUpdateItemDto) => void) => {
             <Tag
                 key={data.value}
                 tooltip={
-                    <Button variant="default" className="p-0" onClick={() => onClick(data)}>
+                    <Button variant="default" className="p-0" onClick={onClick.bind(null, data)}>
                         Удалить
                     </Button>
                 }

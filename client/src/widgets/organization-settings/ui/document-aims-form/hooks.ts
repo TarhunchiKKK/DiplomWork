@@ -48,7 +48,7 @@ export function useUpdate() {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async (documentAims: TUpdateItemDto[]) => {
-            const jwtToken = authCredentialsManager.jwt.get();
+            const token = authCredentialsManager.jwt.get();
 
             await axios.patch(
                 queryUrls.organizations.updateDocumentAims,
@@ -57,7 +57,7 @@ export function useUpdate() {
                     documentAims: documentAims
                 },
                 {
-                    headers: new HttpHeadersBuilder().setBearerToken(jwtToken).get()
+                    headers: new HttpHeadersBuilder().setBearerToken(token).get()
                 }
             );
         },

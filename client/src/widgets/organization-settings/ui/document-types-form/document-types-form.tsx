@@ -1,26 +1,29 @@
 "use client";
 
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, TagsCloud } from "@/shared/ui";
-import { useFormState, useUpdate } from "./hooks";
+import {
+    Button,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    Input,
+    TagsCloud,
+    TagsCloudSkeleton
+} from "@/shared/ui";
+import { useDocumentTypesForm, useUpdate } from "./hooks";
 import { getTagRenderer } from "./ui";
-import { removeTempId } from "../../helpers";
+import { Suspense } from "react";
 
 export function DocumentTypesForm() {
+    const { documentTypesSet, form, onSubmit, isLoading } = useDocumentTypesForm();
+
     const { update, isPending } = useUpdate();
-
-    const { documentTypes, form, onSubmit, organization } = useFormState();
-
-    const handleUpdate = () => {
-        update({
-            organizationId: organization._id,
-            documentTypes: documentTypes.data.map(removeTempId)
-        });
-    };
 
     return (
         <div>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="mb-4 space-y-4 w-[600px]">
+                <form onSubmit={onSubmit} className="mb-4 space-y-4 w-[600px]">
                     <FormField
                         control={form.control}
                         name="value"
@@ -37,13 +40,15 @@ export function DocumentTypesForm() {
                 </form>
             </Form>
 
-            <TagsCloud
-                items={documentTypes.data}
-                renderItem={getTagRenderer(documentTypes.remove)}
-                className="w-[800px] mb-4"
-            />
+            <Suspense fallback={<TagsCloudSkeleton />}>
+                <TagsCloud
+                    items={documentTypesSet.items}
+                    renderItem={getTagRenderer(documentTypesSet.remove)}
+                    className="w-[800px] mb-4"
+                />
+            </Suspense>
 
-            <Button onClick={handleUpdate} disabled={isPending}>
+            <Button onClick={() => update(documentTypesSet.items)} disabled={isPending || isLoading}>
                 Сохранить
             </Button>
         </div>

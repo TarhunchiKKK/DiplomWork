@@ -1,25 +1,65 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { TFormState, TUpdateDto, TUpdateItemDto } from "./types";
-import { authCredentialsManager } from "@/features/auth";
+import { TFormState, TUpdateItemDto } from "./types";
+import { authCredentialsManager, TProfile, useProfileStore } from "@/features/auth";
 import axios, { AxiosError } from "axios";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { toast } from "sonner";
 import { extractValidationMessages, TValidationError } from "@/shared/validation";
-import { TOrganization, useOrganizationStore } from "@/entities/organizations";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { addTempId, TWithTempId } from "../../helpers";
+import { useCallback } from "react";
+import { useOrganization } from "../../hooks";
+import { useCompareableSet } from "@/shared/hooks";
+
+export function useDocumentTypesForm() {
+    const { organization, isLoading } = useOrganization();
+
+    const extractValue = useCallback((aim: TUpdateItemDto) => aim.value, []);
+
+    const documentTypesSet = useCompareableSet<TUpdateItemDto, string>(organization?.documentTypes || [], extractValue);
+
+    const form = useForm<TFormState>({
+        defaultValues: {
+            value: ""
+        }
+    });
+
+    const onSubmit = form.handleSubmit((data: TFormState) => {
+        const result = documentTypesSet.add(data);
+
+        if (!result) {
+            toast.warning("Цель уже существует");
+        }
+
+        form.reset();
+    });
+
+    return {
+        documentTypesSet,
+        form,
+        onSubmit,
+        isLoading
+    };
+}
 
 export function useUpdate() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: async (dto: TUpdateDto) => {
-            const jwtToken = authCredentialsManager.jwt.get();
+    const profile = useProfileStore(state => state.profile) as TProfile;
 
-            await axios.patch(queryUrls.organizations.updateDocumentTypes, dto, {
-                headers: new HttpHeadersBuilder().setBearerToken(jwtToken).get()
-            });
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (documentTypes: TUpdateItemDto[]) => {
+            const token = authCredentialsManager.jwt.get();
+
+            await axios.patch(
+                queryUrls.organizations.updateDocumentTypes,
+                {
+                    organizationId: profile.organizationId,
+                    documentTypes: documentTypes
+                },
+                {
+                    headers: new HttpHeadersBuilder().setBearerToken(token).get()
+                }
+            );
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.organizations.base });
@@ -37,45 +77,5 @@ export function useUpdate() {
     return {
         update: mutate,
         isPending
-    };
-}
-
-export function useFormState() {
-    const organization = useOrganizationStore(state => state.organization) as TOrganization;
-
-    const [documentTypes, setDocumentTypes] = useState<TWithTempId<TUpdateItemDto>[]>(
-        (organization.documentTypes || []).map(addTempId)
-    );
-
-    const addDocumentType = (data: TUpdateItemDto) => {
-        setDocumentTypes([...documentTypes, addTempId(data)]);
-    };
-
-    const removeDocumentType = (tempId: string) => {
-        setDocumentTypes(documentTypes.filter(documentType => documentType.tempId !== tempId));
-    };
-
-    const form = useForm<TFormState>({
-        defaultValues: {
-            value: ""
-        }
-    });
-
-    const onSubmit = (data: TFormState) => {
-        if (form.getValues().value) {
-            addDocumentType(data);
-            form.reset();
-        }
-    };
-
-    return {
-        form,
-        onSubmit,
-        documentTypes: {
-            data: documentTypes,
-            add: addDocumentType,
-            remove: removeDocumentType
-        },
-        organization
     };
 }
