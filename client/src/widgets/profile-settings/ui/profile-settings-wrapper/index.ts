@@ -1,2 +1,1 @@
 export { ProfileSettingsWrapper } from "./profile-settings-wrapper";
-export { UpdateProfileForm } from "./update-profile-form";
