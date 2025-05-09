@@ -1,5 +1,5 @@
 import { Separator } from "@/shared/ui";
-import { DocumentAimsForm, DocumentTypesForm, UrgencyIntervalForm } from "@/widgets/settings";
+import { DocumentAimsForm, DocumentTypesForm, UrgencyIntervalForm } from "@/widgets/organization-settings";
 
 export default function DocumentsSettings() {
     return (

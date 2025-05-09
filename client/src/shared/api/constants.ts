@@ -25,6 +25,7 @@ export const queryUrls = {
         invite: `${environment.apiUrl}/users/invitations/send`,
         activate: (userId: string) => `${environment.apiUrl}/users/activate/${userId}`,
         deactivate: (userId: string) => `${environment.apiUrl}/users/deactivate/${userId}`,
+        updateProfile: `${environment.apiUrl}/users/profile`,
         find: {
             organization: `${environment.apiUrl}/users/organization`
         }
@@ -38,6 +39,10 @@ export const queryUrls = {
 };
 
 export const queryKeys = {
+    profile: {
+        base: ["profile"],
+        withJwt: (jwt: string) => ["profile", jwt]
+    },
     organizations: {
         base: ["organizations"],
         withJwt: (jwt: string) => ["organizations", jwt]
