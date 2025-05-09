@@ -27,7 +27,12 @@ export function UpdateProfileForm() {
                                 <FormItem>
                                     <FormLabel>{formField.label}</FormLabel>
 
-                                    <Input {...field} type={formField.type} placeholder={formField.placeholder} />
+                                    <Input
+                                        {...field}
+                                        type={formField.type}
+                                        placeholder={formField.placeholder}
+                                        className="w-[300px]"
+                                    />
                                 </FormItem>
                             )}
                         />

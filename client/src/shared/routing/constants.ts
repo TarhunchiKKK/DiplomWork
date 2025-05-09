@@ -10,5 +10,8 @@ export const routes = {
     settings: {
         documents: "/settings/documents",
         organization: "/settings/organization"
+    },
+    passwordRecovery: {
+        reset: "/password-recovery/reset"
     }
 };
