@@ -1,2 +1,1 @@
-export { UsersManagementPanel } from "./users-management-panel";
-export { UsersManagementPanelSkeleton } from "./ui";
+export { UsersManagementPanel, UsersManagementPanelSkeleton } from "./users-management-panel";

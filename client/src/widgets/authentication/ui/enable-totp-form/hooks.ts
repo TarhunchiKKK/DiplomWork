@@ -2,12 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { queryUrls } from "@/shared/api";
 import { TProfile, useProfileStore } from "@/features/auth";
-import { redirect } from "next/navigation";
-import { routes } from "@/shared/routing";
 import { toast } from "sonner";
 import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { TProps } from "./types";
 
-export function useEnableTotp() {
+export function useEnableTotp(props: TProps) {
     const profile = useProfileStore(state => state.profile) as TProfile;
 
     const { mutate, isPending } = useMutation({
@@ -15,12 +14,12 @@ export function useEnableTotp() {
             await axios.patch(queryUrls.auth.totp.enable, {
                 userId: profile.id,
                 userEmail: profile.email,
-                secret: "",
+                secret: props.payload,
                 pin: pin
             });
         },
         onSuccess: () => {
-            redirect(routes.settings.profile);
+            props.next();
         },
         onError: (error: AxiosError<TValidationError>) => {
             extractValidationMessages(error).forEach(message => toast.error(message));
