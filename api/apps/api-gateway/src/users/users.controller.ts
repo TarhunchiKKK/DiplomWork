@@ -1,16 +1,17 @@
-import { Controller, Get, Param, ParseArrayPipe, UseGuards } from "@nestjs/common";
+import { Controller, Get, Param, ParseArrayPipe, Req, UseGuards } from "@nestjs/common";
 import { UsersGrpcService } from "common/grpc";
 import { AuthenticationGuard } from "common/middleware";
+import { TAuthenticatedRequest } from "common/modules";
 
 @Controller("users")
 @UseGuards(AuthenticationGuard)
 export class UsersController {
     public constructor(public readonly usersGrpcService: UsersGrpcService) {}
 
-    @Get("/organizations/:organizationId")
-    public findAllByOrganizationId(@Param("organizationId") organizationId: string) {
+    @Get("/organization")
+    public findAllByOrganizationId(@Req() request: TAuthenticatedRequest) {
         return this.usersGrpcService.call("findAllByOrganizationId", {
-            id: organizationId
+            id: request.jwtInfo.organizationId
         });
     }
 

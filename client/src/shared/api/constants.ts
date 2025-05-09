@@ -22,7 +22,12 @@ export const queryUrls = {
         update: `${environment.apiUrl}/users/password-recovery/update`
     },
     users: {
-        invite: `${environment.apiUrl}/users/invitations/send`
+        invite: `${environment.apiUrl}/users/invitations/send`,
+        activate: (userId: string) => `${environment.apiUrl}/users/activate/${userId}`,
+        deactivate: (userId: string) => `${environment.apiUrl}/users/deactivate/${userId}`,
+        find: {
+            organization: `${environment.apiUrl}/users/organization`
+        }
     },
     organizations: {
         updateUrgencyInterval: `${environment.apiUrl}/organizations/urgency-interval`,

@@ -9,3 +9,4 @@ export * from "./tooltip";
 export * from "./separator";
 export * from "./input-otp";
 export * from "./carousel";
+export * from "./skeleton";

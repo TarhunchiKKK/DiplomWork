@@ -14,7 +14,7 @@ export class AccountDeactivationController {
         return this.accountdeactivationGrpcService.call("activate", { id: userId });
     }
 
-    @Patch("/deactivate")
+    @Patch("/deactivate/:userId")
     @RequireRoles([Role.ADMIN])
     @UseGuards(RoleGuard)
     public deactivate(@Param("userId") userId: string) {

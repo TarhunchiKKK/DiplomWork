@@ -15,6 +15,7 @@ export interface IFindOneUserResponseData {
   id: string;
   username?: string | undefined;
   email: string;
+  status: string;
 }
 
 export interface IFindOneUserResponse {
