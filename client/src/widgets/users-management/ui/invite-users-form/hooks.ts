@@ -6,8 +6,11 @@ import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { authCredentialsManager } from "@/features/auth";
 import { toast } from "sonner";
 import { useSet } from "@/shared/hooks";
+import { useOrganizationUsers } from "../../hooks";
 
 export function useInviteUsersForm() {
+    const { users } = useOrganizationUsers();
+
     const emailsSet = useSet<string>();
 
     const form = useForm<TFormState>({
@@ -17,7 +20,11 @@ export function useInviteUsersForm() {
     });
 
     const onSubmit = form.handleSubmit((data: TFormState) => {
-        emailsSet.add(data.value);
+        if (users?.find(user => user.email === data.value)) {
+            toast.warning("Этот пользователь уже приглашен");
+        } else {
+            emailsSet.add(data.value);
+        }
         form.reset();
     });
 

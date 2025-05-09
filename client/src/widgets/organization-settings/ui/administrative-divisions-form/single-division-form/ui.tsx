@@ -1,5 +1,5 @@
 import { Button, Tag } from "@/shared/ui";
-import { TWithTempId } from "@/widgets/settings/helpers";
+import { TWithTempId } from "@/widgets/organization-settings/helpers";
 import { TUpdatePostDto } from "../types";
 
 export const getTagRenderer = (onClick: (tempId: string) => void) => {

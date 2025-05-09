@@ -1,6 +1,6 @@
 "use client";
 
-import { TagsCloud } from "@/shared/ui";
+import { Skeleton, TagsCloud } from "@/shared/ui";
 import { useOrganizationUsers } from "../../hooks";
 import { AccountStatus } from "@/entities/users";
 import { getActiveUserTagRenderer, getDeactivatedUserTagRenderer } from "./ui";
@@ -29,5 +29,15 @@ export function UsersManagementPanel() {
                 </div>
             )}
         </>
+    );
+}
+
+export function UsersManagementPanelSkeleton() {
+    return (
+        <div className="flex justify-between items-center gap-4 h-[104px]">
+            <TagsCloud items={new Array(12).fill("")} renderItem={() => <Skeleton className="w-32 h-6 rounded-sm" />} />
+
+            <TagsCloud items={new Array(12).fill("")} renderItem={() => <Skeleton className="w-32 h-6 rounded-sm" />} />
+        </div>
     );
 }

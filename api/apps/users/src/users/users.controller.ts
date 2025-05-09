@@ -3,6 +3,7 @@ import {
     GrpcExceptionFilter,
     IOnlyId,
     IOnlyIds,
+    IUpdateProfileDto,
     UnwrapGrpcResponse,
     UsersServiceController,
     UsersServiceControllerMethods,
@@ -28,5 +29,10 @@ export class UsersController implements UnwrapGrpcResponse<UsersServiceControlle
 
     public async findAllByOrganizationId(dto: IOnlyId) {
         return await this.usersService.findAllByOrganizationId(dto.id).then(transformUsersArray);
+    }
+
+    public async updateProfile(dto: IUpdateProfileDto) {
+        const { id, ...data } = dto;
+        return await this.usersService.update(id, data);
     }
 }

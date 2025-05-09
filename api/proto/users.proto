@@ -12,6 +12,8 @@ service UsersService {
     rpc FindAllByIds (common.IOnlyIds) returns (IFindManyUsersResponse) {}
 
     rpc FindAllByOrganizationId (common.IOnlyId) returns (IFindManyUsersResponse) {}
+
+    rpc UpdateProfile (IUpdateProfileDto) returns (common.IEmptyResponse) {}
 }
 
 message IFindOneUserResponseData {
@@ -42,6 +44,12 @@ message IFindManyUsersResponse {
 
         common.IHttpError error = 2;
     }
+}
+
+message IUpdateProfileDto {
+    string id = 1;
+
+    optional string username = 2;
 }
 
 /********************************************Authentication*********************************************************************/
@@ -132,7 +140,7 @@ message IGenerateTotpDto {
     string userEmail = 2;
 }
 
-message ICreateTotpResponsedata {
+message ICreateTotpResponseData {
     string qrCode = 1;
 
     string secret = 2;
@@ -140,7 +148,7 @@ message ICreateTotpResponsedata {
 
 message IGenerateTotpResponse {
     oneof response {
-        ICreateTotpResponsedata data = 1;
+        ICreateTotpResponseData data = 1;
 
         common.IHttpError error = 2;
     }

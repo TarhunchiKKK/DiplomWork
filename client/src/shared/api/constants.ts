@@ -14,8 +14,13 @@ export const queryUrls = {
     auth: {
         registerAdmin: `${environment.apiUrl}/users/auth/register/admin`,
         login: `${environment.apiUrl}/users/auth/login`,
-        totpLogin: `${environment.apiUrl}/users/auth/totp/login`,
-        confirmInvitation: `${environment.apiUrl}/users/invitations/confirm`
+        confirmInvitation: `${environment.apiUrl}/users/invitations/confirm`,
+        totp: {
+            generate: `${environment.apiUrl}/users/auth/totp/generate`,
+            enable: `${environment.apiUrl}/users/auth/totp/enable`,
+            disable: `${environment.apiUrl}/users/auth/totp/disable`,
+            login: `${environment.apiUrl}/users/auth/totp/login`
+        }
     },
     passwordRecovery: {
         reset: `${environment.apiUrl}/users/password-recovery/reset`,
@@ -25,6 +30,7 @@ export const queryUrls = {
         invite: `${environment.apiUrl}/users/invitations/send`,
         activate: (userId: string) => `${environment.apiUrl}/users/activate/${userId}`,
         deactivate: (userId: string) => `${environment.apiUrl}/users/deactivate/${userId}`,
+        updateProfile: `${environment.apiUrl}/users/profile`,
         find: {
             organization: `${environment.apiUrl}/users/organization`
         }
@@ -38,6 +44,10 @@ export const queryUrls = {
 };
 
 export const queryKeys = {
+    profile: {
+        base: ["profile"],
+        withJwt: (jwt: string) => ["profile", jwt]
+    },
     organizations: {
         base: ["organizations"],
         withJwt: (jwt: string) => ["organizations", jwt]

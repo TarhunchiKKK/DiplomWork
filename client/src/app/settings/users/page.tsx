@@ -1,5 +1,3 @@
-"use client";
-
 import { Separator } from "@/shared/ui";
 import { InviteUsersForm, UsersManagementPanel, UsersManagementPanelSkeleton } from "@/widgets/users-management";
 import { Suspense } from "react";

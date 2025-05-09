@@ -1,23 +1,25 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import { TProps, TTotpLoginResponse } from "./types";
 import { queryUrls } from "@/shared/api";
+import { TProfile, useProfileStore } from "@/features/auth";
 import { toast } from "sonner";
 import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { TProps } from "./types";
 
-export function useTotpLogin(props: TProps) {
+export function useEnableTotp(props: TProps) {
+    const profile = useProfileStore(state => state.profile) as TProfile;
+
     const { mutate, isPending } = useMutation({
         mutationFn: async (pin: string) => {
-            const response = await axios.post<TTotpLoginResponse>(queryUrls.auth.totpLogin, {
-                ...props.payload,
-                pin
+            await axios.patch(queryUrls.auth.totp.enable, {
+                userId: profile.id,
+                userEmail: profile.email,
+                secret: props.payload,
+                pin: pin
             });
-            return response.data;
         },
-        onSuccess: response => {
-            toast.success("Успешный вход");
-
-            props.next(response);
+        onSuccess: () => {
+            props.next();
         },
         onError: (error: AxiosError<TValidationError>) => {
             extractValidationMessages(error).forEach(message => toast.error(message));
@@ -25,7 +27,7 @@ export function useTotpLogin(props: TProps) {
     });
 
     return {
-        login: mutate,
+        enable: mutate,
         isPending
     };
 }

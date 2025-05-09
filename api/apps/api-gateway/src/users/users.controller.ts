@@ -1,9 +1,22 @@
-import { Controller, Get, Param, ParseArrayPipe, Req, UseGuards } from "@nestjs/common";
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    ParseArrayPipe,
+    Patch,
+    Req,
+    UseGuards,
+    UsePipes,
+    ValidationPipe
+} from "@nestjs/common";
 import { UsersGrpcService } from "common/grpc";
 import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
+import { UpdateProfileDto } from "./dto/update-profile.dto";
 
 @Controller("users")
+@UseGuards(AuthenticationGuard)
 @UseGuards(AuthenticationGuard)
 export class UsersController {
     public constructor(public readonly usersGrpcService: UsersGrpcService) {}
@@ -16,9 +29,18 @@ export class UsersController {
     }
 
     @Get(":ids")
-    public async findAllByIds(@Param("ids", ParseArrayPipe) ids: string[]) {
+    public findAllByIds(@Param("ids", ParseArrayPipe) ids: string[]) {
         return this.usersGrpcService.call("findAllByIds", {
             ids: ids
+        });
+    }
+
+    @Patch("profile")
+    @UsePipes(ValidationPipe)
+    public updateProfile(@Req() request: TAuthenticatedRequest, @Body() dto: UpdateProfileDto) {
+        return this.usersGrpcService.call("updateProfile", {
+            ...dto,
+            id: request.jwtInfo.id
         });
     }
 }
