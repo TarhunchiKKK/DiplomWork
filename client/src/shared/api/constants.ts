@@ -21,6 +21,9 @@ export const queryUrls = {
         reset: `${environment.apiUrl}/users/password-recovery/reset`,
         update: `${environment.apiUrl}/users/password-recovery/update`
     },
+    users: {
+        invite: `${environment.apiUrl}/users/invitations/send`
+    },
     organizations: {
         updateUrgencyInterval: `${environment.apiUrl}/organizations/urgency-interval`,
         updateDocumentTypes: `${environment.apiUrl}/organizations/document-types`,
@@ -33,5 +36,9 @@ export const queryKeys = {
     organizations: {
         base: ["organizations"],
         withJwt: (jwt: string) => ["organizations", jwt]
+    },
+    users: {
+        base: ["users"],
+        withJwt: (jwt: string) => ["users", jwt]
     }
 };
