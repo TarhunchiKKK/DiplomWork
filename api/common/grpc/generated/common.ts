@@ -22,6 +22,7 @@ export interface IProfile {
   role: string;
   organizationId: string;
   token: string;
+  authType: string;
 }
 
 export interface IAuthResponse {

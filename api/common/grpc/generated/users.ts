@@ -93,6 +93,8 @@ export interface UsersServiceClient {
   findOne(request: IOnlyId): Observable<IFindOneUserResponse>;
 
   findAllByIds(request: IOnlyIds): Observable<IFindManyUsersResponse>;
+
+  findAllByOrganizationId(request: IOnlyId): Observable<IFindManyUsersResponse>;
 }
 
 export interface UsersServiceController {
@@ -101,11 +103,15 @@ export interface UsersServiceController {
   findAllByIds(
     request: IOnlyIds,
   ): Promise<IFindManyUsersResponse> | Observable<IFindManyUsersResponse> | IFindManyUsersResponse;
+
+  findAllByOrganizationId(
+    request: IOnlyId,
+  ): Promise<IFindManyUsersResponse> | Observable<IFindManyUsersResponse> | IFindManyUsersResponse;
 }
 
 export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["findOne", "findAllByIds"];
+    const grpcMethods: string[] = ["findOne", "findAllByIds", "findAllByOrganizationId"];
     for (const method of grpcMethods) {
       
         const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

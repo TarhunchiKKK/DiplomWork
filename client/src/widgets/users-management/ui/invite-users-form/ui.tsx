@@ -7,7 +7,7 @@ export const getTagRendereer = (onClick: (email: string) => void) => {
             <Tag
                 key={email}
                 tooltip={
-                    <Button variant="default" className="p-0" onClick={onClick.bind(null, email)}>
+                    <Button variant="default" className="p-0 cursor-pointer" onClick={onClick.bind(null, email)}>
                         Удалить
                     </Button>
                 }

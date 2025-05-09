@@ -25,4 +25,8 @@ export class UsersController implements UnwrapGrpcResponse<UsersServiceControlle
     public async findAllByIds(dto: IOnlyIds) {
         return await this.usersService.findAllByIds(dto.ids).then(transformUsersArray);
     }
+
+    public async findAllByOrganizationId(dto: IOnlyId) {
+        return await this.usersService.findAllByOrganizationId(dto.id).then(transformUsersArray);
+    }
 }
