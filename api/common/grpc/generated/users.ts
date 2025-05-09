@@ -70,13 +70,13 @@ export interface IGenerateTotpDto {
   userEmail: string;
 }
 
-export interface ICreateTotpResponsedata {
+export interface ICreateTotpResponseData {
   qrCode: string;
   secret: string;
 }
 
 export interface IGenerateTotpResponse {
-  data?: ICreateTotpResponsedata | undefined;
+  data?: ICreateTotpResponseData | undefined;
   error?: IHttpError | undefined;
 }
 

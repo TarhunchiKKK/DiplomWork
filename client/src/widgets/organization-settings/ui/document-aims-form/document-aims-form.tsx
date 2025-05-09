@@ -1,26 +1,29 @@
 "use client";
 
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, TagsCloud } from "@/shared/ui";
-import { removeTempId } from "../../helpers";
-import { useFormState, useUpdate } from "./hooks";
+import {
+    Button,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    Input,
+    TagsCloud,
+    TagsCloudSkeleton
+} from "@/shared/ui";
+import { useUpdate, useDocumentAimsForm } from "./hooks";
 import { getTagRenderer } from "./ui";
+import { Suspense } from "react";
 
 export function DocumentAimsForm() {
     const { update, isPending } = useUpdate();
 
-    const { documentAims, form, onSubmit, organization } = useFormState();
-
-    const handleUpdate = () => {
-        update({
-            organizationId: organization._id,
-            documentAims: documentAims.data.map(removeTempId)
-        });
-    };
+    const { documentAimsSet, form, onSubmit, isLoading } = useDocumentAimsForm();
 
     return (
         <div>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="mb-4 space-y-4 w-[600px]">
+                <form onSubmit={onSubmit} className="mb-4 space-y-4 w-[600px]">
                     <FormField
                         control={form.control}
                         name="value"
@@ -37,13 +40,15 @@ export function DocumentAimsForm() {
                 </form>
             </Form>
 
-            <TagsCloud
-                items={documentAims.data}
-                renderItem={getTagRenderer(documentAims.remove)}
-                className="w-[800px] mb-4"
-            />
+            <Suspense fallback={<TagsCloudSkeleton />}>
+                <TagsCloud
+                    items={documentAimsSet.items}
+                    renderItem={getTagRenderer(documentAimsSet.remove)}
+                    className="w-[800px] mb-4"
+                />
+            </Suspense>
 
-            <Button onClick={handleUpdate} disabled={isPending}>
+            <Button onClick={() => update(documentAimsSet.items)} disabled={isPending || isLoading}>
                 Сохранить
             </Button>
         </div>
