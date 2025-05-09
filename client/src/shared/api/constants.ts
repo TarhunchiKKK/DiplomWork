@@ -14,8 +14,11 @@ export const queryUrls = {
     auth: {
         registerAdmin: `${environment.apiUrl}/users/auth/register/admin`,
         login: `${environment.apiUrl}/users/auth/login`,
-        totpLogin: `${environment.apiUrl}/users/auth/totp/login`,
-        confirmInvitation: `${environment.apiUrl}/users/invitations/confirm`
+        confirmInvitation: `${environment.apiUrl}/users/invitations/confirm`,
+        totp: {
+            disable: `${environment.apiUrl}/users/auth/totp/disable`,
+            login: `${environment.apiUrl}/users/auth/totp/login`
+        }
     },
     passwordRecovery: {
         reset: `${environment.apiUrl}/users/password-recovery/reset`,

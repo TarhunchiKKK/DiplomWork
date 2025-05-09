@@ -1,4 +1,9 @@
-import { ProfileSettingsWrapper, UpdatePasswordLink, UpdateProfileForm } from "@/widgets/profile-settings";
+import {
+    ProfileSettingsWrapper,
+    UpdateAuthTypeForm,
+    UpdatePasswordLink,
+    UpdateProfileForm
+} from "@/widgets/profile-settings";
 
 export default function UpdateProfilePage() {
     return (
@@ -9,6 +14,10 @@ export default function UpdateProfilePage() {
 
             <ProfileSettingsWrapper title="Смена пароля">
                 <UpdatePasswordLink />
+            </ProfileSettingsWrapper>
+
+            <ProfileSettingsWrapper title="Аутентификация">
+                <UpdateAuthTypeForm />
             </ProfileSettingsWrapper>
         </div>
     );

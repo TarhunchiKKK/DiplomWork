@@ -8,7 +8,7 @@ import { TValidationError, extractValidationMessages } from "@/shared/validation
 export function useTotpLogin(props: TProps) {
     const { mutate, isPending } = useMutation({
         mutationFn: async (pin: string) => {
-            const response = await axios.post<TTotpLoginResponse>(queryUrls.auth.totpLogin, {
+            const response = await axios.post<TTotpLoginResponse>(queryUrls.auth.totp.login, {
                 ...props.payload,
                 pin
             });

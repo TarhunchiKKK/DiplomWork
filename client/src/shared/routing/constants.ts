@@ -5,7 +5,8 @@ export const routes = {
     auth: {
         registerAdmin: "/auth/register/admin",
         registerUser: "/auth/register/user",
-        login: "/auth/login"
+        login: "/auth/login",
+        enableTotp: "/auth/enable-totp"
     },
     settings: {
         documents: "/settings/documents",
