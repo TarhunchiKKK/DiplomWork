@@ -15,7 +15,7 @@ export class User {
     @Column({ nullable: true })
     public password?: string;
 
-    @Column({ type: "enum", enum: AccountStatus, default: AccountStatus.ACTIVE })
+    @Column({ type: "enum", enum: AccountStatus, default: AccountStatus.INVITED })
     public status: AccountStatus;
 
     @Column({ type: "enum", enum: Role })

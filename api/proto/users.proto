@@ -10,6 +10,8 @@ service UsersService {
     rpc FindOne (common.IOnlyId) returns (IFindOneUserResponse) {}
 
     rpc FindAllByIds (common.IOnlyIds) returns (IFindManyUsersResponse) {}
+
+    rpc FindAllByOrganizationId (common.IOnlyId) returns (IFindManyUsersResponse) {}
 }
 
 message IFindOneUserResponseData {
@@ -18,6 +20,8 @@ message IFindOneUserResponseData {
     optional string username = 2;
 
     string email = 3;
+
+    string status = 4;
 }
 
 message IFindOneUserResponse {
