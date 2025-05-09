@@ -32,7 +32,7 @@ export function DocumentTypesForm() {
                                 <FormLabel className="text-lg">Типы документов</FormLabel>
 
                                 <FormControl>
-                                    <Input {...field} type="text" disabled={isPending} />
+                                    <Input {...field} type="text" disabled={isPending} placeholder="Тип документа" />
                                 </FormControl>
                             </FormItem>
                         )}

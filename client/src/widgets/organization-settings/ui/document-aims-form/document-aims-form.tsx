@@ -32,7 +32,7 @@ export function DocumentAimsForm() {
                                 <FormLabel className="text-lg">Цели документов</FormLabel>
 
                                 <FormControl>
-                                    <Input {...field} type="text" disabled={isPending} />
+                                    <Input {...field} type="text" disabled={isPending} placeholder="Цель документа" />
                                 </FormControl>
                             </FormItem>
                         )}

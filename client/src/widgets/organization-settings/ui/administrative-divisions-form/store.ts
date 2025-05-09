@@ -1,115 +1,45 @@
 import { create } from "zustand";
-import { TWithTempId } from "../../helpers";
-import { TUpdateItemDto, TUpdatePostDto } from "./types";
-import { addTempId, generateTempId } from "../../helpers/temp-id";
-import { generateDivisionTitle } from "./helpers";
-import { TOrganization } from "@/entities/organizations";
+import { TUpdateDivisionDto } from "./types";
 
-type TPosts = TWithTempId<TUpdatePostDto>[];
+type TStore = {
+    divisions: TUpdateDivisionDto[];
 
-export type TStore = {
-    data: TWithTempId<Omit<TUpdateItemDto, "posts"> & { posts: TPosts }>[];
+    setData: (_: TUpdateDivisionDto[]) => void;
 
-    setData: (data: TOrganization["administrativeDivisions"]) => void;
+    setDivision: (_: TUpdateDivisionDto) => void;
 
-    divisions: {
-        add: () => void;
-
-        update: (tempId: string, title: string) => void;
-
-        remove: (tempId: string) => void;
-    };
-
-    posts: {
-        add: (divisionTempId: string) => void;
-
-        update: (divisionTempId: string, postTempId: string, title: string) => void;
-
-        remove: (divisionTempId: string, postTempId: string) => void;
-    };
+    setTitle: (title: string, index: number) => void;
 };
 
 export const useDivisionsStore = create<TStore>(set => ({
-    data: [],
+    divisions: [],
 
-    setData: data => {
-        set({
-            data: data.map(data =>
-                addTempId({
-                    ...data,
-                    posts: data.posts.map(addTempId)
-                })
-            )
+    setData: divisions => set({ divisions }),
+
+    setDivision: division => {
+        set(state => {
+            const index = state.divisions.findIndex(d => d.title === division.title);
+
+            if (index == -1) {
+                return { divisions: [...state.divisions, division] };
+            } else {
+                return {
+                    divisions: [...state.divisions.slice(0, index), division, ...state.divisions.slice(index + 1)]
+                };
+            }
         });
     },
 
-    divisions: {
-        add: () => {
-            set(state => ({
-                data: [
-                    ...state.data,
-                    {
-                        title: generateDivisionTitle(state.data),
-                        tempId: generateTempId(),
-                        posts: [
-                            {
-                                title: "",
-                                tempId: generateTempId()
-                            }
-                        ]
-                    }
+    setTitle: (title, index) => {
+        set(state => {
+            const division = state.divisions[index];
+            return {
+                divisions: [
+                    ...state.divisions.slice(0, index),
+                    { ...division, title },
+                    ...state.divisions.slice(index + 1)
                 ]
-            }));
-        },
-        update: (tempId, title) => {
-            set(state => ({
-                data: state.data.map(division => (division.tempId === tempId ? { ...division, title } : division))
-            }));
-        },
-        remove: tempId => {
-            set(state => ({
-                data: state.data.filter(division => division.tempId !== tempId)
-            }));
-        }
-    },
-    posts: {
-        add: divisionTempId => {
-            set(state => ({
-                data: state.data.map(division =>
-                    division.tempId === divisionTempId
-                        ? {
-                              ...division,
-                              posts: [...division.posts, { title: "", tempId: generateTempId() }]
-                          }
-                        : division
-                )
-            }));
-        },
-        update: (divisionTempId, postTempId, title) => {
-            set(state => ({
-                data: state.data.map(division =>
-                    division.tempId === divisionTempId
-                        ? {
-                              ...division,
-                              posts: division.posts.map(post =>
-                                  post.tempId! === postTempId ? { ...post, title } : post
-                              )
-                          }
-                        : division
-                )
-            }));
-        },
-        remove: (divisionTempId, postTempId) => {
-            set(state => ({
-                data: state.data.map(division =>
-                    division.tempId === divisionTempId
-                        ? {
-                              ...division,
-                              posts: division.posts.filter(post => post.tempId !== postTempId)
-                          }
-                        : division
-                )
-            }));
-        }
+            };
+        });
     }
 }));
