@@ -16,6 +16,8 @@ export const queryUrls = {
         login: `${environment.apiUrl}/users/auth/login`,
         confirmInvitation: `${environment.apiUrl}/users/invitations/confirm`,
         totp: {
+            generate: `${environment.apiUrl}/users/auth/totp/generate`,
+            enable: `${environment.apiUrl}/users/auth/totp/enable`,
             disable: `${environment.apiUrl}/users/auth/totp/disable`,
             login: `${environment.apiUrl}/users/auth/totp/login`
         }

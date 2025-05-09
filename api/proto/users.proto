@@ -140,7 +140,7 @@ message IGenerateTotpDto {
     string userEmail = 2;
 }
 
-message ICreateTotpResponsedata {
+message ICreateTotpResponseData {
     string qrCode = 1;
 
     string secret = 2;
@@ -148,7 +148,7 @@ message ICreateTotpResponsedata {
 
 message IGenerateTotpResponse {
     oneof response {
-        ICreateTotpResponsedata data = 1;
+        ICreateTotpResponseData data = 1;
 
         common.IHttpError error = 2;
     }
