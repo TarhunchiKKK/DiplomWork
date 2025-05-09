@@ -10,7 +10,9 @@ export const routes = {
     },
     settings: {
         documents: "/settings/documents",
-        organization: "/settings/organization"
+        organization: "/settings/organization",
+        users: "/settings/users",
+        profile: "/settings/profile"
     },
     passwordRecovery: {
         reset: "/password-recovery/reset"
