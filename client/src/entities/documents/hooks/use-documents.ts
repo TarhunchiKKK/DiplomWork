@@ -10,7 +10,6 @@ export function useDocuments() {
     const searchParams = useSearchParams();
 
     const queryParams: TQueryParams = {
-        authorId: searchParams.get("authorId") || undefined,
         aimId: searchParams.get("aimId") || undefined,
         typeId: searchParams.get("typeId") || undefined,
         isUrgent: Boolean(searchParams.get("isUrgent")) || undefined

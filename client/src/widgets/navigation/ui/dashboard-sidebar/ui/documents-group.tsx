@@ -13,7 +13,7 @@ import {
     SidebarMenuItem
 } from "@/shared/ui";
 import { useOrganization } from "@/widgets/organization-settings";
-import { Timer, ChevronDown } from "lucide-react";
+import { Timer, Star, ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 export function DocumentsGroup() {
@@ -28,6 +28,16 @@ export function DocumentsGroup() {
 
             <SidebarGroupContent>
                 <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton asChild>
+                            <Link href="#">
+                                <Star />
+
+                                <span>Избранные</span>
+                            </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild>
                             <Link href="#">

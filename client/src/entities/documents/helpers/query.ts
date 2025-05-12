@@ -7,6 +7,6 @@ export function createQueryKey(queryParams: TQueryParams) {
 
     return queryKeys.documents
         .withJwt(jwt)
-        .concat([queryParams.authorId, queryParams.aimId, queryParams.typeId, queryParams.isUrgent] as string[])
+        .concat([queryParams.aimId, queryParams.typeId, queryParams.isUrgent] as string[])
         .filter(Boolean) as string[];
 }
