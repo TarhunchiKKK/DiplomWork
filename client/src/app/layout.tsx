@@ -12,11 +12,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <html lang="en">
             <body>
                 <QueryClientProvider client={queryClient}>
-                    <ThemeProvider>
-                        <div className="py-6">
-                            <div className="container mx-auto">{children}</div>
-                        </div>
-                    </ThemeProvider>
+                    <ThemeProvider>{children}</ThemeProvider>
                 </QueryClientProvider>
 
                 <Toaster />
