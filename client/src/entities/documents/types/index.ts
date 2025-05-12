@@ -1,2 +1,2 @@
 export type { TDocumentShortData } from "./document";
-export type { TQueryParams } from "./api";
+export type { TQueryParams, TFindDocumentsResponse } from "./api";

@@ -1,7 +1,7 @@
-import { Card, CardContent, CardDescription, CardTitle } from "@/shared/ui";
+import { Card, CardContent, CardDescription, CardTitle, Skeleton } from "@/shared/ui";
 import Image from "next/image";
 import Link from "next/link";
-import { iconSizes } from "./constants";
+import { containerClassNames, iconSizes } from "./constants";
 import { DocumentsDisplayType } from "../../enums";
 import { TSIngleItemProps } from "./types";
 import { formatDateOnly, getDocumentIcon } from "@/shared/helpers";
@@ -49,5 +49,33 @@ export function DocumentsGridItem({ document }: TSIngleItemProps) {
                 </div>
             </CardContent>
         </Card>
+    );
+}
+
+export function DocumentsCOntainerSkeleton() {
+    const containerClassName = containerClassNames[DocumentsDisplayType.ROWS];
+
+    return (
+        <div className={containerClassName}>
+            {[...Array(9)].map((_, index) => (
+                <Card key={index}>
+                    <CardContent>
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-4">
+                                <Skeleton className="size-6 rounded-sm" />
+
+                                <CardTitle>
+                                    <Skeleton className="h-4 w-[150px]" />
+                                </CardTitle>
+                            </div>
+
+                            <CardDescription>
+                                <Skeleton className="h-4 w-[150px]" />
+                            </CardDescription>
+                        </div>
+                    </CardContent>
+                </Card>
+            ))}
+        </div>
     );
 }

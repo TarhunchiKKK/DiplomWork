@@ -58,5 +58,9 @@ export const queryKeys = {
     users: {
         base: ["users"],
         withJwt: (jwt: string) => ["users", jwt]
+    },
+    documents: {
+        base: ["documents"],
+        withJwt: (jwt: string) => ["documents", jwt]
     }
 };
