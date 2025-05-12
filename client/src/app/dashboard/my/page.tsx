@@ -1,6 +1,6 @@
 "use client";
 
-import { useFavouriteDocuments } from "@/entities/documents";
+import { useMyDocuments } from "@/entities/documents";
 import {
     DocumentsContainer,
     DocumentsCOntainerSkeleton,
@@ -8,8 +8,8 @@ import {
 } from "@/widgets/documents-container";
 import { Suspense } from "react";
 
-export default function FavouriteocumentsPage() {
-    const { documents } = useFavouriteDocuments();
+export default function MyDocumentsPage() {
+    const { documents } = useMyDocuments();
 
     return (
         <div className="space-y-4">
