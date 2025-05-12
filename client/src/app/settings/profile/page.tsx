@@ -5,7 +5,7 @@ import {
     UpdateProfileForm
 } from "@/widgets/profile-settings";
 
-export default function UpdateProfilePage() {
+export default function ProfileSettingsPage() {
     return (
         <div className="space-y-4">
             <ProfileSettingsWrapper title="Настройки профиля">

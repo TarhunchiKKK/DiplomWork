@@ -40,6 +40,9 @@ export const queryUrls = {
         updateDocumentTypes: `${environment.apiUrl}/organizations/document-types`,
         updateDocumentAims: `${environment.apiUrl}/organizations/document-aims`,
         updateAdministrativeDivisions: `${environment.apiUrl}/organizations/administrative-divisions`
+    },
+    documents: {
+        findAll: `${environment.apiUrl}/documents`
     }
 };
 
@@ -55,5 +58,9 @@ export const queryKeys = {
     users: {
         base: ["users"],
         withJwt: (jwt: string) => ["users", jwt]
+    },
+    documents: {
+        base: ["documents"],
+        withJwt: (jwt: string) => ["documents", jwt]
     }
 };
