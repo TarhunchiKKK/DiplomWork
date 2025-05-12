@@ -1,7 +1,7 @@
 import { Separator } from "@/shared/ui";
 import { DocumentAimsForm, DocumentTypesForm } from "@/widgets/organization-settings";
 
-export default function DocumentsSettings() {
+export default function DocumentsSettingsPage() {
     return (
         <div>
             <DocumentTypesForm />

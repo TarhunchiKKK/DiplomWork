@@ -1,3 +1,5 @@
+import { DocumentsContainer } from "@/widgets/documents-container";
+
 export default function DashboardPage() {
-    return <div>Dashboard</div>;
+    return <DocumentsContainer />;
 }
