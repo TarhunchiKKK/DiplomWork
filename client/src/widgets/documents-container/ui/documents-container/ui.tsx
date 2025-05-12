@@ -4,7 +4,7 @@ import Link from "next/link";
 import { iconSizes } from "./constants";
 import { DocumentsDisplayType } from "../../enums";
 import { TSIngleItemProps } from "./types";
-import { getDocumentIcon } from "@/shared/helpers";
+import { formatDateOnly, getDocumentIcon } from "@/shared/helpers";
 
 export function DocumentsRowItem({ document }: TSIngleItemProps) {
     const iconPath = getDocumentIcon(document.title);
@@ -23,7 +23,7 @@ export function DocumentsRowItem({ document }: TSIngleItemProps) {
                         </CardTitle>
                     </div>
 
-                    <CardDescription>{document.createdAt.toISOString()}</CardDescription>
+                    <CardDescription>{formatDateOnly(document.createdAt)}</CardDescription>
                 </div>
             </CardContent>
         </Card>
@@ -45,7 +45,7 @@ export function DocumentsGridItem({ document }: TSIngleItemProps) {
                         <Link href="#">{document.title}</Link>
                     </CardTitle>
 
-                    <CardDescription>{document.createdAt.toISOString()}</CardDescription>
+                    <CardDescription>{formatDateOnly(document.createdAt)}</CardDescription>
                 </div>
             </CardContent>
         </Card>
