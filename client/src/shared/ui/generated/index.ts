@@ -10,3 +10,6 @@ export * from "./separator";
 export * from "./input-otp";
 export * from "./carousel";
 export * from "./skeleton";
+export * from "./sidebar";
+export * from "./avatar";
+export * from "./menubar";
