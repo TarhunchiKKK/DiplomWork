@@ -1,5 +1,5 @@
 import { TDocumentShortData } from "@/entities/documents";
-import { DocumentsContainer } from "@/widgets/documents-container";
+import { DocumentsContainer, DocumentsDisplayTypeTabs } from "@/widgets/documents-container";
 
 const documents: TDocumentShortData[] = [
     {
@@ -65,5 +65,13 @@ const documents: TDocumentShortData[] = [
 ];
 
 export default function DashboardPage() {
-    return <DocumentsContainer documents={documents} />;
+    return (
+        <div className="space-y-4">
+            <div className="flex justify-end">
+                <DocumentsDisplayTypeTabs />
+            </div>
+
+            <DocumentsContainer documents={documents} />
+        </div>
+    );
 }

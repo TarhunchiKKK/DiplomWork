@@ -13,3 +13,4 @@ export * from "./skeleton";
 export * from "./sidebar";
 export * from "./avatar";
 export * from "./menubar";
+export * from "./tabs";

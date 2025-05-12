@@ -1,2 +1,1 @@
-export { DocumentsContainer } from "./documents-container";
 export { DocumentsDisplayTypeTabs } from "./documents-dispay-type-tabs";

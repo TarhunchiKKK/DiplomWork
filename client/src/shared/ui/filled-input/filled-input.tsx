@@ -1,4 +1,4 @@
-import { cn } from "@/shared/utils";
+import { cn } from "@/shared/helpers";
 import { TProps } from "./types";
 
 export function FilledInput({ className, ...props }: TProps) {

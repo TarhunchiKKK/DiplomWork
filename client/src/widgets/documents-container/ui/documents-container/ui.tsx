@@ -1,10 +1,10 @@
-import { getDocumentIcon } from "@/shared/files";
 import { Card, CardContent, CardDescription, CardTitle } from "@/shared/ui";
 import Image from "next/image";
 import Link from "next/link";
 import { iconSizes } from "./constants";
 import { DocumentsDisplayType } from "../../enums";
 import { TSIngleItemProps } from "./types";
+import { getDocumentIcon } from "@/shared/helpers";
 
 export function DocumentsRowItem({ document }: TSIngleItemProps) {
     const iconPath = getDocumentIcon(document.title);
