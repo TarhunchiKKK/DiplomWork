@@ -2,6 +2,7 @@
 
 import { useDocuments } from "@/entities/documents";
 import {
+    AddDocumentButton,
     DocumentsContainer,
     DocumentsCOntainerSkeleton,
     DocumentsDisplayTypeTabs
@@ -13,7 +14,9 @@ export default function DashboardPage() {
 
     return (
         <div className="space-y-4">
-            <div className="flex justify-end">
+            <div className="flex justify-between item-center">
+                <AddDocumentButton />
+
                 <DocumentsDisplayTypeTabs />
             </div>
 
