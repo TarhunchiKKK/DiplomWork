@@ -1,16 +1,20 @@
 "use client";
 
 import { useDisplayDocumentsStore } from "../../lib";
+import { containerClassNames, documentsItems } from "./constants";
 import { TProps } from "./types";
-import { DocumentRowItem } from "./ui";
 
 export function DocumentsContainer({ documents }: TProps) {
-    // const displayType = useDisplayDocumentsStore(state => state.displayType);
+    const displayType = useDisplayDocumentsStore(state => state.displayType);
+
+    const DocumentsItem = documentsItems[displayType];
+
+    const containerClassName = containerClassNames[displayType];
 
     return (
-        <div className="space-y-4">
+        <div className={containerClassName}>
             {documents.map(document => (
-                <DocumentRowItem key={document.id} document={document} />
+                <DocumentsItem key={document.id} document={document} />
             ))}
         </div>
     );
