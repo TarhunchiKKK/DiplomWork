@@ -1,9 +1,5 @@
-export type TQueryParams = {
-    authorId?: string;
+import { TDocumentShortData } from "@/entities/documents";
 
-    typeId?: string;
-
-    aimId?: string;
-
-    isUrgent?: boolean;
+export type TProps = {
+    documents: TDocumentShortData[];
 };

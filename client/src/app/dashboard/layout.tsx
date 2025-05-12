@@ -5,9 +5,9 @@ import { PropsWithChildren } from "react";
 export default function DashboardLayout({ children }: PropsWithChildren) {
     return (
         <SidebarProvider defaultOpen={true}>
-            <DashboardSidebar />
+            {/* <DashboardSidebar /> */}
 
-            <main>{children}</main>
+            <main className="w-full p-4">{children}</main>
         </SidebarProvider>
     );
 }
