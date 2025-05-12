@@ -1,2 +1,2 @@
 export type { TDocumentShortData } from "./types";
-export { useDocuments } from "./hooks";
+export { useDocuments, useFavouriteDocuments, useMyDocuments } from "./hooks";

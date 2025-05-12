@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/shared/routing";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,7 +14,7 @@ import {
     SidebarMenuItem
 } from "@/shared/ui";
 import { useOrganization } from "@/widgets/organization-settings";
-import { Timer, ChevronDown } from "lucide-react";
+import { Timer, Star, User, ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 export function DocumentsGroup() {
@@ -28,6 +29,26 @@ export function DocumentsGroup() {
 
             <SidebarGroupContent>
                 <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton asChild>
+                            <Link href={routes.dashboard.myDocuments}>
+                                <User />
+
+                                <span>Мои</span>
+                            </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+
+                    <SidebarMenuItem>
+                        <SidebarMenuButton asChild>
+                            <Link href={routes.dashboard.favouriteDocuments}>
+                                <Star />
+
+                                <span>Избранные</span>
+                            </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild>
                             <Link href="#">

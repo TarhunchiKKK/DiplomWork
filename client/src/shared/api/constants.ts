@@ -42,7 +42,13 @@ export const queryUrls = {
         updateAdministrativeDivisions: `${environment.apiUrl}/organizations/administrative-divisions`
     },
     documents: {
-        findAll: `${environment.apiUrl}/documents`
+        findAll: `${environment.apiUrl}/documents`,
+        favourite: {
+            findAll: `${environment.apiUrl}/documents/favourite`
+        },
+        my: {
+            findAll: `${environment.apiUrl}/documents/my`
+        }
     }
 };
 
@@ -61,6 +67,8 @@ export const queryKeys = {
     },
     documents: {
         base: ["documents"],
-        withJwt: (jwt: string) => ["documents", jwt]
+        withJwt: (jwt: string) => ["documents", jwt],
+        favourite: (jwt: string) => ["favourite-documents", jwt],
+        my: (jwt: string) => ["my-documents", jwt]
     }
 };

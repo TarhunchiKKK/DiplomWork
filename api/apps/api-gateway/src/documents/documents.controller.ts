@@ -38,7 +38,6 @@ export class DocumentsController {
 
     @Get()
     public findAll(
-        @Req() request: TAuthenticatedRequest,
         @Query("aimId") aimId?: string,
         @Query("typeId") typeId?: string,
         @Query("isUrgent", ParseBoolPipe) isUrgent?: boolean,
@@ -48,14 +47,17 @@ export class DocumentsController {
             aimId,
             typeId,
             isUrgent,
-            sortOrder: sortOrder as DocumentSortOrder
+            sortOrder: sortOrder as DocumentSortOrder | undefined
         };
 
-        if (request.jwtInfo.role !== Role.ADMIN) {
-            dto.authorId = request.jwtInfo.id;
-        }
-
         return this.documentsGrpcService.call("findAll", dto);
+    }
+
+    @Get("my")
+    public findMyDocuments(@Req() request: TAuthenticatedRequest) {
+        return this.documentsGrpcService.call("findAll", {
+            authorId: request.jwtInfo.id
+        });
     }
 
     @Get(":documentId")

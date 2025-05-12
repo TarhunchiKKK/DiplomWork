@@ -1,6 +1,8 @@
 export const routes = {
     dashboard: {
-        index: "/dashboard"
+        index: "/dashboard",
+        myDocuments: "/dashboard/my",
+        favouriteDocuments: "/dashboard/favourite"
     },
     auth: {
         registerAdmin: "/auth/register/admin",
