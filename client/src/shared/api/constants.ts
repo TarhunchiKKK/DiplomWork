@@ -32,7 +32,8 @@ export const queryUrls = {
         deactivate: (userId: string) => `${environment.apiUrl}/users/deactivate/${userId}`,
         updateProfile: `${environment.apiUrl}/users/profile`,
         find: {
-            organization: `${environment.apiUrl}/users/organization`
+            organization: `${environment.apiUrl}/users/organization`,
+            ids: `${environment.apiUrl}/users`
         }
     },
     organizations: {
@@ -60,7 +61,9 @@ export const queryKeys = {
     },
     users: {
         findAll: ["users"],
-        byOrganization: ["users", "organzation"]
+        byOrganization: ["users", "organzation"],
+        findOne: (userId: string) => ["users", userId],
+        findMany: (usersIds: string[]) => ["users"].concat(usersIds)
     },
     documents: {
         findAll: ["documents"],
