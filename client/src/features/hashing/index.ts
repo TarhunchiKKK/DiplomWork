@@ -1,1 +1,0 @@
-export { useVerifyDocumentHash } from "./hooks";

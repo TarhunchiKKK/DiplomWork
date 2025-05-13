@@ -1,9 +1,11 @@
-import { environment } from "@/shared/config";
+const LOCAL_STORAGE_KEY = "jwt";
 
-export const authCredentialsManager = {
+export const credentialsManager = {
     jwt: {
-        set: (jwt: string) => localStorage.setItem(environment.jwtLocalStorageKey, jwt),
-        get: () => localStorage.getItem(environment.jwtLocalStorageKey),
-        remove: () => localStorage.removeItem(environment.jwtLocalStorageKey)
+        set: (jwt: string) => localStorage.setItem(LOCAL_STORAGE_KEY, jwt),
+
+        get: () => localStorage.getItem(LOCAL_STORAGE_KEY),
+
+        remove: () => localStorage.removeItem(LOCAL_STORAGE_KEY)
     }
 };

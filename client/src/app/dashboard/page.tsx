@@ -1,6 +1,5 @@
 "use client";
 
-import { useDocuments } from "@/entities/documents";
 import {
     AddDocumentButton,
     DocumentsContainer,
@@ -8,9 +7,10 @@ import {
     DocumentsDisplayTypeTabs
 } from "@/widgets/documents-container";
 import { Suspense } from "react";
+import { useCurrentDocuments } from "./hooks";
 
 export default function DashboardPage() {
-    const { documents } = useDocuments();
+    const { documents } = useCurrentDocuments();
 
     return (
         <div className="space-y-4">

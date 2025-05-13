@@ -1,1 +1,1 @@
-export * from "./ui";
+export { DocumentInfo, DocumentInfoSkeleton } from "./document-info";

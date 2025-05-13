@@ -1,8 +1,9 @@
-import { environment } from "@/shared/config";
 import { TTheme } from "../types";
 
-export const themeLocalStorageService = {
-    set: (theme: TTheme) => localStorage.setItem(environment.themeLocalStorageKey, theme),
+const LOCAL_STORAGE_KEY = "theme";
 
-    get: () => localStorage.getItem(environment.themeLocalStorageKey) as TTheme | null
+export const themeLocalStorageService = {
+    set: (theme: TTheme) => localStorage.setItem(LOCAL_STORAGE_KEY, theme),
+
+    get: () => localStorage.getItem(LOCAL_STORAGE_KEY) as TTheme | null
 };

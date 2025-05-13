@@ -11,6 +11,8 @@ type TStore = {
 
 export const useProfileStore = create<TStore>(set => ({
     profile: null,
+
     setProfile: (profile: TProfile) => set({ profile }),
+
     resetProfile: () => set({ profile: null })
 }));

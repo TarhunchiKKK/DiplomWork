@@ -1,4 +1,4 @@
-import { authCredentialsManager, useProfileStore } from "@/features/auth";
+import { credentialsManager, useProfileStore } from "@/features/auth";
 import { TLoginResult, TTotpLoginPayload } from "./types";
 import { useState } from "react";
 import { routes } from "@/shared/routing";
@@ -9,7 +9,7 @@ function useEndLogin() {
     const setProfile = useProfileStore(state => state.setProfile);
 
     const endLogin = (result: TLoginResult) => {
-        authCredentialsManager.jwt.set(result.token);
+        credentialsManager.jwt.set(result.token);
 
         setProfile(result);
 

@@ -72,7 +72,8 @@ export const queryKeys = {
         findMany: (usersIds: string[]) => ["users"].concat(usersIds)
     },
     documents: {
-        findAll: ["documents"],
+        base: ["documents"],
+        findAll: (queryParams: Record<string, unknown>) => ["documents", queryParams],
         findOne: (documentId: string) => ["documents", documentId],
         favourite: ["favourite-documents"],
         my: ["my-documents"]
