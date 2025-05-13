@@ -1,10 +1,12 @@
 import { useSearchParams } from "next/navigation";
 import { TFindDocumentsResponse, TQueryParams } from "../types";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createQueryKey, transformDocumentShortData } from "../helpers";
 import axios from "axios";
-import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
+import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { authCredentialsManager } from "@/features/auth";
+import { TUpdateDocumentDto } from "../types/api";
+import { toast } from "sonner";
 
 export function useDocuments() {
     const searchParams = useSearchParams();
@@ -30,4 +32,24 @@ export function useDocuments() {
     });
 
     return { documents: data, isLoading };
+}
+
+export function useUpdateDocument(documentId: string) {
+    const queryClient = useQueryClient();
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (dto: TUpdateDocumentDto) => {
+            const token = authCredentialsManager.jwt.get();
+
+            await axios.patch(queryUrls.documents.update, dto, {
+                headers: new HttpHeadersBuilder().setBearerToken(token).get()
+            });
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: queryKeys.documents.findOne(documentId) });
+        },
+        onError: () => toast.error("Ошибка")
+    });
+
+    return { update: mutate, isPending };
 }

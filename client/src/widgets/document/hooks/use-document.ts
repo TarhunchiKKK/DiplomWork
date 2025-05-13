@@ -22,6 +22,7 @@ export function useDocument() {
     });
 
     return {
+        documentId: id,
         document: data,
         isLoading
     };

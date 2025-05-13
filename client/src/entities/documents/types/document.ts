@@ -17,5 +17,5 @@ export type TDocument = {
 
     isUrgent: boolean;
 
-    authroId: string;
+    authorId: string;
 };

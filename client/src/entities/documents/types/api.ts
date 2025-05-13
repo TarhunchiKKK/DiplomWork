@@ -12,3 +12,15 @@ export type TQueryParams = {
 export type TFindDocumentsResponse = {
     documents: DateFieldsToString<TDocumentShortData>[];
 };
+
+export type TUpdateDocumentDto = {
+    id: string;
+
+    title?: string;
+
+    typeId?: string;
+
+    aimId?: string;
+
+    isUrgent?: boolean;
+};

@@ -32,7 +32,7 @@ export function DocumentInfo() {
                     <DocumentParams />
 
                     <div className="space-y-2">
-                        <DocumentButtons documentId={document.id} />
+                        <DocumentButtons />
 
                         <DownloadButton />
                     </div>
