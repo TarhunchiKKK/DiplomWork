@@ -5,3 +5,17 @@ export type TDocumentShortData = {
 
     createdAt: Date;
 };
+
+export type TDocument = {
+    id: string;
+
+    title: string;
+
+    typeId: string;
+
+    aimId: string;
+
+    isUrgent: boolean;
+
+    authroId: string;
+};

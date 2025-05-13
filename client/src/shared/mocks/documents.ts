@@ -1,4 +1,4 @@
-import { TDocumentShortData } from "@/entities/documents";
+import { TDocument, TDocumentShortData } from "@/entities/documents";
 
 export const documentsShortData: TDocumentShortData[] = [
     {
@@ -62,3 +62,12 @@ export const documentsShortData: TDocumentShortData[] = [
         createdAt: new Date("2023-01-05")
     }
 ];
+
+export const document: TDocument = {
+    id: "1",
+    title: "Document 1",
+    aimId: "1",
+    typeId: "1",
+    authroId: "1",
+    isUrgent: true
+};

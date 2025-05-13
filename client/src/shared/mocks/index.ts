@@ -1,5 +1,6 @@
-import { documentsShortData } from "./documents-short-data";
+import { document, documentsShortData } from "./documents";
 
 export const mocks = {
-    documentsShortData
+    documentsShortData,
+    document
 };
