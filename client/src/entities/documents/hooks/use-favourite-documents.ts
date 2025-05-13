@@ -9,7 +9,7 @@ export function useFavouriteDocuments() {
     const token = authCredentialsManager.jwt.get() as string;
 
     const { data, isLoading } = useQuery({
-        queryKey: queryKeys.documents.favourite(token),
+        queryKey: queryKeys.documents.favourite,
         queryFn: async () => {
             const response = await axios.get<TFindDocumentsResponse>(queryUrls.documents.favourite.findAll, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).get()

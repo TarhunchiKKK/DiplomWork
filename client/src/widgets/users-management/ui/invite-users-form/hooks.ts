@@ -49,7 +49,7 @@ export function useUsersInvitation() {
         onSuccess: () => {
             toast.success("Пользователи добавлены");
 
-            queryClient.invalidateQueries({ queryKey: queryKeys.users.base });
+            queryClient.invalidateQueries({ queryKey: queryKeys.users.byOrganization });
         }
     });
 

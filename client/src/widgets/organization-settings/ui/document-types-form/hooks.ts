@@ -62,7 +62,7 @@ export function useUpdate() {
             );
         },
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeys.organizations.base });
+            queryClient.invalidateQueries({ queryKey: queryKeys.organizations.findOne });
         },
         onSuccess: () => {
             toast.success("Обновлено успешно");

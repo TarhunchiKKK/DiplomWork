@@ -27,7 +27,7 @@ export function useDisableTotp() {
         onSuccess: () => {
             toast.success("Обновлено");
 
-            queryClient.invalidateQueries({ queryKey: queryKeys.profile.base });
+            queryClient.invalidateQueries({ queryKey: queryKeys.profile });
         },
         onError: () => {
             toast.error("Ошибка");

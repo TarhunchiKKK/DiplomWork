@@ -9,7 +9,7 @@ export function useMyDocuments() {
     const token = authCredentialsManager.jwt.get() as string;
 
     const { data, isLoading } = useQuery({
-        queryKey: queryKeys.documents.my(token),
+        queryKey: queryKeys.documents.my,
         queryFn: async () => {
             const response = await axios.get<TFindDocumentsResponse>(queryUrls.documents.my.findAll, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).get()

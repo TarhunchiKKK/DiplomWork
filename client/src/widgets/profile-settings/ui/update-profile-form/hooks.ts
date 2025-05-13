@@ -33,7 +33,7 @@ export function useUpdateProfile() {
         onSuccess: () => {
             toast.success("Профиль обновлен");
 
-            queryClient.invalidateQueries({ queryKey: queryKeys.profile.base });
+            queryClient.invalidateQueries({ queryKey: queryKeys.profile });
         },
         onError: (error: AxiosError<TValidationError>) => {
             extractValidationMessages(error).forEach(message => toast.error(message));

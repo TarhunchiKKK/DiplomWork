@@ -43,6 +43,7 @@ export const queryUrls = {
     },
     documents: {
         findAll: `${environment.apiUrl}/documents`,
+        findOne: (documentId: string) => `${environment.apiUrl}/documents/${documentId}`,
         favourite: {
             findAll: `${environment.apiUrl}/documents/favourite`
         },
@@ -53,22 +54,18 @@ export const queryUrls = {
 };
 
 export const queryKeys = {
-    profile: {
-        base: ["profile"],
-        withJwt: (jwt: string) => ["profile", jwt]
-    },
+    profile: ["profile"],
     organizations: {
-        base: ["organizations"],
-        withJwt: (jwt: string) => ["organizations", jwt]
+        findOne: ["organization"]
     },
     users: {
-        base: ["users"],
-        withJwt: (jwt: string) => ["users", jwt]
+        findAll: ["users"],
+        byOrganization: ["users", "organzation"]
     },
     documents: {
-        base: ["documents"],
-        withJwt: (jwt: string) => ["documents", jwt],
-        favourite: (jwt: string) => ["favourite-documents", jwt],
-        my: (jwt: string) => ["my-documents", jwt]
+        findAll: ["documents"],
+        findOne: (documentId: string) => ["documents", documentId],
+        favourite: ["favourite-documents"],
+        my: ["my-documents"]
     }
 };
