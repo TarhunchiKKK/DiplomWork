@@ -5,11 +5,11 @@ export function useDocumentHeader() {
     const { document } = useDocument();
 
     const { users } = useMultipleUsers({
-        ids: [document?.authroId || ""],
+        ids: [document?.authorId || ""],
         enabled: !!document
     });
 
-    const user = users ? users[0] || null : undefined;
+    const user = users ? users[0] : null;
 
     return { document, user };
 }

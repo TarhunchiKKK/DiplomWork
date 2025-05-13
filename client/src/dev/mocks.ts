@@ -1,6 +1,8 @@
 import { TDocument, TDocumentShortData } from "@/entities/documents";
+import { AuthType, Role } from "@/entities/users";
+import { TProfile } from "@/features/auth";
 
-export const documentsShortData: TDocumentShortData[] = [
+const documentsShortData: TDocumentShortData[] = [
     {
         id: "1",
         title: "Document 1",
@@ -63,11 +65,26 @@ export const documentsShortData: TDocumentShortData[] = [
     }
 ];
 
-export const document: TDocument = {
+const document: TDocument = {
     id: "1",
     title: "Document 1",
     aimId: "1",
     typeId: "1",
-    authroId: "1",
+    authorId: "1",
     isUrgent: true
+};
+
+const profile: TProfile = {
+    id: "1",
+    email: "kostabarilo12@gmial.com",
+    authType: AuthType.BASIC,
+    organizationId: "1",
+    role: Role.USER,
+    username: "Kostya Barilo"
+};
+
+export const mocks = {
+    document,
+    documentsShortData,
+    profile
 };

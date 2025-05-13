@@ -4,25 +4,23 @@ import { Badge, Skeleton } from "@/shared/ui";
 import { useDocumentParams } from "./hooks";
 
 export function DocumentParams() {
-    const { documentAim, documentType, isLoading } = useDocumentParams();
+    const { documentAim, documentType } = useDocumentParams();
 
     return (
         <div className="flex flex-col items-start gap-2">
-            {isLoading && (
-                <>
-                    <Skeleton className="w-28 h-6" />
+            {documentAim && <Badge variant="outline">{documentAim}</Badge>}
 
-                    <Skeleton className="w-28 h-6" />
-                </>
-            )}
+            {documentType && <Badge variant="outline">{documentType}</Badge>}
+        </div>
+    );
+}
 
-            {!isLoading && (
-                <>
-                    {documentAim && <Badge variant="outline">{documentAim}</Badge>}
+export function DocumentParamsSkeleton() {
+    return (
+        <div className="flex flex-col items-start gap-2">
+            <Skeleton className="w-2/3 h-6" />
 
-                    {documentType && <Badge variant="outline">{documentType}</Badge>}
-                </>
-            )}
+            <Skeleton className="w-2/3 h-6" />
         </div>
     );
 }

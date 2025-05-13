@@ -10,11 +10,21 @@ export function DocumentHeader() {
         <CardHeader>
             {document && <CardTitle>{document.title}</CardTitle>}
 
-            {!document && <Skeleton className="w-[130px] h-6" />}
-
-            {user === undefined && <Skeleton className="w-[130px] h-6" />}
-
             {user && <CardDescription>{`Создатель: ${user.username ?? user.email}`}</CardDescription>}
+        </CardHeader>
+    );
+}
+
+export function DocumentHeaderSkeleton() {
+    return (
+        <CardHeader>
+            <CardTitle>
+                <Skeleton className="w-full h-6" />
+            </CardTitle>
+
+            <CardDescription>
+                <Skeleton className="w-full h-6" />
+            </CardDescription>
         </CardHeader>
     );
 }

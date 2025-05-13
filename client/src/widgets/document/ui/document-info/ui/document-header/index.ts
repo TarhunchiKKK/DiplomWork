@@ -1,1 +1,1 @@
-export { DocumentHeader } from "./document-header";
+export { DocumentHeader, DocumentHeaderSkeleton } from "./document-header";

@@ -1,1 +1,1 @@
-export { DocumentButtons } from "./document-buttons";
+export { DocumentButtons, DocumentButtonsSkeleton } from "./document-buttons";

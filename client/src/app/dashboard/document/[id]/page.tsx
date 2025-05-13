@@ -1,5 +1,10 @@
-import { DocumentInfo } from "@/widgets/document";
+import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/document";
+import { Suspense } from "react";
 
 export default function DocumentPage() {
-    return <DocumentInfo />;
+    return (
+        <Suspense fallback={<DocumentInfoSkeleton />}>
+            <DocumentInfoSkeleton />
+        </Suspense>
+    );
 }

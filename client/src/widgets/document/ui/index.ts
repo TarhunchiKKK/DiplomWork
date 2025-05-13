@@ -1,1 +1,1 @@
-export { DocumentInfo } from "./document-info";
+export { DocumentInfo, DocumentInfoSkeleton } from "./document-info";

@@ -1,1 +1,1 @@
-export { DocumentParams } from "./document-params";
+export { DocumentParams, DocumentParamsSkeleton } from "./document-params";

@@ -2,9 +2,9 @@ import { useDocument } from "@/widgets/document/hooks/use-document";
 import { useOrganization } from "@/widgets/organization-settings";
 
 export function useDocumentParams() {
-    const { document, isLoading: isDocumentLoading } = useDocument();
+    const { document } = useDocument();
 
-    const { organization, isLoading: isOrganizationLoading } = useOrganization();
+    const { organization } = useOrganization();
 
     const documentAim = organization?.documentAims.find(aim => aim._id === document?.aimId)?.value || null;
 
@@ -12,7 +12,6 @@ export function useDocumentParams() {
 
     return {
         documentAim,
-        documentType,
-        isLoading: isDocumentLoading || isOrganizationLoading
+        documentType
     };
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/shared/ui";
+import { Button, Skeleton } from "@/shared/ui";
 import { Star, Timer } from "lucide-react";
 import { useStartButton, useUrgencyButton } from "./hooks";
 
@@ -18,6 +18,16 @@ export function DocumentButtons() {
             <Button variant="outline" size="icon" disabled={urgencyButton.disabled} onClick={urgencyButton.onClick}>
                 <Timer />
             </Button>
+        </div>
+    );
+}
+
+export function DocumentButtonsSkeleton() {
+    return (
+        <div className="flex justify-start items-center gap-2">
+            <Skeleton className="w-9 h-9" />
+
+            <Skeleton className="w-9 h-9" />
         </div>
     );
 }
