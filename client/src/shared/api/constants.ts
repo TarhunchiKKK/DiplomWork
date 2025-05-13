@@ -53,6 +53,9 @@ export const queryUrls = {
         },
         my: {
             findAll: `${environment.apiUrl}/documents/my`
+        },
+        hash: {
+            verify: `${environment.apiUrl}/documents/hash`
         }
     }
 };

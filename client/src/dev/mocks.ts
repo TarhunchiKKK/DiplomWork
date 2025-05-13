@@ -83,8 +83,15 @@ const profile: TProfile = {
     username: "Kostya Barilo"
 };
 
+const verifyDocumentHashDto = {
+    hash: "",
+
+    sign: ""
+};
+
 export const mocks = {
     document,
     documentsShortData,
-    profile
+    profile,
+    verifyDocumentHashDto
 };
