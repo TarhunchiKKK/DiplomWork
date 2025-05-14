@@ -1,1 +1,1 @@
-export { VersionsList } from "./versions-list";
+export { VersionsList, VersionsListSkeleton } from "./versions-list";
