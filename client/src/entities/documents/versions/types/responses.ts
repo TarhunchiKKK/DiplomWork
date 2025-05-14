@@ -1,6 +1,6 @@
 import { DateFieldsToString } from "@/shared/api";
 import { TVersion } from "../models";
 
-export type TFindVersionResponse = {
+export type TFindVersionsResponse = {
     versions: DateFieldsToString<TVersion>[];
 };

@@ -60,7 +60,8 @@ export const queryUrls = {
         versions: {
             findAll: (documentId: string) => `${environment.apiUrl}/documents/versions/all/${documentId}`,
             findLast: (documentId: string) => `${environment.apiUrl}/documents/versions/last/${documentId}`,
-            findOne: (versionId: string) => `${environment.apiUrl}/documents/versions/${versionId}`
+            findOne: (versionId: string) => `${environment.apiUrl}/documents/versions/${versionId}`,
+            create: `${environment.apiUrl}/documents/versions`
         }
     }
 };
@@ -83,7 +84,7 @@ export const queryKeys = {
         favourite: ["favourite-documents"],
         my: ["my-documents"],
         versions: {
-            findAll: ["versions"],
+            findAll: (documentId: string) => ["versions", documentId],
             findLast: (documentId: string) => ["versions", "last", documentId],
             findOne: (versionId: string) => ["versions", versionId]
         }

@@ -1,1 +1,1 @@
-export type { TFindVersionResponse } from "./find-versions-response";
+export type { TFindVersionsResponse } from "./responses";

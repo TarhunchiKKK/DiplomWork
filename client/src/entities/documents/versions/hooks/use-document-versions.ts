@@ -2,16 +2,16 @@ import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { TFindVersionResponse } from "../types";
+import { TFindVersionsResponse } from "../types";
 import { transformVersion } from "../helpers";
 
 export function useDocumentVersions(documentId: string) {
     const { data, isLoading } = useQuery({
-        queryKey: queryKeys.documents.versions.findAll,
+        queryKey: queryKeys.documents.versions.findAll(documentId),
         queryFn: async () => {
             const token = credentialsManager.jwt.get();
 
-            const response = await axios.get<TFindVersionResponse>(queryUrls.documents.versions.findAll(documentId), {
+            const response = await axios.get<TFindVersionsResponse>(queryUrls.documents.versions.findAll(documentId), {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
 

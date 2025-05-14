@@ -21,7 +21,7 @@ export function VersionsList() {
 
 export function VersionsListSkeleton() {
     return (
-        <div className="space-y-2 abababa">
+        <div className="space-y-2">
             {new Array(12).fill("").map((_, index) => (
                 <ListItemSkeleton key={index} />
             ))}

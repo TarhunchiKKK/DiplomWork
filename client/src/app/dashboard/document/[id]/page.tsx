@@ -1,21 +1,34 @@
+import { DevOnly, ProdOnly } from "@/dev";
 import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/document";
-import { VersionsList, VersionsListSkeleton } from "@/widgets/versions";
+import { VersionsList, VersionsListHeader, VersionsListSkeleton } from "@/widgets/versions";
 import { Suspense } from "react";
 
 export default function DocumentPage() {
     return (
         <div className="space-y-8">
             <Suspense fallback={<DocumentInfoSkeleton />}>
-                {/* <DocumentInfo /> */}
+                <ProdOnly>
+                    <DocumentInfo />
+                </ProdOnly>
 
-                <DocumentInfoSkeleton />
+                <DevOnly>
+                    <DocumentInfoSkeleton />
+                </DevOnly>
             </Suspense>
 
-            <Suspense fallback={<VersionsListSkeleton />}>
-                {/* <VersionsList/> */}
+            <div className="space-y-4">
+                <VersionsListHeader />
 
-                <VersionsListSkeleton />
-            </Suspense>
+                <Suspense fallback={<VersionsListSkeleton />}>
+                    <ProdOnly>
+                        <VersionsList />
+                    </ProdOnly>
+
+                    <DevOnly>
+                        <VersionsListSkeleton />
+                    </DevOnly>
+                </Suspense>
+            </div>
         </div>
     );
 }
