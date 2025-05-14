@@ -56,6 +56,11 @@ export const queryUrls = {
         },
         hash: {
             verify: `${environment.apiUrl}/documents/hash`
+        },
+        versions: {
+            findAll: (documentId: string) => `${environment.apiUrl}/documents/versions/all/${documentId}`,
+            findLast: (documentId: string) => `${environment.apiUrl}/documents/versions/last/${documentId}`,
+            findOne: (versionId: string) => `${environment.apiUrl}/documents/versions/${versionId}`
         }
     }
 };
@@ -76,6 +81,11 @@ export const queryKeys = {
         findAll: (queryParams: Record<string, unknown>) => ["documents", queryParams],
         findOne: (documentId: string) => ["documents", documentId],
         favourite: ["favourite-documents"],
-        my: ["my-documents"]
+        my: ["my-documents"],
+        versions: {
+            findAll: ["versions"],
+            findLast: (documentId: string) => ["versions", "last", documentId],
+            findOne: (versionId: string) => ["versions", versionId]
+        }
     }
 };

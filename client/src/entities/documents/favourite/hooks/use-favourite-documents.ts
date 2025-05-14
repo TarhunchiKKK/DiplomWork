@@ -5,11 +5,11 @@ import axios from "axios";
 import { TFindDocumentsResponse, transformDocumentShortData } from "../../shared";
 
 export function useFavouriteDocuments() {
-    const token = credentialsManager.jwt.get() as string;
-
     const { data, isLoading } = useQuery({
         queryKey: queryKeys.documents.favourite,
         queryFn: async () => {
+            const token = credentialsManager.jwt.get() as string;
+
             const response = await axios.get<TFindDocumentsResponse>(queryUrls.documents.favourite.findAll, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
