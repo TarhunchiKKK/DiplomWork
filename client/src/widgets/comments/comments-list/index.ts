@@ -1,1 +1,1 @@
-export { CommentsList } from "./comments-list";
+export { CommentsList, CommentsListSkeleton } from "./comments-list";

@@ -1,4 +1,4 @@
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/shared/ui";
+import { Card, CardDescription, CardHeader, CardTitle, Skeleton } from "@/shared/ui";
 import { TProps } from "./types";
 import { formatDateOnly, formatTimeOnly } from "@/shared/helpers";
 import { useMultipleUsers } from "@/entities/users";
@@ -11,10 +11,34 @@ export function Comment({ comment }: TProps) {
             <CardHeader>
                 {users?.[0] && <CardTitle>{users[0].username ?? users[0].email}</CardTitle>}
 
-                <CardDescription>{comment.message}</CardDescription>
-            </CardHeader>
+                <CardDescription className="space-y-2">
+                    {comment.message}
 
-            <CardFooter className="flex justify-end">{`${formatDateOnly(comment.createdAt)} в ${formatTimeOnly(comment.createdAt)}`}</CardFooter>
+                    <div className="flex justify-end">
+                        {`${formatDateOnly(comment.createdAt)} в ${formatTimeOnly(comment.createdAt)}`}
+                    </div>
+                </CardDescription>
+            </CardHeader>
+        </Card>
+    );
+}
+
+export function CommentSkeleton() {
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>
+                    <Skeleton className="w-[100px] h-4" />
+                </CardTitle>
+
+                <CardDescription className="space-y-2">
+                    <Skeleton className="w-full h-12" />
+
+                    <div className="flex justify-end">
+                        <Skeleton className="w-[100px] h-6" />
+                    </div>
+                </CardDescription>
+            </CardHeader>
         </Card>
     );
 }
