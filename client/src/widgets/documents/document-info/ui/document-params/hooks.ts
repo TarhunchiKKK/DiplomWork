@@ -1,5 +1,5 @@
 import { useOrganization } from "@/entities/organizations";
-import { useCurrentDocument } from "@/widgets/document/shared/hooks";
+import { useCurrentDocument } from "@/widgets/documents";
 
 export function useDocumentParams() {
     const { document } = useCurrentDocument();

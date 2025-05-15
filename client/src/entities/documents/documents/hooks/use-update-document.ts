@@ -29,6 +29,7 @@ export function useUpdateDocument() {
         },
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.findOne(variables.id) });
+            queryClient.invalidateQueries({ queryKey: queryKeys.documents.base });
         },
         onError: () => toast.error("Ошибка")
     });

@@ -45,6 +45,7 @@ export const queryUrls = {
     documents: {
         findAll: `${environment.apiUrl}/documents`,
         findOne: (documentId: string) => `${environment.apiUrl}/documents/${documentId}`,
+        create: `${environment.apiUrl}/documents`,
         update: `${environment.apiUrl}/documents`,
         favourite: {
             findAll: `${environment.apiUrl}/documents/favourite`,

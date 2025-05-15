@@ -5,7 +5,7 @@ import {
     useUpdateDocument
 } from "@/entities/documents";
 import { TProfile, useProfileStore } from "@/features/auth";
-import { useCurrentDocument } from "@/widgets/document/shared";
+import { useCurrentDocument } from "@/widgets/documents";
 
 export function useStartButton() {
     const { documentId } = useCurrentDocument();

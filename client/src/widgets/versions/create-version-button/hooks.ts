@@ -1,5 +1,5 @@
 import { TProfile, useProfileStore } from "@/features/auth";
-import { useCurrentDocument } from "@/widgets/document";
+import { useCurrentDocument } from "@/widgets/documents";
 import { useForm } from "react-hook-form";
 import { TFormState } from "./types";
 import { useCreateDocumentVersion } from "@/entities/documents";
