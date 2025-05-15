@@ -1,4 +1,4 @@
-import { TDocument, TDocumentShortData } from "@/entities/documents";
+import { TComment, TDocument, TDocumentShortData } from "@/entities/documents";
 import { AuthType, Role } from "@/entities/users";
 import { TProfile } from "@/features/auth";
 
@@ -89,9 +89,49 @@ const verifyDocumentHashDto = {
     sign: ""
 };
 
+const comments: TComment[] = [
+    {
+        id: "1",
+        message: "Message 1",
+        createdAt: new Date(),
+        creatorId: "1"
+    },
+    {
+        id: "2",
+        message: "Message 2",
+        createdAt: new Date(),
+        creatorId: "1"
+    },
+    {
+        id: "3",
+        message: "Message 3",
+        createdAt: new Date(),
+        creatorId: "1"
+    },
+    {
+        id: "4",
+        message: "Message 4",
+        createdAt: new Date(),
+        creatorId: "1"
+    },
+    {
+        id: "5",
+        message: "Message 5",
+        createdAt: new Date(),
+        creatorId: "1"
+    },
+    {
+        id: "6",
+        message: "Message 6",
+        createdAt: new Date(),
+        creatorId: "1"
+    }
+];
+
 export const mocks = {
     document,
     documentsShortData,
     profile,
-    verifyDocumentHashDto
+    verifyDocumentHashDto,
+    comments
 };
