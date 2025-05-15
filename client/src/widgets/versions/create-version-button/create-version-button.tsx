@@ -19,13 +19,11 @@ import { Plus } from "lucide-react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useCreateVersionButton } from "./hooks";
 
-export function VersionsListHeader() {
+export function CreateVersionButton() {
     const { display, form, isPending, onSubmit } = useCreateVersionButton();
 
     return (
-        <div className="flex justify-between items-center">
-            <h4 className="text-lg">Версии документа:</h4>
-
+        <>
             {display && (
                 <Dialog>
                     <DialogTrigger>
@@ -83,6 +81,6 @@ export function VersionsListHeader() {
                     </DialogContent>
                 </Dialog>
             )}
-        </div>
+        </>
     );
 }

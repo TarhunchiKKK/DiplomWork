@@ -16,7 +16,7 @@ type TUpdateDocumentDto = {
     isUrgent?: boolean;
 };
 
-export function useUpdateDocument(documentId: string) {
+export function useUpdateDocument() {
     const queryClient = useQueryClient();
 
     const { mutate, isPending } = useMutation({
@@ -27,8 +27,8 @@ export function useUpdateDocument(documentId: string) {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeys.documents.findOne(documentId) });
+        onSuccess: (_, variables) => {
+            queryClient.invalidateQueries({ queryKey: queryKeys.documents.findOne(variables.id) });
         },
         onError: () => toast.error("Ошибка")
     });

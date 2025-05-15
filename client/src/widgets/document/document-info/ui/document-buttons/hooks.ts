@@ -35,7 +35,7 @@ export function useUrgencyButton() {
 
     const profile = useProfileStore(state => state.profile) as TProfile;
 
-    const { update, isPending } = useUpdateDocument(documentId);
+    const { update, isPending } = useUpdateDocument();
 
     const onClick = () => {
         const dto = document!.isUrgent ? { isUrgent: false } : { isUrgent: true };

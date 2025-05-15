@@ -1,2 +1,2 @@
 export * from "./versions-list";
-export * from "./versions-list-header";
+export * from "./create-version-button";

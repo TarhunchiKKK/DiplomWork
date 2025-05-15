@@ -1,6 +1,6 @@
 import { DevOnly, ProdOnly } from "@/dev";
 import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/document";
-import { VersionsList, VersionsListHeader, VersionsListSkeleton } from "@/widgets/versions";
+import { VersionsList, VersionsListSkeleton, CreateVersionButton } from "@/widgets/versions";
 import { Suspense } from "react";
 
 export default function DocumentPage() {
@@ -17,7 +17,13 @@ export default function DocumentPage() {
             </Suspense>
 
             <div className="space-y-4">
-                <VersionsListHeader />
+                <div className="flex justify-between items-center">
+                    <h4 className="text-lg">Версии документа:</h4>
+
+                    <ProdOnly>
+                        <CreateVersionButton />
+                    </ProdOnly>
+                </div>
 
                 <Suspense fallback={<VersionsListSkeleton />}>
                     <ProdOnly>
