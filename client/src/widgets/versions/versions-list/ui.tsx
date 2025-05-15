@@ -1,0 +1,34 @@
+import { formatDateOnly, formatTimeOnly } from "@/shared/helpers";
+import { Card, CardDescription, CardHeader, CardTitle, Skeleton } from "@/shared/ui";
+import { TItemProps } from "./types";
+
+export function ListItem({ version, onClick }: TItemProps) {
+    return (
+        <Card>
+            <CardHeader
+                className="flex justify-start items-center gap-4 cursor-pointer"
+                onClick={onClick.bind(null, version.id)}
+            >
+                <CardTitle>{`${formatDateOnly(version.createdAt)} в ${formatTimeOnly(version.createdAt)}`}</CardTitle>
+
+                <CardDescription className="flex-grow">{version.description ?? ""}</CardDescription>
+            </CardHeader>
+        </Card>
+    );
+}
+
+export function ListItemSkeleton() {
+    return (
+        <Card>
+            <CardHeader className="flex justify-start items-center gap-4">
+                <CardTitle>
+                    <Skeleton className="w-[150px] h-4 rounded-sm" />
+                </CardTitle>
+
+                <CardDescription>
+                    <Skeleton className="w-[400px] h-4 rounded-sm" />
+                </CardDescription>
+            </CardHeader>
+        </Card>
+    );
+}

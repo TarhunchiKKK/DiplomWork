@@ -1,4 +1,5 @@
-import { ProdOnly, SidebarProvider } from "@/shared/ui";
+import { ProdOnly } from "@/dev";
+import { SidebarProvider } from "@/shared/ui";
 import { DashboardSidebar } from "@/widgets/navigation";
 import { PropsWithChildren } from "react";
 

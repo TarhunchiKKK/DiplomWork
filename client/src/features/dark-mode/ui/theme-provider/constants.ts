@@ -1,1 +1,3 @@
-export const defaultTheme = "dark";
+import { TTheme } from "../../types";
+
+export const defaultTheme: TTheme = "dark";

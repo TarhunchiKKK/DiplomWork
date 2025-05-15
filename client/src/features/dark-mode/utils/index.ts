@@ -1,2 +1,2 @@
-export { setDocumentTheme } from "./document";
+export { setDocumentTheme } from "./dom";
 export { themeLocalStorageService } from "./local-storage";

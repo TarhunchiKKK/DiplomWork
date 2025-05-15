@@ -1,1 +1,1 @@
-export { authCredentialsManager } from "./local-storage";
+export { credentialsManager } from "./local-storage";

@@ -20,3 +20,9 @@ export function getDocumentIcon(documentName: string): string {
 export function getFileName(documentName: string): string {
     return documentName.split(".")[0];
 }
+
+export function getFileExtensions(filename: string) {
+    const reversedArray = filename.split(".");
+    reversedArray.reverse();
+    return reversedArray[0];
+}

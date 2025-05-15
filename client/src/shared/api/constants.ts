@@ -32,7 +32,8 @@ export const queryUrls = {
         deactivate: (userId: string) => `${environment.apiUrl}/users/deactivate/${userId}`,
         updateProfile: `${environment.apiUrl}/users/profile`,
         find: {
-            organization: `${environment.apiUrl}/users/organization`
+            organization: `${environment.apiUrl}/users/organization`,
+            ids: `${environment.apiUrl}/users`
         }
     },
     organizations: {
@@ -43,32 +44,58 @@ export const queryUrls = {
     },
     documents: {
         findAll: `${environment.apiUrl}/documents`,
+        findOne: (documentId: string) => `${environment.apiUrl}/documents/${documentId}`,
+        update: `${environment.apiUrl}/documents`,
         favourite: {
-            findAll: `${environment.apiUrl}/documents/favourite`
+            findAll: `${environment.apiUrl}/documents/favourite`,
+            add: (documentId: string) => `${environment.apiUrl}/documents/favourite/${documentId}`,
+            remove: (userId: string) => `${environment.apiUrl}/documents/favourite/${userId}`
         },
         my: {
             findAll: `${environment.apiUrl}/documents/my`
+        },
+        hash: {
+            verify: `${environment.apiUrl}/documents/hash`
+        },
+        versions: {
+            findAll: (documentId: string) => `${environment.apiUrl}/documents/versions/all/${documentId}`,
+            findLast: (documentId: string) => `${environment.apiUrl}/documents/versions/last/${documentId}`,
+            findOne: (versionId: string) => `${environment.apiUrl}/documents/versions/${versionId}`,
+            create: `${environment.apiUrl}/documents/versions`
+        },
+        comments: {
+            findAll: (versionId: string) => `${environment.apiUrl}/documents/comments/${versionId}`,
+            create: `${environment.apiUrl}/documents/comments`,
+            update: (commentId: string) => `${environment.apiUrl}/documents/comments/${commentId}`,
+            delete: (commentId: string) => `${environment.apiUrl}/documents/comments/${commentId}`
         }
     }
 };
 
 export const queryKeys = {
-    profile: {
-        base: ["profile"],
-        withJwt: (jwt: string) => ["profile", jwt]
-    },
+    profile: ["profile"],
     organizations: {
-        base: ["organizations"],
-        withJwt: (jwt: string) => ["organizations", jwt]
+        findOne: ["organization"]
     },
     users: {
-        base: ["users"],
-        withJwt: (jwt: string) => ["users", jwt]
+        findAll: ["users"],
+        byOrganization: ["users", "organzation"],
+        findOne: (userId: string) => ["users", userId],
+        findMany: (usersIds: string[]) => ["users"].concat(usersIds)
     },
     documents: {
         base: ["documents"],
-        withJwt: (jwt: string) => ["documents", jwt],
-        favourite: (jwt: string) => ["favourite-documents", jwt],
-        my: (jwt: string) => ["my-documents", jwt]
+        findAll: (queryParams: Record<string, unknown>) => ["documents", queryParams],
+        findOne: (documentId: string) => ["documents", documentId],
+        favourite: ["favourite-documents"],
+        my: ["my-documents"],
+        versions: {
+            findAll: (documentId: string) => ["versions", documentId],
+            findLast: (documentId: string) => ["versions", "last", documentId],
+            findOne: (versionId: string) => ["versions", versionId]
+        },
+        comments: {
+            findAll: (versionId: string) => ["comments", "versions", versionId]
+        }
     }
 };

@@ -11,7 +11,7 @@ export class HttpHeadersBuilder {
         return this;
     }
 
-    public get() {
+    public build() {
         return this.headers;
     }
 }

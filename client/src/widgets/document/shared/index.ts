@@ -1,0 +1,1 @@
+export { useCurrentDocument } from "./hooks";

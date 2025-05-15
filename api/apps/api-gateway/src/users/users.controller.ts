@@ -2,9 +2,9 @@ import {
     Body,
     Controller,
     Get,
-    Param,
     ParseArrayPipe,
     Patch,
+    Query,
     Req,
     UseGuards,
     UsePipes,
@@ -28,8 +28,8 @@ export class UsersController {
         });
     }
 
-    @Get(":ids")
-    public findAllByIds(@Param("ids", ParseArrayPipe) ids: string[]) {
+    @Get()
+    public findAllByIds(@Query("ids", ParseArrayPipe) ids: string[]) {
         return this.usersGrpcService.call("findAllByIds", {
             ids: ids
         });

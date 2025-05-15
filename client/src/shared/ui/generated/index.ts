@@ -14,3 +14,7 @@ export * from "./sidebar";
 export * from "./avatar";
 export * from "./menubar";
 export * from "./tabs";
+export * from "./badge";
+export * from "./alert-dialog";
+export * from "./dialog";
+export * from "./scroll-area";
