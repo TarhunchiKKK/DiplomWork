@@ -1,0 +1,39 @@
+import { credentialsManager } from "@/features/auth";
+import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
+
+type TDto = {
+    message: string;
+
+    versionId: string;
+};
+
+export function useCreateDocumentComment() {
+    const queryClient = useQueryClient();
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (dto: TDto) => {
+            const token = credentialsManager.jwt.get();
+
+            await axios.post(queryUrls.documents.comments.create, dto, {
+                headers: new HttpHeadersBuilder().setBearerToken(token).build()
+            });
+        },
+        onSuccess: (_, variables) => {
+            queryClient.invalidateQueries({ queryKey: queryKeys.documents.comments.findAll(variables.versionId) });
+        },
+        onError: (error: AxiosError<TValidationError>) => {
+            extractValidationMessages(error).forEach(message => {
+                toast.error(message);
+            });
+        }
+    });
+
+    return {
+        createComment: mutate,
+        isPending
+    };
+}

@@ -62,6 +62,12 @@ export const queryUrls = {
             findLast: (documentId: string) => `${environment.apiUrl}/documents/versions/last/${documentId}`,
             findOne: (versionId: string) => `${environment.apiUrl}/documents/versions/${versionId}`,
             create: `${environment.apiUrl}/documents/versions`
+        },
+        comments: {
+            findAll: (versionId: string) => `${environment.apiUrl}/documents/comments/${versionId}`,
+            create: `${environment.apiUrl}/documents/comments`,
+            update: (commentId: string) => `${environment.apiUrl}/documents/comments/${commentId}`,
+            delete: (commentId: string) => `${environment.apiUrl}/documents/comments/${commentId}`
         }
     }
 };
@@ -87,6 +93,9 @@ export const queryKeys = {
             findAll: (documentId: string) => ["versions", documentId],
             findLast: (documentId: string) => ["versions", "last", documentId],
             findOne: (versionId: string) => ["versions", versionId]
+        },
+        comments: {
+            findAll: (versionId: string) => ["comments", "versions", versionId]
         }
     }
 };
