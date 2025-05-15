@@ -1,3 +1,3 @@
 export { cn } from "./shadcn";
-export { getDocumentIcon, getFileName } from "./files";
+export { getDocumentIcon, getFileName, getFileExtensions } from "./files";
 export { formatDateOnly, formatTimeOnly } from "./date";
