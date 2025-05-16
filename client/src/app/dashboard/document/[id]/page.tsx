@@ -1,5 +1,5 @@
 import { CommentsList, CommentsListSkeleton, CreateCommentForm } from "@/widgets/comments";
-import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/document";
+import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/documents";
 import { VersionsList, VersionsListSkeleton, CreateVersionButton } from "@/widgets/versions";
 import { Suspense } from "react";
 

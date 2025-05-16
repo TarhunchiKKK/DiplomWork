@@ -21,7 +21,7 @@ export function getFileName(documentName: string): string {
     return documentName.split(".")[0];
 }
 
-export function getFileExtensions(filename: string) {
+export function getFileExtension(filename: string) {
     const reversedArray = filename.split(".");
     reversedArray.reverse();
     return reversedArray[0];

@@ -1,5 +1,5 @@
 import { useMultipleUsers } from "@/entities/users";
-import { useCurrentDocument } from "@/widgets/document/shared";
+import { useCurrentDocument } from "@/widgets/documents";
 
 export function useDocumentHeader() {
     const { document } = useCurrentDocument();
