@@ -3,5 +3,5 @@ import { NotificationsList, NotificationsListSkeleton } from "@/widgets/notifica
 export default function Home() {
     // return <div>Home</div>;
 
-    return <NotificationsListSkeleton />;
+    return <NotificationsList />;
 }

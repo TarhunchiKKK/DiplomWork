@@ -7,7 +7,7 @@ import { TValidationError, extractValidationMessages } from "@/shared/validation
 import { toast } from "sonner";
 
 type TDto = {
-    notificationId: string;
+    id: string;
 
     data: {
         status: NotificationStatus;
@@ -21,7 +21,7 @@ export function useUpdateNotification() {
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
-            await axios.patch(queryUrls.notifications.update(dto.notificationId), dto.data, {
+            await axios.patch(queryUrls.notifications.update(dto.id), dto.data, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
         },
