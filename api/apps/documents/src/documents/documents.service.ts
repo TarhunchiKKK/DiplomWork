@@ -24,7 +24,7 @@ export class DocumentsService {
             typeId: dto.typeId,
             authorId: dto.authorId,
             isUrgent: dto.isUrgent,
-            title: dto.title,
+            title: dto.filename,
             accessToken: this.tokensService.create({
                 authorId: dto.authorId,
                 usersIds: []
@@ -33,7 +33,7 @@ export class DocumentsService {
 
         this.versionsService.create({
             documentId: document.id,
-            fileExtension: dto.fileExtension,
+            filename: dto.filename,
             hash: dto.hash
         });
 

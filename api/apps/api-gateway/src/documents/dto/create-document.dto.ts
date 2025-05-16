@@ -5,7 +5,7 @@ import { IgnoreFields } from "common/utils";
 export class CreateDocumentDto implements IgnoreFields<ICreateDocumentDto, "authorId"> {
     @IsNotEmpty({ message: "Название документа не указано" })
     @IsString({ message: "Название документа должно быть строкой" })
-    public title: string;
+    public filename: string;
 
     @IsNotEmpty({ message: "Тип документа не указан" })
     @IsString({ message: "Тип документа должен быть строкой" })
@@ -18,10 +18,6 @@ export class CreateDocumentDto implements IgnoreFields<ICreateDocumentDto, "auth
     @IsNotEmpty({ message: "Срочность документа не указана" })
     @IsBoolean({ message: "Срочность документа должна быть булевым значение" })
     public isUrgent: boolean;
-
-    @IsNotEmpty({ message: "Расширение файла документа не указано" })
-    @IsString({ message: "Расширение файла документа должно быть строкой" })
-    public fileExtension: string;
 
     @IsNotEmpty({ message: "Хеш документа не указан" })
     @IsString({ message: "Хеш документа должен быть строкой " })
