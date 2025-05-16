@@ -19,7 +19,8 @@ export function useNotifications(queryParams: TQueryParams = {}) {
             const token = credentialsManager.jwt.get();
 
             const response = await axios.get<TFindNotificationsResponse>(queryUrls.notifications.findAll, {
-                headers: new HttpHeadersBuilder().setBearerToken(token).build()
+                headers: new HttpHeadersBuilder().setBearerToken(token).build(),
+                params: queryParams
             });
 
             return response.data.notifications;

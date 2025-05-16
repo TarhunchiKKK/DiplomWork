@@ -37,7 +37,13 @@ export function formatDateOnly(date: Date) {
 
 export function formatTimeOnly(date: Date) {
     const hours = date.getHours();
-    const minutes = date.getMinutes();
 
-    return `${hours}:${minutes}`;
+    const minutes = date.getMinutes();
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    return `${hours}:${formattedMinutes}`;
+}
+
+export function formatFullDate(date: Date) {
+    return `${formatDateOnly(date)} в ${formatTimeOnly(date)}`;
 }

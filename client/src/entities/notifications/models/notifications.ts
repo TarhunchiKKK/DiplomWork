@@ -7,7 +7,7 @@ export type TNotification = {
 
     status: NotificationStatus;
 
-    message?: string;
+    message: string;
 
     createdAt: Date;
 };

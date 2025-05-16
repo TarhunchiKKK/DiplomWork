@@ -1,4 +1,4 @@
-import { formatDateOnly, formatTimeOnly } from "@/shared/helpers";
+import { formatFullDate } from "@/shared/helpers";
 import { Card, CardDescription, CardHeader, CardTitle, Skeleton } from "@/shared/ui";
 import { TItemProps } from "./types";
 
@@ -9,7 +9,7 @@ export function ListItem({ version, onClick }: TItemProps) {
                 className="flex justify-start items-center gap-4 cursor-pointer"
                 onClick={onClick.bind(null, version.id)}
             >
-                <CardTitle>{`${formatDateOnly(version.createdAt)} в ${formatTimeOnly(version.createdAt)}`}</CardTitle>
+                <CardTitle>{formatFullDate(version.createdAt)}</CardTitle>
 
                 <CardDescription className="flex-grow">{version.description ?? ""}</CardDescription>
             </CardHeader>

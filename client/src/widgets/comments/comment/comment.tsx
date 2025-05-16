@@ -1,6 +1,6 @@
 import { Card, CardDescription, CardHeader, CardTitle, Skeleton } from "@/shared/ui";
 import { TProps } from "./types";
-import { formatDateOnly, formatTimeOnly } from "@/shared/helpers";
+import { formatFullDate } from "@/shared/helpers";
 import { useMultipleUsers } from "@/entities/users";
 
 export function Comment({ comment }: TProps) {
@@ -14,9 +14,7 @@ export function Comment({ comment }: TProps) {
                 <CardDescription className="space-y-2">
                     {comment.message}
 
-                    <div className="flex justify-end">
-                        {`${formatDateOnly(comment.createdAt)} в ${formatTimeOnly(comment.createdAt)}`}
-                    </div>
+                    <div className="flex justify-end">{formatFullDate(comment.createdAt)}</div>
                 </CardDescription>
             </CardHeader>
         </Card>

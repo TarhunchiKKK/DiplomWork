@@ -1,4 +1,5 @@
 import { TComment, TDocument, TDocumentShortData } from "@/entities/documents";
+import { NotificationStatus, NotificationSubject, TNotification } from "@/entities/notifications";
 import { AuthType, Role } from "@/entities/users";
 import { TProfile } from "@/features/auth";
 
@@ -128,10 +129,105 @@ const comments: TComment[] = [
     }
 ];
 
+const notifications: TNotification[] = [
+    {
+        id: "1",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "2",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "3",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "4",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "5",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "6",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "7",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "8",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "9",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "10",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "11",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "12",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    },
+    {
+        id: "13",
+        createdAt: new Date(),
+        status: NotificationStatus.ACTIVE,
+        subject: NotificationSubject.ACCOUNT_ACTIVATION,
+        message: "Message"
+    }
+];
+
 export const mocks = {
     document,
     documentsShortData,
     profile,
     verifyDocumentHashDto,
-    comments
+    comments,
+    notifications
 };
