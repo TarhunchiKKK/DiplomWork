@@ -1,14 +1,14 @@
-import { mocks } from "@/dev";
-import { Notification, NotificationSkeleton } from "../notification";
+"use client";
 
-const notifications = mocks.notifications;
+import { Notification, NotificationSkeleton } from "../notification";
+import { useNotifications } from "@/entities/notifications/hooks";
 
 export function NotificationsList() {
+    const { notifications } = useNotifications();
+
     return (
         <div className="space-y-2">
-            {notifications.map(notification => (
-                <Notification key={notification.id} notification={notification} />
-            ))}
+            {notifications?.map(notification => <Notification key={notification.id} notification={notification} />)}
         </div>
     );
 }
