@@ -13,10 +13,10 @@ import {
     FormField,
     FormItem,
     FormLabel,
-    Input
+    Input,
+    DialogClose
 } from "@/shared/ui";
 import { Plus } from "lucide-react";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { useCreateVersionButton } from "./hooks";
 
 export function CreateVersionButton() {
@@ -27,9 +27,9 @@ export function CreateVersionButton() {
             {display && (
                 <Dialog>
                     <DialogTrigger>
-                        <Button variant="outline" size="icon" title="Создать">
+                        <div className="border-2 p-2 rounded-md cursor-pointer" title="Создать">
                             <Plus />
-                        </Button>
+                        </div>
                     </DialogTrigger>
 
                     <DialogContent>
