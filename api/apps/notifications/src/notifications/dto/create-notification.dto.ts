@@ -3,7 +3,7 @@ import { NotificationSubject } from "../../../../../common/enums/notifications/n
 export class CreateNotificationdto {
     public subject: NotificationSubject;
 
-    public message?: string;
+    public message: string;
 
     public receiverId: string;
 }

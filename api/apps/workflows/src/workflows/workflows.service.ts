@@ -90,7 +90,7 @@ export class WorkflowsService {
         this.eventEmitter.emit(
             WorkflowDeletedEvent.pattern,
             new WorkflowDeletedEvent(
-                workflow.documentId,
+                workflow.documentTitle,
                 workflow.participants.map(p => p.id)
             )
         );

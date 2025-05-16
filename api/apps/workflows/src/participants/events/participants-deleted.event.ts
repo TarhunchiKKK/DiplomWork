@@ -4,6 +4,6 @@ export class ParticipantsDeletedEvent {
     public constructor(
         public participantsIds: string[],
 
-        public documentId: string
+        public workflowDocumentTitle: string
     ) {}
 }

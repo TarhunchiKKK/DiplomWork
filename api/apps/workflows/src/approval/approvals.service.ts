@@ -44,10 +44,17 @@ export class ApprovalsService {
         try {
             const approval = await this.findOne({ workflowId, participantId });
             Object.assign(approval, data);
-            return await this.approvalsRepository.save(approval);
+            const aproval = await this.approvalsRepository.save(approval);
+
+            this.eventEmitter.emit(
+                ApprovalUpsertedEvent.pattern,
+                new ApprovalUpsertedEvent(approval.workflow.documentTitle, participantId)
+            );
+
+            return approval;
         } catch (error: unknown) {
             if (error instanceof NotFoundException) {
-                return await this.approvalsRepository.save({
+                const approval = await this.approvalsRepository.save({
                     ...data,
                     workflow: {
                         id: workflowId
@@ -56,11 +63,14 @@ export class ApprovalsService {
                         id: participantId
                     }
                 } as Approval);
+
+                this.eventEmitter.emit(
+                    ApprovalUpsertedEvent.pattern,
+                    new ApprovalUpsertedEvent(approval.workflow.documentTitle, participantId)
+                );
             } else {
                 throw error;
             }
-        } finally {
-            this.eventEmitter.emit(ApprovalUpsertedEvent.pattern, new ApprovalUpsertedEvent(participantId));
         }
     }
 

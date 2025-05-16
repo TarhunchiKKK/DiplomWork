@@ -6,7 +6,7 @@ export class WorkflowDeletedRmqEvent implements IRmqEvent {
     public pattern = WorkflowDeletedRmqEvent.PATTERN;
 
     public constructor(
-        public workflowTitle: string,
+        public documentTitle: string,
 
         public participant: IReceiverData
     ) {}
@@ -18,7 +18,7 @@ export class WorkflowCompletedRmqEvent implements IRmqEvent {
     public pattern = WorkflowCompletedRmqEvent.PATTERN;
 
     public constructor(
-        public workflowTitle: string,
+        public documentTitle: string,
 
         public creator: IReceiverData
     ) {}

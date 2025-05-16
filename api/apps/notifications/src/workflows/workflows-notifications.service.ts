@@ -19,11 +19,12 @@ export class WorkflowsNotificationsService {
         const [, html] = await Promise.all([
             this.notificationsService.create({
                 receiverId: event.participant.id,
-                subject: NotificationSubject.WORKFLOW_DELETED
+                subject: NotificationSubject.WORKFLOW_DELETED,
+                message: `Маршрут согласования документа ${event.documentTitle} удален`
             }),
             render(
                 WorkflowDeletedTemplate({
-                    documentTitle: event.workflowTitle
+                    documentTitle: event.documentTitle
                 })
             )
         ]);
@@ -39,11 +40,12 @@ export class WorkflowsNotificationsService {
         const [, html] = await Promise.all([
             this.notificationsService.create({
                 receiverId: event.creator.id,
-                subject: NotificationSubject.WORKFLOW_COMPLETED
+                subject: NotificationSubject.WORKFLOW_COMPLETED,
+                message: `Маршрут согласования документа ${event.documentTitle} завершен`
             }),
             render(
                 WorkflowCompletedTemplate({
-                    workflowTitle: event.workflowTitle
+                    documentTitle: event.documentTitle
                 })
             )
         ]);

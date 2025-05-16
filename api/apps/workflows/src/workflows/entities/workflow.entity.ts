@@ -8,9 +8,6 @@ export class Workflow {
     @PrimaryGeneratedColumn("uuid")
     public id: string;
 
-    @Column()
-    public title: string;
-
     @Column({ type: "enum", enum: WorkflowStatus, default: WorkflowStatus.DEFAULT })
     public status: WorkflowStatus;
 
@@ -19,6 +16,9 @@ export class Workflow {
 
     @Column()
     public documentId: string;
+
+    @Column()
+    public documentTitle: string;
 
     @Column({ nullable: true, default: null })
     public completedAt?: Date;
