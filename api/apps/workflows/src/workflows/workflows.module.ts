@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Workflow } from "./entities/workflow.entity";
 import { WorkflowsController } from "./workflows.controller";
 import { WorkflowsService } from "./workflows.service";
-import { DocumentsGrpcModule, UsersGrpcModule } from "common/grpc";
+import { UsersGrpcModule } from "common/grpc";
 import { NotificationsRmqModule } from "common/rabbitmq";
 import { WorkflowCrudObserver } from "./observers/workflow-crud.observer";
 import { WorkflowStatusObserver } from "./observers/workflow-status.observer";
@@ -13,7 +13,6 @@ import { ApprovalsModule } from "../approval/approvals.module";
 @Module({
     imports: [
         TypeOrmModule.forFeature([Workflow]),
-        DocumentsGrpcModule,
         UsersGrpcModule,
         NotificationsRmqModule,
         WorkflowParticipantsModule,

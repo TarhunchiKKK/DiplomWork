@@ -17,8 +17,6 @@ service WorkflowsService {
 
     rpc FindOneByDocumentId (common.IOnlyId) returns (IFindOneWorkflowResponse) {}
 
-    rpc Update (IUpdateWorkflowDto) returns (common.IEmptyResponse) {}
-
     rpc Delete (common.IOnlyId) returns (common.IEmptyResponse) {}
 }
 
@@ -27,13 +25,13 @@ message ICreateWorkflowDto {
 
     string documentId = 2;
 
-    string title = 3;
+    string documentTitle = 3;
 }
 
 message IWorkflowResponseData {
     string id = 1;
 
-    string title = 2;
+    string documentTitle = 2;
 
     string creatorId = 3;
 
@@ -70,14 +68,6 @@ message IFindWorkflowsResponse {
 
         common.IHttpError error = 2;
     }
-}
-
-message IUpdateWorkflowDto {
-    string id = 1;
-
-    optional string title = 2;
-
-    optional string stautus = 3;
 }
 
 /********************************************Workflow Participants*********************************************************************/

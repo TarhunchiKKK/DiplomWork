@@ -14,12 +14,12 @@ const protobufPackage = "workflows";
 export interface ICreateWorkflowDto {
   userId: string;
   documentId: string;
-  title: string;
+  documentTitle: string;
 }
 
 export interface IWorkflowResponseData {
   id: string;
-  title: string;
+  documentTitle: string;
   creatorId: string;
   documentId: string;
   status: string;
@@ -43,12 +43,6 @@ export interface IFindWorkflowsResponseData {
 export interface IFindWorkflowsResponse {
   data?: IFindWorkflowsResponseData | undefined;
   error?: IHttpError | undefined;
-}
-
-export interface IUpdateWorkflowDto {
-  id: string;
-  title?: string | undefined;
-  stautus?: string | undefined;
 }
 
 export interface IUpsertWorkflowParticipantDto {
@@ -98,8 +92,6 @@ export interface WorkflowsServiceClient {
 
   findOneByDocumentId(request: IOnlyId): Observable<IFindOneWorkflowResponse>;
 
-  update(request: IUpdateWorkflowDto): Observable<IEmptyResponse>;
-
   delete(request: IOnlyId): Observable<IEmptyResponse>;
 }
 
@@ -122,8 +114,6 @@ export interface WorkflowsServiceController {
     request: IOnlyId,
   ): Promise<IFindOneWorkflowResponse> | Observable<IFindOneWorkflowResponse> | IFindOneWorkflowResponse;
 
-  update(request: IUpdateWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
   delete(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
@@ -135,7 +125,6 @@ export function WorkflowsServiceControllerMethods() {
       "findAllByCreatorId",
       "findOneById",
       "findOneByDocumentId",
-      "update",
       "delete",
     ];
     for (const method of grpcMethods) {

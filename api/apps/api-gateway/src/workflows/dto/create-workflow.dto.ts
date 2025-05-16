@@ -9,5 +9,5 @@ export class CreateWorkflowDto implements IgnoreFields<ICreateWorkflowDto, "user
 
     @IsNotEmpty({ message: "Название не указано" })
     @IsString({ message: "Название должно быть строкой" })
-    public title: string;
+    public documentTitle: string;
 }

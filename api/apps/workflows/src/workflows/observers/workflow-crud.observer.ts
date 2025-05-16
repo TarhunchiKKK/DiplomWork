@@ -10,35 +10,20 @@ export class WorkflowCrudObserver {
     public constructor(
         private readonly usersGrpcService: UsersGrpcService,
 
-        private readonly documentsGrpcService: DocumentsGrpcService,
-
         private readonly notificationsRmqService: NotificationsRmqService
     ) {}
 
-    private async getWorkflowInfo(documentId: string, participantsIds: string[]) {
-        const [document, users] = await Promise.all([
-            firstValueFrom(
-                this.documentsGrpcService.call("findOneById", {
-                    id: documentId
-                })
-            ),
-            firstValueFrom(
-                this.usersGrpcService.call("findAllByIds", {
-                    ids: participantsIds
-                })
-            )
-        ]);
-
-        return { document, users };
-    }
-
     @OnEvent(WorkflowDeletedEvent.pattern)
     public async handleWorkflowDeleted(event: WorkflowDeletedEvent) {
-        const { document, users } = await this.getWorkflowInfo(event.documentId, event.participantsIds);
+        const users = await firstValueFrom(
+            this.usersGrpcService.call("findAllByIds", {
+                ids: event.participantsIds
+            })
+        );
 
         users.users.forEach(user => {
             this.notificationsRmqService.emit(
-                new WorkflowDeletedRmqEvent(document.title, { id: user.id, email: user.email })
+                new WorkflowDeletedRmqEvent(event.documentTitle, { id: user.id, email: user.email })
             );
         });
     }

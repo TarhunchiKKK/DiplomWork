@@ -24,7 +24,8 @@ export class DocumentCommentsNotificationsService {
         const [, html] = await Promise.all([
             this.notificationsservice.create({
                 receiverId: event.documentOwner.id,
-                subject: NotificationSubject.COMMENT_CREATED
+                subject: NotificationSubject.COMMENT_CREATED,
+                message: `Пользователь ${event.creatorUsername} создал комментарий к вашему документу "${event.documentTitle}"`
             }),
             render(
                 CommentCreatedTemplate({
@@ -45,7 +46,9 @@ export class DocumentCommentsNotificationsService {
         const [, html] = await Promise.all([
             this.notificationsservice.create({
                 receiverId: event.documentOwner.id,
-                subject: NotificationSubject.COMMENT_UPDATED
+                subject: NotificationSubject.COMMENT_UPDATED,
+                message: `Пользователь ${event.creatorUsername} обноил комментарий к вашему документу "${event.documentTitle}"`
+
             }),
             render(
                 CommentUpdatedTemplate({
@@ -66,7 +69,9 @@ export class DocumentCommentsNotificationsService {
         const [, html] = await Promise.all([
             this.notificationsservice.create({
                 receiverId: event.documentOwner.id,
-                subject: NotificationSubject.COMMENT_DELETED
+                subject: NotificationSubject.COMMENT_DELETED, 
+                message: `Пользователь ${event.creatorUsername} удалил комментарий к вашему документу "${event.documentTitle}"`
+
             }),
             render(
                 CommentDeletedTemplate({

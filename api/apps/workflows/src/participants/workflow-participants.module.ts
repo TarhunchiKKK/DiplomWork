@@ -4,16 +4,11 @@ import { WorkflowParticipant } from "./entities/workflow-participant.entity";
 import { WorkflowParticipantsController } from "./workflow-participants.controller";
 import { WorkflowParticipantsService } from "./workflow-participants.service";
 import { WorkflowParticipantsObserver } from "./workflow-participants.observer";
-import { DocumentsGrpcModule, UsersGrpcModule } from "common/grpc";
+import { UsersGrpcModule } from "common/grpc";
 import { NotificationsRmqModule } from "common/rabbitmq";
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([WorkflowParticipant]),
-        DocumentsGrpcModule,
-        UsersGrpcModule,
-        NotificationsRmqModule
-    ],
+    imports: [TypeOrmModule.forFeature([WorkflowParticipant]), UsersGrpcModule, NotificationsRmqModule],
     controllers: [WorkflowParticipantsController],
     providers: [WorkflowParticipantsService, WorkflowParticipantsObserver],
     exports: [WorkflowParticipantsService]

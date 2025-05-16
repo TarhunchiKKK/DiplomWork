@@ -5,7 +5,7 @@ import { ApprovalsController } from "./approvals.controller";
 import { ApprovalsService } from "./approvals.service";
 import { ApprovalsEventsObserver } from "./approvals-events.observer";
 import { WorkflowParticipantsModule } from "../participants/workflow-participants.module";
-import { DocumentsGrpcModule, UsersGrpcModule } from "common/grpc";
+import { UsersGrpcModule } from "common/grpc";
 import { NotificationsRmqModule } from "common/rabbitmq";
 
 @Module({
@@ -13,7 +13,6 @@ import { NotificationsRmqModule } from "common/rabbitmq";
         TypeOrmModule.forFeature([Approval]),
         WorkflowParticipantsModule,
         UsersGrpcModule,
-        DocumentsGrpcModule,
         NotificationsRmqModule
     ],
     controllers: [ApprovalsController],
