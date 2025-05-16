@@ -44,19 +44,6 @@ export function CreateDocumentButton() {
                 <Form {...form}>
                     <form onSubmit={onSubmit} className="space-y-4">
                         <FormField
-                            key="title"
-                            name="title"
-                            control={form.control}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Название</FormLabel>
-
-                                    <Input {...field} type="text" placeholder="Название" />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
                             key="aimId"
                             name="aimId"
                             control={form.control}

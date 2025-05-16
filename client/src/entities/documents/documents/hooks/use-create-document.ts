@@ -6,15 +6,13 @@ import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 
 type TDto = {
-    title: string;
-
     typeId: string;
 
     aimId: string;
 
     isUrgent: boolean;
 
-    fileExtension: string;
+    filename: string;
 
     hash: string;
 };

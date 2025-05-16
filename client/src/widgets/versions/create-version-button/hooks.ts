@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { TFormState } from "./types";
 import { useCreateDocumentVersion } from "@/entities/documents";
 import { toast } from "sonner";
-import { getFileExtension } from "@/shared/helpers";
 
 export function useCreateVersionButton() {
     const form = useForm<TFormState>({
@@ -28,7 +27,7 @@ export function useCreateVersionButton() {
         create({
             documentId: document!.id,
             description: data.description || undefined,
-            fileExtension: getFileExtension(data.files[0].name),
+            filename: data.files[0].name,
             hash: ""
         });
     });
