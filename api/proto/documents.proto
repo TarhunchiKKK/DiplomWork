@@ -21,7 +21,7 @@ service DocumentsService {
 message ICreateDocumentDto {
     string authorId = 1;
 
-    string title = 2;
+    string filename = 2;
 
     string typeId = 3;
 
@@ -29,9 +29,7 @@ message ICreateDocumentDto {
 
     bool isUrgent = 5;
 
-    string fileExtension = 6;
-
-    string hash = 7;
+    string hash = 6;
 }
 
 message ICreateDocumentResponseData {
@@ -196,7 +194,7 @@ service DocumentVersionsService {
 message ICreateDocumentVersionDto {
     string documentId = 1;
 
-    string fileExtension = 2;
+    string filename = 2;
 
     optional string description = 3;
 

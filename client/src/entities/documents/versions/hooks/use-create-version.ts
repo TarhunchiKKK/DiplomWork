@@ -8,7 +8,7 @@ import { toast } from "sonner";
 type TDto = {
     documentId: string;
 
-    fileExtension: string;
+    filename: string;
 
     description?: string;
 

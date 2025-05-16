@@ -13,11 +13,10 @@ const protobufPackage = "documents";
 
 export interface ICreateDocumentDto {
   authorId: string;
-  title: string;
+  filename: string;
   typeId: string;
   aimId: string;
   isUrgent: boolean;
-  fileExtension: string;
   hash: string;
 }
 
@@ -112,7 +111,7 @@ export interface IRemoveFromFavouriteDto {
 
 export interface ICreateDocumentVersionDto {
   documentId: string;
-  fileExtension: string;
+  filename: string;
   description?: string | undefined;
   hash: string;
 }

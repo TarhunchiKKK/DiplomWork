@@ -7,6 +7,7 @@ import { generateS3Filename } from "./helpers/s3.helpers";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { VersionCreatedEvent } from "./events/version-created.evnet";
 import { UpdateDocumentDto } from "./dto/update-version.dto";
+import { splitFilename } from "common/utils";
 
 @Injectable()
 export class DocumentVersionsService {
@@ -17,8 +18,10 @@ export class DocumentVersionsService {
     ) {}
 
     public async create(dto: ICreateDocumentVersionDto) {
+        const [, fileExtension] = splitFilename(dto.filename);
+
         const version = await this.versionsRepository.save({
-            url: generateS3Filename(dto.fileExtension),
+            url: generateS3Filename(fileExtension),
             description: dto.description,
             document: {
                 id: dto.documentId

@@ -8,7 +8,7 @@ export class CreateDocumentVersionDto implements ICreateDocumentVersionDto {
 
     @IsNotEmpty({ message: "Расширение файла не указано" })
     @IsString({ message: "Расширение файла должно быть строкой" })
-    public fileExtension: string;
+    public filename: string;
 
     @IsOptional()
     @IsString({ message: "Описание к версии должно быть строкой" })

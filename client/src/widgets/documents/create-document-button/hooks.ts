@@ -1,13 +1,11 @@
 import { useCreateDocument } from "@/entities/documents";
 import { useForm } from "react-hook-form";
 import { TFormState } from "./types";
-import { getFileExtension } from "@/shared/helpers";
 import { toast } from "sonner";
 
 export function useCreateDocumentButton() {
     const form = useForm<TFormState>({
         defaultValues: {
-            title: "",
             isUrgent: false
         }
     });
@@ -22,7 +20,7 @@ export function useCreateDocumentButton() {
 
         createDocument({
             ...data,
-            fileExtension: getFileExtension(data.files[0].name),
+            filename: data.files[0].name,
             hash: ""
         });
     });
