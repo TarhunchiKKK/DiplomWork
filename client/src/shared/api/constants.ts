@@ -70,6 +70,11 @@ export const queryUrls = {
             update: (commentId: string) => `${environment.apiUrl}/documents/comments/${commentId}`,
             delete: (commentId: string) => `${environment.apiUrl}/documents/comments/${commentId}`
         }
+    },
+    notifications: {
+        findAll: `${environment.apiUrl}/notifications`,
+        update: (notificationId: string) => `${environment.apiUrl}/notifications/${notificationId}`,
+        delete: (notificationId: string) => `${environment.apiUrl}/notifications/${notificationId}`
     }
 };
 
@@ -98,5 +103,9 @@ export const queryKeys = {
         comments: {
             findAll: (versionId: string) => ["comments", "versions", versionId]
         }
+    },
+    notifications: {
+        base: ["notifications"],
+        findAll: (queryParams: Record<string, string>) => ["notifications", queryParams]
     }
 };
