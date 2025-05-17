@@ -76,6 +76,7 @@ export const queryUrls = {
         start: (workflowId: string) => `${environment.apiUrl}/workflows/start/${workflowId}`,
         findOneByDocumentId: (documentId: string) => `${environment.apiUrl}/workflows/documents/${documentId}`,
         findAllByCreatorId: (creatorId: string) => `${environment.apiUrl}/workflows/user/${creatorId}`,
+        updateSigner: (workflowId: string) => `${environment.apiUrl}/workflows/signer/${workflowId}`,
         delete: (workflowId: string) => `${environment.apiUrl}/workflows/${workflowId}`,
         participants: {
             upsert: (workflowId: string) => `${environment.apiUrl}/workflows/participants/${workflowId}`

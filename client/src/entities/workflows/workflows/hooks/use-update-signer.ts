@@ -1,31 +1,25 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { credentialsManager } from "@/features/auth";
-import axios from "axios";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
-
-type TParticipantDto = {
-    id?: string;
-
-    userId: string;
-};
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 type TDto = {
-    id: string;
+    workflowId: string;
 
-    participants: TParticipantDto[];
+    signerId: string;
 };
 
-export function useUpsertWorkflowParticipants() {
+export function useUpdateWorkflowSigner() {
     const queryClient = useQueryClient();
 
     const { mutate, isPending } = useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
-            await axios.put(
-                queryUrls.workflows.participants.upsert(dto.id),
+            await axios.patch(
+                queryUrls.workflows.updateSigner(dto.workflowId),
                 {
-                    participants: dto.participants
+                    signerId: dto.signerId
                 },
                 {
                     headers: new HttpHeadersBuilder().setBearerToken(token).build()
@@ -33,12 +27,12 @@ export function useUpsertWorkflowParticipants() {
             );
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeys.workflows.findOne.base });
+            queryClient.invalidateQueries({ queryKey: queryKeys.workflows.base });
         }
     });
 
     return {
-        upsertParticipants: mutate,
+        updateSigner: mutate,
         isPending
     };
 }

@@ -1,21 +1,59 @@
 "use client";
 
-import { ApproversForm } from "./approvers-form";
+import { Button } from "@/shared/ui";
+import { ApproversForm, ApproversFormSkeleton } from "./approvers-form";
+import { ApproversList, ApproversListSkeleton } from "./approvers-list";
 import { useSetup } from "./hooks";
 import { SignerDropdown } from "./signer-dropdown";
 
 export function WorkflowParticipantsForm() {
-    useSetup();
+    const buttonProps = useSetup();
 
     return (
-        <div>
-            <ApproversForm />
+        <div className="h-full flex flex-col justify-between">
+            <div className="space-y-4">
+                <ApproversForm />
 
-            <SignerDropdown />
+                <div>
+                    <h3 className="mb-2">Участники:</h3>
+
+                    <ApproversList />
+                </div>
+
+                <div>
+                    <h3 className="mb-2">Подписывающий:</h3>
+
+                    <SignerDropdown />
+                </div>
+            </div>
+
+            <div className="flex justify-center">
+                <Button variant="outline" className="cursor-pointer" {...buttonProps}>
+                    Сохранить
+                </Button>
+            </div>
         </div>
     );
 }
 
 export function WorkflowParticipantsFormSkeleton() {
-    return <></>;
+    return (
+        <div className="h-full flex flex-col justify-between">
+            <div className="space-y-4">
+                <ApproversFormSkeleton />
+
+                <div>
+                    <h3 className="mb-2">Участники:</h3>
+
+                    <ApproversListSkeleton />
+                </div>
+            </div>
+
+            <div className="flex justify-center">
+                <Button variant="outline" className="cursor-pointer" disabled>
+                    Сохранить
+                </Button>
+            </div>
+        </div>
+    );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Input, Table, TableBody, TableCell, TableRow } from "@/shared/ui";
+import { Input } from "@/shared/ui";
 import { useApproversForm } from "./hooks";
 import { getContent } from "../helpers";
 
@@ -11,25 +11,25 @@ export function ApproversForm() {
         <div>
             <Input {...input} placeholder="Введите нового пользователя" />
 
-            <Table className="relative">
+            <div className="relative">
                 {displayUsers && (
-                    <TableBody className="absolute top-0 left-0 w-full">
+                    <div className="absolute top-0 left-0 w-full z-50 rounded-sm border bg-background">
                         {availableUsers.map(user => (
-                            <TableRow
+                            <div
                                 key={user.id}
-                                className="cursor-pointer"
+                                className="cursor-pointer w-full border-b px-4 py-1 last:border-none hover:bg-accent"
                                 onClick={onSelect.bind(null, { userId: user.id })}
                             >
-                                <TableCell>{getContent(user)}</TableCell>
-                            </TableRow>
+                                {getContent(user)}
+                            </div>
                         ))}
-                    </TableBody>
+                    </div>
                 )}
-            </Table>
+            </div>
         </div>
     );
 }
 
 export function ApproversFormSkeleton() {
-    return <></>;
+    return <Input placeholder="Введите нового пользователя" />;
 }

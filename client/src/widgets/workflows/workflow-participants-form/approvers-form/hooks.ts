@@ -1,15 +1,14 @@
 import { TParticipantDto } from "../types";
 import { useParticipantsStore } from "../store";
 import { ChangeEvent, useState } from "react";
-import { mocks } from "@/dev";
 import { getContent } from "../helpers";
+import { useOrganizationUsers } from "@/entities/users";
 
 export function useApproversForm() {
-    // const { users } = useOrganizationUsers();
+    const { users } = useOrganizationUsers();
+
     const [input, setInput] = useState("");
     const [displayUsers, setDisplayUsers] = useState(false);
-
-    const users = mocks.users;
 
     const { approvers, signerId, setApprovers } = useParticipantsStore();
 

@@ -1,11 +1,9 @@
-import { mocks } from "@/dev";
 import { useParticipantsStore } from "../store";
 import { getContent } from "../helpers";
+import { useOrganizationUsers } from "@/entities/users";
 
 export function useSignerDropdowm() {
-    // const { users } = useOrganizationUsers();
-
-    const users = mocks.users;
+    const { users } = useOrganizationUsers();
 
     const { approvers, setSignerId, signerId } = useParticipantsStore();
 
@@ -13,13 +11,13 @@ export function useSignerDropdowm() {
         setSignerId(id);
     };
 
-    const availableUsers = users
+    const availableUsers = (users || [])
         .filter(user => !approvers.find(a => a.userId === user.id))
         .filter(user => user.id !== signerId);
 
     return {
         availableUsers,
         onSelect,
-        buttonLabel: getContent(users.find(u => u.id === signerId)) ?? "Выбрать"
+        buttonLabel: getContent((users || []).find(u => u.id === signerId)) ?? "Выбрать"
     };
 }

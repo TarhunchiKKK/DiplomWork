@@ -1,5 +1,5 @@
-import { WorkflowParticipantsForm } from "@/widgets/workflows";
+import { WorkflowParticipantsFormSkeleton } from "@/widgets/workflows";
 
 export default function Home() {
-    return <WorkflowParticipantsForm />;
+    return <WorkflowParticipantsFormSkeleton />;
 }
