@@ -1,9 +1,5 @@
 export type TParticipantDto = {
-    id: string;
+    id?: string;
 
     userId: string;
-};
-
-export type TFormState = {
-    value: string;
 };

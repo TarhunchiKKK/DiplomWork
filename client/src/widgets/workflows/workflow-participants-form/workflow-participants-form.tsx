@@ -1,17 +1,12 @@
-import { useForm } from "react-hook-form";
+"use client";
+
+import { ApproversForm } from "./approvers-form";
 import { useSetup } from "./hooks";
-import { TFormState } from "./types";
 
 export function WorkflowParticipantsForm() {
     useSetup();
 
-    const form = useForm<TFormState>({
-        defaultValues: {
-            value: ""
-        }
-    });
-
-    return <></>;
+    return <ApproversForm />;
 }
 
 export function WorkflowParticipantsFormSkeleton() {

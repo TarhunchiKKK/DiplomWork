@@ -4,11 +4,11 @@ import { TParticipantDto } from "./types";
 type TStore = {
     approvers: TParticipantDto[];
 
-    signer: TParticipantDto | null;
+    signerId: string | null;
 
     setApprovers: (_: TParticipantDto[]) => void;
 
-    setSigner: (_: TParticipantDto | null) => void;
+    setSignerId: (_: string | null) => void;
 
     reset: () => void;
 };
@@ -16,11 +16,11 @@ type TStore = {
 export const useParticipantsStore = create<TStore>(set => ({
     approvers: [],
 
-    signer: null,
+    signerId: null,
 
     setApprovers: approvers => set({ approvers }),
 
-    setSigner: signer => set({ signer }),
+    setSignerId: signerId => set({ signerId }),
 
-    reset: () => set({ approvers: [], signer: null })
+    reset: () => set({ approvers: [], signerId: null })
 }));

@@ -50,6 +50,12 @@ export function useCompareableSet<T, K>(initialData: T[], extractValue: (_: T) =
         setItems(prev => prev.filter(i => extractValue(i) !== extractedValue));
     };
 
+    const has = (item: T) => {
+        const extractedValue = extractValue(item);
+
+        return set.has(extractedValue);
+    };
+
     useEffect(() => {
         initialData.forEach(add);
     }, [initialData, extractValue, add]);
@@ -57,6 +63,7 @@ export function useCompareableSet<T, K>(initialData: T[], extractValue: (_: T) =
     return {
         items,
         add,
-        remove
+        remove,
+        has
     };
 }

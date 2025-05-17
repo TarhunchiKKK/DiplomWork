@@ -1,6 +1,6 @@
 import { TComment, TDocument, TDocumentShortData } from "@/entities/documents";
 import { NotificationStatus, NotificationSubject, TNotification } from "@/entities/notifications";
-import { AuthType, Role } from "@/entities/users";
+import { AccountStatus, AuthType, Role, TUserInfo } from "@/entities/users";
 import { TProfile } from "@/features/auth";
 
 const documentsShortData: TDocumentShortData[] = [
@@ -223,11 +223,63 @@ const notifications: TNotification[] = [
     }
 ];
 
+const users: TUserInfo[] = [
+    {
+        id: "1",
+        email: "1@gmail.com",
+        username: "1",
+        status: AccountStatus.ACTIVE
+    },
+    {
+        id: "2",
+        email: "2@gmail.com",
+        username: "2",
+        status: AccountStatus.ACTIVE
+    },
+    {
+        id: "3",
+        email: "3@gmail.com",
+        username: "3",
+        status: AccountStatus.ACTIVE
+    },
+    {
+        id: "4",
+        email: "4@gmail.com",
+        username: "4",
+        status: AccountStatus.ACTIVE
+    },
+    {
+        id: "5",
+        email: "5@gmail.com",
+        username: "5",
+        status: AccountStatus.ACTIVE
+    },
+    {
+        id: "6",
+        email: "6@gmail.com",
+        username: "6",
+        status: AccountStatus.ACTIVE
+    },
+    {
+        id: "7",
+        email: "7@gmail.com",
+        username: "7",
+        status: AccountStatus.ACTIVE
+    },
+    {
+        id: "8",
+        email: "8@gmail.com",
+        username: "8",
+        status: AccountStatus.ACTIVE
+    }
+];
+
 export const mocks = {
     document,
     documentsShortData,
     profile,
     verifyDocumentHashDto,
     comments,
-    notifications
+    notifications,
+    users
 };
