@@ -2,7 +2,7 @@
 
 import { Input } from "@/shared/ui";
 import { useApproversForm } from "./hooks";
-import { getContent } from "../helpers";
+import { getContent } from "../../shared";
 
 export function ApproversForm() {
     const { availableUsers, input, onSelect, displayUsers } = useApproversForm();

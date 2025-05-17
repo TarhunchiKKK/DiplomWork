@@ -1,7 +1,7 @@
 import { DateFieldsToString } from "@/shared/api";
 import { TFullWorkflow } from "../models";
-import { TApproval } from "../../approvals";
+import { TFullWorkflowParticipant } from "../../participants";
 
 export type TFullWorkflowResponse = TFullWorkflow & {
-    approvals: DateFieldsToString<TApproval>[];
+    participants: DateFieldsToString<TFullWorkflowParticipant>;
 };

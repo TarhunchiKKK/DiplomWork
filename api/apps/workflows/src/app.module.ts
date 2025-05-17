@@ -7,8 +7,6 @@ import { WorkflowParticipant } from "./participants/entities/workflow-participan
 import { WorkflowParticipantsModule } from "./participants/workflow-participants.module";
 import { DocumentsGrpcModule } from "common/grpc";
 import { EventEmitterModule } from "@nestjs/event-emitter";
-import { ApprovalsModule } from "./approval/approvals.module";
-import { Approval } from "./approval/entities/workflow-approval.entity";
 
 @Module({
     imports: [
@@ -26,13 +24,12 @@ import { Approval } from "./approval/entities/workflow-approval.entity";
                 username: configService.getOrThrow<string>("WORKFLOWS_MICROSERVICE_DB_USER"),
                 password: configService.getOrThrow<string>("WORKFLOWS_MICROSERVICE_DB_PASSWORD"),
                 synchronize: true,
-                entities: [Workflow, WorkflowParticipant, Approval]
+                entities: [Workflow, WorkflowParticipant]
             })
         }),
         EventEmitterModule.forRoot(),
         WorkflowsModule,
         WorkflowParticipantsModule,
-        ApprovalsModule,
         DocumentsGrpcModule
     ]
 })

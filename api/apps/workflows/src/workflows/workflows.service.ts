@@ -13,6 +13,7 @@ import { WorkflowCompletedEvent } from "./events/workflow-completeed.events";
 export class WorkflowsService {
     public constructor(
         @InjectRepository(Workflow) private readonly workflowsRepository: Repository<Workflow>,
+
         private readonly eventEmitter: EventEmitter2
     ) {}
 
@@ -54,8 +55,7 @@ export class WorkflowsService {
                 id: workflowId
             },
             relations: {
-                participants: true,
-                approvals: true
+                participants: true
             }
         });
 
@@ -72,8 +72,7 @@ export class WorkflowsService {
                 documentId: workflowId
             },
             relations: {
-                participants: true,
-                approvals: true
+                participants: true
             }
         });
 

@@ -1,6 +1,6 @@
 import { useOrganizationUsers } from "@/entities/users";
 import { useParticipantsStore } from "../store";
-import { getContent } from "../helpers";
+import { getContent } from "../../shared";
 
 export function useApproversList() {
     const { users } = useOrganizationUsers();

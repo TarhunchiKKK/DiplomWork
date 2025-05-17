@@ -1,5 +1,5 @@
 import { useParticipantsStore } from "../store";
-import { getContent } from "../helpers";
+import { getContent } from "../../shared/helpers";
 import { useOrganizationUsers } from "@/entities/users";
 
 export function useSignerDropdowm() {

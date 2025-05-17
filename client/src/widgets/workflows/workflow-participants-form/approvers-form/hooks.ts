@@ -1,7 +1,7 @@
 import { TParticipantDto } from "../types";
 import { useParticipantsStore } from "../store";
 import { ChangeEvent, useState } from "react";
-import { getContent } from "../helpers";
+import { getContent } from "../../shared/helpers";
 import { useOrganizationUsers } from "@/entities/users";
 
 export function useApproversForm() {

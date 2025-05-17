@@ -3,7 +3,7 @@ import { WorkflowParticipantsService } from "../../participants/workflow-partici
 import { RecalculateWorkflowStatusEvent } from "../events/recalculate-workflow-status.event";
 import { OnEvent } from "@nestjs/event-emitter";
 import { WorkflowParticipant } from "../../participants/entities/workflow-participant.entity";
-import { ApprovalStatus } from "../../approval/enums/approval.-status.enum";
+import { ApprovalStatus } from "../../participants/enums/approval.-status.enum";
 import { WorkflowStatus } from "../enums/workflow-status.enum";
 import { WorkflowsService } from "../workflows.service";
 import { UpdateWorkflowDto } from "../dto/update-workflow-dto";
@@ -26,12 +26,12 @@ export class WorkflowStatusObserver {
 
     private checkForFullyApproved(participants: WorkflowParticipant[]) {
         return participants.every(participant => {
-            return participant.approval.status === ApprovalStatus.APPROVED;
+            return participant.approvalStatus === ApprovalStatus.APPROVED;
         });
     }
 
     private checkForRejected(participants: WorkflowParticipant[]) {
-        return participants.some(participant => participant.approval.status === ApprovalStatus.REJECTED);
+        return participants.some(participant => participant.approvalStatus === ApprovalStatus.REJECTED);
     }
 
     private getUpdateWorkflowDto(participants: WorkflowParticipant[]) {

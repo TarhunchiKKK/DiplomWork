@@ -1,3 +1,2 @@
-export * from "./create-workflow-button";
-export * from "./start-workflow-button";
+export * from "./buttons";
 export * from "./workflow-participants-form";

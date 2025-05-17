@@ -10,7 +10,7 @@ import {
     WrapGrpcResponseInterceptor
 } from "common/grpc";
 import { WorkflowsService } from "./workflows.service";
-import { transformFullWorkflow, transformWorkflow, transformWorkflowsArray } from "./helpers/grpc.helpers";
+import { transformWorkflow, transformWorkflowsArray } from "./helpers/grpc.helpers";
 
 @Controller()
 @WorkflowsServiceControllerMethods()
@@ -41,11 +41,11 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
     }
 
     public async findOneById(dto: IOnlyId) {
-        return await this.workflowsService.findOneById(dto.id).then(transformFullWorkflow);
+        return await this.workflowsService.findOneById(dto.id).then(transformWorkflow);
     }
 
     public async findOneByDocumentId(dto: IOnlyId) {
-        return await this.workflowsService.findOneByDocumentId(dto.id).then(transformFullWorkflow);
+        return await this.workflowsService.findOneByDocumentId(dto.id).then(transformWorkflow);
     }
 
     public async delete(dto: IOnlyId) {

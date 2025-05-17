@@ -2,6 +2,7 @@ import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
     GrpcExceptionFilter,
     IOnlyId,
+    IUpdateApprovalStatusDto,
     IUpsertWorkflowParticipantsDto,
     UnwrapGrpcResponse,
     WorkflowParticipantsServiceController,
@@ -10,6 +11,7 @@ import {
 } from "common/grpc";
 import { WorkflowParticipantsService } from "./workflow-participants.service";
 import { transformWorkflowsArray } from "../workflows/helpers/grpc.helpers";
+import { ApprovalStatus } from "./enums/approval.-status.enum";
 
 @Controller()
 @WorkflowParticipantsServiceControllerMethods()
@@ -24,5 +26,9 @@ export class WorkflowParticipantsController implements UnwrapGrpcResponse<Workfl
 
     public async upsertWorkflowParticipants(dto: IUpsertWorkflowParticipantsDto) {
         await this.participantsService.upsertWorkflowParticipants(dto.workflowId, dto.participants);
+    }
+
+    public async updateApprovalStatus(dto: IUpdateApprovalStatusDto) {
+        await this.participantsService.updateApprovalStatus(dto.id, dto.approvalStatus as ApprovalStatus);
     }
 }

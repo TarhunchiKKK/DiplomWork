@@ -1,6 +1,6 @@
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/shared/ui";
 import { useSignerDropdowm } from "./hooks";
-import { getContent } from "../helpers";
+import { getContent } from "../../shared";
 
 export function SignerDropdown() {
     const { availableUsers, buttonLabel, onSelect } = useSignerDropdowm();
