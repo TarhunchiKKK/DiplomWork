@@ -4,7 +4,7 @@ export const transformWorkflow = (workflow: Workflow) => {
     return {
         ...workflow,
         createdAt: workflow.createdAt.toISOString(),
-        completedAt: workflow.completedAt.toISOString() ?? null
+        completedAt: workflow.completedAt?.toISOString() ?? null
     };
 };
 

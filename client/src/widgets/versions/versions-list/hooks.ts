@@ -1,4 +1,4 @@
-import { useCurrentVersionStore, useDocumentVersions } from "@/entities/documents";
+import { useCurrentDocumentStore, useDocumentVersions } from "@/entities/documents";
 import { useParams } from "next/navigation";
 
 export function useVersionsList() {
@@ -6,10 +6,10 @@ export function useVersionsList() {
 
     const { versions } = useDocumentVersions(documentId);
 
-    const setCurrentVersion = useCurrentVersionStore(state => state.setCurrentVersion);
+    const setCurrentVersionId = useCurrentDocumentStore(state => state.setVersionId);
 
     return {
         versions,
-        onClick: setCurrentVersion
+        onClick: setCurrentVersionId
     };
 }

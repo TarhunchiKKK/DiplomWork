@@ -1,17 +1,17 @@
 import { create } from "zustand";
 
 type TStore = {
-    id: string | null;
+    versionId: string | null;
 
-    setCurrentVersion: (_: string) => void;
+    setVersionId: (_: string) => void;
 
-    resetCurrentVersion: () => void;
+    reset: () => void;
 };
 
-export const useCurrentVersionStore = create<TStore>(set => ({
-    id: null,
+export const useCurrentDocumentStore = create<TStore>(set => ({
+    versionId: null,
 
-    setCurrentVersion: (id: string) => set({ id }),
+    setVersionId: versionId => set({ versionId }),
 
-    resetCurrentVersion: () => set({ id: null })
+    reset: () => set({ versionId: null })
 }));

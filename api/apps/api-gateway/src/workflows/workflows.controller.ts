@@ -1,10 +1,23 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Req,
+    UseGuards,
+    UsePipes,
+    ValidationPipe
+} from "@nestjs/common";
 import { WorkflowsGrpcService } from "common/grpc";
 import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { DocumentAuthorGuard } from "./middleware/document-author.guard";
 import { WorkflowCreatorGuard } from "./middleware/workflow-creator.guard";
 import { CreateWorkflowDto } from "./dto/create-workflow.dto";
+import { UpdateSignerDto } from "./dto/update-signer.dto";
 
 @Controller("/workflows")
 @UseGuards(AuthenticationGuard)
@@ -26,6 +39,24 @@ export class WorkflowsController {
     @UseGuards(WorkflowCreatorGuard)
     public start(@Param("workflowId") workflowId: string) {
         return this.workflowsGrpcService.call("start", {
+            id: workflowId
+        });
+    }
+
+    @Patch("/sign/:workflowId")
+    public sign(@Param("workflowId") workflowId: string) {
+        return this.workflowsGrpcService.call("sign", {
+            id: workflowId
+        });
+    }
+
+    @Patch("/signer/:workflowId")
+    @ExtractFromRequest(request => request.params.workflowId)
+    @UseGuards(WorkflowCreatorGuard)
+    @UsePipes(ValidationPipe)
+    public updateSigner(@Param("workflowId") workflowId: string, @Body() dto: UpdateSignerDto) {
+        return this.workflowsGrpcService.call("updateSigner", {
+            ...dto,
             id: workflowId
         });
     }

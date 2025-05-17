@@ -9,7 +9,11 @@ package workflows;
 service WorkflowsService {
     rpc Create (ICreateWorkflowDto) returns (ICreateWorkflowResponse) {}
 
+    rpc UpdateSigner (IUpdateSignerDto) returns (common.IEmptyResponse) {}
+
     rpc Start (common.IOnlyId) returns (common.IEmptyResponse) {}
+
+    rpc Sign (common.IOnlyId) returns (common.IEmptyResponse) {}
 
     rpc FindAllByCreatorId (common.IOnlyId) returns (IFindWorkflowsResponse) {}
 
@@ -28,6 +32,12 @@ message ICreateWorkflowDto {
     string documentTitle = 3;
 }
 
+message IUpdateSignerDto {
+    string id = 1;
+
+    string signerId = 2;
+}
+
 message IWorkflowResponseData {
     string id = 1;
 
@@ -40,6 +50,26 @@ message IWorkflowResponseData {
     string status = 5;
 
     optional string completedAt = 6;
+
+    optional string signerId = 7;
+}
+
+message IFullWorkflowResponse {
+    string id = 1;
+
+    string documentTitle = 2;
+
+    string creatorId = 3;
+
+    string documentId = 4;
+
+    string status = 5;
+
+    optional string completedAt = 6;
+
+    optional string signerId = 7;
+
+    repeated IParticipant participants = 8;
 }
 
 message ICreateWorkflowResponse {
@@ -52,7 +82,7 @@ message ICreateWorkflowResponse {
 
 message IFindOneWorkflowResponse {
     oneof response {
-        IWorkflowResponseData data = 1;
+        IFullWorkflowResponse data = 1;
 
         common.IHttpError error = 2;
     }
@@ -76,14 +106,22 @@ service WorkflowParticipantsService {
     rpc UpsertWorkflowParticipants (IUpsertWorkflowParticipantsDto) returns (common.IEmptyResponse) {}
 
     rpc FindAllUserWorkflows (common.IOnlyId) returns (IFindWorkflowsResponse) {}
+
+    rpc UpdateApprovalStatus (IUpdateApprovalStatusDto) returns (common.IEmptyResponse) {}
+}
+
+message IParticipant {
+    string id = 1;
+
+    string userId = 2;
+
+    string approvalStatus = 3;
 }
 
 message IUpsertWorkflowParticipantDto   {
     optional string id = 1;
 
-    string role = 2;
-
-    string userId = 3;
+    string userId = 2;
 }
 
 message IUpsertWorkflowParticipantsDto {
@@ -92,44 +130,9 @@ message IUpsertWorkflowParticipantsDto {
     string workflowId = 2;
 }
 
-/********************************************Approvals*********************************************************************/
-
-service ApprovalsService {
-    rpc Upsert (IUpsertApprovalDto) returns (IApprovalResponse) {}
-
-    rpc FindOne (IFindOneApprovalDto) returns (IApprovalResponse) {} 
-
-    rpc ResetAllByWorkflowId (common.IOnlyId) returns (common.IEmptyResponse) {}
-}
-
-message IUpsertApprovalDto {
-    string workflowId = 1;
-
-    string participantId = 2;
-
-    string status = 3;
-}
-
-message IFindOneApprovalDto {
-    string workflowId = 1;
-
-    string participantId = 2;
-}
-
-message IApproval {
+message IUpdateApprovalStatusDto {
     string id = 1;
 
-    string status = 2;
-
-    string createdAt = 3;
-
-    string updatedAt = 4;
+    string approvalStatus = 2;
 }
 
-message IApprovalResponse {
-    oneof response {
-        IApproval data = 1;
-
-        common.IEmptyResponse empty = 2;
-    }
-}

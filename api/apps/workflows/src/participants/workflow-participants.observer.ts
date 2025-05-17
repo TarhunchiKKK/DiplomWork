@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
-import { DocumentsGrpcService, UsersGrpcService } from "common/grpc";
+import { UsersGrpcService } from "common/grpc";
 import { ParticipantsCreatedEvent } from "./events/participants-created.event";
 import { firstValueFrom } from "rxjs";
 import { NotificationsRmqService, ParticipantAddedRmqEvent, ParticipantDeletedRmqEvent } from "common/rabbitmq";

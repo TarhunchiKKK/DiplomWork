@@ -1,7 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { WorkflowParticipantRole } from "../enums/workflow-participant-role.enum";
 import { Workflow } from "../../workflows/entities/workflow.entity";
-import { Approval } from "../../approval/entities/workflow-approval.entity";
+import { ApprovalStatus } from "../enums/approval.-status.enum";
 
 @Entity()
 export class WorkflowParticipant {
@@ -11,13 +10,10 @@ export class WorkflowParticipant {
     @Column()
     public userId: string;
 
-    @Column({ type: "enum", enum: WorkflowParticipantRole })
-    public role: WorkflowParticipantRole;
+    @Column({ type: "enum", enum: ApprovalStatus, default: ApprovalStatus.DEFAULT })
+    public approvalStatus: ApprovalStatus;
 
     @ManyToOne(() => Workflow, workflow => workflow.participants)
     @JoinColumn()
     public workflow: Workflow;
-
-    @OneToOne(() => Approval, approval => approval.participant)
-    public approval: Approval;
 }

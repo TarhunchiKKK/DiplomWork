@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { TFormState } from "./types";
-import { useCreateDocumentComment, useCurrentVersionStore } from "@/entities/documents";
+import { useCreateDocumentComment, useCurrentDocumentStore } from "@/entities/documents";
 
 export function useCreateCommentForm() {
-    const versionId = useCurrentVersionStore(state => state.id) as string;
+    const versionId = useCurrentDocumentStore(state => state.versionId) as string;
 
     const form = useForm<TFormState>({
         defaultValues: {

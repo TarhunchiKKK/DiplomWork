@@ -63,24 +63,12 @@ export function NotificationsServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["findAll", "update", "delete"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("NotificationsService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("NotificationsService", method)(constructor.prototype[method], method, descriptor);
     }
   };

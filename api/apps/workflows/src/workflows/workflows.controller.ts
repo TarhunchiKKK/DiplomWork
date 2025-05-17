@@ -3,6 +3,7 @@ import {
     GrpcExceptionFilter,
     ICreateWorkflowDto,
     IOnlyId,
+    IUpdateSignerDto,
     UnwrapGrpcResponse,
     WorkflowsServiceController,
     WorkflowsServiceControllerMethods,
@@ -22,8 +23,17 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
         return await this.workflowsService.create(dto).then(transformWorkflow);
     }
 
+    public async updateSigner(dto: IUpdateSignerDto) {
+        const { id, ...data } = dto;
+        await this.workflowsService.update(id, data);
+    }
+
     public async start(dto: IOnlyId) {
         await this.workflowsService.start(dto.id);
+    }
+
+    public async sign(dto: IOnlyId) {
+        await this.workflowsService.sign(dto.id);
     }
 
     public async findAllByCreatorId(dto: IOnlyId) {

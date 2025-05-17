@@ -3,15 +3,14 @@ import { WorkflowParticipantsService } from "../../participants/workflow-partici
 import { RecalculateWorkflowStatusEvent } from "../events/recalculate-workflow-status.event";
 import { OnEvent } from "@nestjs/event-emitter";
 import { WorkflowParticipant } from "../../participants/entities/workflow-participant.entity";
-import { WorkflowParticipantRole } from "../../participants/enums/workflow-participant-role.enum";
-import { ApprovalStatus } from "../../approval/enums/approval.-status.enum";
+import { ApprovalStatus } from "../../participants/enums/approval.-status.enum";
 import { WorkflowStatus } from "../enums/workflow-status.enum";
 import { WorkflowsService } from "../workflows.service";
 import { UpdateWorkflowDto } from "../dto/update-workflow-dto";
 import { NotificationsRmqService, WorkflowCompletedRmqEvent } from "common/rabbitmq";
 import { UsersGrpcService } from "common/grpc";
 import { firstValueFrom } from "rxjs";
-import { ApprovalsService } from "../../approval/approvals.service";
+import { WorkflowCompletedEvent } from "../events/workflow-completeed.events";
 
 @Injectable()
 export class WorkflowStatusObserver {
@@ -20,8 +19,6 @@ export class WorkflowStatusObserver {
 
         private readonly participantsService: WorkflowParticipantsService,
 
-        private readonly approvalsService: ApprovalsService,
-
         private readonly notificationsRmqService: NotificationsRmqService,
 
         private readonly usersGrpcService: UsersGrpcService
@@ -29,34 +26,18 @@ export class WorkflowStatusObserver {
 
     private checkForFullyApproved(participants: WorkflowParticipant[]) {
         return participants.every(participant => {
-            if (participant.role === WorkflowParticipantRole.APPROVER) {
-                return participant.approval.status === ApprovalStatus.APPROVED;
-            }
-
-            return true;
-        });
-    }
-
-    private checkForCompleted(participants: WorkflowParticipant[]) {
-        return participants.every(participant => {
-            if (participant.role === WorkflowParticipantRole.SIGNER) {
-                return participant.approval.status === ApprovalStatus.SIGNED;
-            }
-
-            return true;
+            return participant.approvalStatus === ApprovalStatus.APPROVED;
         });
     }
 
     private checkForRejected(participants: WorkflowParticipant[]) {
-        return participants.some(participant => participant.approval.status === ApprovalStatus.REJECTED);
+        return participants.some(participant => participant.approvalStatus === ApprovalStatus.REJECTED);
     }
 
     private getUpdateWorkflowDto(participants: WorkflowParticipant[]) {
         let dto: UpdateWorkflowDto | null = null;
 
-        if (this.checkForCompleted(participants)) {
-            dto = { status: WorkflowStatus.COMPLETED, completedAt: new Date() };
-        } else if (this.checkForFullyApproved(participants)) {
+        if (this.checkForFullyApproved(participants)) {
             dto = { status: WorkflowStatus.FULLY_APPROVED };
         } else if (this.checkForRejected(participants)) {
             dto = { status: WorkflowStatus.REJECTED };
@@ -73,17 +54,12 @@ export class WorkflowStatusObserver {
 
         if (dto) {
             await this.workflowsService.update(event.workflowId, dto);
-
-            if (dto.status === WorkflowStatus.COMPLETED) {
-                this.handleWorkflowCompletedEvent(event.workflowId);
-            } else if (dto.status === WorkflowStatus.REJECTED) {
-                this.approvalsService.resetAllByWorkflowId(event.workflowId);
-            }
         }
     }
 
-    public async handleWorkflowCompletedEvent(workflowId: string) {
-        const workflow = await this.workflowsService.findOneById(workflowId);
+    @OnEvent(WorkflowCompletedEvent.pattern)
+    public async handleWorkflowCompletedEvent(event: WorkflowCompletedEvent) {
+        const workflow = await this.workflowsService.findOneById(event.workflowId);
 
         const user = await firstValueFrom(
             this.usersGrpcService.call("findOne", {

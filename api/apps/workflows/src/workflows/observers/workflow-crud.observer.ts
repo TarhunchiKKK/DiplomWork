@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
-import { UsersGrpcService, DocumentsGrpcService } from "common/grpc";
+import { UsersGrpcService } from "common/grpc";
 import { NotificationsRmqService, WorkflowDeletedRmqEvent } from "common/rabbitmq";
 import { firstValueFrom } from "rxjs";
 import { WorkflowDeletedEvent } from "../events/workflow-deleted.event";

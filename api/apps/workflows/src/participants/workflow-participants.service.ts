@@ -4,11 +4,13 @@ import { WorkflowParticipant } from "./entities/workflow-participant.entity";
 import { In, Repository } from "typeorm";
 import { ICreateParticipantDto } from "./dto/create-participant.dto";
 import { IUpdateParticipantDto } from "./dto/update-participant.dto";
-import { IUpsertWorkflowParticipantsDto } from "common/grpc";
+import { IUpsertWorkflowParticipantDto, IUpsertWorkflowParticipantsDto } from "common/grpc";
 import { diffParticipants } from "./helpers/upserting.helpers";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { ParticipantsDeletedEvent } from "./events/participants-deleted.event";
 import { ParticipantsCreatedEvent } from "./events/participants-created.event";
+import { ApprovalStatus } from "./enums/approval.-status.enum";
+import { RecalculateWorkflowStatusEvent } from "../workflows/events/recalculate-workflow-status.event";
 
 @Injectable()
 export class WorkflowParticipantsService {
@@ -41,8 +43,7 @@ export class WorkflowParticipantsService {
                 id: participantId
             },
             relations: {
-                workflow: true,
-                approval: true
+                workflow: true
             }
         });
 
@@ -61,8 +62,7 @@ export class WorkflowParticipantsService {
                 }
             },
             relations: {
-                workflow: true,
-                approval: true
+                workflow: true
             }
         });
     }
@@ -75,6 +75,19 @@ export class WorkflowParticipantsService {
         });
 
         return participants.map(participant => participant.workflow);
+    }
+
+    public async updateApprovalStatus(participantId: string, approvlaStatus: ApprovalStatus) {
+        const participant = await this.findOneById(participantId);
+
+        participant.approvalStatus = approvlaStatus;
+
+        await this.participantsRepository.save(participant);
+
+        this.eventEmitter.emit(
+            RecalculateWorkflowStatusEvent.pattern,
+            new RecalculateWorkflowStatusEvent(participant.workflow.id)
+        );
     }
 
     private async updateMany(dtos: IUpdateParticipantDto[]) {

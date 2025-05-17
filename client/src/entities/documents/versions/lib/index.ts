@@ -1,1 +1,1 @@
-export { useCurrentVersionStore } from "./store";
+export { useCurrentDocumentStore } from "./store";

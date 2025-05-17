@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactNode } from "react";
 
 export type TTagProps = PropsWithChildren<{
-    tooltip: ReactNode;
+    tooltip: ReactNode | null;
 }>;
 
 export type TTagsCloudProps<T> = {

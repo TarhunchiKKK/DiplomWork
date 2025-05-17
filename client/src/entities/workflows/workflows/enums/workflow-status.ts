@@ -1,0 +1,7 @@
+export enum WorkflowStatus {
+    DEFAULT = "DEFAULT",
+    STARTED = "STARTED",
+    FULLY_APPROVED = "FULLY_AGREEMENTED",
+    COMPLETED = "COMPLETED",
+    REJECTED = "REJECTED"
+}

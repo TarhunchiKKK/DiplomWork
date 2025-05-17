@@ -123,24 +123,12 @@ export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["findOne", "findAllByIds", "findAllByOrganizationId", "updateProfile"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("UsersService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("UsersService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -168,24 +156,12 @@ export function AuthenticationServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["registerAdmin", "login", "refreshProfile"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("AuthenticationService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("AuthenticationService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -209,24 +185,12 @@ export function UsersInvitationServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["invite", "confirm"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("UsersInvitationService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("UsersInvitationService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -250,24 +214,12 @@ export function PasswordRecoveryServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["reset", "update"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("PasswordRecoveryService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("PasswordRecoveryService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -291,24 +243,12 @@ export function AccountDeactivationServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["activate", "deactivate"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("AccountDeactivationService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("AccountDeactivationService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -342,24 +282,12 @@ export function TotpAuthenticationServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["generate", "enable", "disable", "login"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("TotpAuthenticationService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("TotpAuthenticationService", method)(constructor.prototype[method], method, descriptor);
     }
   };

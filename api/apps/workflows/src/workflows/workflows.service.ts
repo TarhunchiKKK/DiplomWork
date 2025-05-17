@@ -7,11 +7,13 @@ import { UpdateWorkflowDto } from "./dto/update-workflow-dto";
 import { WorkflowStatus } from "./enums/workflow-status.enum";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { WorkflowDeletedEvent } from "./events/workflow-deleted.event";
+import { WorkflowCompletedEvent } from "./events/workflow-completeed.events";
 
 @Injectable()
 export class WorkflowsService {
     public constructor(
         @InjectRepository(Workflow) private readonly workflowsRepository: Repository<Workflow>,
+
         private readonly eventEmitter: EventEmitter2
     ) {}
 
@@ -33,6 +35,12 @@ export class WorkflowsService {
         await this.update(workflowId, { status: WorkflowStatus.STARTED });
     }
 
+    public async sign(workflowId: string) {
+        await this.update(workflowId, { status: WorkflowStatus.COMPLETED, completedAt: new Date() });
+
+        this.eventEmitter.emit(WorkflowCompletedEvent.pattern, new WorkflowCompletedEvent(workflowId));
+    }
+
     public async findAllByCreatorId(creatorId: string) {
         return await this.workflowsRepository.find({
             where: {
@@ -47,8 +55,7 @@ export class WorkflowsService {
                 id: workflowId
             },
             relations: {
-                participants: true,
-                approvals: true
+                participants: true
             }
         });
 

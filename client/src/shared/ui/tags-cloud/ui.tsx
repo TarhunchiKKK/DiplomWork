@@ -7,7 +7,7 @@ export function Tag({ tooltip, children }: TTagProps) {
             <Tooltip>
                 <TooltipTrigger asChild>{children}</TooltipTrigger>
 
-                <TooltipContent>{tooltip}</TooltipContent>
+                {tooltip && <TooltipContent>{tooltip}</TooltipContent>}
             </Tooltip>
         </TooltipProvider>
     );
