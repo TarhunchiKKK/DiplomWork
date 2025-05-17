@@ -20,3 +20,4 @@ export * from "./dialog";
 export * from "./scroll-area";
 export * from "./checkbox";
 export * from "./context-menu";
+export * from "./command";

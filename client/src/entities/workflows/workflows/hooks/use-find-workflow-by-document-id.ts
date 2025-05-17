@@ -1,0 +1,25 @@
+import { credentialsManager } from "@/features/auth";
+import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { TWorkflow } from "../models";
+
+export function useFindorkflowByDocumentId(documentId: string) {
+    const { data, isLoading } = useQuery({
+        queryKey: queryKeys.workflows.findOne.byDocumentId(documentId),
+        queryFn: async () => {
+            const token = credentialsManager.jwt.get();
+
+            const response = await axios.get<TWorkflow>(queryUrls.workflows.findOneByDocumentId(documentId), {
+                headers: new HttpHeadersBuilder().setBearerToken(token).build()
+            });
+
+            return response.data;
+        }
+    });
+
+    return {
+        workflow: data,
+        isLoading
+    };
+}

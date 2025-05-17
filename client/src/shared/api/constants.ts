@@ -71,6 +71,13 @@ export const queryUrls = {
             delete: (commentId: string) => `${environment.apiUrl}/documents/comments/${commentId}`
         }
     },
+    workflows: {
+        create: `${environment.apiUrl}/workflows`,
+        start: (workflowId: string) => `${environment.apiUrl}/workflows/start/${workflowId}`,
+        findOneByDocumentId: (documentId: string) => `${environment.apiUrl}/workflows/documents/${documentId}`,
+        findAllByCreatorId: (creatorId: string) => `${environment.apiUrl}/workflows/user/${creatorId}`,
+        delete: (workflowId: string) => `${environment.apiUrl}/workflows/${workflowId}`
+    },
     notifications: {
         findAll: `${environment.apiUrl}/notifications`,
         update: (notificationId: string) => `${environment.apiUrl}/notifications/${notificationId}`,
@@ -102,6 +109,15 @@ export const queryKeys = {
         },
         comments: {
             findAll: (versionId: string) => ["comments", "versions", versionId]
+        }
+    },
+    workflows: {
+        base: ["workflows"],
+        findAll: {
+            byCreatorId: (creatorId: string) => ["workflows", "user", creatorId]
+        },
+        findOne: {
+            byDocumentId: (documentId: string) => ["workflows", "one", "document", documentId]
         }
     },
     notifications: {
