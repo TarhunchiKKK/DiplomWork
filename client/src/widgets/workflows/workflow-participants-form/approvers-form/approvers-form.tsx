@@ -2,7 +2,7 @@
 
 import { Input, Table, TableBody, TableCell, TableRow } from "@/shared/ui";
 import { useApproversForm } from "./hooks";
-import { getContent } from "./helpers";
+import { getContent } from "../helpers";
 
 export function ApproversForm() {
     const { availableUsers, input, onSelect, displayUsers } = useApproversForm();
@@ -11,9 +11,9 @@ export function ApproversForm() {
         <div>
             <Input {...input} placeholder="Введите нового пользователя" />
 
-            <Table>
+            <Table className="relative">
                 {displayUsers && (
-                    <TableBody>
+                    <TableBody className="absolute top-0 left-0 w-full">
                         {availableUsers.map(user => (
                             <TableRow
                                 key={user.id}

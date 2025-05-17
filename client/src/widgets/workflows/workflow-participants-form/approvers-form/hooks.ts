@@ -2,7 +2,7 @@ import { TParticipantDto } from "../types";
 import { useParticipantsStore } from "../store";
 import { ChangeEvent, useState } from "react";
 import { mocks } from "@/dev";
-import { getContent } from "./helpers";
+import { getContent } from "../helpers";
 
 export function useApproversForm() {
     // const { users } = useOrganizationUsers();
@@ -11,7 +11,7 @@ export function useApproversForm() {
 
     const users = mocks.users;
 
-    const { approvers, setApprovers } = useParticipantsStore();
+    const { approvers, signerId, setApprovers } = useParticipantsStore();
 
     const onSelect = (dto: TParticipantDto) => {
         setInput("");
@@ -19,7 +19,8 @@ export function useApproversForm() {
     };
 
     const availableUsers = (users || [])
-        .filter(user => getContent(user).toLowerCase().includes(input))
+        .filter(user => getContent(user)!.toLowerCase().includes(input))
+        .filter(user => user.id !== signerId)
         .filter(user => !approvers.find(a => a.userId === user.id));
 
     return {
