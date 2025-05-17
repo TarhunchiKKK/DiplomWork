@@ -26,6 +26,17 @@ export interface IWorkflowResponseData {
   completedAt?: string | undefined;
 }
 
+export interface IFullWorkflowResponse {
+  id: string;
+  documentTitle: string;
+  creatorId: string;
+  documentId: string;
+  status: string;
+  completedAt?: string | undefined;
+  approvals: IApproval[];
+  participants: IParticipant[];
+}
+
 export interface ICreateWorkflowResponse {
   data?: IWorkflowResponseData | undefined;
   error?: IHttpError | undefined;
@@ -43,6 +54,12 @@ export interface IFindWorkflowsResponseData {
 export interface IFindWorkflowsResponse {
   data?: IFindWorkflowsResponseData | undefined;
   error?: IHttpError | undefined;
+}
+
+export interface IParticipant {
+  id: string;
+  userId: string;
+  role: string;
 }
 
 export interface IUpsertWorkflowParticipantDto {

@@ -65,7 +65,8 @@ export class WorkflowsService {
                 documentId: workflowId
             },
             relations: {
-                participants: true
+                participants: true,
+                approvals: true
             }
         });
 

@@ -1,8 +1,8 @@
-import { useCurrentVersionStore } from "@/entities/documents";
+import { useCurrentDocumentStore } from "@/entities/documents";
 import { useStartWorkflow } from "@/entities/workflows";
 
 export function useStartWorkflowButton() {
-    const documentId = useCurrentVersionStore(state => state.documentId);
+    const documentId = useCurrentDocumentStore(state => state.documentId);
 
     const { startWorkflow, isPending } = useStartWorkflow();
 

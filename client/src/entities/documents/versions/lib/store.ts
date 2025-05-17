@@ -12,7 +12,7 @@ type TStore = {
     reset: () => void;
 };
 
-export const useCurrentVersionStore = create<TStore>(set => ({
+export const useCurrentDocumentStore = create<TStore>(set => ({
     versionId: null,
 
     documentId: null,
