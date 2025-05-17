@@ -8,15 +8,13 @@ import { NotificationsRmqModule } from "common/rabbitmq";
 import { WorkflowCrudObserver } from "./observers/workflow-crud.observer";
 import { WorkflowStatusObserver } from "./observers/workflow-status.observer";
 import { WorkflowParticipantsModule } from "../participants/workflow-participants.module";
-import { ApprovalsModule } from "../approval/approvals.module";
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([Workflow]),
         UsersGrpcModule,
         NotificationsRmqModule,
-        WorkflowParticipantsModule,
-        ApprovalsModule
+        WorkflowParticipantsModule
     ],
     controllers: [WorkflowsController],
     providers: [WorkflowsService, WorkflowCrudObserver, WorkflowStatusObserver],

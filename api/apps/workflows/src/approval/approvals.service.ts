@@ -5,7 +5,6 @@ import { Repository } from "typeorm";
 import { IFindOneApprovalDto, IUpsertApprovalDto } from "common/grpc";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { ApprovalUpsertedEvent } from "./events/approval-upserted.event";
-import { ApprovalStatus } from "./enums/approval.-status.enum";
 
 @Injectable()
 export class ApprovalsService {
@@ -72,18 +71,5 @@ export class ApprovalsService {
                 throw error;
             }
         }
-    }
-
-    public async resetAllByWorkflowId(workflowId: string) {
-        await this.approvalsRepository.update(
-            {
-                workflow: {
-                    id: workflowId
-                }
-            },
-            {
-                status: ApprovalStatus.DEFAULT
-            }
-        );
     }
 }

@@ -26,8 +26,4 @@ export class ApprovalsController implements UnwrapGrpcResponse<ApprovalsServiceC
     public async upsert(dto: IUpsertApprovalDto) {
         return await this.approvalsService.upsert(dto).then(transformApproval);
     }
-
-    public async resetAllByWorkflowId(dto: IOnlyId) {
-        await this.approvalsService.resetAllByWorkflowId(dto.id);
-    }
 }

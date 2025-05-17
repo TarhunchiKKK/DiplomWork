@@ -14,6 +14,9 @@ export class Workflow {
     @Column()
     public creatorId: string;
 
+    @Column({ nullable: true, default: null })
+    public signerId: string;
+
     @Column()
     public documentId: string;
 

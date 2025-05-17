@@ -6,4 +6,6 @@ export class UpdateWorkflowDto {
     public status?: WorkflowStatus;
 
     public completedAt?: Date;
+
+    public signerId?: string;
 }

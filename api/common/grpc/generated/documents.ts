@@ -253,24 +253,12 @@ export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["create", "update", "findAll", "findOneById", "findAccessToken"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("DocumentsService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("DocumentsService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -300,24 +288,12 @@ export function FavouriteDocumentsServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["add", "remove", "findAll"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("FavouriteDocumentsService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("FavouriteDocumentsService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -379,24 +355,12 @@ export function DocumentVersionsServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["create", "findAll", "findOneById", "findLast", "findDocument", "update"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("DocumentVersionsService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("DocumentVersionsService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -422,24 +386,12 @@ export function DocumentHashingServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["update", "verify"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("DocumentHashingService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("DocumentHashingService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -487,24 +439,12 @@ export function DocumentCommentsServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["create", "findOneById", "findAll", "update", "delete"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("DocumentCommentsService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("DocumentCommentsService", method)(constructor.prototype[method], method, descriptor);
     }
   };

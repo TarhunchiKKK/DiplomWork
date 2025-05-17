@@ -17,6 +17,11 @@ export interface ICreateWorkflowDto {
   documentTitle: string;
 }
 
+export interface IUpdateSignerDto {
+  id: string;
+  signerId: string;
+}
+
 export interface IWorkflowResponseData {
   id: string;
   documentTitle: string;
@@ -24,6 +29,7 @@ export interface IWorkflowResponseData {
   documentId: string;
   status: string;
   completedAt?: string | undefined;
+  signerId?: string | undefined;
 }
 
 export interface IFullWorkflowResponse {
@@ -43,7 +49,7 @@ export interface ICreateWorkflowResponse {
 }
 
 export interface IFindOneWorkflowResponse {
-  data?: IWorkflowResponseData | undefined;
+  data?: IFullWorkflowResponse | undefined;
   error?: IHttpError | undefined;
 }
 
@@ -59,7 +65,6 @@ export interface IFindWorkflowsResponse {
 export interface IParticipant {
   id: string;
   userId: string;
-  role: string;
 }
 
 export interface IUpsertWorkflowParticipantDto {
@@ -88,7 +93,6 @@ export interface IApproval {
   id: string;
   status: string;
   createdAt: string;
-  updatedAt: string;
 }
 
 export interface IApprovalResponse {
@@ -101,7 +105,11 @@ export const WORKFLOWS_PACKAGE_NAME = "workflows";
 export interface WorkflowsServiceClient {
   create(request: ICreateWorkflowDto): Observable<ICreateWorkflowResponse>;
 
+  updateSigner(request: IUpdateSignerDto): Observable<IEmptyResponse>;
+
   start(request: IOnlyId): Observable<IEmptyResponse>;
+
+  sign(request: IOnlyId): Observable<IEmptyResponse>;
 
   findAllByCreatorId(request: IOnlyId): Observable<IFindWorkflowsResponse>;
 
@@ -117,7 +125,11 @@ export interface WorkflowsServiceController {
     request: ICreateWorkflowDto,
   ): Promise<ICreateWorkflowResponse> | Observable<ICreateWorkflowResponse> | ICreateWorkflowResponse;
 
+  updateSigner(request: IUpdateSignerDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
   start(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
+  sign(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   findAllByCreatorId(
     request: IOnlyId,
@@ -138,31 +150,21 @@ export function WorkflowsServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = [
       "create",
+      "updateSigner",
       "start",
+      "sign",
       "findAllByCreatorId",
       "findOneById",
       "findOneByDocumentId",
       "delete",
     ];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("WorkflowsService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("WorkflowsService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -190,24 +192,12 @@ export function WorkflowParticipantsServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["upsertWorkflowParticipants", "findAllUserWorkflows"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("WorkflowParticipantsService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("WorkflowParticipantsService", method)(constructor.prototype[method], method, descriptor);
     }
   };
@@ -219,40 +209,24 @@ export interface ApprovalsServiceClient {
   upsert(request: IUpsertApprovalDto): Observable<IApprovalResponse>;
 
   findOne(request: IFindOneApprovalDto): Observable<IApprovalResponse>;
-
-  resetAllByWorkflowId(request: IOnlyId): Observable<IEmptyResponse>;
 }
 
 export interface ApprovalsServiceController {
   upsert(request: IUpsertApprovalDto): Promise<IApprovalResponse> | Observable<IApprovalResponse> | IApprovalResponse;
 
   findOne(request: IFindOneApprovalDto): Promise<IApprovalResponse> | Observable<IApprovalResponse> | IApprovalResponse;
-
-  resetAllByWorkflowId(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function ApprovalsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["upsert", "findOne", "resetAllByWorkflowId"];
+    const grpcMethods: string[] = ["upsert", "findOne"];
     for (const method of grpcMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("ApprovalsService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("ApprovalsService", method)(constructor.prototype[method], method, descriptor);
     }
   };

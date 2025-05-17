@@ -73,18 +73,12 @@ const replacements = [
         to: "participantId"
     },
     {
-        from: "export const GOOGLE_PROTOBUF_PACKAGE_NAME",
-        to: "const GOOGLE_PROTOBUF_PACKAGE_NAME"
+        from: "signer_id",
+        to: "signerId"
     },
     {
-        from: "const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);",
-        to: `
-        const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-
-        if (!descriptor) {
-            continue;
-        }
-        `
+        from: "export const GOOGLE_PROTOBUF_PACKAGE_NAME",
+        to: "const GOOGLE_PROTOBUF_PACKAGE_NAME"
     }
 ];
 

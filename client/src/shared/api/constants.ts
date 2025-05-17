@@ -76,7 +76,10 @@ export const queryUrls = {
         start: (workflowId: string) => `${environment.apiUrl}/workflows/start/${workflowId}`,
         findOneByDocumentId: (documentId: string) => `${environment.apiUrl}/workflows/documents/${documentId}`,
         findAllByCreatorId: (creatorId: string) => `${environment.apiUrl}/workflows/user/${creatorId}`,
-        delete: (workflowId: string) => `${environment.apiUrl}/workflows/${workflowId}`
+        delete: (workflowId: string) => `${environment.apiUrl}/workflows/${workflowId}`,
+        participants: {
+            upsert: (workflowId: string) => `${environment.apiUrl}/workflows/participants/${workflowId}`
+        }
     },
     notifications: {
         findAll: `${environment.apiUrl}/notifications`,
@@ -117,6 +120,7 @@ export const queryKeys = {
             byCreatorId: (creatorId: string) => ["workflows", "user", creatorId]
         },
         findOne: {
+            base: ["workflows", "one"],
             byDocumentId: (documentId: string) => ["workflows", "one", "document", documentId]
         }
     },

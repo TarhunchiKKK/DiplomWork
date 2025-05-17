@@ -1,13 +1,4 @@
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn
-} from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ApprovalStatus } from "../enums/approval.-status.enum";
 import { WorkflowParticipant } from "../../participants/entities/workflow-participant.entity";
 import { Workflow } from "../../workflows/entities/workflow.entity";
@@ -22,9 +13,6 @@ export class Approval {
 
     @CreateDateColumn()
     public createdAt: Date;
-
-    @UpdateDateColumn()
-    public updatedAt: Date;
 
     @OneToOne(() => WorkflowParticipant, participant => participant.approval)
     public participant: WorkflowParticipant;
