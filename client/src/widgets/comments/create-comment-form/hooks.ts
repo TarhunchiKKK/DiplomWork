@@ -3,7 +3,7 @@ import { TFormState } from "./types";
 import { useCreateDocumentComment, useCurrentVersionStore } from "@/entities/documents";
 
 export function useCreateCommentForm() {
-    const versionId = useCurrentVersionStore(state => state.id) as string;
+    const versionId = useCurrentVersionStore(state => state.versionId) as string;
 
     const form = useForm<TFormState>({
         defaultValues: {

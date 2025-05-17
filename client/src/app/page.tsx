@@ -1,5 +1,5 @@
-import { CreateWorkflowButton } from "@/widgets/workflows";
+import { StartWorkflowButton } from "@/widgets/workflows/start-workflow-button";
 
 export default function Home() {
-    return <CreateWorkflowButton />;
+    return <StartWorkflowButton />;
 }
