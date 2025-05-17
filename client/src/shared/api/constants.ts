@@ -1,5 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { environment } from "../config";
+import { updateStatusLabels } from "@/widgets/notifications/notification/constants";
 
 export const queryClient = new QueryClient({
     defaultOptions: {
@@ -81,6 +82,7 @@ export const queryUrls = {
         delete: (workflowId: string) => `${environment.apiUrl}/workflows/${workflowId}`,
         participants: {
             upsert: (workflowId: string) => `${environment.apiUrl}/workflows/participants/${workflowId}`,
+            uspateStatus: (participantId: string) => `${environment.apiUrl}/workflows/participants/${participantId}`,
             findAll: {
                 byWorkflowId: (workflowId: string) => `${environment.apiUrl}/workflows/participants/${workflowId}`
             }

@@ -10,7 +10,7 @@ export function useSignWorkflow() {
         mutationFn: async (workflowId: string) => {
             const token = credentialsManager.jwt.get();
 
-            await axios.post(queryUrls.workflows.sign(workflowId), null, {
+            await axios.patch(queryUrls.workflows.sign(workflowId), null, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
         },
