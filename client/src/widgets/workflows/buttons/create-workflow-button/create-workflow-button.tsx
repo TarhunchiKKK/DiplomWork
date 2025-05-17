@@ -7,7 +7,7 @@ export function CreateWorkflowButton() {
     const buttonProps = useCreateWorkflowButton();
 
     return (
-        <Button variant="outline" className="cursor-pointer" {...buttonProps}>
+        <Button className="cursor-pointer" {...buttonProps}>
             Создать
         </Button>
     );

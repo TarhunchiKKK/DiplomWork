@@ -1,4 +1,4 @@
-import { ApprovalStatus } from "@/entities/workflows/approvals";
+import { ApprovalStatus } from "@/entities/workflows";
 
 export type TItem = {
     id: string;

@@ -1,6 +1,6 @@
-import { TFullWorkflowParticipant } from "../../participants";
+import { TWorkflowParticipant } from "../../participants";
 import { TWorkflow } from "./workflow";
 
 export type TFullWorkflow = TWorkflow & {
-    participants: TFullWorkflowParticipant[];
+    participants: TWorkflowParticipant[];
 };

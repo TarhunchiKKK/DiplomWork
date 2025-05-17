@@ -1,6 +1,6 @@
 import { Button, Tag } from "@/shared/ui";
 import { TItem } from "./types";
-import { ApprovalStatus } from "@/entities/workflows/approvals";
+import { ApprovalStatus } from "@/entities/workflows";
 
 const classNamesMap: Record<ApprovalStatus, string> = {
     [ApprovalStatus.APPROVED]: "bg-green-400",

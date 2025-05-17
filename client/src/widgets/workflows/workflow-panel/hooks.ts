@@ -16,7 +16,7 @@ export function useWorkflowPanel() {
         return {
             id: participant.id,
             displayName: getContent(user)!,
-            status: participant.approval.status
+            status: participant.approvalStatus
         };
     });
 
