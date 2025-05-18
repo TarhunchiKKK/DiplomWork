@@ -7,7 +7,7 @@ import {
 
 export default function ProfileSettingsPage() {
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
             <ProfileSettingsWrapper title="Настройки профиля">
                 <UpdateProfileForm />
             </ProfileSettingsWrapper>

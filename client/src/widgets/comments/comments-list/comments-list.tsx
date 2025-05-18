@@ -5,6 +5,7 @@ import { Comment, CommentSkeleton } from "../comment";
 import { ScrollArea, ScrollBar } from "@/shared/ui";
 import { useEffect, useRef } from "react";
 import { TProps } from "./types";
+import { mocks } from "@/dev";
 
 export function CommentsList({ className }: TProps) {
     const ref = useRef<HTMLDivElement>(null);
@@ -16,7 +17,9 @@ export function CommentsList({ className }: TProps) {
         });
     }, []);
 
-    const { comments } = useCommentsList();
+    // const { comments } = useCommentsList();
+
+    const comments = mocks.comments;
 
     return (
         <ScrollArea className={className}>

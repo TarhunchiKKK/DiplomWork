@@ -1,6 +1,6 @@
 "use client";
 
-import { useOrganization } from "@/entities/organizations";
+import { mocks } from "@/dev";
 import { routes } from "@/shared/routing";
 import {
     DropdownMenu,
@@ -18,7 +18,7 @@ import { Timer, Star, User, ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 export function DocumentsGroup() {
-    const { organization } = useOrganization();
+    const organization = mocks.organization;
 
     const documentAims = organization?.documentAims.map(aim => ({ title: aim.value, url: "#" })) || [];
     const documentTypes = organization?.documentTypes.map(type => ({ title: type.value, url: "#" })) || [];

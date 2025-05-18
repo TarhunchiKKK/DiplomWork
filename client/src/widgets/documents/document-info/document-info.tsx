@@ -1,3 +1,5 @@
+"use client";
+
 import { getDocumentIcon } from "@/shared/helpers";
 import { Card, CardContent, CardFooter, Skeleton } from "@/shared/ui";
 import Image from "next/image";
@@ -41,7 +43,7 @@ export function DocumentInfo() {
                 </div>
             </CardContent>
 
-            <div className="min-w-[200px] space-y-4">
+            <div className="min-w-[300px] space-y-4">
                 <DocumentHeader />
 
                 <CardFooter className="flex-col items-start gap-4">

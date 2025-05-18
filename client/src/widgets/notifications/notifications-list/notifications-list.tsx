@@ -1,10 +1,13 @@
 "use client";
 
+import { mocks } from "@/dev";
 import { Notification, NotificationSkeleton } from "../notification";
 import { useNotifications } from "@/entities/notifications/hooks";
 
 export function NotificationsList() {
-    const { notifications } = useNotifications();
+    // const { notifications } = useNotifications();
+
+    const notifications = mocks.notifications;
 
     return (
         <div className="space-y-2">

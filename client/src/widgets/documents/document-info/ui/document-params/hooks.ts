@@ -1,10 +1,13 @@
+import { mocks } from "@/dev";
 import { useOrganization } from "@/entities/organizations";
 import { useCurrentDocument } from "@/widgets/documents";
 
 export function useDocumentParams() {
     const { document } = useCurrentDocument();
 
-    const { organization } = useOrganization();
+    // const { organization } = useOrganization();
+
+    const organization = mocks.organization;
 
     const documentAim = organization?.documentAims.find(aim => aim._id === document?.aimId)?.value || null;
 

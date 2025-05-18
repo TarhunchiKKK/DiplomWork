@@ -2,14 +2,17 @@ import { Card, CardDescription, CardHeader, CardTitle, Skeleton } from "@/shared
 import { TProps } from "./types";
 import { formatFullDate } from "@/shared/helpers";
 import { useMultipleUsers } from "@/entities/users";
+import { mocks } from "@/dev";
 
 export function Comment({ comment }: TProps) {
-    const { users } = useMultipleUsers({ ids: [comment.creatorId], enabled: true });
+    // const { users } = useMultipleUsers({ ids: [comment.creatorId], enabled: true });
+
+    const users = [mocks.users.find(u => u.id === comment.creatorId)];
 
     return (
         <Card>
             <CardHeader>
-                {users?.[0] && <CardTitle>{users[0].username ?? users[0].email}</CardTitle>}
+                {users?.[0] && <CardTitle>{users[0].email}</CardTitle>}
 
                 <CardDescription className="space-y-2">
                     {comment.message}

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { TFormState } from "./types";
 import { useCreateDocumentVersion } from "@/entities/documents";
 import { toast } from "sonner";
+import { mocks } from "@/dev";
 
 export function useCreateVersionButton() {
     const form = useForm<TFormState>({
@@ -14,7 +15,9 @@ export function useCreateVersionButton() {
 
     const { document } = useCurrentDocument();
 
-    const profile = useProfileStore(state => state.profile) as TProfile;
+    // const profile = useProfileStore(state => state.profile) as TProfile;
+
+    const profile = mocks.profile;
 
     const { create, isPending } = useCreateDocumentVersion();
 

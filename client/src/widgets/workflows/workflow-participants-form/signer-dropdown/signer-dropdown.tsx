@@ -8,7 +8,7 @@ export function SignerDropdown() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline">{buttonLabel}</Button>
+                <Button variant="outline">ivanpetrov@gmail.com</Button>
             </DropdownMenuTrigger>
 
             <DropdownMenuContent>

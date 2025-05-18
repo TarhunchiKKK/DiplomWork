@@ -6,11 +6,11 @@ import {
     DocumentsDisplayTypeTabs
 } from "@/widgets/documents-container";
 import { Suspense } from "react";
-import { useCurrentDocuments } from "./hooks";
 import { CreateDocumentButton } from "@/widgets/documents";
+import { mocks } from "@/dev";
 
 export default function DashboardPage() {
-    const { documents } = useCurrentDocuments();
+    const documents = mocks.documentShortData;
 
     return (
         <div className="space-y-4">

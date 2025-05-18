@@ -5,9 +5,13 @@ import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useCompareableSet } from "@/shared/hooks";
 import { useOrganization, useUpdateDocumentAims } from "@/entities/organizations";
+import { mocks } from "@/dev";
 
 export function useDocumentAimsForm() {
-    const { organization, isLoading } = useOrganization();
+    // const { organization, isLoading } = useOrganization();
+
+    const organization = mocks.organization;
+    const isLoading = false;
 
     const extractValue = useCallback((aim: TUpdateItemDto) => aim.value, []);
 

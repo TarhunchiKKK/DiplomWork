@@ -4,9 +4,12 @@ import { TagsCloud, TagsCloudSkeleton } from "@/shared/ui";
 import { AccountStatus, useOrganizationUsers } from "@/entities/users";
 import { getActiveUserTagRenderer, getDeactivatedUserTagRenderer } from "./ui";
 import { useChangeUserStatus } from "./hooks";
+import { mocks } from "@/dev";
 
 export function UsersManagementPanel() {
-    const { users } = useOrganizationUsers();
+    // const { users } = useOrganizationUsers();
+
+    const users = mocks.users;
 
     const { activate, deactivate } = useChangeUserStatus();
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { mocks } from "@/dev";
 import { credentialsManager, TProfile, useProfileStore } from "@/features/auth";
 import { routes } from "@/shared/routing";
 import {
@@ -16,7 +17,9 @@ import { ExternalLink } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export function Header() {
-    const profile = useProfileStore(state => state.profile) as TProfile;
+    // const profile = useProfileStore(state => state.profile) as TProfile;
+
+    const profile = mocks.profile;
 
     const resetProfile = useProfileStore(state => state.resetProfile);
 

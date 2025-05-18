@@ -10,7 +10,7 @@ export function WorkflowParticipantsForm() {
     const buttonProps = useSetup();
 
     return (
-        <div className="h-full flex flex-col justify-between">
+        <div className="max-w-full h-full flex flex-col justify-between">
             <div className="space-y-4">
                 <ApproversForm />
 

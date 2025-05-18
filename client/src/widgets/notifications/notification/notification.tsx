@@ -15,14 +15,17 @@ import {
 import { TProps } from "./types";
 import { formatFullDate } from "@/shared/helpers";
 import { useNotification } from "./hooks";
+import { NotificationStatus } from "@/entities/notifications";
 
 export function Notification({ notification }: TProps) {
     const { menuItems, isPending } = useNotification(notification);
 
+    const className = notification.status === NotificationStatus.ACTIVE ? "bg-accent" : "";
+
     return (
         <ContextMenu>
             <ContextMenuTrigger className="block" disabled={isPending}>
-                <Card className="py-4 gap-1">
+                <Card className={"py-4 gap-1 " + className}>
                     <CardHeader>
                         <CardTitle>{notification.subject}</CardTitle>
 

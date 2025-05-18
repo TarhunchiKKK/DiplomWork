@@ -9,7 +9,7 @@ export function DownloadButton() {
 
     return (
         <>
-            {isPending && <PendingPlaceholder />}
+            {/* {isPending && <PendingPlaceholder />}
 
             {!isPending && (
                 <>
@@ -23,7 +23,12 @@ export function DownloadButton() {
 
                     {isError && <ErrorPlaceholder />}
                 </>
-            )}
+            )} */}
+            <div className="space-y-2">
+                <SuccessPlaceholder />
+
+                <Button className="w-full">Скачать</Button>
+            </div>
         </>
     );
 }

@@ -3,31 +3,6 @@ import { TGroup } from "./types";
 
 export const groups: TGroup[] = [
     {
-        label: "Все",
-        links: [
-            {
-                title: "Home",
-                url: "#",
-                icon: Home
-            },
-            {
-                title: "Inbox",
-                url: "#",
-                icon: Inbox
-            },
-            {
-                title: "Calendar",
-                url: "#",
-                icon: Calendar
-            },
-            {
-                title: "Search",
-                url: "#",
-                icon: Search
-            }
-        ]
-    },
-    {
         label: "Уведомления",
         links: [
             {
@@ -43,12 +18,12 @@ export const groups: TGroup[] = [
             {
                 title: "Мои",
                 url: "#",
-                icon: Search
+                icon: Calendar
             },
             {
                 title: "Другие",
                 url: "#",
-                icon: Search
+                icon: Calendar
             }
         ]
     }

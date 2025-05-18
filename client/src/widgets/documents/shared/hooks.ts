@@ -1,5 +1,6 @@
 "use client";
 
+import { mocks } from "@/dev";
 import { useOneDocument } from "@/entities/documents";
 import { useParams } from "next/navigation";
 
@@ -10,7 +11,7 @@ export function useCurrentDocument() {
 
     return {
         documentId,
-        document,
+        document: mocks.document,
         isLoading
     };
 }

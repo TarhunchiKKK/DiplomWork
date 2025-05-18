@@ -1,6 +1,8 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui";
 import { CommentsList, CommentsListSkeleton, CreateCommentForm } from "@/widgets/comments";
 import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/documents";
 import { VersionsList, VersionsListSkeleton, CreateVersionButton } from "@/widgets/versions";
+import { WorkflowParticipantsForm } from "@/widgets/workflows";
 import { Suspense } from "react";
 
 export default function DocumentPage() {
@@ -19,17 +21,28 @@ export default function DocumentPage() {
                     </div>
 
                     <Suspense fallback={<VersionsListSkeleton className="h-[55%] border" />}>
-                        <VersionsList className="h-[55%] border" />
+                        <VersionsList className=" border" />
                     </Suspense>
                 </div>
             </div>
 
-            <div className="grow-3 h-full flex flex-col">
-                <Suspense fallback={<CommentsListSkeleton className="h-[90%] rounded-md border p-2" />}>
-                    <CommentsList className="h-[90%] rounded-md border p-2" />
-                </Suspense>
+            <div className="grow-3 max-w-[580px]  h-[580px] flex flex-col">
+                <Tabs defaultValue="1" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="1">Комментарии</TabsTrigger>
+                        <TabsTrigger value="2">Маршрут</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="1" className="h-[90%] rounded-md border p-2 space-y-2">
+                        <Suspense fallback={<CommentsListSkeleton className="h-[90%] rounded-md border p-2" />}>
+                            <CommentsList />
+                        </Suspense>
 
-                <CreateCommentForm />
+                        <CreateCommentForm />
+                    </TabsContent>
+                    <TabsContent value="2" className="h-[90%] rounded-md border p-2 space-y-2">
+                        <WorkflowParticipantsForm />
+                    </TabsContent>
+                </Tabs>
             </div>
         </div>
     );

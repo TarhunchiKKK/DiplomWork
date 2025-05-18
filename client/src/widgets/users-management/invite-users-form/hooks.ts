@@ -7,9 +7,12 @@ import { credentialsManager } from "@/features/auth";
 import { toast } from "sonner";
 import { useSet } from "@/shared/hooks";
 import { useOrganizationUsers } from "@/entities/users";
+import { mocks } from "@/dev";
 
 export function useInviteUsersForm() {
-    const { users } = useOrganizationUsers();
+    // const { users } = useOrganizationUsers();
+
+    const users = mocks.users;
 
     const emailsSet = useSet<string>();
 

@@ -2,9 +2,12 @@ import { TProfile, useProfileStore } from "@/features/auth";
 import { useDivisionsStore } from "./store";
 import { useEffect } from "react";
 import { useOrganization, useUpdateAdministrativeDivisioons } from "@/entities/organizations";
+import { mocks } from "@/dev";
 
 function useSetupDivisionsStore() {
-    const { organization } = useOrganization();
+    // const { organization } = useOrganization();
+
+    const organization = mocks.organization;
 
     const setDivisions = useDivisionsStore(state => state.setData);
 

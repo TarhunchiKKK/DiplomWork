@@ -8,6 +8,7 @@ import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { toast } from "sonner";
 import { routes } from "@/shared/routing";
 import { redirect } from "next/navigation";
+import { mocks } from "@/dev";
 
 export function useDisableTotp() {
     const queryClient = useQueryClient();
@@ -51,7 +52,9 @@ export function useDisableTotp() {
 }
 
 export function useUpdateAuthTypeForm() {
-    const profile = useProfileStore(state => state.profile) as TProfile;
+    // const profile = useProfileStore(state => state.profile) as TProfile;
+
+    const profile = mocks.profile;
 
     const [authType, setAuthType] = useState(profile.authType);
 

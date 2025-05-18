@@ -1,3 +1,4 @@
+import { mocks } from "@/dev";
 import {
     useAddToFavourite,
     useFavouriteDocuments,
@@ -10,18 +11,18 @@ import { useCurrentDocument } from "@/widgets/documents";
 export function useStartButton() {
     const { documentId } = useCurrentDocument();
 
-    const { documents: favouriteDocuments } = useFavouriteDocuments();
+    // const { documents: favouriteDocuments } = useFavouriteDocuments();
 
     const { add, isPending: isAddingPending } = useAddToFavourite();
 
     const { remove, isPending: isRemovingPending } = useRemoveFromFavourites();
 
     const onClick = () => {
-        if (favouriteDocuments!.some(doc => doc.id === documentId)) {
-            remove(documentId);
-        } else {
-            add(documentId);
-        }
+        // if (favouriteDocuments!.some(doc => doc.id === documentId)) {
+        // remove(documentId);
+        // } else {
+        add(documentId);
+        // }
     };
 
     return {
@@ -33,7 +34,9 @@ export function useStartButton() {
 export function useUrgencyButton() {
     const { document, documentId } = useCurrentDocument();
 
-    const profile = useProfileStore(state => state.profile) as TProfile;
+    // const profile = useProfileStore(state => state.profile) as TProfile;
+
+    const profile = mocks.profile;
 
     const { update, isPending } = useUpdateDocument();
 

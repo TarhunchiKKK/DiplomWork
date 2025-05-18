@@ -36,13 +36,15 @@ export function DocumentsGridItem({ document }: TSIngleItemProps) {
     const iconSize = iconSizes[DocumentsDisplayType.GRID];
 
     return (
-        <Card className="w-min">
+        <Card className="w-[180px]">
             <CardContent>
                 <div className="flex flex-col items-center space-y-2">
                     <Image src={iconPath} alt="icon" width={iconSize} height={iconSize} />
 
-                    <CardTitle>
-                        <Link href="#">{document.title}</Link>
+                    <CardTitle className="text-center">
+                        <Link href="#" className="text-center">
+                            {document.title}
+                        </Link>
                     </CardTitle>
 
                     <CardDescription>{formatDateOnly(document.createdAt)}</CardDescription>
