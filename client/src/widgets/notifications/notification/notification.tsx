@@ -15,14 +15,17 @@ import {
 import { TProps } from "./types";
 import { formatFullDate } from "@/shared/helpers";
 import { useNotification } from "./hooks";
+import { classNamesMap } from "./constants";
 
 export function Notification({ notification }: TProps) {
     const { menuItems, isPending } = useNotification(notification);
 
+    const additionalClassName = classNamesMap[notification.status];
+
     return (
         <ContextMenu>
             <ContextMenuTrigger className="block" disabled={isPending}>
-                <Card className="py-4 gap-1">
+                <Card className={"py-4 gap-1" + additionalClassName}>
                     <CardHeader>
                         <CardTitle>{notification.subject}</CardTitle>
 
