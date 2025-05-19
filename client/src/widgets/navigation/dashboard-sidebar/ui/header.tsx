@@ -1,17 +1,9 @@
 "use client";
 
 import { credentialsManager, TProfile, useProfileStore } from "@/features/auth";
+import { ThemeSwitch } from "@/features/dark-mode";
 import { routes } from "@/shared/routing";
-import {
-    Avatar,
-    AvatarImage,
-    Button,
-    SidebarHeader,
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger
-} from "@/shared/ui";
+import { Avatar, AvatarImage, Button, SidebarHeader } from "@/shared/ui";
 import { ExternalLink } from "lucide-react";
 import { redirect } from "next/navigation";
 
@@ -30,24 +22,22 @@ export function Header() {
         <SidebarHeader>
             <div className="space-y-4 rounded-md border px-4 py-2">
                 <div className="flex justify-between items-center">
-                    <Avatar>
-                        <AvatarImage src="/avatar.jpeg" />
-                    </Avatar>
+                    <div>
+                        <Avatar>
+                            <AvatarImage src="/avatar.jpeg" />
+                        </Avatar>
+                    </div>
 
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button variant="link" className="cursor-pointer" onClick={handleClick}>
-                                    <ExternalLink />
-                                </Button>
-                            </TooltipTrigger>
-
-                            <TooltipContent>Выйти из аккаунта</TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
+                    <ThemeSwitch />
                 </div>
 
-                <p className="text-base italic">{profile.username || profile.email}</p>
+                <div className="flex justify-between items-center">
+                    <p className="text-base italic">{profile.username || profile.email}</p>
+
+                    <Button variant="link" className="cursor-pointer" title="Выйти из аккаунта " onClick={handleClick}>
+                        <ExternalLink />
+                    </Button>
+                </div>
             </div>
         </SidebarHeader>
     );

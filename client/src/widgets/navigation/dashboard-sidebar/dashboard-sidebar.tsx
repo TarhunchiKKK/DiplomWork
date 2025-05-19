@@ -7,7 +7,7 @@ import { footerGroup, notificationsGroup, workflowsGroup } from "./constants";
 export function DashboardSidebar() {
     return (
         <Sidebar>
-            {/* <Header /> */}
+            <Header />
 
             <SidebarContent>
                 <Group {...notificationsGroup} />
