@@ -1,64 +1,39 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Inbox, Settings, User, LucideUsers } from "lucide-react";
 import { TGroup } from "./types";
+import { routes } from "@/shared/routing";
 
-export const groups: TGroup[] = [
-    {
-        label: "Все",
-        links: [
-            {
-                title: "Home",
-                url: "#",
-                icon: Home
-            },
-            {
-                title: "Inbox",
-                url: "#",
-                icon: Inbox
-            },
-            {
-                title: "Calendar",
-                url: "#",
-                icon: Calendar
-            },
-            {
-                title: "Search",
-                url: "#",
-                icon: Search
-            }
-        ]
-    },
-    {
-        label: "Уведомления",
-        links: [
-            {
-                title: "Входящие",
-                url: "#",
-                icon: Inbox
-            }
-        ]
-    },
-    {
-        label: "Маршруты",
-        links: [
-            {
-                title: "Мои",
-                url: "#",
-                icon: Search
-            },
-            {
-                title: "Другие",
-                url: "#",
-                icon: Search
-            }
-        ]
-    }
-];
+export const notificationsGroup: TGroup = {
+    label: "Уведомления",
+    links: [
+        {
+            title: "Входящие",
+            url: routes.dashboard.notificaions.all,
+            icon: Inbox
+        }
+    ]
+};
+
+export const workflowsGroup: TGroup = {
+    label: "Маршруты",
+    links: [
+        {
+            title: "Мои",
+            url: routes.dashboard.workflows.my,
+            icon: User
+        },
+        {
+            title: "С моим участием",
+            url: routes.dashboard.workflows.invited,
+            icon: LucideUsers
+        }
+    ]
+};
 
 export const footerGroup: TGroup = {
     links: [
         {
-            title: "Settings",
-            url: "#",
+            title: "Настройки",
+            url: routes.settings.documents,
             icon: Settings
         }
     ]

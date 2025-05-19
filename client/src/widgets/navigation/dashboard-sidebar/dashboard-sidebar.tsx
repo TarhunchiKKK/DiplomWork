@@ -1,18 +1,20 @@
+"use client";
+
 import { Sidebar, SidebarContent, SidebarFooter } from "@/shared/ui";
 import { Header, Group, DocumentsGroup } from "./ui";
-import { footerGroup, groups } from "./constants";
+import { footerGroup, notificationsGroup, workflowsGroup } from "./constants";
 
 export function DashboardSidebar() {
     return (
         <Sidebar>
-            <Header />
+            {/* <Header /> */}
 
             <SidebarContent>
-                {groups.map(group => (
-                    <Group key={group.label} {...group} />
-                ))}
+                <Group {...notificationsGroup} />
 
                 <DocumentsGroup />
+
+                <Group {...workflowsGroup} />
             </SidebarContent>
 
             <SidebarFooter>
