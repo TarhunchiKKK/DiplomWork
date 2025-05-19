@@ -1,6 +1,6 @@
 "use client";
 
-import { Menubar, MenubarMenu, MenubarTrigger } from "@/shared/ui";
+import { activeLinkClassName, Menubar, MenubarMenu, MenubarTrigger } from "@/shared/ui";
 import { links } from "./constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,7 +19,10 @@ export function SettingsMenubar() {
                     {links.map(link => (
                         <MenubarMenu key={link.label}>
                             <MenubarTrigger>
-                                <Link href={link.url} className={pathname === link.label ? "text-gray-400" : ""}>
+                                <Link
+                                    href={link.url}
+                                    className={pathname === link.label ? activeLinkClassName : undefined}
+                                >
                                     {link.label}
                                 </Link>
                             </MenubarTrigger>

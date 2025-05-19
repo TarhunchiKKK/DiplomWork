@@ -1,4 +1,7 @@
+"use client";
+
 import {
+    activeLinkClassName,
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
@@ -8,8 +11,11 @@ import {
 } from "@/shared/ui";
 import { TGroup } from "../types";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function Group({ label, links }: TGroup) {
+    const pathname = usePathname();
+
     return (
         <SidebarGroup>
             {label && <SidebarGroupLabel>{label}</SidebarGroupLabel>}
@@ -19,7 +25,10 @@ export function Group({ label, links }: TGroup) {
                     {links.map(link => (
                         <SidebarMenuItem key={link.title}>
                             <SidebarMenuButton asChild>
-                                <Link href={link.url}>
+                                <Link
+                                    href={link.url}
+                                    className={pathname === link.url ? activeLinkClassName : undefined}
+                                >
                                     <link.icon />
 
                                     <span>{link.title}</span>

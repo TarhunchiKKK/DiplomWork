@@ -3,6 +3,7 @@
 import { useOrganization } from "@/entities/organizations";
 import { routes } from "@/shared/routing";
 import {
+    activeLinkClassName,
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
@@ -14,10 +15,37 @@ import {
     SidebarMenuButton,
     SidebarMenuItem
 } from "@/shared/ui";
-import { Timer, Star, User, ChevronDown } from "lucide-react";
+import { Timer, Star, User, ChevronDown, Home } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { TLink } from "../types";
+
+const staticLinks: TLink[] = [
+    {
+        title: "Все",
+        url: routes.dashboard.index,
+        icon: Home
+    },
+    {
+        title: "Мои",
+        url: routes.dashboard.documents.my,
+        icon: User
+    },
+    {
+        title: "Избранные",
+        url: routes.dashboard.documents.favourite,
+        icon: Star
+    },
+    {
+        title: "Срочные",
+        url: routes.dashboard.documents.urgent,
+        icon: Timer
+    }
+];
 
 export function DocumentsGroup() {
+    const pathname = usePathname();
+
     const { organization } = useOrganization();
 
     const documentAims = organization?.documentAims.map(aim => ({ title: aim.value, url: "#" })) || [];
@@ -29,35 +57,20 @@ export function DocumentsGroup() {
 
             <SidebarGroupContent>
                 <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
-                            <Link href={routes.dashboard.myDocuments}>
-                                <User />
+                    {staticLinks.map(link => (
+                        <SidebarMenuItem key={link.url}>
+                            <SidebarMenuButton asChild>
+                                <Link
+                                    href={link.url}
+                                    className={pathname === link.url ? activeLinkClassName : undefined}
+                                >
+                                    <link.icon />
 
-                                <span>Мои</span>
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-
-                    <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
-                            <Link href={routes.dashboard.favouriteDocuments}>
-                                <Star />
-
-                                <span>Избранные</span>
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-
-                    <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
-                            <Link href="#">
-                                <Timer />
-
-                                <span>Срочные</span>
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
+                                    <span>{link.title}</span>
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    ))}
 
                     <SidebarMenuItem>
                         <DropdownMenu>
@@ -71,7 +84,12 @@ export function DocumentsGroup() {
                             <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
                                 {documentAims.map((item, index) => (
                                     <DropdownMenuItem key={index}>
-                                        <Link href={item.url}>{item.title}</Link>
+                                        <Link
+                                            href={item.url}
+                                            className={pathname === item.url ? activeLinkClassName : undefined}
+                                        >
+                                            {item.title}
+                                        </Link>
                                     </DropdownMenuItem>
                                 ))}
                             </DropdownMenuContent>
@@ -90,7 +108,12 @@ export function DocumentsGroup() {
                             <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
                                 {documentTypes.map((item, index) => (
                                     <DropdownMenuItem key={index}>
-                                        <Link href={item.url}>{item.title}</Link>
+                                        <Link
+                                            href={item.url}
+                                            className={pathname === item.url ? activeLinkClassName : undefined}
+                                        >
+                                            {item.title}
+                                        </Link>
                                     </DropdownMenuItem>
                                 ))}
                             </DropdownMenuContent>

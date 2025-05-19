@@ -29,7 +29,7 @@ export function TotpLoginForm(props: TProps) {
     };
 
     return (
-        <FormWrapper heading="Аутентификация TOTP" description="Введите код, сгенерированный ашим приложением">
+        <FormWrapper heading="Аутентификация TOTP" description="Введите код, сгенерированный вашим приложением">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <FormField

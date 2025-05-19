@@ -1,8 +1,24 @@
 export const routes = {
     dashboard: {
         index: "/dashboard",
-        myDocuments: "/dashboard/my",
-        favouriteDocuments: "/dashboard/favourite"
+        documents: {
+            my: "/dashboard/my-documents",
+            favourite: "/dashboard/favourite-documents",
+            urgent: "/dashboard/urgent-documents"
+        },
+        notificaions: {
+            all: "/dashboard/notifications"
+        },
+        workflows: {
+            my: "/dashboard/workflows/my",
+            invited: "/dashboard/workflows/invited"
+        },
+        settings: {
+            profile: "/dashboard/settings/profile",
+            users: "/dashboard/settings/users",
+            organization: "/dashboard/settings/organization",
+            documents: "/dashboard/settings/documents"
+        }
     },
     auth: {
         registerAdmin: "/auth/register/admin",
