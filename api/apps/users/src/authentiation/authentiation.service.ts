@@ -56,7 +56,7 @@ export class AuthenticationService {
     public async login(dto: ILoginDto) {
         const user = await this.usersService.findOneByLogin(dto.login);
 
-        if (!argon2.verify(dto.login, user.password)) {
+        if (!argon2.verify(user.password, dto.password)) {
             throw new BadRequestException("Неверный пароль.");
         }
 

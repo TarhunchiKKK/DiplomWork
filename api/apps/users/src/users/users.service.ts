@@ -12,11 +12,11 @@ export class UsersService {
     public constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>) {}
 
     public async create(dto: ISaveUserDto) {
-        return await this.usersRepository.save(withHashedPassword(dto));
+        return await this.usersRepository.save(await withHashedPassword(dto));
     }
 
     public async save(dto: ISaveUserDto): Promise<User> {
-        return await this.usersRepository.save(withHashedPassword(dto));
+        return await this.usersRepository.save(await withHashedPassword(dto));
     }
 
     public async findAllByOrganizationId(organizationId: string): Promise<User[]> {

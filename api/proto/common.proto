@@ -15,7 +15,7 @@ message IHttpError {
 message IProfile {
     string id = 1;
 
-    string username = 2;
+    optional string username = 2;
     
     string email = 3;
 
