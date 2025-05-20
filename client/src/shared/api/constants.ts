@@ -1,6 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
 import { environment } from "../config";
-import { updateStatusLabels } from "@/widgets/notifications/notification/constants";
 
 export const queryClient = new QueryClient({
     defaultOptions: {
@@ -13,7 +12,7 @@ export const queryClient = new QueryClient({
 
 export const queryUrls = {
     auth: {
-        registerAdmin: `${environment.apiUrl}/users/auth/register/admin`,
+        registerAdmin: `${environment.apiUrl}/users/auth/register-admin`,
         login: `${environment.apiUrl}/users/auth/login`,
         confirmInvitation: `${environment.apiUrl}/users/invitations/confirm`,
         totp: {

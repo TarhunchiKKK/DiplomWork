@@ -10,50 +10,50 @@ services:
         networks:
             - organizations-network
 
-    documents-db:
-        container_name: documents-db
-        image: postgres:15.2
-        restart: always
-        environment:
-            - POSTGRES_DB=${DOCUMENTS_MICROSERVICE_DB_NAME}
-            - POSTGRES_USER=${DOCUMENTS_MICROSERVICE_DB_USER}
-            - POSTGRES_PASSWORD=${DOCUMENTS_MICROSERVICE_DB_PASSWORD}
-        ports:
-            - ${DOCUMENTS_MICROSERVICE_DB_PORT}:5432
-        volumes:
-            - documents-postgres_data:/var/lib/postgresql/data
-        networks:
-            - documents-network
+    # documents-db:
+    #     container_name: documents-db
+    #     image: postgres:15.2
+    #     restart: always
+    #     environment:
+    #         - POSTGRES_DB=${DOCUMENTS_MICROSERVICE_DB_NAME}
+    #         - POSTGRES_USER=${DOCUMENTS_MICROSERVICE_DB_USER}
+    #         - POSTGRES_PASSWORD=${DOCUMENTS_MICROSERVICE_DB_PASSWORD}
+    #     ports:
+    #         - ${DOCUMENTS_MICROSERVICE_DB_PORT}:5432
+    #     volumes:
+    #         - documents-postgres_data:/var/lib/postgresql/data
+    #     networks:
+    #         - documents-network
 
-    workflows-db:
-        container_name: workflows-db
-        image: postgres:15.2
-        restart: always
-        environment:
-            - POSTGRES_DB=${WORKFLOWS_MICROSERVICE_DB_NAME}
-            - POSTGRES_USER=${WORKFLOWS_MICROSERVICE_DB_USER}
-            - POSTGRES_PASSWORD=${WORKFLOWS_MICROSERVICE_DB_PASSWORD}
-        ports:
-            - ${WORKFLOWS_MICROSERVICE_DB_PORT}:5432
-        volumes:
-            - workflows-postgres_data:/var/lib/postgresql/data
-        networks:
-            - workflows-network
+    # workflows-db:
+    #     container_name: workflows-db
+    #     image: postgres:15.2
+    #     restart: always
+    #     environment:
+    #         - POSTGRES_DB=${WORKFLOWS_MICROSERVICE_DB_NAME}
+    #         - POSTGRES_USER=${WORKFLOWS_MICROSERVICE_DB_USER}
+    #         - POSTGRES_PASSWORD=${WORKFLOWS_MICROSERVICE_DB_PASSWORD}
+    #     ports:
+    #         - ${WORKFLOWS_MICROSERVICE_DB_PORT}:5432
+    #     volumes:
+    #         - workflows-postgres_data:/var/lib/postgresql/data
+    #     networks:
+    #         - workflows-network
 
-    notifications-db:
-        container_name: notifications-db
-        image: postgres:15.2
-        restart: always
-        environment:
-            - POSTGRES_DB=${NOTIFICATIONS_MICROSERVICE_DB_NAME}
-            - POSTGRES_USER=${NOTIFICATIONS_MICROSERVICE_DB_USER}
-            - POSTGRES_PASSWORD=${NOTIFICATIONS_MICROSERVICE_DB_PASSWORD}
-        ports:
-            - ${NOTIFICATIONS_MICROSERVICE_DB_PORT}:5432
-        volumes:
-            - notifications-postgres_data:/var/lib/postgresql/data
-        networks:
-            - notifications-network
+    # notifications-db:
+    #     container_name: notifications-db
+    #     image: postgres:15.2
+    #     restart: always
+    #     environment:
+    #         - POSTGRES_DB=${NOTIFICATIONS_MICROSERVICE_DB_NAME}
+    #         - POSTGRES_USER=${NOTIFICATIONS_MICROSERVICE_DB_USER}
+    #         - POSTGRES_PASSWORD=${NOTIFICATIONS_MICROSERVICE_DB_PASSWORD}
+    #     ports:
+    #         - ${NOTIFICATIONS_MICROSERVICE_DB_PORT}:5432
+    #     volumes:
+    #         - notifications-postgres_data:/var/lib/postgresql/data
+    #     networks:
+    #         - notifications-network
 
     users-db:
         container_name: users-db
@@ -70,10 +70,10 @@ services:
         networks:
             - users-network
 
-    rabbitmq:
-        image: rabbitmq
-        ports:
-            - ${RABBITMQ_PORT}:5672
+    # rabbitmq:
+    #     image: rabbitmq
+    #     ports:
+    #         - ${RABBITMQ_PORT}:5672
 
 volumes:
     users-postgres_data:
