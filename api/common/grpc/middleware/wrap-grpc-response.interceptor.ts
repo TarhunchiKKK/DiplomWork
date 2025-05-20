@@ -5,7 +5,10 @@ import { map, tap } from "rxjs";
 export class WrapGrpcResponseInterceptor implements NestInterceptor {
     public intercept(_: ExecutionContext, next: CallHandler<any>) {
         return next.handle().pipe(
-            tap(console.log),
+            tap(data => {
+                console.log("WrapGrpcResponseGuard:");
+                console.log(data);
+            }),
             map(data => ({
                 data
             }))
