@@ -36,7 +36,7 @@ export class AuthenticationService {
             role: user.role,
             organizationId: user.organizationId,
             authType: user.authType,
-            token: this.createJwtFromUser(user)
+            token: user.useBasicAuth ? this.createJwtFromUser(user) : ""
         };
     }
 
