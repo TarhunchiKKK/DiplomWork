@@ -29,8 +29,7 @@ export const queryUrls = {
     },
     users: {
         invite: `${environment.apiUrl}/users/invitations/send`,
-        activate: (userId: string) => `${environment.apiUrl}/users/activate/${userId}`,
-        deactivate: (userId: string) => `${environment.apiUrl}/users/deactivate/${userId}`,
+        changeStatus: (userId: string) => `${environment.apiUrl}/users/account-deactivation/change-stus/${userId}`,
         updateProfile: `${environment.apiUrl}/users/profile`,
         find: {
             organization: `${environment.apiUrl}/users/organization`,

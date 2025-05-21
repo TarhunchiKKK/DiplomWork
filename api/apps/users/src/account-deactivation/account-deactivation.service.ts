@@ -4,6 +4,7 @@ import { AccountStatus } from "common/enums";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { AccountActivatedEvent } from "./events/account-activated.event";
 import { AccountDeactivatedEvent } from "./events/account-deactivated.event";
+import { IChangeAccountStatusDto } from "common/grpc";
 
 @Injectable()
 export class AccountDeactivationService {
@@ -13,19 +14,15 @@ export class AccountDeactivationService {
         private readonly eventEmitter: EventEmitter2
     ) {}
 
-    public async activate(userId: string) {
-        await this.usersService.update(userId, {
-            status: AccountStatus.ACTIVE
+    public async changeStatus(dto: IChangeAccountStatusDto) {
+        await this.usersService.update(dto.id, {
+            status: dto.status as AccountStatus
         });
 
-        this.eventEmitter.emit(AccountActivatedEvent.PATTERN, new AccountActivatedEvent(userId));
-    }
-
-    public async deactivate(userId: string) {
-        await this.usersService.update(userId, {
-            status: AccountStatus.DEACTIVATED
-        });
-
-        this.eventEmitter.emit(AccountDeactivatedEvent.PATTERN, new AccountDeactivatedEvent(userId));
+        if (dto.status === AccountStatus.ACTIVE) {
+            this.eventEmitter.emit(AccountActivatedEvent.PATTERN, new AccountActivatedEvent(dto.id));
+        } else {
+            this.eventEmitter.emit(AccountDeactivatedEvent.PATTERN, new AccountDeactivatedEvent(dto.id));
+        }
     }
 }

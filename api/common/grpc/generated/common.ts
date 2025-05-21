@@ -17,7 +17,7 @@ export interface IHttpError {
 
 export interface IProfile {
   id: string;
-  username: string;
+  username?: string | undefined;
   email: string;
   role: string;
   organizationId: string;

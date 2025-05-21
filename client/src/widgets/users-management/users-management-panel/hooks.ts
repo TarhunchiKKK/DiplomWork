@@ -1,41 +1,17 @@
-import { credentialsManager } from "@/features/auth";
-import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { toast } from "sonner";
+import { useOrganizationUsers, useChangeAccountStatus, AccountStatus } from "@/entities/users";
 
-export function useChangeUserStatus() {
-    const token = credentialsManager.jwt.get();
+export function useUsersManagementPanel() {
+    const { users } = useOrganizationUsers();
 
-    const onError = () => {
-        toast.error("Ошибка");
+    const { mutate: changeStatus } = useChangeAccountStatus();
+
+    const activate = (userId: string) => {
+        changeStatus({ userId, status: AccountStatus.ACTIVE });
     };
 
-    const { mutate: activate } = useMutation({
-        mutationFn: async (userId: string) => {
-            await axios.patch<void>(
-                queryUrls.users.activate(userId),
-                {},
-                {
-                    headers: new HttpHeadersBuilder().setBearerToken(token).build()
-                }
-            );
-        },
-        onError: onError
-    });
+    const deactivate = (userId: string) => {
+        changeStatus({ userId, status: AccountStatus.DEACTIVATED });
+    };
 
-    const { mutate: deactivate } = useMutation({
-        mutationFn: async (userId: string) => {
-            await axios.patch<void>(
-                queryUrls.users.deactivate(userId),
-                {},
-                {
-                    headers: new HttpHeadersBuilder().setBearerToken(token).build()
-                }
-            );
-        },
-        onError: onError
-    });
-
-    return { activate, deactivate };
+    return { users, activate, deactivate };
 }
