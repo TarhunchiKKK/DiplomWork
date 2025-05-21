@@ -16,13 +16,9 @@ export function useDisableTotp() {
         mutationFn: async () => {
             const token = credentialsManager.jwt.get();
 
-            await axios.patch(
-                queryUrls.auth.totp.disable,
-                {},
-                {
-                    headers: new HttpHeadersBuilder().setBearerToken(token).build()
-                }
-            );
+            await axios.patch(queryUrls.auth.totp.disable, null, {
+                headers: new HttpHeadersBuilder().setBearerToken(token).build()
+            });
         },
         onSuccess: () => {
             toast.success("Обновлено");
