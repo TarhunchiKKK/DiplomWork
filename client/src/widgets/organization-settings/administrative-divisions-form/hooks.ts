@@ -10,7 +10,7 @@ function useSetupDivisionsStore() {
 
     useEffect(() => {
         if (organization) {
-            setDivisions(organization.administrativeDivisions);
+            setDivisions(organization.administrativeDivisions ?? []);
         }
     }, [organization, setDivisions]);
 }
