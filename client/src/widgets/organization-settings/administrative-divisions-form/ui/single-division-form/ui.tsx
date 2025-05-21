@@ -70,7 +70,7 @@ export function DivisionPostsForm({ index }: TProps) {
     );
 }
 
-export function TrashButton({ index, className }: TProps & { className: string }) {
+export function TrashButton({ index }: TProps) {
     const { divisions, setData: setDivisions } = useDivisionsStore();
 
     const handleClick = () => {
@@ -78,7 +78,7 @@ export function TrashButton({ index, className }: TProps & { className: string }
     };
 
     return (
-        <Button variant="outline" size="icon" className={className} onClick={handleClick}>
+        <Button variant="outline" size="icon" className="absolute top-3 right-3 cursor-pointer" onClick={handleClick}>
             <Trash />
         </Button>
     );

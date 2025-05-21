@@ -15,7 +15,7 @@ export function SingleDivisionForm({ index }: TProps) {
                 <DivisionPostsForm index={index} />
             </CardContent>
 
-            <TrashButton index={index} className="absolute top-3 right-3" />
+            <TrashButton index={index} />
         </Card>
     );
 }
