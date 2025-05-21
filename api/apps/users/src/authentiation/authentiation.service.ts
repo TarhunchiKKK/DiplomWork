@@ -57,6 +57,10 @@ export class AuthenticationService {
     public async login(dto: ILoginDto) {
         const user = await this.usersService.findOneByLogin(dto.login);
 
+        if (user.status === AccountStatus.INVITED) {
+            throw new BadRequestException("Пользователь еще не зарегистрировался.");
+        }
+
         const passwordsMatch = await argon2.verify(user.password, dto.password);
         if (!passwordsMatch) {
             throw new BadRequestException("Неверный пароль.");
