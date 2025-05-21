@@ -1,5 +1,5 @@
-import { TProfile, useProfileStore } from "@/features/auth";
-import { queryUrls } from "@/shared/api";
+import { credentialsManager, TProfile, useProfileStore } from "@/features/auth";
+import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -12,10 +12,18 @@ export function useGenerateTotp() {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
-            const response = await axios.post<TGenerateTotpResponse>(queryUrls.auth.totp.generate, {
-                userId: profile.id,
-                userEmail: profile.email
-            });
+            const token = credentialsManager.jwt.get();
+
+            const response = await axios.post<TGenerateTotpResponse>(
+                queryUrls.auth.totp.generate,
+                {
+                    userId: profile.id,
+                    userEmail: profile.email
+                },
+                {
+                    headers: new HttpHeadersBuilder().setBearerToken(token).build()
+                }
+            );
 
             return response.data;
         },

@@ -24,7 +24,8 @@ export class TotpAuthenticationService {
         return new TOTP({
             issuer: this.configService.getOrThrow<string>("TOTP_ISSUER"),
             algorithm: this.configService.getOrThrow<string>("TOTP_ALGORITHM"),
-            digits: this.configService.getOrThrow<number>("TOTP_DIGITS"),
+            digits: +this.configService.getOrThrow<number>("TOTP_DIGITS"),
+            period: +this.configService.getOrThrow<number>("TOTP_PERIOD"),
             label: dto.label,
             secret: dto.secret
         });

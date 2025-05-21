@@ -3,8 +3,8 @@
 import { Button, FormWrapper, Skeleton } from "@/shared/ui";
 import { useGenerateTotp } from "./hooks";
 import { Suspense } from "react";
-import { QRCodeSVG } from "qrcode.react";
 import { TProps } from "./types";
+import Image from "next/image";
 
 export function TotpQrCard(props: TProps) {
     const { totpResponse, isPending } = useGenerateTotp();
@@ -16,7 +16,7 @@ export function TotpQrCard(props: TProps) {
         >
             <div className="space-y-4">
                 <Suspense fallback={<Skeleton className="w-[400px] h-[400px] rounded-sm" />}>
-                    {totpResponse && <QRCodeSVG value={totpResponse.qrCode} size={400} />}
+                    {totpResponse && <Image src={totpResponse.qrCode} alt="QR-Code" width={400} height={400} />}
                 </Suspense>
 
                 <Button
