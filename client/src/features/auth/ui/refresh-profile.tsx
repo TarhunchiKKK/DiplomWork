@@ -1,3 +1,5 @@
+"use client";
+
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { useQuery } from "@tanstack/react-query";
 import { credentialsManager } from "../utils";
