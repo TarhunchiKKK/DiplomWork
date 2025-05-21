@@ -1,3 +1,5 @@
+import { Trash } from "lucide-react";
+import { useDivisionsStore } from "../../store";
 import { useDivisionPostsForm, useDivisionTitleForm } from "./hooks";
 import { TProps, TUpdatePostDto } from "./types";
 import { Button, FilledInput, Form, FormField, FormItem, FormLabel, Input, Tag, TagsCloud } from "@/shared/ui";
@@ -65,5 +67,19 @@ export function DivisionPostsForm({ index }: TProps) {
 
             <TagsCloud items={postsSet.items} renderItem={getTagRenderer(postsSet.remove)} className="w-[800px] mb-4" />
         </div>
+    );
+}
+
+export function TrashButton({ index, className }: TProps & { className: string }) {
+    const { divisions, setData: setDivisions } = useDivisionsStore();
+
+    const handleClick = () => {
+        setDivisions(divisions.filter((_, i) => i !== index));
+    };
+
+    return (
+        <Button variant="outline" size="icon" className={className} onClick={handleClick}>
+            <Trash />
+        </Button>
     );
 }
