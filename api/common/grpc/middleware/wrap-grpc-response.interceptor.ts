@@ -7,7 +7,13 @@ export class WrapGrpcResponseInterceptor implements NestInterceptor {
         return next.handle().pipe(
             tap(data => {
                 console.log("WrapGrpcResponseGuard:");
+                console.log(
+                    "-------------------------------------------------------------------------------------------------"
+                );
                 console.log(data);
+                console.log(
+                    "-------------------------------------------------------------------------------------------------"
+                );
             }),
             map(data => ({
                 data

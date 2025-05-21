@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { UserInvitationTokensService } from "common/modules";
 import { UsersService } from "../users/users.service";
 import { IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
-import { AccountStatus } from "common/enums";
+import { AccountStatus, Role } from "common/enums";
 import { AuthenticationService } from "../authentiation/authentiation.service";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { UsersInvitedEvent } from "./events/users-invited.event";
@@ -24,7 +24,8 @@ export class InvitationsService {
             dto.emails.map(email =>
                 this.usersService.save({
                     organizationId: dto.organizationId,
-                    email: email
+                    email: email,
+                    role: Role.USER
                 })
             )
         );

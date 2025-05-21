@@ -1,18 +1,20 @@
+import { routes } from "@/shared/routing";
+
 export const links = [
     {
         label: "Профиль",
-        url: "#"
+        url: routes.settings.profile
     },
     {
         label: "Пользователи",
-        url: "#"
+        url: routes.settings.users
     },
     {
         label: "Организация",
-        url: "#"
+        url: routes.settings.organization
     },
     {
         label: "Документы",
-        url: "#"
+        url: routes.settings.documents
     }
 ];

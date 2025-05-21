@@ -2,18 +2,20 @@ import { credentialsManager, useProfileStore } from "@/features/auth";
 import { TLoginResult, TTotpLoginPayload } from "./types";
 import { useState } from "react";
 import { routes } from "@/shared/routing";
-import { redirect } from "next/navigation";
 import { AuthType } from "@/entities/users";
+import { useRouter } from "next/navigation";
 
 function useEndLogin() {
     const setProfile = useProfileStore(state => state.setProfile);
+
+    const router = useRouter();
 
     const endLogin = (result: TLoginResult) => {
         credentialsManager.jwt.set(result.token);
 
         setProfile(result);
 
-        redirect(routes.dashboard.index);
+        router.push(routes.dashboard.index);
     };
 
     return endLogin;
