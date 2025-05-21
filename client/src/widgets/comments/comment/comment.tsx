@@ -1,15 +1,15 @@
 import { Card, CardDescription, CardHeader, CardTitle, Skeleton } from "@/shared/ui";
 import { TProps } from "./types";
 import { formatFullDate } from "@/shared/helpers";
-import { useMultipleUsers } from "@/entities/users";
+import { useOneUser } from "@/entities/users";
 
 export function Comment({ comment }: TProps) {
-    const { users } = useMultipleUsers({ ids: [comment.creatorId], enabled: true });
+    const { data: user } = useOneUser(comment.creatorId);
 
     return (
         <Card>
             <CardHeader>
-                {users?.[0] && <CardTitle>{users[0].username ?? users[0].email}</CardTitle>}
+                {user && <CardTitle>{user.username ?? user.email}</CardTitle>}
 
                 <CardDescription className="space-y-2">
                     {comment.message}

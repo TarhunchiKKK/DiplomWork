@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { TUserInfo } from "../models";
 
-export function useOneUser(userId: string) {
+export function useOneUser(userId: string, enabled: boolean = true) {
     return useQuery({
         queryKey: queryKeys.users.findOne(userId),
         queryFn: async () => {
@@ -15,6 +15,7 @@ export function useOneUser(userId: string) {
             });
 
             return response.data;
-        }
+        },
+        enabled: enabled
     });
 }
