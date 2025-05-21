@@ -8,6 +8,9 @@ import { TGenerateTotpResponse } from "./types";
 
 export function useGenerateTotp() {
     const [totpResponse, setTotpResponse] = useState<TGenerateTotpResponse | null>(null);
+
+    const [isQrCodeFetched, setIsQrCodeFtched] = useState(false);
+
     const profile = useProfileStore(state => state.profile) as TProfile;
 
     const { mutate, isPending } = useMutation({
@@ -36,8 +39,11 @@ export function useGenerateTotp() {
     });
 
     useEffect(() => {
-        mutate();
-    }, [mutate]);
+        if (!isQrCodeFetched) {
+            mutate();
+            setIsQrCodeFtched(true);
+        }
+    }, [mutate, isQrCodeFetched]);
 
     return { totpResponse, isPending };
 }

@@ -32,8 +32,6 @@ export class TotpAuthenticationService {
     }
 
     private validateTotp(dto: IValidateTotpDto) {
-        console.log(dto);
-
         const totp = this.createTotpInstance({ label: dto.label, secret: dto.secret });
 
         const delta = totp.validate({ token: dto.pin });
