@@ -19,14 +19,10 @@ export class UserInvitationEventsObserver {
     public async handleUsersInvited(event: UsersInvitedEvent) {
         const users = await this.usersService.findAllByIds(event.usersIds);
 
-        users.forEach(user => {
-            console.log(user.email + " --- " + this.invitationTokensService.create(user));
-        });
-
-        // users.forEach(user =>
-        //     this.notificationsRmqService.emit(
-        //         new UserInvitedRqmEvent(event.adminEmail, user.email, this.invitationTokensService.create(user))
-        //     )
-        // );
+        users.forEach(user =>
+            this.notificationsRmqService.emit(
+                new UserInvitedRqmEvent(event.adminEmail, user.email, this.invitationTokensService.create(user))
+            )
+        );
     }
 }

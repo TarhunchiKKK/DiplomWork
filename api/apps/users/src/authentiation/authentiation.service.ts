@@ -47,7 +47,8 @@ export class AuthenticationService {
             ...dto,
             organizationId: organization._id,
             role: Role.ADMIN,
-            status: AccountStatus.ACTIVE
+            status: AccountStatus.ACTIVE,
+            password: await argon2.hash(dto.password)
         });
 
         return this.createAuthResponse(user);
@@ -56,7 +57,8 @@ export class AuthenticationService {
     public async login(dto: ILoginDto) {
         const user = await this.usersService.findOneByLogin(dto.login);
 
-        if (!argon2.verify(user.password, dto.password)) {
+        const passwordsMatch = await argon2.verify(user.password, dto.password);
+        if (!passwordsMatch) {
             throw new BadRequestException("Неверный пароль.");
         }
 
