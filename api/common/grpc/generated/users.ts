@@ -65,6 +65,11 @@ export interface IUpdatePasswordDto {
   password: string;
 }
 
+export interface IChangeAccountStatusDto {
+  id: string;
+  status: string;
+}
+
 export interface IGenerateTotpDto {
   userId: string;
   userEmail: string;
@@ -228,20 +233,16 @@ export function PasswordRecoveryServiceControllerMethods() {
 export const PASSWORD_RECOVERY_SERVICE_NAME = "PasswordRecoveryService";
 
 export interface AccountDeactivationServiceClient {
-  activate(request: IOnlyId): Observable<IEmptyResponse>;
-
-  deactivate(request: IOnlyId): Observable<IEmptyResponse>;
+  changeStatus(request: IChangeAccountStatusDto): Observable<IEmptyResponse>;
 }
 
 export interface AccountDeactivationServiceController {
-  activate(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
-
-  deactivate(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+  changeStatus(request: IChangeAccountStatusDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 }
 
 export function AccountDeactivationServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["activate", "deactivate"];
+    const grpcMethods: string[] = ["changeStatus"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("AccountDeactivationService", method)(constructor.prototype[method], method, descriptor);

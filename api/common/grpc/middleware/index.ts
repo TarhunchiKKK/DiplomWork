@@ -1,2 +1,2 @@
-export { WrapGrpcResponseInterceptor } from "./insert-grpc-response.interceptor";
+export { WrapGrpcResponseInterceptor } from "./wrap-grpc-response.interceptor";
 export { GrpcExceptionFilter } from "./grpc-exception.filter";

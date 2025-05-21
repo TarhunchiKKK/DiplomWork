@@ -1,5 +1,5 @@
 import { routes } from "@/shared/routing";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function useGenerateTotpStep(setStep: (_: number) => void) {
@@ -14,8 +14,10 @@ export function useGenerateTotpStep(setStep: (_: number) => void) {
 }
 
 export function useEnableTotpStep() {
+    const router = useRouter();
+
     const handleEnableTotp = () => {
-        redirect(routes.settings.profile);
+        router.push(routes.settings.profile);
     };
 
     return { handleEnableTotp };

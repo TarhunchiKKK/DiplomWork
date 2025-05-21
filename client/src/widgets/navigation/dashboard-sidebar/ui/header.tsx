@@ -1,21 +1,23 @@
 "use client";
 
-import { credentialsManager, TProfile, useProfileStore } from "@/features/auth";
+import { credentialsManager, useProfileStore } from "@/features/auth";
 import { ThemeSwitch } from "@/features/dark-mode";
 import { routes } from "@/shared/routing";
 import { Avatar, AvatarImage, Button, SidebarHeader } from "@/shared/ui";
 import { ExternalLink } from "lucide-react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export function Header() {
-    const profile = useProfileStore(state => state.profile) as TProfile;
+    const { profile, resetProfile } = useProfileStore();
 
-    const resetProfile = useProfileStore(state => state.resetProfile);
+    const router = useRouter();
 
     const handleClick = () => {
+        router.push(routes.auth.login);
+
         resetProfile();
+
         credentialsManager.jwt.remove();
-        redirect(routes.auth.login);
     };
 
     return (
@@ -32,7 +34,7 @@ export function Header() {
                 </div>
 
                 <div className="flex justify-between items-center">
-                    <p className="text-base italic">{profile.username || profile.email}</p>
+                    {profile && <p className="text-base italic">{profile.username || profile.email}</p>}
 
                     <Button variant="link" className="cursor-pointer" title="Выйти из аккаунта " onClick={handleClick}>
                         <ExternalLink />

@@ -5,9 +5,13 @@ import { toast } from "sonner";
 import { extractValidationMessages, TValidationError } from "@/shared/validation";
 import { TRegisterDto, TRegisterResponse } from "./types";
 import { credentialsManager, useProfileStore } from "@/features/auth";
+import { useRouter } from "next/navigation";
+import { routes } from "@/shared/routing";
 
 export function useRegister() {
     const setProfile = useProfileStore(state => state.setProfile);
+
+    const router = useRouter();
 
     const { mutate, isPending } = useMutation({
         mutationFn: async (dto: TRegisterDto) => {
@@ -20,6 +24,8 @@ export function useRegister() {
             credentialsManager.jwt.set(response.token);
 
             setProfile(response);
+
+            router.push(routes.dashboard.index);
         },
         onError: (error: AxiosError<TValidationError>) => {
             extractValidationMessages(error).forEach(message => {

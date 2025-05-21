@@ -7,22 +7,20 @@ import axios from "axios";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { toast } from "sonner";
 import { routes } from "@/shared/routing";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export function useDisableTotp() {
+    const router = useRouter();
+
     const queryClient = useQueryClient();
 
     const { mutate: disableTotp, isPending: isTotpDisablingPending } = useMutation({
         mutationFn: async () => {
             const token = credentialsManager.jwt.get();
 
-            await axios.patch(
-                queryUrls.auth.totp.disable,
-                {},
-                {
-                    headers: new HttpHeadersBuilder().setBearerToken(token).build()
-                }
-            );
+            await axios.patch(queryUrls.auth.totp.disable, null, {
+                headers: new HttpHeadersBuilder().setBearerToken(token).build()
+            });
         },
         onSuccess: () => {
             toast.success("Обновлено");
@@ -38,9 +36,10 @@ export function useDisableTotp() {
         switch (authType) {
             case AuthType.BASIC:
                 disableTotp();
+                router.push(routes.settings.profile);
                 break;
             case AuthType.TOTP:
-                redirect(routes.auth.enableTotp);
+                router.push(routes.auth.enableTotp);
                 break;
             default:
                 break;

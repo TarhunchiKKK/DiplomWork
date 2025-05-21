@@ -2,6 +2,7 @@ import {
     Body,
     Controller,
     Get,
+    Param,
     ParseArrayPipe,
     Patch,
     Query,
@@ -21,10 +22,17 @@ import { UpdateProfileDto } from "./dto/update-profile.dto";
 export class UsersController {
     public constructor(public readonly usersGrpcService: UsersGrpcService) {}
 
-    @Get("/organization")
+    @Get("organization")
     public findAllByOrganizationId(@Req() request: TAuthenticatedRequest) {
         return this.usersGrpcService.call("findAllByOrganizationId", {
             id: request.jwtInfo.organizationId
+        });
+    }
+
+    @Get(":userId")
+    public findOne(@Param("userId") userId: string) {
+        return this.usersGrpcService.call("findOne", {
+            id: userId
         });
     }
 

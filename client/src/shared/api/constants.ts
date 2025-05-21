@@ -1,6 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
 import { environment } from "../config";
-import { updateStatusLabels } from "@/widgets/notifications/notification/constants";
 
 export const queryClient = new QueryClient({
     defaultOptions: {
@@ -13,9 +12,10 @@ export const queryClient = new QueryClient({
 
 export const queryUrls = {
     auth: {
-        registerAdmin: `${environment.apiUrl}/users/auth/register/admin`,
+        registerAdmin: `${environment.apiUrl}/users/auth/register-admin`,
         login: `${environment.apiUrl}/users/auth/login`,
         confirmInvitation: `${environment.apiUrl}/users/invitations/confirm`,
+        profile: `${environment.apiUrl}/users/auth/me`,
         totp: {
             generate: `${environment.apiUrl}/users/auth/totp/generate`,
             enable: `${environment.apiUrl}/users/auth/totp/enable`,
@@ -29,12 +29,12 @@ export const queryUrls = {
     },
     users: {
         invite: `${environment.apiUrl}/users/invitations/send`,
-        activate: (userId: string) => `${environment.apiUrl}/users/activate/${userId}`,
-        deactivate: (userId: string) => `${environment.apiUrl}/users/deactivate/${userId}`,
+        changeStatus: (userId: string) => `${environment.apiUrl}/users/account-deactivation/change-stus/${userId}`,
         updateProfile: `${environment.apiUrl}/users/profile`,
         find: {
             organization: `${environment.apiUrl}/users/organization`,
-            ids: `${environment.apiUrl}/users`
+            ids: `${environment.apiUrl}/users`,
+            one: (userId: string) => `${environment.apiUrl}/users/${userId}`
         }
     },
     organizations: {
@@ -101,7 +101,7 @@ export const queryKeys = {
         findOne: ["organization"]
     },
     users: {
-        findAll: ["users"],
+        base: ["users"],
         byOrganization: ["users", "organzation"],
         findOne: (userId: string) => ["users", userId],
         findMany: (usersIds: string[]) => ["users"].concat(usersIds)

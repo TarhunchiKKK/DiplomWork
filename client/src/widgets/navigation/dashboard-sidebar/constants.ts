@@ -33,7 +33,7 @@ export const footerGroup: TGroup = {
     links: [
         {
             title: "Настройки",
-            url: routes.settings.documents,
+            url: routes.settings.profile,
             icon: Settings
         }
     ]

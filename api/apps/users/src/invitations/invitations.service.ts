@@ -2,10 +2,11 @@ import { Injectable } from "@nestjs/common";
 import { UserInvitationTokensService } from "common/modules";
 import { UsersService } from "../users/users.service";
 import { IConfirmInvitationDto, IInviteUsersDto } from "common/grpc";
-import { AccountStatus } from "common/enums";
+import { AccountStatus, Role } from "common/enums";
 import { AuthenticationService } from "../authentiation/authentiation.service";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { UsersInvitedEvent } from "./events/users-invited.event";
+import * as argon2 from "argon2";
 
 @Injectable()
 export class InvitationsService {
@@ -22,9 +23,10 @@ export class InvitationsService {
     public async send(dto: IInviteUsersDto): Promise<void> {
         const users = await Promise.all(
             dto.emails.map(email =>
-                this.usersService.save({
+                this.usersService.create({
                     organizationId: dto.organizationId,
-                    email: email
+                    email: email,
+                    role: Role.USER
                 })
             )
         );
@@ -43,8 +45,8 @@ export class InvitationsService {
 
         const user = await this.usersService.update(id, {
             username: dto.username,
-            password: dto.password,
-            status: AccountStatus.INVITED
+            password: await argon2.hash(dto.password),
+            status: AccountStatus.ACTIVE
         });
 
         return this.authenticationService.createAuthResponse(user);

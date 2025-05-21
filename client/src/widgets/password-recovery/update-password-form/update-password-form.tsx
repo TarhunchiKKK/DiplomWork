@@ -22,7 +22,9 @@ export function UpdatePasswordForm() {
 
     return (
         <FormWrapper heading="Смена пароля" description="Придумайте новый пароль и введите его ниже.">
-            {isPasswordUpdated && <p>Ваш пароль был обновлен. Вы можете закрыть эту страницу.</p>}
+            {isPasswordUpdated && (
+                <p className="text-center">Ваш пароль был обновлен. Вы можете закрыть эту страницу.</p>
+            )}
 
             {!isPasswordUpdated && (
                 <Form {...form}>

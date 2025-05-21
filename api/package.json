@@ -6,7 +6,7 @@
     "private": true,
     "license": "MIT",
     "scripts": {
-        "dev": "docker compose up & pnpm start:all",
+        "dev": "concurrently \"pnpm start:dev api-gateway\" \"pnpm start:dev users\" \"pnpm start:dev organizations\"",
         "start": "nest start",
         "start:dev": "nest start --watch",
         "build": "nest build",

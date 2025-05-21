@@ -117,9 +117,13 @@ message IUpdatePasswordDto {
 /********************************************Account Deactivation*********************************************************************/
 
 service AccountDeactivationService {
-    rpc Activate (common.IOnlyId) returns (common.IEmptyResponse) {}
+    rpc ChangeStatus (IChangeAccountStatusDto) returns (common.IEmptyResponse) {}
+}
 
-    rpc Deactivate (common.IOnlyId) returns (common.IEmptyResponse) {}
+message IChangeAccountStatusDto {
+    string id = 1;
+
+    string status = 2;
 }
 
 /********************************************TOTP Authentication*********************************************************************/

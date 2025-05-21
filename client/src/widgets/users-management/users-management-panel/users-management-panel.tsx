@@ -1,14 +1,12 @@
 "use client";
 
 import { TagsCloud, TagsCloudSkeleton } from "@/shared/ui";
-import { AccountStatus, useOrganizationUsers } from "@/entities/users";
+import { AccountStatus } from "@/entities/users";
 import { getActiveUserTagRenderer, getDeactivatedUserTagRenderer } from "./ui";
-import { useChangeUserStatus } from "./hooks";
+import { useUsersManagementPanel } from "./hooks";
 
 export function UsersManagementPanel() {
-    const { users } = useOrganizationUsers();
-
-    const { activate, deactivate } = useChangeUserStatus();
+    const { users, activate, deactivate } = useUsersManagementPanel();
 
     return (
         <>

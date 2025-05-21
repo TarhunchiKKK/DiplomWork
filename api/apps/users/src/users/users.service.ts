@@ -2,21 +2,15 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
 import { User } from "./entities/user.entity";
-import { AccountStatus } from "common/enums";
 import { IUpdateUserDto } from "./interfaces/update-user.dto";
 import { ISaveUserDto } from "./interfaces/save-user.dto";
-import { withHashedPassword } from "./helpers/hashing.helpers";
 
 @Injectable()
 export class UsersService {
     public constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>) {}
 
     public async create(dto: ISaveUserDto) {
-        return await this.usersRepository.save(withHashedPassword(dto));
-    }
-
-    public async save(dto: ISaveUserDto): Promise<User> {
-        return await this.usersRepository.save(withHashedPassword(dto));
+        return await this.usersRepository.save(dto);
     }
 
     public async findAllByOrganizationId(organizationId: string): Promise<User[]> {
@@ -74,13 +68,7 @@ export class UsersService {
             throw new NotFoundException("Пользователь не найден");
         }
 
-        Object.assign(
-            user,
-            withHashedPassword({
-                ...dto,
-                status: AccountStatus.ACTIVE
-            })
-        );
+        Object.assign(user, dto);
 
         return await this.usersRepository.save(user);
     }

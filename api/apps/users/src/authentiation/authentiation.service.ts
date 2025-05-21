@@ -36,7 +36,7 @@ export class AuthenticationService {
             role: user.role,
             organizationId: user.organizationId,
             authType: user.authType,
-            token: this.createJwtFromUser(user)
+            token: user.useBasicAuth ? this.createJwtFromUser(user) : ""
         };
     }
 
@@ -47,7 +47,8 @@ export class AuthenticationService {
             ...dto,
             organizationId: organization._id,
             role: Role.ADMIN,
-            status: AccountStatus.ACTIVE
+            status: AccountStatus.ACTIVE,
+            password: await argon2.hash(dto.password)
         });
 
         return this.createAuthResponse(user);
@@ -56,7 +57,12 @@ export class AuthenticationService {
     public async login(dto: ILoginDto) {
         const user = await this.usersService.findOneByLogin(dto.login);
 
-        if (!argon2.verify(dto.login, user.password)) {
+        if (user.status === AccountStatus.INVITED) {
+            throw new BadRequestException("Пользователь еще не зарегистрировался.");
+        }
+
+        const passwordsMatch = await argon2.verify(user.password, dto.password);
+        if (!passwordsMatch) {
             throw new BadRequestException("Неверный пароль.");
         }
 

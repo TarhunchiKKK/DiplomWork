@@ -18,13 +18,8 @@ export function SettingsMenubar() {
                 <Menubar className="w-min">
                     {links.map(link => (
                         <MenubarMenu key={link.label}>
-                            <MenubarTrigger>
-                                <Link
-                                    href={link.url}
-                                    className={pathname === link.label ? activeLinkClassName : undefined}
-                                >
-                                    {link.label}
-                                </Link>
+                            <MenubarTrigger className={pathname === link.url ? activeLinkClassName : undefined}>
+                                <Link href={link.url}>{link.label}</Link>
                             </MenubarTrigger>
                         </MenubarMenu>
                     ))}
