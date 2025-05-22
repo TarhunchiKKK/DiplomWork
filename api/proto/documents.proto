@@ -9,13 +9,13 @@ package documents;
 service DocumentsService {
     rpc Create (ICreateDocumentDto) returns (ICreateDocumentResponse) {}
 
-    rpc Update (IUpdateDocumentDto) returns (common.IEmptyResponse) {}
+    // rpc Update (IUpdateDocumentDto) returns (common.IEmptyResponse) {}
 
     rpc FindAll (IFindDocumentsDto) returns (IFindDocumentsResponse) {}
 
-    rpc FindOneById(common.IOnlyId) returns (IFindDocumentByIdResponse) {}  
+    // rpc FindOne (common.IOnlyId) returns (IFindDocumentByIdResponse) {}  
 
-    rpc FindAccessToken (common.IOnlyId) returns (IFindAccessTokenResponse) {}
+    // rpc FindAccessToken (common.IOnlyId) returns (IFindAccessTokenResponse) {}
 }
 
 message ICreateDocumentDto {

@@ -1,15 +1,15 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import { DocumentsService } from "./documents.service";
 import {
-    DocumentsServiceController,
-    DocumentsServiceControllerMethods,
     GrpcExceptionFilter,
     ICreateDocumentDto,
     WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
     IFindDocumentsDto,
     IUpdateDocumentDto,
-    IOnlyId
+    IOnlyId,
+    DocumentsServiceControllerMethods,
+    DocumentsServiceController
 } from "common/grpc";
 import { transformDocumentsArray } from "./helpers/grpc.helpers";
 
@@ -24,7 +24,7 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
         return await this.documentsService.create(dto);
     }
 
-    public async findOneById(dto: IOnlyId) {
+    public async findOne(dto: IOnlyId) {
         return await this.documentsService.findOneById(dto.id);
     }
 
