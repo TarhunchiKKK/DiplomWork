@@ -220,7 +220,13 @@ export const DOCUMENTS_PACKAGE_NAME = "documents";
 export interface DocumentsServiceClient {
   create(request: ICreateDocumentDto): Observable<ICreateDocumentResponse>;
 
+  update(request: IUpdateDocumentDto): Observable<IEmptyResponse>;
+
   findAll(request: IFindDocumentsDto): Observable<IFindDocumentsResponse>;
+
+  findOneById(request: IOnlyId): Observable<IFindDocumentByIdResponse>;
+
+  findAccessToken(request: IOnlyId): Observable<IFindAccessTokenResponse>;
 }
 
 export interface DocumentsServiceController {
@@ -228,14 +234,24 @@ export interface DocumentsServiceController {
     request: ICreateDocumentDto,
   ): Promise<ICreateDocumentResponse> | Observable<ICreateDocumentResponse> | ICreateDocumentResponse;
 
+  update(request: IUpdateDocumentDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+
   findAll(
     request: IFindDocumentsDto,
   ): Promise<IFindDocumentsResponse> | Observable<IFindDocumentsResponse> | IFindDocumentsResponse;
+
+  findOneById(
+    request: IOnlyId,
+  ): Promise<IFindDocumentByIdResponse> | Observable<IFindDocumentByIdResponse> | IFindDocumentByIdResponse;
+
+  findAccessToken(
+    request: IOnlyId,
+  ): Promise<IFindAccessTokenResponse> | Observable<IFindAccessTokenResponse> | IFindAccessTokenResponse;
 }
 
 export function DocumentsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll"];
+    const grpcMethods: string[] = ["create", "update", "findAll", "findOneById", "findAccessToken"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("DocumentsService", method)(constructor.prototype[method], method, descriptor);

@@ -24,7 +24,7 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
         return await this.documentsService.create(dto);
     }
 
-    public async findOne(dto: IOnlyId) {
+    public async findOneById(dto: IOnlyId) {
         return await this.documentsService.findOneById(dto.id);
     }
 

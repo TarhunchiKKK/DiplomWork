@@ -2,6 +2,7 @@ version: "3.7"
 
 services:
     organizations-db:
+        container_name: organizations-db
         image: mongo:latest
         environment:
             - MONGO_INITDB_DATABASE=${ORGANIZATIONS_DB_NAME}
@@ -10,20 +11,20 @@ services:
         networks:
             - organizations-network
 
-    # documents-db:
-    #     container_name: documents-db
-    #     image: postgres:15.2
-    #     restart: always
-    #     environment:
-    #         - POSTGRES_DB=${DOCUMENTS_MICROSERVICE_DB_NAME}
-    #         - POSTGRES_USER=${DOCUMENTS_MICROSERVICE_DB_USER}
-    #         - POSTGRES_PASSWORD=${DOCUMENTS_MICROSERVICE_DB_PASSWORD}
-    #     ports:
-    #         - ${DOCUMENTS_MICROSERVICE_DB_PORT}:5432
-    #     volumes:
-    #         - documents-postgres_data:/var/lib/postgresql/data
-    #     networks:
-    #         - documents-network
+    documents-db:
+        container_name: documents-db
+        image: postgres:15.2
+        restart: always
+        environment:
+            - POSTGRES_DB=${DOCUMENTS_MICROSERVICE_DB_NAME}
+            - POSTGRES_USER=${DOCUMENTS_MICROSERVICE_DB_USER}
+            - POSTGRES_PASSWORD=${DOCUMENTS_MICROSERVICE_DB_PASSWORD}
+        ports:
+            - ${DOCUMENTS_MICROSERVICE_DB_PORT}:5432
+        volumes:
+            - documents-postgres_data:/var/lib/postgresql/data
+        networks:
+            - documents-network
 
     # workflows-db:
     #     container_name: workflows-db
