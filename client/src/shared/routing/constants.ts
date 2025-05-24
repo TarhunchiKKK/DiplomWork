@@ -4,7 +4,9 @@ export const routes = {
         documents: {
             my: "/dashboard/my-documents",
             favourite: "/dashboard/favourite-documents",
-            urgent: "/dashboard/urgent-documents"
+            urgent: "/dashboard?isUrgent=true",
+            withDocumentAim: (documentAimId: string) => `/dashboard?aimId=${documentAimId}`,
+            withDocumentType: (documentTypeId: string) => `/dashboard?typeId=${documentTypeId}`
         },
         notificaions: {
             all: "/dashboard/notifications"
