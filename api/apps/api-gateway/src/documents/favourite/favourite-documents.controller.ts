@@ -3,7 +3,7 @@ import { AuthenticationGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { FavouriteDocumentsGrpcService } from "common/grpc";
 
-@Controller("/documents/favourite")
+@Controller("/favourite")
 @UseGuards(AuthenticationGuard)
 export class FavouriteDocumentsController {
     public constructor(private readonly favouriteDocumentsGrpcService: FavouriteDocumentsGrpcService) {}
