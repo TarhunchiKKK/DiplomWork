@@ -46,7 +46,7 @@ export class DocumentsController {
         const dto: IFindDocumentsDto = {
             aimId,
             typeId,
-            isUrgent: Boolean(isUrgent),
+            isUrgent: isUrgent === undefined ? undefined : Boolean(isUrgent),
             sortOrder: sortOrder as DocumentSortOrder | undefined
         };
 

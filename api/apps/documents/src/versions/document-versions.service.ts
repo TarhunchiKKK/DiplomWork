@@ -23,6 +23,7 @@ export class DocumentVersionsService {
         const version = await this.versionsRepository.save({
             url: generateS3Filename(fileExtension),
             description: dto.description,
+            hash: dto.hash,
             document: {
                 id: dto.documentId
             }
