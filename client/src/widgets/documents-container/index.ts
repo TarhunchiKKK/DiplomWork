@@ -1,2 +1,2 @@
-export { DocumentsContainer, DocumentsCOntainerSkeleton } from "./documents-container";
+export { DocumentsContainer, DocumentsContainerSkeleton } from "./documents-container";
 export { DocumentsDisplayTypeTabs } from "./documents-dispay-type-tabs";

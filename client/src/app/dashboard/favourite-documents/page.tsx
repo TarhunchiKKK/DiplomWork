@@ -3,7 +3,7 @@
 import { useFavouriteDocuments } from "@/entities/documents";
 import {
     DocumentsContainer,
-    DocumentsCOntainerSkeleton,
+    DocumentsContainerSkeleton,
     DocumentsDisplayTypeTabs
 } from "@/widgets/documents-container";
 import { Suspense } from "react";
@@ -17,7 +17,7 @@ export default function FavouriteocumentsPage() {
                 <DocumentsDisplayTypeTabs />
             </div>
 
-            <Suspense fallback={<DocumentsCOntainerSkeleton />}>
+            <Suspense fallback={<DocumentsContainerSkeleton />}>
                 {documents && <DocumentsContainer documents={documents} />}
             </Suspense>
         </div>

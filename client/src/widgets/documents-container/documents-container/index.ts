@@ -1,2 +1,2 @@
 export { DocumentsContainer } from "./documents-container";
-export { DocumentsCOntainerSkeleton } from "./ui";
+export { DocumentsContainerSkeleton } from "./ui";

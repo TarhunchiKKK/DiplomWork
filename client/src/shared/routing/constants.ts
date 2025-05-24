@@ -6,7 +6,8 @@ export const routes = {
             favourite: "/dashboard/favourite-documents",
             urgent: "/dashboard?isUrgent=true",
             withDocumentAim: (documentAimId: string) => `/dashboard?aimId=${documentAimId}`,
-            withDocumentType: (documentTypeId: string) => `/dashboard?typeId=${documentTypeId}`
+            withDocumentType: (documentTypeId: string) => `/dashboard?typeId=${documentTypeId}`,
+            one: (documentId: string) => `/dashboard/document/${documentId}`
         },
         notificaions: {
             all: "/dashboard/notifications"
