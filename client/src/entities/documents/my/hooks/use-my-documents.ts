@@ -13,7 +13,7 @@ export function useMyDocuments() {
             const response = await axios.get<TFindDocumentsResponse>(queryUrls.documents.my.findAll, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
-            return response.data.documents;
+            return response.data.documents ?? [];
         },
         select: documents => documents.map(transformDocumentShortData)
     });

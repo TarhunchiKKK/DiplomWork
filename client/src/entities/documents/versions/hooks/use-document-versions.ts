@@ -15,7 +15,7 @@ export function useDocumentVersions(documentId: string) {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
 
-            return response.data.versions;
+            return response.data.versions ?? [];
         },
         select: versions => versions.map(transformVersion)
     });

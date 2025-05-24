@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { ILoginDto, IRegisterAdminDto, OrganizationsGrpcService } from "common/grpc";
-import { AccountStatus, Role } from "common/enums";
+import { AccountStatus, AuthType, Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { JwtTokensService } from "common/modules";
 import { UsersService } from "../users/users.service";
@@ -36,7 +36,7 @@ export class AuthenticationService {
             role: user.role,
             organizationId: user.organizationId,
             authType: user.authType,
-            token: user.useBasicAuth ? this.createJwtFromUser(user) : ""
+            token: user.authType === AuthType.BASIC ? this.createJwtFromUser(user) : ""
         };
     }
 

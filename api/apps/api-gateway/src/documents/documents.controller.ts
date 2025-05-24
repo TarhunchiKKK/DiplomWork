@@ -40,13 +40,13 @@ export class DocumentsController {
     public findAll(
         @Query("aimId") aimId?: string,
         @Query("typeId") typeId?: string,
-        @Query("isUrgent", ParseBoolPipe) isUrgent?: boolean,
+        @Query("isUrgent") isUrgent?: string,
         @Query("sortOrder") sortOrder?: string
     ) {
         const dto: IFindDocumentsDto = {
             aimId,
             typeId,
-            isUrgent,
+            isUrgent: Boolean(isUrgent),
             sortOrder: sortOrder as DocumentSortOrder | undefined
         };
 
