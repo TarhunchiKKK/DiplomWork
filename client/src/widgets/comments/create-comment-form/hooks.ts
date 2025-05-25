@@ -12,6 +12,8 @@ export function useCreateCommentForm(versionId: string) {
     const { createComment, isPending } = useCreateDocumentComment();
 
     const onSubmit = form.handleSubmit((data: TFormState) => {
+        form.reset();
+
         createComment({
             message: data.message,
             versionId: versionId

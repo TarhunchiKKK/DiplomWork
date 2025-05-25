@@ -42,7 +42,7 @@ export class DocumentCommentsController {
     @Get(":versionId")
     @ProvideOperation(DocumentOperation.READ)
     @ExtractFromRequest(request => request.params.versionId)
-    @UseGuards(DocumentOperationGuard)
+    @UseGuards(VersionOperationGuard)
     public findAll(@Param("versionId") versionId: string) {
         return this.documentCommentsGrpcService.call("findAll", {
             id: versionId
