@@ -1,12 +1,12 @@
 "use client";
 
-import { useCommentsList } from "./hooks";
 import { Comment, CommentSkeleton } from "../comment";
 import { ScrollArea, ScrollBar } from "@/shared/ui";
 import { useEffect, useRef } from "react";
-import { TProps } from "./types";
+import { TProps, TSkeletonProps } from "./types";
+import { useDocumentComments } from "@/entities/documents";
 
-export function CommentsList({ className }: TProps) {
+export function CommentsList({ versionId, className }: TProps) {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export function CommentsList({ className }: TProps) {
         });
     }, []);
 
-    const { comments } = useCommentsList();
+    const { comments } = useDocumentComments(versionId);
 
     return (
         <ScrollArea className={className}>
@@ -29,7 +29,7 @@ export function CommentsList({ className }: TProps) {
     );
 }
 
-export function CommentsListSkeleton({ className }: TProps) {
+export function CommentsListSkeleton({ className }: TSkeletonProps) {
     return (
         <ScrollArea className={className}>
             <div className="space-y-4">

@@ -11,6 +11,7 @@ import { DocumentComment } from "./comments/entities/document-comment.entity";
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { ScheduleModule } from "@nestjs/schedule";
 import { DocumentHashingModule } from "./hashing/document-hashing.module";
+import { DocumentCommentsModule } from "./comments/document-comments.module";
 
 @Module({
     imports: [
@@ -35,6 +36,7 @@ import { DocumentHashingModule } from "./hashing/document-hashing.module";
         ScheduleModule.forRoot(),
         DocumentsModule,
         DocumentVersionsModule,
+        DocumentCommentsModule,
         DocumentHashingModule,
         DocumentAccessTokensModule
     ]

@@ -4,15 +4,15 @@ import { DocumentCommentsService } from "./document-comments.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DocumentComment } from "./entities/document-comment.entity";
 import { DocumentCommentsEventsObserver } from "./document-comments-events.observer";
-import { NotificationsRmqService } from "common/rabbitmq";
-import { DocumentVersionsService } from "../versions/document-versions.service";
+import { NotificationsRmqModule } from "common/rabbitmq";
 import { UsersGrpcModule } from "common/grpc";
+import { DocumentVersionsModule } from "../versions/document-versions.module";
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([DocumentComment]),
-        NotificationsRmqService,
-        DocumentVersionsService,
+        NotificationsRmqModule,
+        DocumentVersionsModule,
         UsersGrpcModule
     ],
     controllers: [DocumentCommentsController],

@@ -1,5 +1,6 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
+    DOCUMENT_COMMENTS_SERVICE_NAME,
     DocumentCommentsServiceController,
     DocumentCommentsServiceControllerMethods,
     GrpcExceptionFilter,
@@ -23,20 +24,19 @@ export class DocumentCommentsController implements UnwrapGrpcResponse<DocumentCo
         return await this.commentsService.create(dto).then(transfromComment);
     }
 
-    public async findOneById(dto: IOnlyId) {
-        return await this.commentsService.findOne(dto.id).then(transfromComment);
+    public async findOneById({ id }: IOnlyId) {
+        return await this.commentsService.findOne(id).then(transfromComment);
     }
 
-    public async findAll(dto: IOnlyId) {
-        return await this.commentsService.findAll(dto.id).then(transformCommentsArray);
+    public async findAll({ id }: IOnlyId) {
+        return await this.commentsService.findAll(id).then(transformCommentsArray);
     }
 
-    public async update(dto: IUpdateDocumentCommentDto) {
-        const { id, ...data } = dto;
-        await this.commentsService.update(id, data);
+    public async update({ id, ...dto }: IUpdateDocumentCommentDto) {
+        await this.commentsService.update(id, dto);
     }
 
-    public async delete(dto: IOnlyId) {
-        await this.commentsService.delete(dto.id);
+    public async delete({ id }: IOnlyId) {
+        await this.commentsService.delete(id);
     }
 }

@@ -3,11 +3,12 @@
 import { CommentsList, CommentsListSkeleton, CreateCommentForm } from "@/widgets/comments";
 import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/documents";
 import { VersionsListSkeleton, CreateVersionButton, VersionsList } from "@/widgets/versions";
-import { useParams } from "next/navigation";
 import { Suspense } from "react";
+import { commentsListClassName, versionsListClassName } from "./constants";
+import { useDocumentPage } from "./hooks";
 
 export default function DocumentPage() {
-    const { id: documentId } = useParams() as { id: string };
+    const { documentId, versionId } = useDocumentPage();
 
     return (
         <div className="flex flex-row justify-between items-start gap-2 h-screen">
@@ -23,18 +24,18 @@ export default function DocumentPage() {
                         <CreateVersionButton documentId={documentId} />
                     </div>
 
-                    <Suspense fallback={<VersionsListSkeleton className="h-[55%] border" />}>
-                        <VersionsList documentId={documentId} className="h-[55%] border" />
+                    <Suspense fallback={<VersionsListSkeleton className={versionsListClassName} />}>
+                        <VersionsList documentId={documentId} className={versionsListClassName} />
                     </Suspense>
                 </div>
             </div>
 
             <div className="grow-3 h-full flex flex-col">
-                <Suspense fallback={<CommentsListSkeleton className="h-[90%] rounded-md border p-2" />}>
-                    <CommentsList className="h-[90%] rounded-md border p-2" />
+                <Suspense fallback={<CommentsListSkeleton className={commentsListClassName} />}>
+                    {versionId && <CommentsList versionId={versionId} className={commentsListClassName} />}
                 </Suspense>
 
-                <CreateCommentForm />
+                {versionId && <CreateCommentForm versionId={versionId} />}
             </div>
         </div>
     );
