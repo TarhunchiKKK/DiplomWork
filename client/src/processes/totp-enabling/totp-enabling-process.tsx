@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useEnableTotpStep, useGenerateTotpStep } from "./hooks";
-import { EnableTotpForm, TotpQrCard } from "@/widgets/authentication";
+import { EnableTotpForm, TotpQrCard } from "@/features/auth";
 
 export function TotpEnablingProcess() {
     const [step, setStep] = useState(0);

@@ -1,4 +1,5 @@
+export * from "./hooks";
 export * from "./ui";
-export type { TProfile } from "./types";
-export { useProfileStore } from "./lib";
-export { credentialsManager } from "./utils";
+export * from "./lib";
+export * from "./utils";
+export type { TProfile, TAuthResponse } from "./types";
