@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { credentialsManager } from "@/features/auth";
 import axios from "axios";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 
 type TParticipantDto = {
     id?: string;
@@ -34,7 +35,8 @@ export function useUpsertWorkflowParticipants() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.workflows.findOne.base });
-        }
+        },
+        onError: httpErrorHandler
     });
 
     return {

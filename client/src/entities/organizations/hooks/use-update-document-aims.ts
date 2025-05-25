@@ -1,8 +1,8 @@
 import { credentialsManager } from "@/features/auth";
 import { queryUrls, HttpHeadersBuilder, queryKeys } from "@/shared/api";
-import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { toast } from "sonner";
 
 type TUpdateDto = {
@@ -28,11 +28,7 @@ export function useUpdateDocumentAims() {
         onSuccess: () => {
             toast.success("Обновлено успешно");
         },
-        onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => {
-                toast.error(message);
-            });
-        }
+        onError: httpErrorHandler
     });
 
     return {

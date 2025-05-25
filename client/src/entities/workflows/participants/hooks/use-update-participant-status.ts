@@ -3,6 +3,7 @@ import { ApprovalStatus } from "../enums";
 import { credentialsManager } from "@/features/auth";
 import axios from "axios";
 import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 
 type TDto = {
     id: string;
@@ -24,7 +25,8 @@ export function useUpdatePArticipantStatus() {
                     headers: new HttpHeadersBuilder().setBearerToken(token).build()
                 }
             );
-        }
+        },
+        onError: httpErrorHandler
     });
 
     return {

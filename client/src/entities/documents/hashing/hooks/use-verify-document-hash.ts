@@ -1,5 +1,6 @@
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -25,7 +26,8 @@ export function useVerifyDocumentHash() {
             if (!response.data.valid) {
                 throw new Error("Неверный хеш");
             }
-        }
+        },
+        onError: httpErrorHandler
     });
 
     return {

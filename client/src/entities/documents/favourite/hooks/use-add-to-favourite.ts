@@ -1,8 +1,8 @@
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { toast } from "sonner";
 
 export function useAddToFavourite() {
     const queryClient = useQueryClient();
@@ -19,7 +19,7 @@ export function useAddToFavourite() {
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.findOne(documentId) });
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.favourite });
         },
-        onError: () => toast.error("Ошибка")
+        onError: httpErrorHandler
     });
 
     return {

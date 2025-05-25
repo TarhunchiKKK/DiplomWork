@@ -2,12 +2,12 @@
 
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/shared/ui";
 import { dropdownOptions } from "./constants";
-import { useDisableTotp, useUpdateAuthTypeForm } from "./hooks";
+import { useUpdateAuthType, useUpdateAuthTypeForm } from "./hooks";
 
 export function UpdateAuthTypeForm() {
     const { buttonLabel, authType, setAuthType } = useUpdateAuthTypeForm();
 
-    const { update, isPending } = useDisableTotp();
+    const { update, isPending } = useUpdateAuthType();
 
     return (
         <div className="flex justify-between items-end">

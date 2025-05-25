@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { credentialsManager } from "@/features/auth";
-import { toast } from "sonner";
+import { httpErrorHandler } from "@/shared/validation";
 
 type TUpdateDocumentDto = {
     id: string;
@@ -31,7 +31,7 @@ export function useUpdateDocument() {
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.findOne(variables.id) });
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.base });
         },
-        onError: () => toast.error("Ошибка")
+        onError: httpErrorHandler
     });
 
     return { update: mutate, isPending };

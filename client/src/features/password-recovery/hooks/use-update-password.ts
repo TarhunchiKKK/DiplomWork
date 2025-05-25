@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
 import { toast } from "sonner";
-import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { httpErrorHandler } from "@/shared/validation";
 import { credentialsManager } from "@/features/auth";
 
 type TDto = {
@@ -23,11 +23,7 @@ export function useUpdatePassword() {
         onSuccess: () => {
             toast.success("Пароль обновлен");
         },
-        onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => {
-                toast.error(message);
-            });
-        }
+        onError: httpErrorHandler
     });
 
     return { update: mutate, isPending };

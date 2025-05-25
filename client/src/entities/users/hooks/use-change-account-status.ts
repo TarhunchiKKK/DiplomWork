@@ -1,9 +1,9 @@
 import { AccountStatus } from "@/entities/users";
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { toast } from "sonner";
 
 type TDto = {
     userId: string;
@@ -29,8 +29,6 @@ export function useChangeAccountStatus() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.users.byOrganization });
         },
-        onError: () => {
-            toast.error("Ошибка");
-        }
+        onError: httpErrorHandler
     });
 }

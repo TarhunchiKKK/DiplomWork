@@ -1,7 +1,7 @@
 import { TFormField } from "@/shared/types";
-import { TUpdateProfileFormState } from "./types";
+import { TFormState } from "./types";
 
-export const formFields: TFormField<TUpdateProfileFormState>[] = [
+export const formFields: TFormField<TFormState>[] = [
     {
         name: "username",
         label: "Отображаемое имя",

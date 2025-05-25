@@ -1,5 +1,6 @@
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
@@ -15,7 +16,8 @@ export function useResetPassword() {
         },
         onSuccess: () => {
             toast.success("Пароль сброшен");
-        }
+        },
+        onError: httpErrorHandler
     });
 
     return {

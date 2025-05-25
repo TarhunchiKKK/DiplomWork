@@ -1,5 +1,6 @@
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -22,7 +23,8 @@ export function useCreateWorkflow() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.workflows.base });
-        }
+        },
+        onError: httpErrorHandler
     });
 
     return {

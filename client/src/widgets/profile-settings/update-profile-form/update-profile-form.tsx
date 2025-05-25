@@ -1,22 +1,15 @@
 "use client";
 
 import { Button, Form, FormField, FormItem, FormLabel, Input } from "@/shared/ui";
-import { useUpdateProfile, useUpdateProfileForm } from "./hooks";
-import { TUpdateProfileFormState } from "./types";
+import { useUpdateProfileForm } from "./hooks";
 import { formFields } from "./constants";
 
 export function UpdateProfileForm() {
-    const form = useUpdateProfileForm();
-
-    const { update, isPending } = useUpdateProfile();
-
-    const onSubmit = (data: TUpdateProfileFormState) => {
-        update(data);
-    };
+    const { form, onSubmit, isPending } = useUpdateProfileForm();
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="flex justify-between items-end">
+            <form onSubmit={onSubmit} className="flex justify-between items-end">
                 <div className="space-y-2">
                     {formFields.map(formField => (
                         <FormField

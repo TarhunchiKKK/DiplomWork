@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { queryUrls } from "@/shared/api";
 import { toast } from "sonner";
-import { extractValidationMessages, TValidationError } from "@/shared/validation";
+import { httpErrorHandler } from "@/shared/validation";
 import { TAuthResponse } from "../types";
 
 type TDto = {
@@ -24,8 +24,6 @@ export function useLogin(onSuccess: TOnSuccess = () => {}) {
 
             onSuccess(response);
         },
-        onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => toast.error(message));
-        }
+        onError: httpErrorHandler
     });
 }

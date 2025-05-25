@@ -1,40 +1,30 @@
 import { credentialsManager } from "@/features/auth";
-import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { queryUrls, HttpHeadersBuilder, queryKeys } from "@/shared/api";
 import { httpErrorHandler } from "@/shared/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { toast } from "sonner";
 
 type TDto = {
-    typeId: string;
-
-    aimId: string;
-
-    isUrgent: boolean;
-
-    filename: string;
-
-    hash: string;
+    username: string;
 };
 
-export function useCreateDocument() {
+export function useUpdateProfile() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
-            await axios.post(queryUrls.documents.create, dto, {
+            await axios.patch(queryUrls.users.updateProfile, dto, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeys.documents.base });
+            toast.success("Профиль обновлен");
+
+            queryClient.invalidateQueries({ queryKey: queryKeys.profile });
         },
         onError: httpErrorHandler
     });
-
-    return {
-        createDocument: mutate,
-        isPending
-    };
 }

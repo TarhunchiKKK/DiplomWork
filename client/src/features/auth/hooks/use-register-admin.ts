@@ -1,8 +1,8 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { queryUrls } from "@/shared/api";
 import { toast } from "sonner";
-import { extractValidationMessages, TValidationError } from "@/shared/validation";
+import { httpErrorHandler } from "@/shared/validation";
 import { credentialsManager, useProfileStore } from "@/features/auth";
 import { TAuthResponse } from "../types";
 
@@ -29,10 +29,6 @@ export function useRegisterAdmin() {
 
             setProfile(response);
         },
-        onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => {
-                toast.error(message);
-            });
-        }
+        onError: httpErrorHandler
     });
 }
