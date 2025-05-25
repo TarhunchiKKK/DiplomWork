@@ -5,7 +5,7 @@ import { DocumentCommentsGrpcService } from "common/grpc";
 import { firstValueFrom } from "rxjs";
 
 @Injectable()
-export class CommentGuard implements CanActivate {
+export class CommentAuthorGuard implements CanActivate {
     public constructor(
         private readonly commentsService: DocumentCommentsGrpcService,
 

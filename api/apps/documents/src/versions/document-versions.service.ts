@@ -13,7 +13,6 @@ import { splitFilename } from "common/utils";
 export class DocumentVersionsService {
     public constructor(
         @InjectRepository(DocumentVersion) private readonly versionsRepository: Repository<DocumentVersion>,
-
         private readonly eventEmitter: EventEmitter2
     ) {}
 
@@ -62,28 +61,6 @@ export class DocumentVersionsService {
         }
 
         return version;
-    }
-
-    public async findLast(documentId: string) {
-        const versions = await this.versionsRepository.find({
-            where: {
-                document: {
-                    id: documentId
-                }
-            },
-            relations: {
-                document: true
-            },
-            order: {
-                createdAt: "DESC"
-            }
-        });
-
-        if (versions.length === 0) {
-            throw new NotFoundException("Нет версий для документа");
-        }
-
-        return versions[0];
     }
 
     public async findVersionDocument(versionId: string) {

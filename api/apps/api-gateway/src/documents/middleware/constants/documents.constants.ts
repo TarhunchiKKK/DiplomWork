@@ -6,7 +6,8 @@ export const documentPermissions: Record<DocumentRole, DocumentOperation[]> = {
         DocumentOperation.UPDATE,
         DocumentOperation.READ,
         DocumentOperation.CREATE_VERSION,
-        DocumentOperation.COMMENT
+        DocumentOperation.UPDATE_VERSION,
+        DocumentOperation.CREATE_COMMENT
     ],
-    [DocumentRole.REGULAR]: [DocumentOperation.READ, DocumentOperation.COMMENT]
+    [DocumentRole.REGULAR]: [DocumentOperation.READ, DocumentOperation.CREATE_COMMENT]
 };

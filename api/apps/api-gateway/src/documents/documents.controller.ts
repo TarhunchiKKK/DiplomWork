@@ -3,7 +3,6 @@ import {
     Controller,
     Get,
     Param,
-    ParseBoolPipe,
     Patch,
     Post,
     Query,

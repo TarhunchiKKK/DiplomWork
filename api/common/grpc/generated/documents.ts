@@ -304,8 +304,6 @@ export interface DocumentVersionsServiceClient {
 
   findOneById(request: IOnlyId): Observable<IFindOneDocumentVersionResponse>;
 
-  findLast(request: IOnlyId): Observable<IFindOneDocumentVersionResponse>;
-
   findDocument(request: IOnlyId): Observable<IFullDocumentResponse>;
 
   update(request: IUpdateDocumentVersionDto): Observable<IEmptyResponse>;
@@ -333,13 +331,6 @@ export interface DocumentVersionsServiceController {
     | Observable<IFindOneDocumentVersionResponse>
     | IFindOneDocumentVersionResponse;
 
-  findLast(
-    request: IOnlyId,
-  ):
-    | Promise<IFindOneDocumentVersionResponse>
-    | Observable<IFindOneDocumentVersionResponse>
-    | IFindOneDocumentVersionResponse;
-
   findDocument(
     request: IOnlyId,
   ): Promise<IFullDocumentResponse> | Observable<IFullDocumentResponse> | IFullDocumentResponse;
@@ -349,7 +340,7 @@ export interface DocumentVersionsServiceController {
 
 export function DocumentVersionsServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll", "findOneById", "findLast", "findDocument", "update"];
+    const grpcMethods: string[] = ["create", "findAll", "findOneById", "findDocument", "update"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("DocumentVersionsService", method)(constructor.prototype[method], method, descriptor);

@@ -180,8 +180,6 @@ service DocumentVersionsService {
 
     rpc FindOneById (common.IOnlyId) returns (IFindOneDocumentVersionResponse) {}
 
-    rpc FindLast (common.IOnlyId) returns (IFindOneDocumentVersionResponse) {}
-
     rpc FindDocument (common.IOnlyId) returns (IFullDocumentResponse) {}
 
     rpc Update (IUpdateDocumentVersionDto) returns (common.IEmptyResponse) {}

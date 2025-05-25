@@ -72,7 +72,12 @@ export function CreateVersionButton({ documentId }: TProps) {
 
                                 <DialogFooter>
                                     <DialogClose asChild>
-                                        <Button type="submit" variant="outline" className="w-full" disabled={isPending}>
+                                        <Button
+                                            type="submit"
+                                            variant="outline"
+                                            className="cursor-pointer"
+                                            disabled={isPending}
+                                        >
                                             Сохранить
                                         </Button>
                                     </DialogClose>

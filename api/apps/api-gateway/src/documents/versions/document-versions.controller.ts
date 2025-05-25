@@ -32,13 +32,6 @@ export class DocumentVersionsController {
         });
     }
 
-    @Get("/last/:documentId")
-    public findLast(@Param("documentId") documentId: string) {
-        return this.documentVersionsGrpcService.call("findLast", {
-            id: documentId
-        });
-    }
-
     @Get("/:versionId")
     @ProvideOperation(DocumentOperation.READ)
     @ExtractFromRequest(request => request.params.versionId)
@@ -51,6 +44,9 @@ export class DocumentVersionsController {
 
     @Patch(":versionId")
     @UsePipes(ValidationPipe)
+    @ProvideOperation(DocumentOperation.UPDATE_VERSION)
+    @ExtractFromRequest(request => request.params.versionId)
+    @UseGuards(DocumentOperationGuard)
     public update(@Param("versionId") versionId: string, @Body() dto: UpdateDocumentVersionDto) {
         return this.documentVersionsGrpcService.call("update", {
             ...dto,

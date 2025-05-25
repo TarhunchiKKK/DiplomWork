@@ -23,24 +23,19 @@ export class DocumentVersionsController implements UnwrapGrpcResponse<DocumentVe
         return await this.versionsService.create(dto);
     }
 
-    public async findAll(dto: IOnlyId) {
-        return await this.versionsService.findAll(dto.id).then(transfromVrsionsArray);
+    public async findAll({ id }: IOnlyId) {
+        return await this.versionsService.findAll(id).then(transfromVrsionsArray);
     }
 
-    public async findOneById(dto: IOnlyId) {
-        return await this.versionsService.findOneById(dto.id).then(transformVersion);
+    public async findOneById({ id }: IOnlyId) {
+        return await this.versionsService.findOneById(id).then(transformVersion);
     }
 
-    public async findLast(dto: IOnlyId) {
-        return await this.versionsService.findLast(dto.id).then(transformVersion);
+    public async findDocument({ id }: IOnlyId) {
+        return await this.versionsService.findVersionDocument(id);
     }
 
-    public async findDocument(dto: IOnlyId) {
-        return await this.versionsService.findVersionDocument(dto.id);
-    }
-
-    public async update(dto: IUpdateDocumentVersionDto) {
-        const { id, ...data } = dto;
-        await this.versionsService.update(id, data);
+    public async update({ id, ...dto }: IUpdateDocumentVersionDto) {
+        await this.versionsService.update(id, dto);
     }
 }
