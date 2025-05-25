@@ -6,8 +6,9 @@ import { ProvideOperation } from "../middleware/decorators/provide-operation.dec
 import { DocumentOperation } from "../middleware/enums/document-operation.enum";
 import { VersionOperationGuard } from "../middleware/guards/version-operation.guard";
 import { UpdateDocumentVersionDto } from "./dto/update-document-version.dto";
+import { DocumentOperationGuard } from "../middleware/guards/document-operation.guard";
 
-@Controller("/documents/versions")
+@Controller("/versions")
 @UseGuards(AuthenticationGuard)
 export class DocumentVersionsController {
     public constructor(private readonly documentVersionsGrpcService: DocumentVersionsGrpcService) {}
@@ -24,7 +25,7 @@ export class DocumentVersionsController {
     @Get("/all/:documentId")
     @ProvideOperation(DocumentOperation.READ)
     @ExtractFromRequest(request => request.params.documentId)
-    @UseGuards(VersionOperationGuard)
+    @UseGuards(DocumentOperationGuard)
     public findAll(@Param("documentId") documentId: string) {
         return this.documentVersionsGrpcService.call("findAll", {
             id: documentId

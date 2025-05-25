@@ -18,7 +18,7 @@ import { CreateDocumentCommentDto } from "./dto/create-document-comment.dto";
 import { UpdateDocumentCommentDto } from "./dto/update-document-comment.dto";
 import { CommentGuard } from "./middleware/comments.guard";
 
-@Controller("/documents/comments")
+@Controller("/comments")
 @UseGuards(AuthenticationGuard)
 export class DocumentCommentsController {
     public constructor(private readonly documentCommentsGrpcService: DocumentCommentsGrpcService) {}

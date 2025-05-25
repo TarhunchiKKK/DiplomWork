@@ -4,7 +4,7 @@ import { AuthenticationGuard } from "common/middleware";
 import { UpdateDocumentHashDto } from "./dto/update-document-hash.dto";
 import { VerifyDocumentHashDto } from "./dto/verify-document-hash.dto";
 
-@Controller("/documents/hash")
+@Controller("/hashing")
 @UseGuards(AuthenticationGuard)
 export class DocumentHashingController {
     public constructor(private readonly hashingGrpcService: DocumentHashingGrpcService) {}
