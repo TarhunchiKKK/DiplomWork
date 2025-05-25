@@ -72,7 +72,8 @@ const document: TDocument = {
     aimId: "1",
     typeId: "1",
     authorId: "1",
-    isUrgent: true
+    isUrgent: true,
+    lastVersionId: "1"
 };
 
 const profile: TProfile = {
@@ -281,5 +282,6 @@ export const mocks = {
     verifyDocumentHashDto,
     comments,
     notifications,
-    users
+    users,
+    hash: "$argon2id$v=19$m=65536,t=3,p=4$rvbfUqS8CNoElEmVLqIIQw$FDMrfRKvOoV/6WWDAYqgyvVzoK938SzIFJ1f36GiODo"
 };

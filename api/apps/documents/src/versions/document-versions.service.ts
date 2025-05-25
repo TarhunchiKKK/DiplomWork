@@ -43,6 +43,9 @@ export class DocumentVersionsService {
             },
             relations: {
                 document: true
+            },
+            order: {
+                createdAt: "DESC"
             }
         });
     }

@@ -16,8 +16,8 @@ export class DocumentVersionsController {
     @Post()
     @UsePipes(ValidationPipe)
     @ProvideOperation(DocumentOperation.CREATE_VERSION)
-    @ExtractFromRequest(request => request.params.versionId)
-    @UseGuards(VersionOperationGuard)
+    @ExtractFromRequest(request => request.body.documentId)
+    @UseGuards(DocumentOperationGuard)
     public create(@Body() dto: CreateDocumentVersionDto) {
         return this.documentVersionsGrpcService.call("create", dto);
     }

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { TFormState } from "./types";
 import { useCreateDocumentVersion, useOneDocument } from "@/entities/documents";
 import { toast } from "sonner";
+import { mocks } from "@/dev";
 
 export function useCreateVersionButton(documentId: string) {
     const form = useForm<TFormState>({
@@ -27,8 +28,10 @@ export function useCreateVersionButton(documentId: string) {
             documentId: document!.id,
             description: data.description || undefined,
             filename: data.files[0].name,
-            hash: ""
+            hash: mocks.hash
         });
+
+        form.reset();
     });
 
     return {
