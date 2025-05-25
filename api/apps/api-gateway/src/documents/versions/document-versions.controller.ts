@@ -1,5 +1,16 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
-import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    Patch,
+    Post,
+    UseFilters,
+    UseGuards,
+    UsePipes,
+    ValidationPipe
+} from "@nestjs/common";
+import { AuthenticationGuard, ExtractFromRequest, GatewayExceptionFilter } from "common/middleware";
 import { CreateDocumentVersionDto } from "./dto/create-document-version.dto";
 import { DocumentVersionsGrpcService } from "common/grpc";
 import { ProvideOperation } from "../middleware/decorators/provide-operation.decorator";
@@ -9,6 +20,7 @@ import { UpdateDocumentVersionDto } from "./dto/update-document-version.dto";
 import { DocumentOperationGuard } from "../middleware/guards/document-operation.guard";
 
 @Controller("/versions")
+@UseFilters(GatewayExceptionFilter)
 @UseGuards(AuthenticationGuard)
 export class DocumentVersionsController {
     public constructor(private readonly documentVersionsGrpcService: DocumentVersionsGrpcService) {}

@@ -1,11 +1,23 @@
-import { Body, Controller, Get, Param, Patch, Put, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    Patch,
+    Put,
+    UseFilters,
+    UseGuards,
+    UsePipes,
+    ValidationPipe
+} from "@nestjs/common";
 import { WorkflowParticipantsGrpcService } from "common/grpc";
-import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
+import { AuthenticationGuard, ExtractFromRequest, GatewayExceptionFilter } from "common/middleware";
 import { WorkflowCreatorGuard } from "../middleware/workflow-creator.guard";
 import { UpsertWorkflowParticipantsDto } from "./dto/uspers-workflow-participants.dto";
 import { UpdateApprovalStatusDto } from "./dto/update-approval-status.dto";
 
 @Controller("/workflows/participants")
+@UseFilters(GatewayExceptionFilter)
 @UseGuards(AuthenticationGuard)
 export class WorkflowParticipantsController {
     public constructor(private readonly participantsGrpcService: WorkflowParticipantsGrpcService) {}

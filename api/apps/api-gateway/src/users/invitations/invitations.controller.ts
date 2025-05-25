@@ -1,12 +1,13 @@
-import { Body, Controller, Patch, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Patch, Post, Req, UseFilters, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { Role } from "common/enums";
 import { UsersInvitationGrpcService } from "common/grpc";
-import { RequireRoles, RoleGuard } from "common/middleware";
+import { GatewayExceptionFilter, RequireRoles, RoleGuard } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { ConfirmInvitationDto } from "./dto/confirm-invitation.dto";
 import { Recaptcha } from "@nestlab/google-recaptcha";
 
 @Controller("/users/invitations")
+@UseFilters(GatewayExceptionFilter)
 export class InvitationsController {
     public constructor(private readonly usersInvitationGrpcService: UsersInvitationGrpcService) {}
 

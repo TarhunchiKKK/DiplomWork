@@ -1,13 +1,21 @@
-import { Body, Controller, Get, Patch, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Req, UseFilters, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { Role } from "common/enums";
 import { OrganizationsGrpcService } from "common/grpc";
-import { AuthenticationGuard, ExtractFromRequest, OrganizationGuard, RequireRoles, RoleGuard } from "common/middleware";
+import {
+    AuthenticationGuard,
+    ExtractFromRequest,
+    GatewayExceptionFilter,
+    OrganizationGuard,
+    RequireRoles,
+    RoleGuard
+} from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { UpdateDocumentAimsDto } from "./dto/update-document-aims.dto";
 import { UpdateDocumentTypesDto } from "./dto/update-document-types.dto";
 import { UpdateAdministrativeDivisionsDto } from "./dto/update-administrative-divisions.dto";
 
 @Controller("organizations")
+@UseFilters(GatewayExceptionFilter)
 export class OrganizationsController {
     public constructor(private readonly organizationsGrpcService: OrganizationsGrpcService) {}
 

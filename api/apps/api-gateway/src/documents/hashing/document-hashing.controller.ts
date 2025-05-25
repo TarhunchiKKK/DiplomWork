@@ -1,10 +1,11 @@
-import { Body, Controller, Param, Patch, Post, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Param, Patch, Post, UseFilters, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { DocumentHashingGrpcService } from "common/grpc";
-import { AuthenticationGuard } from "common/middleware";
+import { AuthenticationGuard, GatewayExceptionFilter } from "common/middleware";
 import { UpdateDocumentHashDto } from "./dto/update-document-hash.dto";
 import { VerifyDocumentHashDto } from "./dto/verify-document-hash.dto";
 
 @Controller("/hashing")
+@UseFilters(GatewayExceptionFilter)
 @UseGuards(AuthenticationGuard)
 export class DocumentHashingController {
     public constructor(private readonly hashingGrpcService: DocumentHashingGrpcService) {}

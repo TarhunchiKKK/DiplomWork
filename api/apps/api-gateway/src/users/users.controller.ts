@@ -7,17 +7,18 @@ import {
     Patch,
     Query,
     Req,
+    UseFilters,
     UseGuards,
     UsePipes,
     ValidationPipe
 } from "@nestjs/common";
 import { UsersGrpcService } from "common/grpc";
-import { AuthenticationGuard } from "common/middleware";
+import { AuthenticationGuard, GatewayExceptionFilter } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { UpdateProfileDto } from "./dto/update-profile.dto";
 
 @Controller("users")
-@UseGuards(AuthenticationGuard)
+@UseFilters(GatewayExceptionFilter)
 @UseGuards(AuthenticationGuard)
 export class UsersController {
     public constructor(public readonly usersGrpcService: UsersGrpcService) {}

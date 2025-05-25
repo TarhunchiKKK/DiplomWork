@@ -7,12 +7,13 @@ import {
     Post,
     Query,
     Req,
+    UseFilters,
     UseGuards,
     UsePipes,
     ValidationPipe
 } from "@nestjs/common";
 import { DocumentsGrpcService, IFindDocumentsDto } from "common/grpc";
-import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
+import { AuthenticationGuard, ExtractFromRequest, GatewayExceptionFilter } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { CreateDocumentDto } from "./dto/create-document.dto";
 import { UpdateDocumentDto } from "./dto/update-document.dto";
@@ -22,6 +23,7 @@ import { DocumentOperation } from "./middleware/enums/document-operation.enum";
 import { DocumentOperationGuard } from "./middleware/guards/document-operation.guard";
 
 @Controller("/documents")
+@UseFilters(GatewayExceptionFilter)
 @UseGuards(AuthenticationGuard)
 export class DocumentsController {
     public constructor(private readonly documentsGrpcService: DocumentsGrpcService) {}

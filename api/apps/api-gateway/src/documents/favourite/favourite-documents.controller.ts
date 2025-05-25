@@ -1,9 +1,21 @@
-import { Controller, Delete, Get, Param, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
-import { AuthenticationGuard } from "common/middleware";
+import {
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Req,
+    UseFilters,
+    UseGuards,
+    UsePipes,
+    ValidationPipe
+} from "@nestjs/common";
+import { AuthenticationGuard, GatewayExceptionFilter } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { FavouriteDocumentsGrpcService } from "common/grpc";
 
 @Controller("/favourite")
+@UseFilters(GatewayExceptionFilter)
 @UseGuards(AuthenticationGuard)
 export class FavouriteDocumentsController {
     public constructor(private readonly favouriteDocumentsGrpcService: FavouriteDocumentsGrpcService) {}

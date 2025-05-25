@@ -7,12 +7,13 @@ import {
     Patch,
     Post,
     Req,
+    UseFilters,
     UseGuards,
     UsePipes,
     ValidationPipe
 } from "@nestjs/common";
 import { DocumentCommentsGrpcService } from "common/grpc/services/documents/services/document-comments.grpc-service";
-import { AuthenticationGuard, ExtractFromRequest } from "common/middleware";
+import { AuthenticationGuard, ExtractFromRequest, GatewayExceptionFilter } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { CreateDocumentCommentDto } from "./dto/create-document-comment.dto";
 import { UpdateDocumentCommentDto } from "./dto/update-document-comment.dto";
@@ -23,6 +24,7 @@ import { DocumentOperation } from "../middleware/enums/document-operation.enum";
 import { VersionOperationGuard } from "../middleware/guards/version-operation.guard";
 
 @Controller("/comments")
+@UseFilters(GatewayExceptionFilter)
 @UseGuards(AuthenticationGuard)
 export class DocumentCommentsController {
     public constructor(private readonly documentCommentsGrpcService: DocumentCommentsGrpcService) {}
