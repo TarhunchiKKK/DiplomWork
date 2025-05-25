@@ -10,4 +10,6 @@ export type TDocument = {
     isUrgent: boolean;
 
     authorId: string;
+
+    lastVersionId: string;
 };

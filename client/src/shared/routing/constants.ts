@@ -1,10 +1,14 @@
 export const routes = {
     dashboard: {
         index: "/dashboard",
+        matcher: "/dashboard/*",
         documents: {
             my: "/dashboard/my-documents",
             favourite: "/dashboard/favourite-documents",
-            urgent: "/dashboard/urgent-documents"
+            urgent: "/dashboard?isUrgent=true",
+            withDocumentAim: (documentAimId: string) => `/dashboard?aimId=${documentAimId}`,
+            withDocumentType: (documentTypeId: string) => `/dashboard?typeId=${documentTypeId}`,
+            one: (documentId: string) => `/dashboard/document/${documentId}`
         },
         notificaions: {
             all: "/dashboard/notifications"
@@ -12,13 +16,14 @@ export const routes = {
         workflows: {
             my: "/dashboard/workflows/my",
             invited: "/dashboard/workflows/invited"
-        },
-        settings: {
-            profile: "/dashboard/settings/profile",
-            users: "/dashboard/settings/users",
-            organization: "/dashboard/settings/organization",
-            documents: "/dashboard/settings/documents"
         }
+    },
+    settings: {
+        matcher: "/settings/*",
+        documents: "/settings/documents",
+        organization: "/settings/organization",
+        users: "/settings/users",
+        profile: "/settings/profile"
     },
     auth: {
         registerAdmin: "/auth/register/admin",
@@ -26,13 +31,8 @@ export const routes = {
         login: "/auth/login",
         enableTotp: "/auth/enable-totp"
     },
-    settings: {
-        documents: "/settings/documents",
-        organization: "/settings/organization",
-        users: "/settings/users",
-        profile: "/settings/profile"
-    },
     passwordRecovery: {
+        matcher: "/password-recovery/*",
         reset: "/password-recovery/reset"
     }
 };

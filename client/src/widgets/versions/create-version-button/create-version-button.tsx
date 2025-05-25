@@ -18,9 +18,10 @@ import {
 } from "@/shared/ui";
 import { Plus } from "lucide-react";
 import { useCreateVersionButton } from "./hooks";
+import { TProps } from "./types";
 
-export function CreateVersionButton() {
-    const { display, form, isPending, onSubmit } = useCreateVersionButton();
+export function CreateVersionButton({ documentId }: TProps) {
+    const { display, form, isPending, onSubmit } = useCreateVersionButton(documentId);
 
     return (
         <>
@@ -70,8 +71,13 @@ export function CreateVersionButton() {
                                 />
 
                                 <DialogFooter>
-                                    <DialogClose>
-                                        <Button type="submit" variant="outline" className="w-full" disabled={isPending}>
+                                    <DialogClose asChild>
+                                        <Button
+                                            type="submit"
+                                            variant="outline"
+                                            className="cursor-pointer"
+                                            disabled={isPending}
+                                        >
                                             Сохранить
                                         </Button>
                                     </DialogClose>

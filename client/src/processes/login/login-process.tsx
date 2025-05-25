@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { LoginForm, TotpLoginForm } from "@/widgets/authentication";
+import { LoginForm, TotpLoginForm } from "@/features/auth";
 import { useLoginStep, useTotpLoginStep } from "./hooks";
 import { TTotpLoginPayload } from "./types";
 

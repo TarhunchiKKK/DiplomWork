@@ -23,7 +23,7 @@ export function useNotifications(queryParams: TQueryParams = {}) {
                 params: queryParams
             });
 
-            return response.data.notifications;
+            return response.data.notifications ?? [];
         },
         select: notifications => notifications.map(transformNotification)
     });

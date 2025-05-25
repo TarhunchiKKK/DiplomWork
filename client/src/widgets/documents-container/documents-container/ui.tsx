@@ -3,8 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { containerClassNames, iconSizes } from "./constants";
 import { TSIngleItemProps } from "./types";
-import { formatDateOnly, getDocumentIcon } from "@/shared/helpers";
+import { formatFullDate, getDocumentIcon } from "@/shared/helpers";
 import { DocumentsDisplayType } from "../shared";
+import { routes } from "@/shared/routing";
 
 export function DocumentsRowItem({ document }: TSIngleItemProps) {
     const iconPath = getDocumentIcon(document.title);
@@ -19,11 +20,11 @@ export function DocumentsRowItem({ document }: TSIngleItemProps) {
                         <Image src={iconPath} alt="icon" width={iconSize} height={iconSize} />
 
                         <CardTitle>
-                            <Link href="#">{document.title}</Link>
+                            <Link href={routes.dashboard.documents.one(document.id)}>{document.title}</Link>
                         </CardTitle>
                     </div>
 
-                    <CardDescription>{formatDateOnly(document.createdAt)}</CardDescription>
+                    <CardDescription>{formatFullDate(document.createdAt)}</CardDescription>
                 </div>
             </CardContent>
         </Card>
@@ -36,23 +37,25 @@ export function DocumentsGridItem({ document }: TSIngleItemProps) {
     const iconSize = iconSizes[DocumentsDisplayType.GRID];
 
     return (
-        <Card className="w-min">
+        <Card className="w-[180px]">
             <CardContent>
                 <div className="flex flex-col items-center space-y-2">
                     <Image src={iconPath} alt="icon" width={iconSize} height={iconSize} />
 
-                    <CardTitle>
-                        <Link href="#">{document.title}</Link>
+                    <CardTitle className="text-center">
+                        <Link href={routes.dashboard.documents.one(document.id)} className="text-center">
+                            {document.title}
+                        </Link>
                     </CardTitle>
 
-                    <CardDescription>{formatDateOnly(document.createdAt)}</CardDescription>
+                    <CardDescription>{formatFullDate(document.createdAt)}</CardDescription>
                 </div>
             </CardContent>
         </Card>
     );
 }
 
-export function DocumentsCOntainerSkeleton() {
+export function DocumentsContainerSkeleton() {
     const containerClassName = containerClassNames[DocumentsDisplayType.ROWS];
 
     return (

@@ -1,7 +1,7 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import {
-    DocumentsServiceControllerMethods,
     FavouriteDocumentsServiceController,
+    FavouriteDocumentsServiceControllerMethods,
     GrpcExceptionFilter,
     IAddToFavouriteDto,
     IOnlyId,
@@ -13,7 +13,7 @@ import { FavouriteDocumentsService } from "./favourite-documents.service";
 import { transformDocumentsArray } from "./helpers/grpc.helpers";
 
 @Controller()
-@DocumentsServiceControllerMethods()
+@FavouriteDocumentsServiceControllerMethods()
 @UseFilters(GrpcExceptionFilter)
 @UseInterceptors(WrapGrpcResponseInterceptor)
 export class FavouriteDocumentsController implements UnwrapGrpcResponse<FavouriteDocumentsServiceController> {

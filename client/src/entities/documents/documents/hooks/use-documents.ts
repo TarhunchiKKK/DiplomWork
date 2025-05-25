@@ -22,7 +22,7 @@ export function useDocuments(queryParams: TQueryParams) {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build(),
                 params: queryParams
             });
-            return response.data.documents;
+            return response.data.documents ?? [];
         },
         select: documents => documents.map(transformDocumentShortData)
     });

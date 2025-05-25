@@ -48,8 +48,17 @@ export function DocumentsGroup() {
 
     const { organization } = useOrganization();
 
-    const documentAims = organization?.documentAims.map(aim => ({ title: aim.value, url: "#" })) || [];
-    const documentTypes = organization?.documentTypes.map(type => ({ title: type.value, url: "#" })) || [];
+    const documentAims =
+        organization?.documentAims.map(aim => ({
+            title: aim.value,
+            url: routes.dashboard.documents.withDocumentAim(aim._id)
+        })) || [];
+
+    const documentTypes =
+        organization?.documentTypes.map(type => ({
+            title: type.value,
+            url: routes.dashboard.documents.withDocumentType(type._id)
+        })) || [];
 
     return (
         <SidebarGroup>

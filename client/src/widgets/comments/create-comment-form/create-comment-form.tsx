@@ -3,9 +3,10 @@
 import { Button, Form, FormField, FormItem, Input } from "@/shared/ui";
 import { useCreateCommentForm } from "./hooks";
 import { ArrowBigRight } from "lucide-react";
+import { TProps } from "./types";
 
-export function CreateCommentForm() {
-    const { form, onSubmit, isPending } = useCreateCommentForm();
+export function CreateCommentForm({ versionId }: TProps) {
+    const { form, onSubmit, isPending } = useCreateCommentForm(versionId);
 
     return (
         <Form {...form}>

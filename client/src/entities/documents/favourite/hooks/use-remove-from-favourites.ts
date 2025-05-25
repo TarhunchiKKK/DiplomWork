@@ -17,6 +17,7 @@ export function useRemoveFromFavourites() {
         },
         onSuccess: (_, documentId) => {
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.findOne(documentId) });
+            queryClient.invalidateQueries({ queryKey: queryKeys.documents.favourite });
         },
         onError: () => toast.error("Ошибка")
     });

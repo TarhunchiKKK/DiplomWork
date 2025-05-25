@@ -13,6 +13,9 @@ export class DocumentVersion {
     @Column()
     public url: string;
 
+    @Column()
+    public hash: string;
+
     @CreateDateColumn()
     public createdAt: Date;
 

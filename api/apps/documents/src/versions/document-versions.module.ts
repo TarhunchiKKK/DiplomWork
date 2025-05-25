@@ -5,7 +5,6 @@ import { DocumentVersionsController } from "./document-versions.controller";
 import { DocumentVersionsService } from "./document-versions.service";
 import { DocumentAccessTokensModule } from "common/modules";
 import { DocumentsModule } from "../documents/documents.module";
-import { DocumentVersionsEventsObserver } from "./document-versions-events.observer";
 import { WorkflowsGrpcModule } from "common/grpc";
 
 @Module({
@@ -16,7 +15,7 @@ import { WorkflowsGrpcModule } from "common/grpc";
         WorkflowsGrpcModule
     ],
     controllers: [DocumentVersionsController],
-    providers: [DocumentVersionsService, DocumentVersionsEventsObserver],
+    providers: [DocumentVersionsService],
     exports: [DocumentVersionsService]
 })
 export class DocumentVersionsModule {}

@@ -4,7 +4,7 @@ import { DocumentsService } from "./documents.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ElectronicDocument } from "./entities/document.entity";
 import { DocumentAccessTokensModule } from "common/modules";
-import { FavouriteDocumentsModule } from "./favourite/marked-documents.module";
+import { FavouriteDocumentsModule } from "./favourite/favourite-documents.module";
 import { DocumentVersionsModule } from "../versions/document-versions.module";
 
 @Module({

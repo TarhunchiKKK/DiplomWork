@@ -49,27 +49,27 @@ export const queryUrls = {
         create: `${environment.apiUrl}/documents`,
         update: `${environment.apiUrl}/documents`,
         favourite: {
-            findAll: `${environment.apiUrl}/documents/favourite`,
-            add: (documentId: string) => `${environment.apiUrl}/documents/favourite/${documentId}`,
-            remove: (userId: string) => `${environment.apiUrl}/documents/favourite/${userId}`
+            findAll: `${environment.apiUrl}/favourite`,
+            add: (documentId: string) => `${environment.apiUrl}/favourite/${documentId}`,
+            remove: (userId: string) => `${environment.apiUrl}/favourite/${userId}`
         },
         my: {
             findAll: `${environment.apiUrl}/documents/my`
         },
         hash: {
-            verify: `${environment.apiUrl}/documents/hash`
+            verify: `${environment.apiUrl}/hashing`
         },
         versions: {
-            findAll: (documentId: string) => `${environment.apiUrl}/documents/versions/all/${documentId}`,
-            findLast: (documentId: string) => `${environment.apiUrl}/documents/versions/last/${documentId}`,
-            findOne: (versionId: string) => `${environment.apiUrl}/documents/versions/${versionId}`,
-            create: `${environment.apiUrl}/documents/versions`
+            findAll: (documentId: string) => `${environment.apiUrl}/versions/all/${documentId}`,
+            findLast: (documentId: string) => `${environment.apiUrl}/versions/last/${documentId}`,
+            findOne: (versionId: string) => `${environment.apiUrl}/versions/${versionId}`,
+            create: `${environment.apiUrl}/versions`
         },
         comments: {
-            findAll: (versionId: string) => `${environment.apiUrl}/documents/comments/${versionId}`,
-            create: `${environment.apiUrl}/documents/comments`,
-            update: (commentId: string) => `${environment.apiUrl}/documents/comments/${commentId}`,
-            delete: (commentId: string) => `${environment.apiUrl}/documents/comments/${commentId}`
+            findAll: (versionId: string) => `${environment.apiUrl}/comments/${versionId}`,
+            create: `${environment.apiUrl}/comments`,
+            update: (commentId: string) => `${environment.apiUrl}/comments/${commentId}`,
+            delete: (commentId: string) => `${environment.apiUrl}/comments/${commentId}`
         }
     },
     workflows: {

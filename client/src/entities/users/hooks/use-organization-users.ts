@@ -18,7 +18,7 @@ export function useOrganizationUsers() {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
 
-            return response.data.users;
+            return response.data.users ?? [];
         },
         placeholderData: []
     });

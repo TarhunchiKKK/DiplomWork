@@ -46,7 +46,10 @@ export class DocumentsService {
 
     public async findOneById(documentId: string) {
         const document = await this.documentsRepository.findOne({
-            where: { id: documentId }
+            where: { id: documentId },
+            relations: {
+                versions: true
+            }
         });
 
         if (!document) {

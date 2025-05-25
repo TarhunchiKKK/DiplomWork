@@ -1,5 +1,10 @@
-import { ConfirmInvitationForm } from "@/widgets/authentication";
+"use client";
+
+import { ConfirmInvitationForm } from "@/features/auth";
+import { useParams } from "next/navigation";
 
 export default function ConfirmInvitationPage() {
-    return <ConfirmInvitationForm />;
+    const { token } = useParams() as { token: string };
+
+    return <ConfirmInvitationForm invitationToken={token} />;
 }

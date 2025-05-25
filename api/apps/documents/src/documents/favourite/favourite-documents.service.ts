@@ -46,7 +46,7 @@ export class FavouriteDocumentsService {
             }
         });
 
-        if (!documentInfo) {
+        if (documentInfo) {
             await this.favouriteDocumentsRepository.delete(documentInfo.id);
         }
     }

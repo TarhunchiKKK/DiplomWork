@@ -3,7 +3,6 @@ import {
     Controller,
     Get,
     Param,
-    ParseBoolPipe,
     Patch,
     Post,
     Query,
@@ -40,13 +39,13 @@ export class DocumentsController {
     public findAll(
         @Query("aimId") aimId?: string,
         @Query("typeId") typeId?: string,
-        @Query("isUrgent", ParseBoolPipe) isUrgent?: boolean,
+        @Query("isUrgent") isUrgent?: string,
         @Query("sortOrder") sortOrder?: string
     ) {
         const dto: IFindDocumentsDto = {
             aimId,
             typeId,
-            isUrgent,
+            isUrgent: isUrgent === undefined ? undefined : Boolean(isUrgent),
             sortOrder: sortOrder as DocumentSortOrder | undefined
         };
 
@@ -73,7 +72,7 @@ export class DocumentsController {
     @Patch()
     @UsePipes(ValidationPipe)
     @ProvideOperation(DocumentOperation.UPDATE)
-    @ExtractFromRequest(request => request.body.documentId)
+    @ExtractFromRequest(request => request.body.id)
     @UseGuards(DocumentOperationGuard)
     public update(@Body() dto: UpdateDocumentDto) {
         return this.documentsGrpcService.call("update", dto);

@@ -1,17 +1,17 @@
 import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import { DocumentsService } from "./documents.service";
 import {
-    DocumentsServiceController,
-    DocumentsServiceControllerMethods,
     GrpcExceptionFilter,
     ICreateDocumentDto,
     WrapGrpcResponseInterceptor,
     UnwrapGrpcResponse,
     IFindDocumentsDto,
     IUpdateDocumentDto,
-    IOnlyId
+    IOnlyId,
+    DocumentsServiceControllerMethods,
+    DocumentsServiceController
 } from "common/grpc";
-import { transformDocumentsArray } from "./helpers/grpc.helpers";
+import { transformDocumentsArray, transfromOneDocument } from "./helpers/grpc.helpers";
 
 @Controller()
 @DocumentsServiceControllerMethods()
@@ -25,19 +25,18 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
     }
 
     public async findOneById(dto: IOnlyId) {
-        return await this.documentsService.findOneById(dto.id);
+        return await this.documentsService.findOneById(dto.id).then(transfromOneDocument);
     }
 
     public async findAll(dto: IFindDocumentsDto) {
         return await this.documentsService.findAll(dto).then(transformDocumentsArray);
     }
 
-    public async update(dto: IUpdateDocumentDto) {
-        const { id, ...data } = dto;
-        await this.documentsService.update(id, data);
+    public async update({ id, ...dto }: IUpdateDocumentDto) {
+        await this.documentsService.update(id, dto);
     }
 
-    public async findAccessToken(dto: IOnlyId) {
-        return (await this.documentsService.findOneById(dto.id)).accessToken;
+    public async findOneFull(dto: IOnlyId) {
+        return await this.documentsService.findOneById(dto.id);
     }
 }

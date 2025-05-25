@@ -11,12 +11,13 @@ export function useAddToFavourite() {
         mutationFn: async (documentId: string) => {
             const token = credentialsManager.jwt.get();
 
-            await axios.post(queryUrls.documents.favourite.add(documentId), {
+            await axios.post(queryUrls.documents.favourite.add(documentId), null, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
         },
         onSuccess: (_, documentId) => {
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.findOne(documentId) });
+            queryClient.invalidateQueries({ queryKey: queryKeys.documents.favourite });
         },
         onError: () => toast.error("Ошибка")
     });

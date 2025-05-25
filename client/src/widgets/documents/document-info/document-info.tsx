@@ -13,10 +13,11 @@ import {
     DocumentParamsSkeleton,
     DownloadButtonSkeleton
 } from "./ui";
-import { useCurrentDocument } from "../shared";
+import { TProps } from "./types";
+import { useOneDocument } from "@/entities/documents";
 
-export function DocumentInfo() {
-    const { document } = useCurrentDocument();
+export function DocumentInfo({ documentId }: TProps) {
+    const { document } = useOneDocument(documentId);
 
     return (
         <Card className="min-w-[600px] flex-row! justify-between items-start">
@@ -42,13 +43,13 @@ export function DocumentInfo() {
             </CardContent>
 
             <div className="min-w-[200px] space-y-4">
-                <DocumentHeader />
+                <DocumentHeader documentId={documentId} />
 
                 <CardFooter className="flex-col items-start gap-4">
-                    <DocumentParams />
+                    <DocumentParams documentId={documentId} />
 
                     <div className="space-y-2 w-full">
-                        <DocumentButtons />
+                        <DocumentButtons documentId={documentId} />
 
                         <DownloadButton />
                     </div>

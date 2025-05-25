@@ -21,7 +21,7 @@ export function useCreateDocumentButton() {
         createDocument({
             ...data,
             filename: data.files[0].name,
-            hash: ""
+            hash: "hash"
         });
     });
 

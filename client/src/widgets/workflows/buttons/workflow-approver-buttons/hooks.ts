@@ -1,10 +1,7 @@
 import { ApprovalStatus, useFindWorkflowByDocumentId, useUpdatePArticipantStatus } from "@/entities/workflows";
 import { TProfile, useProfileStore } from "@/features/auth";
-import { useCurrentDocument } from "@/widgets/documents";
 
-export function useApproverButtons() {
-    const { documentId } = useCurrentDocument();
-
+export function useApproverButtons(documentId: string) {
     const { workflow } = useFindWorkflowByDocumentId(documentId);
 
     const profile = useProfileStore(state => state.profile) as TProfile;

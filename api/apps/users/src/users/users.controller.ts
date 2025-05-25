@@ -19,20 +19,19 @@ import { transformUsersArray } from "./helpers/grpc.helpers";
 export class UsersController implements UnwrapGrpcResponse<UsersServiceController> {
     public constructor(private readonly usersService: UsersService) {}
 
-    public async findOne(dto: IOnlyId) {
-        return await this.usersService.findOneById(dto.id);
+    public async findOne({ id }: IOnlyId) {
+        return await this.usersService.findOneById(id);
     }
 
-    public async findAllByIds(dto: IOnlyIds) {
-        return await this.usersService.findAllByIds(dto.ids).then(transformUsersArray);
+    public async findAllByIds({ ids }: IOnlyIds) {
+        return await this.usersService.findAllByIds(ids).then(transformUsersArray);
     }
 
-    public async findAllByOrganizationId(dto: IOnlyId) {
-        return await this.usersService.findAllByOrganizationId(dto.id).then(transformUsersArray);
+    public async findAllByOrganizationId({ id }: IOnlyId) {
+        return await this.usersService.findAllByOrganizationId(id).then(transformUsersArray);
     }
 
-    public async updateProfile(dto: IUpdateProfileDto) {
-        const { id, ...data } = dto;
-        return await this.usersService.update(id, data);
+    public async updateProfile({ id, ...dto }: IUpdateProfileDto) {
+        return await this.usersService.update(id, dto);
     }
 }

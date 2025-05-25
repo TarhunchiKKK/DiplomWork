@@ -2,9 +2,10 @@
 
 import { CardDescription, CardHeader, CardTitle, Skeleton } from "@/shared/ui";
 import { useDocumentHeader } from "./hooks";
+import { TProps } from "./types";
 
-export function DocumentHeader() {
-    const { document, user } = useDocumentHeader();
+export function DocumentHeader({ documentId }: TProps) {
+    const { document, user } = useDocumentHeader(documentId);
 
     return (
         <CardHeader>

@@ -1,35 +1,41 @@
+"use client";
+
 import { CommentsList, CommentsListSkeleton, CreateCommentForm } from "@/widgets/comments";
 import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/documents";
-import { VersionsList, VersionsListSkeleton, CreateVersionButton } from "@/widgets/versions";
+import { VersionsListSkeleton, CreateVersionButton, VersionsList } from "@/widgets/versions";
 import { Suspense } from "react";
+import { commentsListClassName, versionsListClassName } from "./constants";
+import { useDocumentPage } from "./hooks";
 
 export default function DocumentPage() {
+    const { documentId, versionId } = useDocumentPage();
+
     return (
         <div className="flex flex-row justify-between items-start gap-2 h-screen">
             <div className="space-y-8 grow-4 flex flex-col h-full">
                 <Suspense fallback={<DocumentInfoSkeleton />}>
-                    <DocumentInfo />
+                    <DocumentInfo documentId={documentId} />
                 </Suspense>
 
                 <div className="space-y-4">
                     <div className="flex justify-between items-center">
                         <h4 className="text-lg">Версии документа:</h4>
 
-                        <CreateVersionButton />
+                        <CreateVersionButton documentId={documentId} />
                     </div>
 
-                    <Suspense fallback={<VersionsListSkeleton className="h-[55%] border" />}>
-                        <VersionsList className="h-[55%] border" />
+                    <Suspense fallback={<VersionsListSkeleton className={versionsListClassName} />}>
+                        <VersionsList documentId={documentId} className={versionsListClassName} />
                     </Suspense>
                 </div>
             </div>
 
             <div className="grow-3 h-full flex flex-col">
-                <Suspense fallback={<CommentsListSkeleton className="h-[90%] rounded-md border p-2" />}>
-                    <CommentsList className="h-[90%] rounded-md border p-2" />
+                <Suspense fallback={<CommentsListSkeleton className={commentsListClassName} />}>
+                    {versionId && <CommentsList versionId={versionId} className={commentsListClassName} />}
                 </Suspense>
 
-                <CreateCommentForm />
+                {versionId && <CreateCommentForm versionId={versionId} />}
             </div>
         </div>
     );

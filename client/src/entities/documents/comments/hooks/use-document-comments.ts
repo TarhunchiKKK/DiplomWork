@@ -14,7 +14,7 @@ export function useDocumentComments(versionId: string) {
             const response = await axios.get<TFindCommentsResponse>(queryUrls.documents.comments.findAll(versionId), {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
-            return response.data.comments;
+            return response.data.comments ?? [];
         },
         select: comments => comments.map(transformComment)
     });

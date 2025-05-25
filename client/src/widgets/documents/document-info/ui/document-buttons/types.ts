@@ -5,3 +5,7 @@ export type TEditFormState = {
 
     aimId: string;
 };
+
+export type TProps = {
+    documentId: string;
+};

@@ -1,6 +1,7 @@
 export enum DocumentOperation {
-    UPDATE = "UPDATE",
     READ = "READ",
+    UPDATE = "UPDATE",
     CREATE_VERSION = "CREATE_VERSION",
-    COMMENT = "COMMENT"
+    UPDATE_VERSION = "UPDATE_VERSION",
+    CREATE_COMMENT = "CREATE_COMMENT"
 }

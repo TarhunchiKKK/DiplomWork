@@ -102,8 +102,8 @@ export function CreateDocumentButton() {
                         />
 
                         <DialogFooter>
-                            <DialogClose>
-                                <Button type="submit" variant="outline" className="w-full" disabled={isPending}>
+                            <DialogClose asChild>
+                                <Button type="submit" variant="outline" className="cursor-pointer" disabled={isPending}>
                                     Сохранить
                                 </Button>
                             </DialogClose>

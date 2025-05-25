@@ -7,3 +7,7 @@ export type TItem = {
 
     status: ApprovalStatus;
 };
+
+export type TProps = {
+    documentId: string;
+};

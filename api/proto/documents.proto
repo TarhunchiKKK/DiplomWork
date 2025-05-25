@@ -13,9 +13,9 @@ service DocumentsService {
 
     rpc FindAll (IFindDocumentsDto) returns (IFindDocumentsResponse) {}
 
-    rpc FindOneById(common.IOnlyId) returns (IFindDocumentByIdResponse) {}  
+    rpc FindOneById (common.IOnlyId) returns (IFindDocumentByIdResponse) {}  
 
-    rpc FindAccessToken (common.IOnlyId) returns (IFindAccessTokenResponse) {}
+    rpc FindOneFull (common.IOnlyId) returns (IFullDocumentResponse) {}
 }
 
 message ICreateDocumentDto {
@@ -26,7 +26,7 @@ message ICreateDocumentDto {
     string typeId = 3;
 
     string aimId = 4; 
-
+ 
     bool isUrgent = 5;
 
     string hash = 6;
@@ -110,6 +110,8 @@ message IFindOneDocumentResponse {
     bool isUrgent = 5;
 
     string authorId = 6;
+
+    string lastVersionId = 7;
 }
 
 message IFindDocumentByIdResponse {
@@ -144,13 +146,7 @@ message IFullDocumentResponse {
     }
 }
 
-message IFindAccessTokenResponse {
-    oneof response {
-        string data = 1;
 
-        common.IHttpError error = 2;
-    }
-}
 
 /********************************************Favourite Documents*********************************************************************/
 
@@ -183,8 +179,6 @@ service DocumentVersionsService {
     rpc FindAll (common.IOnlyId) returns (IFindAllDocumentVersionsResponse) {}
 
     rpc FindOneById (common.IOnlyId) returns (IFindOneDocumentVersionResponse) {}
-
-    rpc FindLast (common.IOnlyId) returns (IFindOneDocumentVersionResponse) {}
 
     rpc FindDocument (common.IOnlyId) returns (IFullDocumentResponse) {}
 

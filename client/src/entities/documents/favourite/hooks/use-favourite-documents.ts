@@ -13,7 +13,8 @@ export function useFavouriteDocuments() {
             const response = await axios.get<TFindDocumentsResponse>(queryUrls.documents.favourite.findAll, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
-            return response.data.documents;
+
+            return response.data.documents ?? [];
         },
         select: documents => documents.map(transformDocumentShortData)
     });
