@@ -1,8 +1,8 @@
 "use client";
 
 import { Button, FormWrapper } from "@/shared/ui";
-import { useResetPassword } from "./hooks";
 import { routes } from "@/shared/routing";
+import { useResetPassword } from "../../hooks";
 
 export function ResetPasswordForm() {
     const { reset, isPending } = useResetPassword();

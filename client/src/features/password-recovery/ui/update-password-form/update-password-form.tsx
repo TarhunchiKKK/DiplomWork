@@ -1,24 +1,11 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { TUpdatePasswordFormState } from "./types";
-import { defaultValues } from "./constants";
-import { useUpdatePassword } from "./hooks";
+import { useUpdatePasswordForm } from "./hooks";
+import { TProps } from "./types";
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormWrapper, Input } from "@/shared/ui";
-import { useState } from "react";
 
-export function UpdatePasswordForm() {
-    const form = useForm<TUpdatePasswordFormState>({
-        defaultValues: defaultValues
-    });
-    const [isPasswordUpdated, setIsPasswordUpdated] = useState(false);
-
-    const { update, isPending } = useUpdatePassword();
-
-    const onSubmit = (values: TUpdatePasswordFormState) => {
-        update(values);
-        setIsPasswordUpdated(true);
-    };
+export function UpdatePasswordForm({ recoveryToken }: TProps) {
+    const { form, onSubmit, isPending, isPasswordUpdated } = useUpdatePasswordForm(recoveryToken);
 
     return (
         <FormWrapper heading="Смена пароля" description="Придумайте новый пароль и введите его ниже.">
@@ -28,7 +15,7 @@ export function UpdatePasswordForm() {
 
             {!isPasswordUpdated && (
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <form onSubmit={onSubmit} className="space-y-4">
                         <FormField
                             key="password"
                             name="password"

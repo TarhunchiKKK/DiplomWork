@@ -9,13 +9,9 @@ export function useResetPassword() {
         mutationFn: async () => {
             const token = credentialsManager.jwt.get();
 
-            await axios.post<void>(
-                queryUrls.passwordRecovery.reset,
-                {},
-                {
-                    headers: new HttpHeadersBuilder().setBearerToken(token).build()
-                }
-            );
+            await axios.post<void>(queryUrls.passwordRecovery.reset, null, {
+                headers: new HttpHeadersBuilder().setBearerToken(token).build()
+            });
         },
         onSuccess: () => {
             toast.success("Пароль сброшен");

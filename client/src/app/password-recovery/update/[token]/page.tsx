@@ -1,5 +1,10 @@
-import { UpdatePasswordForm } from "@/widgets/password-recovery";
+"use client";
+
+import { UpdatePasswordForm } from "@/features/password-recovery";
+import { useParams } from "next/navigation";
 
 export default function UpdatePasswordPage() {
-    return <UpdatePasswordForm />;
+    const { token } = useParams() as { token: string };
+
+    return <UpdatePasswordForm recoveryToken={token} />;
 }
