@@ -1,9 +1,10 @@
 import { Button } from "@/shared/ui";
 import { useApproverButtons } from "./hooks";
 import { ApprovalStatus } from "@/entities/workflows";
+import { TProps } from "./types";
 
-export function WorkflowApproverButtons() {
-    const { isPending, onClick } = useApproverButtons();
+export function WorkflowApproverButtons({ documentId }: TProps) {
+    const { isPending, onClick } = useApproverButtons(documentId);
 
     return (
         <div className="w-[400px] space-y-4">

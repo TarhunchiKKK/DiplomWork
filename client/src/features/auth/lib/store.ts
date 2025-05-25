@@ -9,7 +9,9 @@ const getInitialState = (): TProfile | null => {
     try {
         const value = localStorage.getItem(LOCAL_STORAGE_KEY);
         profile = value ? (JSON.parse(value) as TProfile) : null;
-    } catch (_: unknown) {}
+    } catch (error: unknown) {
+        console.info(error);
+    }
 
     return profile;
 };

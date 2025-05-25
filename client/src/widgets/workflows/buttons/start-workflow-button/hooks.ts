@@ -1,9 +1,6 @@
 import { useStartWorkflow } from "@/entities/workflows";
-import { useCurrentDocument } from "@/widgets/documents";
 
-export function useStartWorkflowButton() {
-    const { documentId } = useCurrentDocument();
-
+export function useStartWorkflowButton(documentId: string) {
     const { startWorkflow, isPending } = useStartWorkflow();
 
     const onClick = () => {

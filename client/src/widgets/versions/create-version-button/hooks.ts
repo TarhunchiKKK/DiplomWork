@@ -1,18 +1,17 @@
 import { TProfile, useProfileStore } from "@/features/auth";
-import { useCurrentDocument } from "@/widgets/documents";
 import { useForm } from "react-hook-form";
 import { TFormState } from "./types";
-import { useCreateDocumentVersion } from "@/entities/documents";
+import { useCreateDocumentVersion, useOneDocument } from "@/entities/documents";
 import { toast } from "sonner";
 
-export function useCreateVersionButton() {
+export function useCreateVersionButton(documentId: string) {
     const form = useForm<TFormState>({
         defaultValues: {
             description: ""
         }
     });
 
-    const { document } = useCurrentDocument();
+    const { document } = useOneDocument(documentId);
 
     const profile = useProfileStore(state => state.profile) as TProfile;
 

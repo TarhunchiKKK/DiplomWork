@@ -5,9 +5,10 @@ import { ApproversForm, ApproversFormSkeleton } from "./approvers-form";
 import { ApproversList, ApproversListSkeleton } from "./approvers-list";
 import { useSetup } from "./hooks";
 import { SignerDropdown } from "./signer-dropdown";
+import { TProps } from "./types";
 
-export function WorkflowParticipantsForm() {
-    const buttonProps = useSetup();
+export function WorkflowParticipantsForm({ documentId }: TProps) {
+    const buttonProps = useSetup(documentId);
 
     return (
         <div className="h-full flex flex-col justify-between">

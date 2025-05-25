@@ -18,9 +18,10 @@ import {
 } from "@/shared/ui";
 import { Plus } from "lucide-react";
 import { useCreateVersionButton } from "./hooks";
+import { TProps } from "./types";
 
-export function CreateVersionButton() {
-    const { display, form, isPending, onSubmit } = useCreateVersionButton();
+export function CreateVersionButton({ documentId }: TProps) {
+    const { display, form, isPending, onSubmit } = useCreateVersionButton(documentId);
 
     return (
         <>

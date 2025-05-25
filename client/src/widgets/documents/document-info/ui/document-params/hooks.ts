@@ -1,8 +1,8 @@
+import { useOneDocument } from "@/entities/documents";
 import { useOrganization } from "@/entities/organizations";
-import { useCurrentDocument } from "@/widgets/documents";
 
-export function useDocumentParams() {
-    const { document } = useCurrentDocument();
+export function useDocumentParams(documentId: string) {
+    const { document } = useOneDocument(documentId);
 
     const { organization } = useOrganization();
 

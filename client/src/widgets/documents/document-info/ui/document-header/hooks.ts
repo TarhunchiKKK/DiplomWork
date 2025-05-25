@@ -1,8 +1,8 @@
+import { useOneDocument } from "@/entities/documents";
 import { useOneUser } from "@/entities/users";
-import { useCurrentDocument } from "@/widgets/documents";
 
-export function useDocumentHeader() {
-    const { document } = useCurrentDocument();
+export function useDocumentHeader(documentId: string) {
+    const { document } = useOneDocument(documentId);
 
     const { data: user } = useOneUser(document?.authorId as string, !!document);
 

@@ -1,8 +1,8 @@
+import { useOneDocument } from "@/entities/documents";
 import { useCreateWorkflow } from "@/entities/workflows";
-import { useCurrentDocument } from "@/widgets/documents";
 
-export function useCreateWorkflowButton() {
-    const { document } = useCurrentDocument();
+export function useCreateWorkflowButton(documentId: string) {
+    const { document } = useOneDocument(documentId);
 
     const { createWorkflow, isPending } = useCreateWorkflow();
 

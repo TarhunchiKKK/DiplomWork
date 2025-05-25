@@ -72,6 +72,7 @@ export interface IFindOneDocumentResponse {
   aimId: string;
   isUrgent: boolean;
   authorId: string;
+  lastVersionId: string;
 }
 
 export interface IFindDocumentByIdResponse {

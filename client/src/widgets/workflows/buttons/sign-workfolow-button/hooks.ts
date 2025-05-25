@@ -1,9 +1,6 @@
 import { useFindWorkflowByDocumentId, useSignWorkflow } from "@/entities/workflows";
-import { useCurrentDocument } from "@/widgets/documents";
 
-export function useSignWorkflowButton() {
-    const { documentId } = useCurrentDocument();
-
+export function useSignWorkflowButton(documentId: string) {
     const { workflow } = useFindWorkflowByDocumentId(documentId);
 
     const { signWorkflow, isPending } = useSignWorkflow();

@@ -2,11 +2,12 @@
 
 import { Button, Skeleton } from "@/shared/ui";
 import { useStartButton, useUrgencyButton } from "./hooks";
+import { TProps } from "./types";
 
-export function DocumentButtons() {
-    const starButton = useStartButton();
+export function DocumentButtons({ documentId }: TProps) {
+    const starButton = useStartButton(documentId);
 
-    const urgencyButton = useUrgencyButton();
+    const urgencyButton = useUrgencyButton(documentId);
 
     return (
         <div className="flex justify-start items-center gap-2">

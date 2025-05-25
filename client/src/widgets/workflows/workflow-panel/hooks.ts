@@ -1,11 +1,8 @@
 import { useOrganizationUsers } from "@/entities/users";
 import { useFindWorkflowByDocumentId } from "@/entities/workflows";
-import { useCurrentDocument } from "@/widgets/documents";
 import { getContent } from "../shared";
 
-export function useWorkflowPanel() {
-    const { documentId } = useCurrentDocument();
-
+export function useWorkflowPanel(documentId: string) {
     const { workflow } = useFindWorkflowByDocumentId(documentId);
 
     const { users } = useOrganizationUsers();

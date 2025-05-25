@@ -2,9 +2,10 @@
 
 import { Badge, Skeleton } from "@/shared/ui";
 import { useDocumentParams } from "./hooks";
+import { TProps } from "./types";
 
-export function DocumentParams() {
-    const { documentAim, documentType } = useDocumentParams();
+export function DocumentParams({ documentId }: TProps) {
+    const { documentAim, documentType } = useDocumentParams(documentId);
 
     return (
         <div className="flex flex-col items-start gap-2">
