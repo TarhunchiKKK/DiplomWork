@@ -6,6 +6,7 @@ import {
 } from "@/entities/documents";
 import { TProfile, useProfileStore } from "@/features/auth";
 import { useCurrentDocument } from "@/widgets/documents";
+import { Star, StarOff, Timer, TimerOff } from "lucide-react";
 
 export function useStartButton() {
     const { documentId } = useCurrentDocument();
@@ -16,8 +17,10 @@ export function useStartButton() {
 
     const { remove, isPending: isRemovingPending } = useRemoveFromFavourites();
 
+    const isInFavourite = favouriteDocuments?.some(doc => doc.id === documentId);
+
     const onClick = () => {
-        if (favouriteDocuments!.some(doc => doc.id === documentId)) {
+        if (isInFavourite) {
             remove(documentId);
         } else {
             add(documentId);
@@ -25,8 +28,12 @@ export function useStartButton() {
     };
 
     return {
-        onClick,
-        disabled: isAddingPending || isRemovingPending
+        props: {
+            onClick,
+            disabled: isAddingPending || isRemovingPending,
+            title: isInFavourite ? "Удалить из изьранного" : "Добавить в избранное"
+        },
+        icon: isInFavourite ? Star : StarOff
     };
 }
 
@@ -39,6 +46,7 @@ export function useUrgencyButton() {
 
     const onClick = () => {
         const dto = document!.isUrgent ? { isUrgent: false } : { isUrgent: true };
+
         update({
             ...dto,
             id: documentId
@@ -46,8 +54,12 @@ export function useUrgencyButton() {
     };
 
     return {
-        onClick,
-        disabled: isPending,
-        display: profile.id === document?.authorId
+        props: {
+            onClick,
+            disabled: isPending,
+            title: document?.isUrgent ? "Пометить как несрочный" : "Пометить как срочный"
+        },
+        display: profile.id === document?.authorId,
+        icon: document?.isUrgent ? Timer : TimerOff
     };
 }

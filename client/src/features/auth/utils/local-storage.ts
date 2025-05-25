@@ -6,6 +6,8 @@ export const credentialsManager = {
 
         get: () => localStorage.getItem(LOCAL_STORAGE_KEY),
 
-        remove: () => localStorage.removeItem(LOCAL_STORAGE_KEY)
+        remove: () => localStorage.removeItem(LOCAL_STORAGE_KEY),
+
+        have: () => !!localStorage.getItem(LOCAL_STORAGE_KEY)
     }
 };

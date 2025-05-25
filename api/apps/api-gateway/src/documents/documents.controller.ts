@@ -73,7 +73,7 @@ export class DocumentsController {
     @Patch()
     @UsePipes(ValidationPipe)
     @ProvideOperation(DocumentOperation.UPDATE)
-    @ExtractFromRequest(request => request.body.documentId)
+    @ExtractFromRequest(request => request.body.id)
     @UseGuards(DocumentOperationGuard)
     public update(@Body() dto: UpdateDocumentDto) {
         return this.documentsGrpcService.call("update", dto);

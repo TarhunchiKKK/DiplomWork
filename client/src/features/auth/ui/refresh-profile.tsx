@@ -25,7 +25,8 @@ function useRefreshProfile() {
             credentialsManager.jwt.set(profile.token);
 
             setProfile(profile);
-        }
+        },
+        enabled: credentialsManager.jwt.have()
     });
 }
 

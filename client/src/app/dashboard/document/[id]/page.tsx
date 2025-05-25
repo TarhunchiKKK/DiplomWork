@@ -21,7 +21,7 @@ export default function DocumentPage() {
                     </div>
 
                     <Suspense fallback={<VersionsListSkeleton className="h-[55%] border" />}>
-                        <VersionsList className="h-[55%] border" />
+                        {/* <VersionsList className="h-[55%] border" /> */}
                     </Suspense>
                 </div>
             </div>
