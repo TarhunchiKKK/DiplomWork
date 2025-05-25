@@ -4,8 +4,14 @@ import { TProfile } from "../types";
 const LOCAL_STORAGE_KEY = "profile";
 
 const getInitialState = (): TProfile | null => {
-    const profile = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return profile ? JSON.parse(profile) : null;
+    let profile = null;
+
+    try {
+        const value = localStorage.getItem(LOCAL_STORAGE_KEY);
+        profile = value ? (JSON.parse(value) as TProfile) : null;
+    } catch (_: unknown) {}
+
+    return profile;
 };
 
 type TStore = {

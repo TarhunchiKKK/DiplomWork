@@ -31,7 +31,7 @@ export class VersionOperationGuard implements CanActivate {
 
         this.checkPermissions(context, {
             userId: requestData.userId,
-            token: document.accessToken
+            document: document
         });
 
         return true;
@@ -42,7 +42,7 @@ export class VersionOperationGuard implements CanActivate {
 
         const userId = request.jwtInfo.id as string;
 
-        if (userId) {
+        if (!userId) {
             throw new UnauthorizedException("Недостаточно прав");
         }
 
@@ -50,7 +50,7 @@ export class VersionOperationGuard implements CanActivate {
 
         const versionId = extractFromRequest(request) as string;
 
-        if (versionId) {
+        if (!versionId) {
             throw new NotFoundException("Версия не найдена");
         }
 
@@ -70,11 +70,11 @@ export class VersionOperationGuard implements CanActivate {
     }
 
     private defineUserRole(dto: TCheckPermissionsDto) {
-        const tokenInfo = this.tokensService.verify(dto.token);
+        const tokenInfo = this.tokensService.verify(dto.document.accessToken);
 
         let userRole: DocumentRole | null = null;
 
-        if (tokenInfo.authorId === dto.userId) {
+        if (dto.document.authorId === dto.userId) {
             userRole = DocumentRole.AUTHOR;
         } else if (tokenInfo.usersIds.includes(dto.userId)) {
             userRole = DocumentRole.REGULAR;

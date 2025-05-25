@@ -23,15 +23,15 @@ export class DocumentOperationGuard implements CanActivate {
     public async canActivate(context: ExecutionContext) {
         const requestData = this.extractRequestData(context);
 
-        const accessToken = await firstValueFrom(
-            this.documentsGrpcService.call("findAccessToken", {
+        const document = await firstValueFrom(
+            this.documentsGrpcService.call("findOneFull", {
                 id: requestData.documentId
             })
         );
 
         this.checkPermissions(context, {
             userId: requestData.userId,
-            token: accessToken
+            document: document
         });
 
         return true;
@@ -42,7 +42,7 @@ export class DocumentOperationGuard implements CanActivate {
 
         const userId = request.jwtInfo.id as string;
 
-        if (userId) {
+        if (!userId) {
             throw new UnauthorizedException("Недостаточно прав");
         }
 
@@ -50,7 +50,7 @@ export class DocumentOperationGuard implements CanActivate {
 
         const documentId = extractFromRequest(request) as string;
 
-        if (documentId) {
+        if (!documentId) {
             throw new NotFoundException("Документ не найден");
         }
 
@@ -70,11 +70,11 @@ export class DocumentOperationGuard implements CanActivate {
     }
 
     private defineUserRole(dto: TCheckPermissionsDto) {
-        const tokenInfo = this.tokensService.verify(dto.token);
+        const tokenInfo = this.tokensService.verify(dto.document.accessToken);
 
         let userRole: DocumentRole | null = null;
 
-        if (tokenInfo.authorId === dto.userId) {
+        if (dto.document.authorId === dto.userId) {
             userRole = DocumentRole.AUTHOR;
         } else if (tokenInfo.usersIds.includes(dto.userId)) {
             userRole = DocumentRole.REGULAR;

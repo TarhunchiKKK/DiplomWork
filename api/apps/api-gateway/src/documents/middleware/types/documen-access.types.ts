@@ -1,5 +1,9 @@
 export type TCheckPermissionsDto = {
-    token: string;
-
     userId: string;
+
+    document: {
+        authorId: string;
+
+        accessToken: string;
+    };
 };

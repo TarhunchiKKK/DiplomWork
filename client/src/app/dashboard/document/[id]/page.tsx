@@ -1,3 +1,5 @@
+"use client";
+
 import { CommentsList, CommentsListSkeleton, CreateCommentForm } from "@/widgets/comments";
 import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/documents";
 import { VersionsList, VersionsListSkeleton, CreateVersionButton } from "@/widgets/versions";
@@ -24,13 +26,13 @@ export default function DocumentPage() {
                 </div>
             </div>
 
-            <div className="grow-3 h-full flex flex-col">
+            {/* <div className="grow-3 h-full flex flex-col">
                 <Suspense fallback={<CommentsListSkeleton className="h-[90%] rounded-md border p-2" />}>
                     <CommentsList className="h-[90%] rounded-md border p-2" />
                 </Suspense>
 
                 <CreateCommentForm />
-            </div>
+            </div> */}
         </div>
     );
 }
