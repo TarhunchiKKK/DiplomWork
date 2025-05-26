@@ -7,7 +7,7 @@ import axios from "axios";
 export function useAddToFavourite() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (documentId: string) => {
             const token = credentialsManager.jwt.get();
 
@@ -21,9 +21,4 @@ export function useAddToFavourite() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        add: mutate,
-        isPending
-    };
 }

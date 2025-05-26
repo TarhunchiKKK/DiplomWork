@@ -7,7 +7,7 @@ import { useParticipantsStore } from "./store";
 import { useEffect } from "react";
 
 export function useSetup(documentId: string) {
-    const { workflow } = useFindWorkflowByDocumentId(documentId);
+    const { data: workflow } = useFindWorkflowByDocumentId(documentId);
 
     const { setApprovers, setSignerId, approvers, signerId } = useParticipantsStore();
 
@@ -18,9 +18,9 @@ export function useSetup(documentId: string) {
         }
     }, [workflow, setApprovers, setSignerId]);
 
-    const { upsertParticipants, isPending: areParticipantsPending } = useUpsertWorkflowParticipants();
+    const { mutate: upsertParticipants, isPending: areParticipantsPending } = useUpsertWorkflowParticipants();
 
-    const { updateSigner, isPending: isSignerPending } = useUpdateWorkflowSigner();
+    const { mutate: updateSigner, isPending: isSignerPending } = useUpdateWorkflowSigner();
 
     const handleSave = () => {
         Promise.all([

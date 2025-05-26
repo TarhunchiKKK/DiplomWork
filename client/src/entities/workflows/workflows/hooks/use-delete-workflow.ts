@@ -7,7 +7,7 @@ import axios from "axios";
 export function useDeleteWorkflow() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (workflowId: string) => {
             const token = credentialsManager.jwt.get();
 
@@ -20,9 +20,4 @@ export function useDeleteWorkflow() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        deleteWorkflow: mutate,
-        isPending
-    };
 }

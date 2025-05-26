@@ -5,7 +5,7 @@ import { getContent } from "../../shared/helpers";
 import { useOrganizationUsers } from "@/entities/users";
 
 export function useApproversForm() {
-    const { users } = useOrganizationUsers();
+    const { data: users } = useOrganizationUsers();
 
     const [input, setInput] = useState("");
     const [displayUsers, setDisplayUsers] = useState(false);

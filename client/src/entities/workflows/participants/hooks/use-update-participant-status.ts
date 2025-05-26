@@ -12,7 +12,7 @@ type TDto = {
 };
 
 export function useUpdatePArticipantStatus() {
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -28,9 +28,4 @@ export function useUpdatePArticipantStatus() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        updateStatus: mutate,
-        isPending
-    };
 }

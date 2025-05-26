@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useOrganization, useUpdateAdministrativeDivisioons } from "@/entities/organizations";
 
 function useSetupDivisionsStore() {
-    const { organization } = useOrganization();
+    const { data: organization } = useOrganization();
 
     const setDivisions = useDivisionsStore(state => state.setData);
 
@@ -22,7 +22,7 @@ export function useDivisionsForm() {
 
     const profile = useProfileStore(state => state.profile) as TProfile;
 
-    const { updateAdministrativeDivisioons, isPending } = useUpdateAdministrativeDivisioons();
+    const { mutate: updateAdministrativeDivisioons, isPending } = useUpdateAdministrativeDivisioons();
 
     const update = () => {
         updateAdministrativeDivisioons({

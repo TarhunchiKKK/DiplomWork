@@ -7,7 +7,7 @@ import { TFindDocumentsResponse, transformDocumentShortData } from "../../shared
 export function useMyDocuments() {
     const token = credentialsManager.jwt.get() as string;
 
-    const { data, isLoading } = useQuery({
+    return useQuery({
         queryKey: queryKeys.documents.my,
         queryFn: async () => {
             const response = await axios.get<TFindDocumentsResponse>(queryUrls.documents.my.findAll, {
@@ -17,9 +17,4 @@ export function useMyDocuments() {
         },
         select: documents => documents.map(transformDocumentShortData)
     });
-
-    return {
-        documents: data,
-        isLoading
-    };
 }

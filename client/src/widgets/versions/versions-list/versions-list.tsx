@@ -6,7 +6,7 @@ import { ListItem, ListItemSkeleton } from "./ui";
 import { useCurrentDocumentStore, useDocumentVersions } from "@/entities/documents";
 
 export function VersionsList({ documentId, className }: TProps) {
-    const { versions } = useDocumentVersions(documentId);
+    const { data: versions } = useDocumentVersions(documentId);
 
     const setCurrentVersionId = useCurrentDocumentStore(state => state.setVersionId);
 

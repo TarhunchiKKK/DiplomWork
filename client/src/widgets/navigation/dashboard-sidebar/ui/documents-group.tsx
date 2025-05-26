@@ -46,7 +46,7 @@ const staticLinks: TLink[] = [
 export function DocumentsGroup() {
     const pathname = usePathname();
 
-    const { organization } = useOrganization();
+    const { data: organization } = useOrganization();
 
     const documentAims =
         organization?.documentAims.map(aim => ({

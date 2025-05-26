@@ -3,7 +3,7 @@ import { useVerifyDocumentHash } from "@/entities/documents";
 import { useEffect } from "react";
 
 export function useDownloadButton() {
-    const { verifyDocumentHash, isPending, isSuccess, isError } = useVerifyDocumentHash();
+    const { mutate: verifyDocumentHash, isPending, isSuccess, isError } = useVerifyDocumentHash();
 
     useEffect(() => {
         verifyDocumentHash(mocks.verifyDocumentHashDto);

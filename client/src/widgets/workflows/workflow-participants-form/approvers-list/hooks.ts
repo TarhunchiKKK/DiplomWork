@@ -3,7 +3,7 @@ import { useParticipantsStore } from "../store";
 import { getContent } from "../../shared";
 
 export function useApproversList() {
-    const { users } = useOrganizationUsers();
+    const { data: users } = useOrganizationUsers();
 
     const approvers = useParticipantsStore(state => state.approvers);
 

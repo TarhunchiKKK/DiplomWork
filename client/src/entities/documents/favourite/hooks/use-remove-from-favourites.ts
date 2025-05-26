@@ -7,7 +7,7 @@ import axios from "axios";
 export function useRemoveFromFavourites() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (documentId: string) => {
             const token = credentialsManager.jwt.get();
 
@@ -21,9 +21,4 @@ export function useRemoveFromFavourites() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        remove: mutate,
-        isPending
-    };
 }

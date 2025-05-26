@@ -3,9 +3,9 @@ import { TUseNotificationHookProps } from "./types";
 import { newStatusMap, updateStatusLabels } from "./constants";
 
 export function useNotification(notification: TUseNotificationHookProps) {
-    const { updateNotification, isPending: isUpdatingPending } = useUpdateNotification();
+    const { mutate: updateNotification, isPending: isUpdatingPending } = useUpdateNotification();
 
-    const { deleteNotification, isPending: isDeletingPending } = useDeleteNotification();
+    const { mutate: deleteNotification, isPending: isDeletingPending } = useDeleteNotification();
 
     return {
         menuItems: [

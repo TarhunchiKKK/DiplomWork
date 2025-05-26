@@ -6,7 +6,7 @@ import { TFindCommentsResponse } from "../types";
 import { transformComment } from "../helpers";
 
 export function useDocumentComments(versionId: string) {
-    const { data, isLoading } = useQuery({
+    return useQuery({
         queryKey: queryKeys.documents.comments.findAll(versionId),
         queryFn: async () => {
             const token = credentialsManager.jwt.get();
@@ -18,9 +18,4 @@ export function useDocumentComments(versionId: string) {
         },
         select: comments => comments.map(transformComment)
     });
-
-    return {
-        comments: data,
-        isLoading
-    };
 }

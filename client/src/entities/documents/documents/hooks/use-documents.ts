@@ -13,7 +13,7 @@ type TQueryParams = {
 };
 
 export function useDocuments(queryParams: TQueryParams) {
-    const { data, isLoading } = useQuery({
+    return useQuery({
         queryKey: queryKeys.documents.findAll(queryParams),
         queryFn: async () => {
             const token = credentialsManager.jwt.get();
@@ -26,6 +26,4 @@ export function useDocuments(queryParams: TQueryParams) {
         },
         select: documents => documents.map(transformDocumentShortData)
     });
-
-    return { documents: data, isLoading };
 }

@@ -16,7 +16,7 @@ export function CommentsList({ versionId, className }: TProps) {
         });
     }, []);
 
-    const { comments } = useDocumentComments(versionId);
+    const { data: comments } = useDocumentComments(versionId);
 
     return (
         <ScrollArea className={className}>

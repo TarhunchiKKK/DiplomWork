@@ -19,7 +19,7 @@ type TUpdateDocumentDto = {
 export function useUpdateDocument() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TUpdateDocumentDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -33,6 +33,4 @@ export function useUpdateDocument() {
         },
         onError: httpErrorHandler
     });
-
-    return { update: mutate, isPending };
 }

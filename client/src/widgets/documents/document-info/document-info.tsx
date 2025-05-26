@@ -17,7 +17,7 @@ import { TProps } from "./types";
 import { useOneDocument } from "@/entities/documents";
 
 export function DocumentInfo({ documentId }: TProps) {
-    const { document } = useOneDocument(documentId);
+    const { data: document } = useOneDocument(documentId);
 
     return (
         <Card className="min-w-[600px] flex-row! justify-between items-start">

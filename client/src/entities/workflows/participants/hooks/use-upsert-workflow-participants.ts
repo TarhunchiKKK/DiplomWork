@@ -19,7 +19,7 @@ type TDto = {
 export function useUpsertWorkflowParticipants() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -38,9 +38,4 @@ export function useUpsertWorkflowParticipants() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        upsertParticipants: mutate,
-        isPending
-    };
 }

@@ -2,11 +2,11 @@ import { ApprovalStatus, useFindWorkflowByDocumentId, useUpdatePArticipantStatus
 import { TProfile, useProfileStore } from "@/features/auth";
 
 export function useApproverButtons(documentId: string) {
-    const { workflow } = useFindWorkflowByDocumentId(documentId);
+    const { data: workflow } = useFindWorkflowByDocumentId(documentId);
 
     const profile = useProfileStore(state => state.profile) as TProfile;
 
-    const { isPending, updateStatus } = useUpdatePArticipantStatus();
+    const { mutate: updateStatus, isPending } = useUpdatePArticipantStatus();
 
     const onClick = (approvalStatus: ApprovalStatus) => {
         const participantId = workflow!.participants.find(p => p.id === profile.id)?.id as string;

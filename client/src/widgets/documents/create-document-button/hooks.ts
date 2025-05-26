@@ -4,7 +4,7 @@ import { TFormState } from "./types";
 import { toast } from "sonner";
 
 export function useCreateDocumentButton() {
-    const { createDocument, isPending } = useCreateDocument();
+    const { mutate: createDocument, isPending } = useCreateDocument();
 
     const form = useForm<TFormState>({
         defaultValues: {

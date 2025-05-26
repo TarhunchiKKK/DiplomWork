@@ -12,11 +12,11 @@ export function useCreateVersionButton(documentId: string) {
         }
     });
 
-    const { document } = useOneDocument(documentId);
+    const { data: document } = useOneDocument(documentId);
 
     const profile = useProfileStore(state => state.profile) as TProfile;
 
-    const { create, isPending } = useCreateDocumentVersion();
+    const { mutate: create, isPending } = useCreateDocumentVersion();
 
     const onSubmit = form.handleSubmit((data: TFormState) => {
         if (data.files?.length !== 1) {

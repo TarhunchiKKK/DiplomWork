@@ -5,7 +5,7 @@ import { useSet } from "@/shared/hooks";
 import { useOrganizationUsers } from "@/entities/users";
 
 export function useInviteUsersForm() {
-    const { users } = useOrganizationUsers();
+    const { data: users } = useOrganizationUsers();
 
     const emailsSet = useSet<string>();
 

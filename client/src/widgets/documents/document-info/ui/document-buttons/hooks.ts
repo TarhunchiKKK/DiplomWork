@@ -9,11 +9,11 @@ import { TProfile, useProfileStore } from "@/features/auth";
 import { Star, StarOff, Timer, TimerOff } from "lucide-react";
 
 export function useStartButton(documentId: string) {
-    const { documents: favouriteDocuments } = useFavouriteDocuments();
+    const { data: favouriteDocuments } = useFavouriteDocuments();
 
-    const { add, isPending: isAddingPending } = useAddToFavourite();
+    const { mutate: add, isPending: isAddingPending } = useAddToFavourite();
 
-    const { remove, isPending: isRemovingPending } = useRemoveFromFavourites();
+    const { mutate: remove, isPending: isRemovingPending } = useRemoveFromFavourites();
 
     const isInFavourite = favouriteDocuments?.some(doc => doc.id === documentId);
 
@@ -36,11 +36,11 @@ export function useStartButton(documentId: string) {
 }
 
 export function useUrgencyButton(documentId: string) {
-    const { document } = useOneDocument(documentId);
+    const { data: document } = useOneDocument(documentId);
 
     const profile = useProfileStore(state => state.profile) as TProfile;
 
-    const { update, isPending } = useUpdateDocument();
+    const { mutate: update, isPending } = useUpdateDocument();
 
     const onClick = () => {
         const dto = document!.isUrgent ? { isUrgent: false } : { isUrgent: true };

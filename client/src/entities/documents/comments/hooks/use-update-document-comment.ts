@@ -15,7 +15,7 @@ type TDto = {
 export function useUpdateDocumentCommet() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -35,9 +35,4 @@ export function useUpdateDocumentCommet() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        updateComment: mutate,
-        isPending
-    };
 }

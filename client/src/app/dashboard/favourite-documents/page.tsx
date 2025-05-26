@@ -9,7 +9,7 @@ import {
 import { Suspense } from "react";
 
 export default function FavouriteocumentsPage() {
-    const { documents } = useFavouriteDocuments();
+    const { data: documents } = useFavouriteDocuments();
 
     return (
         <div className="space-y-4">

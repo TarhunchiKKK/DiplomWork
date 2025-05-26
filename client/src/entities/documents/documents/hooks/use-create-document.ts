@@ -19,7 +19,7 @@ type TDto = {
 export function useCreateDocument() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -32,9 +32,4 @@ export function useCreateDocument() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        createDocument: mutate,
-        isPending
-    };
 }

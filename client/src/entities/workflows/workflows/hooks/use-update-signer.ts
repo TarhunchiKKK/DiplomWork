@@ -13,7 +13,7 @@ type TDto = {
 export function useUpdateWorkflowSigner() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -32,9 +32,4 @@ export function useUpdateWorkflowSigner() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        updateSigner: mutate,
-        isPending
-    };
 }

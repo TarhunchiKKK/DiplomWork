@@ -9,7 +9,7 @@ type TResponse = {
 };
 
 export function useOrganizationUsers() {
-    const { data, isLoading } = useQuery({
+    return useQuery({
         queryKey: queryKeys.users.byOrganization,
         queryFn: async () => {
             const token = credentialsManager.jwt.get() as string;
@@ -22,6 +22,4 @@ export function useOrganizationUsers() {
         },
         placeholderData: []
     });
-
-    return { users: data, isLoading };
 }

@@ -7,7 +7,7 @@ import axios from "axios";
 export function useDeleteNotification() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (notificationId: string) => {
             const token = credentialsManager.jwt.get();
 
@@ -20,9 +20,4 @@ export function useDeleteNotification() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        deleteNotification: mutate,
-        isPending
-    };
 }

@@ -7,7 +7,7 @@ import axios from "axios";
 export function useStartWorkflow() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (workflowId: string) => {
             const token = credentialsManager.jwt.get();
 
@@ -20,9 +20,4 @@ export function useStartWorkflow() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        startWorkflow: mutate,
-        isPending
-    };
 }

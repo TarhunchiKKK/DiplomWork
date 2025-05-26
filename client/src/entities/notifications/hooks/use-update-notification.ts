@@ -16,7 +16,7 @@ type TDto = {
 export function useUpdateNotification() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -29,9 +29,4 @@ export function useUpdateNotification() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        updateNotification: mutate,
-        isPending
-    };
 }

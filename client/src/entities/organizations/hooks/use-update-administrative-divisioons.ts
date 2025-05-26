@@ -26,7 +26,7 @@ type TUpdateDto = {
 export function useUpdateAdministrativeDivisioons() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TUpdateDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -42,9 +42,4 @@ export function useUpdateAdministrativeDivisioons() {
         },
         onError: httpErrorHandler
     });
-
-    return {
-        updateAdministrativeDivisioons: mutate,
-        isPending
-    };
 }
