@@ -4,7 +4,7 @@ import { defaultValues } from "./constants";
 import { useTotpLogin } from "../../hooks";
 
 export function useTotpLoginForm(props: TProps) {
-    const { mutate: login, isPending } = useTotpLogin(props.next);
+    const { mutate: login, isPending } = useTotpLogin({ onSuccess: props.next });
 
     const form = useForm<TFormState>({
         defaultValues: defaultValues

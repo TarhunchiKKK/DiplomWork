@@ -4,7 +4,7 @@ import { TFormState, TProps } from "./types";
 import { defaultValues } from "./constants";
 
 export function useLoginForm(props: TProps) {
-    const { mutate: login, isPending } = useLogin(props.next);
+    const { mutate: login, isPending } = useLogin({ onSuccess: props.next });
 
     const form = useForm<TFormState>({
         defaultValues: defaultValues
