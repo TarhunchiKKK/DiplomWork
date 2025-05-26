@@ -7,15 +7,17 @@ export function useDocumentPage() {
 
     const { data: document } = useOneDocument(documentId);
 
-    const versionId = useCurrentDocumentStore(state => state.versionId);
-
-    const setVersionId = useCurrentDocumentStore(state => state.setVersionId);
+    const { versionId, setVersionId, resetVersionId } = useCurrentDocumentStore();
 
     useEffect(() => {
         if (document) {
             setVersionId(document.lastVersionId);
         }
-    }, [document, setVersionId]);
+
+        return () => {
+            resetVersionId();
+        };
+    }, [document, setVersionId, resetVersionId]);
 
     return { documentId, versionId };
 }
