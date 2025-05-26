@@ -3,7 +3,7 @@ import { useApproverButtons } from "./hooks";
 import { ApprovalStatus } from "@/entities/workflows";
 import { TProps } from "./types";
 
-export function WorkflowApproverButtons({ documentId }: TProps) {
+export function ApproverButtons({ documentId }: TProps) {
     const { isPending, onClick } = useApproverButtons(documentId);
 
     return (
