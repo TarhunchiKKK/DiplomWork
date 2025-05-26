@@ -5,7 +5,7 @@ import axios from "axios";
 import { TDocument } from "../models";
 
 export function useOneDocument(documentId: string) {
-    const { data, isLoading } = useQuery({
+    return useQuery({
         queryKey: queryKeys.documents.findOne(documentId),
         queryFn: async () => {
             const token = credentialsManager.jwt.get() as string;
@@ -17,6 +17,4 @@ export function useOneDocument(documentId: string) {
             return response.data;
         }
     });
-
-    return { document: data, isLoading };
 }

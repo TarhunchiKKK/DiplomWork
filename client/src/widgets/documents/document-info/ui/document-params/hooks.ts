@@ -2,9 +2,9 @@ import { useOneDocument } from "@/entities/documents";
 import { useOrganization } from "@/entities/organizations";
 
 export function useDocumentParams(documentId: string) {
-    const { document } = useOneDocument(documentId);
+    const { data: document } = useOneDocument(documentId);
 
-    const { organization } = useOrganization();
+    const { data: organization } = useOrganization();
 
     const documentAim = organization?.documentAims.find(aim => aim._id === document?.aimId)?.value || null;
 

@@ -13,7 +13,7 @@ type TQueryParams = {
 };
 
 export function useNotifications(queryParams: TQueryParams = {}) {
-    const { data, isLoading } = useQuery({
+    return useQuery({
         queryKey: queryKeys.notifications.findAll(queryParams),
         queryFn: async () => {
             const token = credentialsManager.jwt.get();
@@ -27,9 +27,4 @@ export function useNotifications(queryParams: TQueryParams = {}) {
         },
         select: notifications => notifications.map(transformNotification)
     });
-
-    return {
-        notifications: data,
-        isLoading
-    };
 }

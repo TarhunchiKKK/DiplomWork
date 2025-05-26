@@ -1,8 +1,8 @@
 import { credentialsManager, useProfileStore } from "@/features/auth";
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { queryUrls } from "@/shared/api";
-import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { httpErrorHandler } from "@/shared/validation";
 import { toast } from "sonner";
 import { TAuthResponse } from "../types";
 
@@ -30,10 +30,6 @@ export function useConfirmInvitation(invitationToken: string) {
 
             setProfile(response);
         },
-        onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => {
-                toast.error(message);
-            });
-        }
+        onError: httpErrorHandler
     });
 }

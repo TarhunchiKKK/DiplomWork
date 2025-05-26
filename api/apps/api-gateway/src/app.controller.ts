@@ -1,6 +1,8 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, UseFilters } from "@nestjs/common";
+import { GatewayExceptionFilter } from "common/middleware";
 
 @Controller()
+@UseFilters(GatewayExceptionFilter)
 export class AppController {
     @Get("/ping")
     public ping() {

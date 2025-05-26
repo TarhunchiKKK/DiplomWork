@@ -1,8 +1,7 @@
 import { queryUrls, HttpHeadersBuilder, queryKeys } from "@/shared/api";
-import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { httpErrorHandler } from "@/shared/validation";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { toast } from "sonner";
+import axios from "axios";
 import { useProfileStore } from "../lib";
 import { TProfile } from "../types";
 import { credentialsManager } from "../utils";
@@ -37,8 +36,6 @@ export function useEnableTotp() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.profile });
         },
-        onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => toast.error(message));
-        }
+        onError: httpErrorHandler
     });
 }

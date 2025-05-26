@@ -10,7 +10,7 @@ import { useCurrentDocuments } from "./hooks";
 import { CreateDocumentButton } from "@/widgets/documents";
 
 export default function DashboardPage() {
-    const { documents } = useCurrentDocuments();
+    const { data: documents } = useCurrentDocuments();
 
     return (
         <div className="space-y-4">

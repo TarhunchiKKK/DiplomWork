@@ -5,8 +5,8 @@ import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { TGenerateTotpResponse } from "../types";
+import { httpErrorHandler } from "@/shared/validation";
 
 export function useGenerateTotp() {
     const [isFetched, setIsFetched] = useState(false);
@@ -33,9 +33,7 @@ export function useGenerateTotp() {
         onSuccess: () => {
             setIsFetched(true);
         },
-        onError: () => {
-            toast.error("Ошибка");
-        }
+        onError: httpErrorHandler
     });
 
     useEffect(() => {

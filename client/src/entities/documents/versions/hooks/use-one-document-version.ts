@@ -6,7 +6,7 @@ import { TVersion } from "../models";
 import { transformVersion } from "../helpers";
 
 export function useOneDocumentVersion(versionId: string) {
-    const { data, isLoading } = useQuery({
+    return useQuery({
         queryKey: queryKeys.documents.versions.findOne(versionId),
         queryFn: async () => {
             const token = credentialsManager.jwt.get();
@@ -21,6 +21,4 @@ export function useOneDocumentVersion(versionId: string) {
         },
         select: transformVersion
     });
-
-    return { version: data, isLoading };
 }

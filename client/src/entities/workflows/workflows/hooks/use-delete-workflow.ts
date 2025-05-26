@@ -1,12 +1,13 @@
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 export function useDeleteWorkflow() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (workflowId: string) => {
             const token = credentialsManager.jwt.get();
 
@@ -16,11 +17,7 @@ export function useDeleteWorkflow() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.workflows.base });
-        }
+        },
+        onError: httpErrorHandler
     });
-
-    return {
-        deleteWorkflow: mutate,
-        isPending
-    };
 }

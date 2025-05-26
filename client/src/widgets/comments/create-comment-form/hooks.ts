@@ -3,13 +3,13 @@ import { TFormState } from "./types";
 import { useCreateDocumentComment } from "@/entities/documents";
 
 export function useCreateCommentForm(versionId: string) {
+    const { mutate: createComment, isPending } = useCreateDocumentComment();
+
     const form = useForm<TFormState>({
         defaultValues: {
             message: ""
         }
     });
-
-    const { createComment, isPending } = useCreateDocumentComment();
 
     const onSubmit = form.handleSubmit((data: TFormState) => {
         form.reset();

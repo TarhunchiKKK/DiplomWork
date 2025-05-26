@@ -4,7 +4,7 @@ import { TProps } from "./types";
 import { defaultLabel } from "./constants";
 
 export function DocumentTypeDropdown({ value, onChange }: TProps) {
-    const { organization } = useOrganization();
+    const { data: organization } = useOrganization();
 
     const documentTypes = organization?.documentTypes ?? [];
 

@@ -1,5 +1,6 @@
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -14,7 +15,7 @@ type TResponse = {
 };
 
 export function useVerifyDocumentHash() {
-    const { mutate, isPending, isError, isSuccess } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -25,13 +26,7 @@ export function useVerifyDocumentHash() {
             if (!response.data.valid) {
                 throw new Error("Неверный хеш");
             }
-        }
+        },
+        onError: httpErrorHandler
     });
-
-    return {
-        verifyDocumentHash: mutate,
-        isPending,
-        isSuccess,
-        isError
-    };
 }

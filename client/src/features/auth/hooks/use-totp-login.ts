@@ -1,8 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { queryUrls } from "@/shared/api";
-import { toast } from "sonner";
-import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import axios from "axios";
+import { queryUrls, TMutationOptions } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { TAuthResponse } from "../types";
 
 type TDto = {
@@ -13,19 +12,15 @@ type TDto = {
     pin: string;
 };
 
-type TOnSuccess = (_: TAuthResponse) => void;
-
-export function useTotpLogin(onSuccess: TOnSuccess = () => {}) {
+export function useTotpLogin(options: TMutationOptions<TAuthResponse> = {}) {
     return useMutation({
         mutationFn: async (dto: TDto) => {
             const response = await axios.post<TAuthResponse>(queryUrls.auth.totp.login, dto);
             return response.data;
         },
         onSuccess: response => {
-            onSuccess(response);
+            options.onSuccess?.(response);
         },
-        onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => toast.error(message));
-        }
+        onError: httpErrorHandler
     });
 }

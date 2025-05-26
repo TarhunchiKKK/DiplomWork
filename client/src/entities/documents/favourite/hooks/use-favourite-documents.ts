@@ -5,7 +5,7 @@ import axios from "axios";
 import { TFindDocumentsResponse, transformDocumentShortData } from "../../shared";
 
 export function useFavouriteDocuments() {
-    const { data, isLoading } = useQuery({
+    return useQuery({
         queryKey: queryKeys.documents.favourite,
         queryFn: async () => {
             const token = credentialsManager.jwt.get() as string;
@@ -18,9 +18,4 @@ export function useFavouriteDocuments() {
         },
         select: documents => documents.map(transformDocumentShortData)
     });
-
-    return {
-        documents: data,
-        isLoading
-    };
 }

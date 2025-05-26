@@ -9,7 +9,7 @@ import {
 import { Suspense } from "react";
 
 export default function MyDocumentsPage() {
-    const { documents } = useMyDocuments();
+    const { data: documents } = useMyDocuments();
 
     return (
         <div className="space-y-4">

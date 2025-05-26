@@ -1,5 +1,6 @@
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -12,7 +13,7 @@ type TDto = {
 export function useUpdateWorkflowSigner() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -28,11 +29,7 @@ export function useUpdateWorkflowSigner() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.workflows.base });
-        }
+        },
+        onError: httpErrorHandler
     });
-
-    return {
-        updateSigner: mutate,
-        isPending
-    };
 }

@@ -1,11 +1,12 @@
-import { Body, Controller, Patch, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Patch, Post, Req, UseFilters, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { TotpAuthenticationGrpcService } from "common/grpc";
-import { AuthenticationGuard } from "common/middleware";
+import { AuthenticationGuard, GatewayExceptionFilter } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { EnableTotpDto } from "./dto/enable-totp.dto";
 import { LoginWithTotpDto } from "./dto/login-with-totp.dto";
 
 @Controller("/users/auth/totp")
+@UseFilters(GatewayExceptionFilter)
 export class TotpAuthenticationController {
     public constructor(private readonly totpAuthenticationGrpcService: TotpAuthenticationGrpcService) {}
 

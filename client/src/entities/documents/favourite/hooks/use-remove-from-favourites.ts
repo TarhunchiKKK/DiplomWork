@@ -1,13 +1,13 @@
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { toast } from "sonner";
 
 export function useRemoveFromFavourites() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (documentId: string) => {
             const token = credentialsManager.jwt.get();
 
@@ -19,11 +19,6 @@ export function useRemoveFromFavourites() {
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.findOne(documentId) });
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.favourite });
         },
-        onError: () => toast.error("Ошибка")
+        onError: httpErrorHandler
     });
-
-    return {
-        remove: mutate,
-        isPending
-    };
 }

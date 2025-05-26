@@ -1,3 +1,4 @@
+import { RequireAuth } from "@/features/auth";
 import {
     ProfileSettingsWrapper,
     UpdateAuthTypeForm,
@@ -7,18 +8,20 @@ import {
 
 export default function ProfileSettingsPage() {
     return (
-        <div className="space-y-4">
-            <ProfileSettingsWrapper title="Настройки профиля">
-                <UpdateProfileForm />
-            </ProfileSettingsWrapper>
+        <RequireAuth>
+            <div className="space-y-4">
+                <ProfileSettingsWrapper title="Настройки профиля">
+                    <UpdateProfileForm />
+                </ProfileSettingsWrapper>
 
-            <ProfileSettingsWrapper title="Смена пароля">
-                <UpdatePasswordLink />
-            </ProfileSettingsWrapper>
+                <ProfileSettingsWrapper title="Смена пароля">
+                    <UpdatePasswordLink />
+                </ProfileSettingsWrapper>
 
-            <ProfileSettingsWrapper title="Аутентификация">
-                <UpdateAuthTypeForm />
-            </ProfileSettingsWrapper>
-        </div>
+                <ProfileSettingsWrapper title="Аутентификация">
+                    <UpdateAuthTypeForm />
+                </ProfileSettingsWrapper>
+            </div>
+        </RequireAuth>
     );
 }

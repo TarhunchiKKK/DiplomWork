@@ -3,7 +3,7 @@ import { getContent } from "../../shared/helpers";
 import { useOrganizationUsers } from "@/entities/users";
 
 export function useSignerDropdowm() {
-    const { users } = useOrganizationUsers();
+    const { data: users } = useOrganizationUsers();
 
     const { approvers, setSignerId, signerId } = useParticipantsStore();
 

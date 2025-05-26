@@ -1,10 +1,10 @@
 import { credentialsManager } from "@/features/auth";
-import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { HttpHeadersBuilder, queryKeys, queryUrls, TQueryOptions } from "@/shared/api";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { TUserInfo } from "../models";
 
-export function useOneUser(userId: string, enabled: boolean = true) {
+export function useOneUser(userId: string, options: TQueryOptions = {}) {
     return useQuery({
         queryKey: queryKeys.users.findOne(userId),
         queryFn: async () => {
@@ -16,6 +16,6 @@ export function useOneUser(userId: string, enabled: boolean = true) {
 
             return response.data;
         },
-        enabled: enabled
+        enabled: options.enabled
     });
 }

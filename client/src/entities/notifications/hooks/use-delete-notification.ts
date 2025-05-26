@@ -1,12 +1,13 @@
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 export function useDeleteNotification() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (notificationId: string) => {
             const token = credentialsManager.jwt.get();
 
@@ -16,11 +17,7 @@ export function useDeleteNotification() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.notifications.base });
-        }
+        },
+        onError: httpErrorHandler
     });
-
-    return {
-        deleteNotification: mutate,
-        isPending
-    };
 }

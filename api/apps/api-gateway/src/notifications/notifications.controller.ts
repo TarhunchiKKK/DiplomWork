@@ -7,17 +7,19 @@ import {
     Patch,
     Query,
     Req,
+    UseFilters,
     UseGuards,
     UsePipes,
     ValidationPipe
 } from "@nestjs/common";
 import { NotificationStatus, NotificationSubject } from "common/enums/notifications";
 import { NotificationsGrpcService } from "common/grpc";
-import { AuthenticationGuard } from "common/middleware";
+import { AuthenticationGuard, GatewayExceptionFilter } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { UpdateNotificationDto } from "./dto/update-notification.dto";
 
 @Controller("notifications")
+@UseFilters(GatewayExceptionFilter)
 @UseGuards(AuthenticationGuard)
 export class NotificationsController {
     public constructor(private readonly notificationsGrpcService: NotificationsGrpcService) {}

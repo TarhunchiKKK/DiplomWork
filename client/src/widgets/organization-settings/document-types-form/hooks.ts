@@ -7,7 +7,7 @@ import { useCompareableSet } from "@/shared/hooks";
 import { useOrganization, useUpdateDocumentTypes } from "@/entities/organizations";
 
 export function useDocumentTypesForm() {
-    const { organization, isLoading } = useOrganization();
+    const { data: organization, isLoading } = useOrganization();
 
     const extractValue = useCallback((aim: TUpdateItemDto) => aim.value, []);
 
@@ -40,7 +40,7 @@ export function useDocumentTypesForm() {
 export function useUpdate() {
     const profile = useProfileStore(state => state.profile) as TProfile;
 
-    const { updateDocumentTypes, isPending } = useUpdateDocumentTypes();
+    const { mutate: updateDocumentTypes, isPending } = useUpdateDocumentTypes();
 
     const update = (documentTypes: TUpdateItemDto[]) => {
         updateDocumentTypes({

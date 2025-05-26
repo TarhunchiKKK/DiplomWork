@@ -1,12 +1,13 @@
-import { Body, Controller, Get, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Post, Req, UseFilters, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { AuthenticationGrpcService } from "common/grpc";
 import { RegisterAdminDto } from "./dto/register-admin.dto";
 import { LoginDto } from "./dto/login.dto";
-import { AuthenticationGuard } from "common/middleware";
+import { AuthenticationGuard, GatewayExceptionFilter } from "common/middleware";
 import { TAuthenticatedRequest } from "common/modules";
 import { Recaptcha } from "@nestlab/google-recaptcha";
 
 @Controller("/users/auth")
+@UseFilters(GatewayExceptionFilter)
 export class AuthenticationController {
     public constructor(private readonly authenticationGrpcService: AuthenticationGrpcService) {}
 

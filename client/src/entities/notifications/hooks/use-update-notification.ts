@@ -1,10 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { NotificationStatus } from "../enums";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { credentialsManager } from "@/features/auth";
-import { TValidationError, extractValidationMessages } from "@/shared/validation";
-import { toast } from "sonner";
+import { httpErrorHandler } from "@/shared/validation";
 
 type TDto = {
     id: string;
@@ -17,7 +16,7 @@ type TDto = {
 export function useUpdateNotification() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -28,13 +27,6 @@ export function useUpdateNotification() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.notifications.base });
         },
-        onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => toast.error(message));
-        }
+        onError: httpErrorHandler
     });
-
-    return {
-        updateNotification: mutate,
-        isPending
-    };
 }

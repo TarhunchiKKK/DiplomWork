@@ -3,6 +3,7 @@ import { ApprovalStatus } from "../enums";
 import { credentialsManager } from "@/features/auth";
 import axios from "axios";
 import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 
 type TDto = {
     id: string;
@@ -11,7 +12,7 @@ type TDto = {
 };
 
 export function useUpdatePArticipantStatus() {
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -24,11 +25,7 @@ export function useUpdatePArticipantStatus() {
                     headers: new HttpHeadersBuilder().setBearerToken(token).build()
                 }
             );
-        }
+        },
+        onError: httpErrorHandler
     });
-
-    return {
-        updateStatus: mutate,
-        isPending
-    };
 }

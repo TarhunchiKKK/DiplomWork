@@ -4,7 +4,7 @@ import { Notification, NotificationSkeleton } from "../notification";
 import { useNotifications } from "@/entities/notifications/hooks";
 
 export function NotificationsList() {
-    const { notifications } = useNotifications();
+    const { data: notifications } = useNotifications();
 
     return (
         <div className="space-y-2">

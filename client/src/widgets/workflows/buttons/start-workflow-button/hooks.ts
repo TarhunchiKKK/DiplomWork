@@ -1,7 +1,7 @@
 import { useStartWorkflow } from "@/entities/workflows";
 
 export function useStartWorkflowButton(documentId: string) {
-    const { startWorkflow, isPending } = useStartWorkflow();
+    const { mutate: startWorkflow, isPending } = useStartWorkflow();
 
     const onClick = () => {
         startWorkflow(documentId as string);

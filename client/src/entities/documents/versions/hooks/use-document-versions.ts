@@ -6,7 +6,7 @@ import { TFindVersionsResponse } from "../types";
 import { transformVersion } from "../helpers";
 
 export function useDocumentVersions(documentId: string) {
-    const { data, isLoading } = useQuery({
+    return useQuery({
         queryKey: queryKeys.documents.versions.findAll(documentId),
         queryFn: async () => {
             const token = credentialsManager.jwt.get();
@@ -19,6 +19,4 @@ export function useDocumentVersions(documentId: string) {
         },
         select: versions => versions.map(transformVersion)
     });
-
-    return { versions: data, isLoading };
 }

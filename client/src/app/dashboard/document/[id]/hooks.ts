@@ -5,17 +5,19 @@ import { useEffect } from "react";
 export function useDocumentPage() {
     const { id: documentId } = useParams() as { id: string };
 
-    const { document } = useOneDocument(documentId);
+    const { data: document } = useOneDocument(documentId);
 
-    const versionId = useCurrentDocumentStore(state => state.versionId);
-
-    const setVersionId = useCurrentDocumentStore(state => state.setVersionId);
+    const { versionId, setVersionId, resetVersionId } = useCurrentDocumentStore();
 
     useEffect(() => {
         if (document) {
             setVersionId(document.lastVersionId);
         }
-    }, [document, setVersionId]);
+
+        return () => {
+            resetVersionId();
+        };
+    }, [document, setVersionId, resetVersionId]);
 
     return { documentId, versionId };
 }

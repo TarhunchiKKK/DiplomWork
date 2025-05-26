@@ -1,8 +1,8 @@
 import { credentialsManager } from "@/features/auth";
 import { queryUrls, HttpHeadersBuilder, queryKeys } from "@/shared/api";
-import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { httpErrorHandler } from "@/shared/validation";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { toast } from "sonner";
 
 type TUpdatePostDto = {
@@ -26,7 +26,7 @@ type TUpdateDto = {
 export function useUpdateAdministrativeDivisioons() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TUpdateDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -40,15 +40,6 @@ export function useUpdateAdministrativeDivisioons() {
         onSuccess: () => {
             toast.success("Обновлено успешно");
         },
-        onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => {
-                toast.error(message);
-            });
-        }
+        onError: httpErrorHandler
     });
-
-    return {
-        updateAdministrativeDivisioons: mutate,
-        isPending
-    };
 }

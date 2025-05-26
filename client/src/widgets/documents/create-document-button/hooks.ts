@@ -4,13 +4,13 @@ import { TFormState } from "./types";
 import { toast } from "sonner";
 
 export function useCreateDocumentButton() {
+    const { mutate: createDocument, isPending } = useCreateDocument();
+
     const form = useForm<TFormState>({
         defaultValues: {
             isUrgent: false
         }
     });
-
-    const { createDocument, isPending } = useCreateDocument();
 
     const onSubmit = form.handleSubmit((data: TFormState) => {
         if (data.files?.length !== 1) {

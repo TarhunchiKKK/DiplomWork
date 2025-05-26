@@ -1,7 +1,7 @@
 import { useOrganizationUsers, useChangeAccountStatus, AccountStatus } from "@/entities/users";
 
 export function useUsersManagementPanel() {
-    const { users } = useOrganizationUsers();
+    const { data: users } = useOrganizationUsers();
 
     const { mutate: changeStatus } = useChangeAccountStatus();
 

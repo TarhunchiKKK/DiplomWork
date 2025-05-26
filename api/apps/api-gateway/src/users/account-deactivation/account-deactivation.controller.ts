@@ -1,10 +1,11 @@
-import { Body, Controller, Param, Patch, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Param, Patch, UseFilters, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { Role } from "common/enums";
 import { AccountDeactivationGrpcService } from "common/grpc";
-import { RequireRoles, RoleGuard } from "common/middleware";
+import { GatewayExceptionFilter, RequireRoles, RoleGuard } from "common/middleware";
 import { ChangeAccountStatusDto } from "./dto/change-account-stattus.dto";
 
 @Controller("/users/account-deactivation")
+@UseFilters(GatewayExceptionFilter)
 export class AccountDeactivationController {
     public constructor(private readonly accountdeactivationGrpcService: AccountDeactivationGrpcService) {}
 

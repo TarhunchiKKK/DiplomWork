@@ -1,5 +1,10 @@
+import { RequireAuth } from "@/features/auth";
 import { TotpEnablingProcess } from "@/processes";
 
 export default function EnableTotpPage() {
-    return <TotpEnablingProcess />;
+    return (
+        <RequireAuth>
+            <TotpEnablingProcess />
+        </RequireAuth>
+    );
 }

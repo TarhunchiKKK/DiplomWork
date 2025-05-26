@@ -5,7 +5,7 @@ import axios from "axios";
 import { TFullWorkflow } from "../models";
 
 export function useFindWorkflowByDocumentId(documentId: string) {
-    const { data, isLoading, error } = useQuery({
+    return useQuery({
         queryKey: queryKeys.workflows.findOne.byDocumentId(documentId),
         queryFn: async () => {
             const token = credentialsManager.jwt.get();
@@ -17,10 +17,4 @@ export function useFindWorkflowByDocumentId(documentId: string) {
             return response.data;
         }
     });
-
-    return {
-        workflow: data,
-        isLoading,
-        error
-    };
 }

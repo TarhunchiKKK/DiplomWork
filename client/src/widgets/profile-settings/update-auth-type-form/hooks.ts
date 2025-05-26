@@ -1,36 +1,14 @@
-import { credentialsManager, TProfile, useProfileStore } from "@/features/auth";
+import { TProfile, useDisableTotp, useProfileStore } from "@/features/auth";
 import { dropdownOptions } from "./constants";
 import { useState } from "react";
 import { AuthType } from "@/entities/users";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
-import { toast } from "sonner";
 import { routes } from "@/shared/routing";
 import { useRouter } from "next/navigation";
 
-export function useDisableTotp() {
+export function useUpdateAuthType() {
     const router = useRouter();
 
-    const queryClient = useQueryClient();
-
-    const { mutate: disableTotp, isPending: isTotpDisablingPending } = useMutation({
-        mutationFn: async () => {
-            const token = credentialsManager.jwt.get();
-
-            await axios.patch(queryUrls.auth.totp.disable, null, {
-                headers: new HttpHeadersBuilder().setBearerToken(token).build()
-            });
-        },
-        onSuccess: () => {
-            toast.success("Обновлено");
-
-            queryClient.invalidateQueries({ queryKey: queryKeys.profile });
-        },
-        onError: () => {
-            toast.error("Ошибка");
-        }
-    });
+    const { mutate: disableTotp, isPending: isTotpDisablingPending } = useDisableTotp();
 
     const update = (authType: AuthType) => {
         switch (authType) {

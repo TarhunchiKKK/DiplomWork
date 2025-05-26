@@ -1,9 +1,8 @@
 import { credentialsManager } from "@/features/auth";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
-import { TValidationError, extractValidationMessages } from "@/shared/validation";
+import { httpErrorHandler } from "@/shared/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { toast } from "sonner";
+import axios from "axios";
 
 type TDto = {
     typeId: string;
@@ -20,7 +19,7 @@ type TDto = {
 export function useCreateDocument() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -31,13 +30,6 @@ export function useCreateDocument() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.base });
         },
-        onError: (error: AxiosError<TValidationError>) => {
-            extractValidationMessages(error).forEach(message => toast.error(message));
-        }
+        onError: httpErrorHandler
     });
-
-    return {
-        createDocument: mutate,
-        isPending
-    };
 }

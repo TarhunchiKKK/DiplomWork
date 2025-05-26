@@ -2,9 +2,9 @@ import { useOneDocument } from "@/entities/documents";
 import { useCreateWorkflow } from "@/entities/workflows";
 
 export function useCreateWorkflowButton(documentId: string) {
-    const { document } = useOneDocument(documentId);
+    const { data: document } = useOneDocument(documentId);
 
-    const { createWorkflow, isPending } = useCreateWorkflow();
+    const { mutate: createWorkflow, isPending } = useCreateWorkflow();
 
     const onClick = () => {
         createWorkflow({

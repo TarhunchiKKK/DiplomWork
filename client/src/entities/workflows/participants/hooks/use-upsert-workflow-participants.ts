@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { credentialsManager } from "@/features/auth";
 import axios from "axios";
 import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
+import { httpErrorHandler } from "@/shared/validation";
 
 type TParticipantDto = {
     id?: string;
@@ -18,7 +19,7 @@ type TDto = {
 export function useUpsertWorkflowParticipants() {
     const queryClient = useQueryClient();
 
-    const { mutate, isPending } = useMutation({
+    return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
@@ -34,11 +35,7 @@ export function useUpsertWorkflowParticipants() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.workflows.findOne.base });
-        }
+        },
+        onError: httpErrorHandler
     });
-
-    return {
-        upsertParticipants: mutate,
-        isPending
-    };
 }

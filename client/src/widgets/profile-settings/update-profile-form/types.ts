@@ -1,3 +1,3 @@
-export type TUpdateProfileFormState = {
+export type TFormState = {
     username: string;
 };

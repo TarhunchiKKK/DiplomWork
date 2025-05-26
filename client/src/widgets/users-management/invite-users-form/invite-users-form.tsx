@@ -1,13 +1,14 @@
 "use client";
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, TagsCloud } from "@/shared/ui";
-import { useInviteUsersForm, useUsersInvitation } from "./hooks";
+import { useInviteUsersForm } from "./hooks";
 import { getTagRendereer } from "./ui";
+import { useUsersInvitation } from "@/entities/users";
 
 export function InviteUsersForm() {
     const { emailsSet, form, onSubmit } = useInviteUsersForm();
 
-    const { invite, isPending } = useUsersInvitation();
+    const { mutate: invite, isPending } = useUsersInvitation();
 
     return (
         <div>
