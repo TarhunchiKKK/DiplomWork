@@ -1,5 +1,10 @@
+import { RequireAdminRole } from "@/features/auth";
 import { AdministrativeDivisionsForm } from "@/widgets/organization-settings";
 
 export default function OrganizationSettingsPage() {
-    return <AdministrativeDivisionsForm />;
+    return (
+        <RequireAdminRole>
+            <AdministrativeDivisionsForm />
+        </RequireAdminRole>
+    );
 }
