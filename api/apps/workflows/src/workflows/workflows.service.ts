@@ -13,7 +13,6 @@ import { WorkflowCompletedEvent } from "./events/workflow-completeed.events";
 export class WorkflowsService {
     public constructor(
         @InjectRepository(Workflow) private readonly workflowsRepository: Repository<Workflow>,
-
         private readonly eventEmitter: EventEmitter2
     ) {}
 
@@ -32,7 +31,15 @@ export class WorkflowsService {
     }
 
     public async start(workflowId: string) {
-        await this.update(workflowId, { status: WorkflowStatus.STARTED });
+        const workflow = await this.findOneById(workflowId);
+
+        if (workflow.participants.length === 0) {
+            throw new BadRequestException("Добавьте участников");
+        } else if (!workflow.signerId) {
+            throw new BadRequestException("Добавьте подписывающего");
+        }
+
+        await this.update(workflow.id, { status: WorkflowStatus.STARTED });
     }
 
     public async sign(workflowId: string) {

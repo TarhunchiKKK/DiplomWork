@@ -6,7 +6,7 @@ export function useDownloadButton() {
     const { mutate: verifyDocumentHash, isPending, isSuccess, isError } = useVerifyDocumentHash();
 
     useEffect(() => {
-        verifyDocumentHash(mocks.verifyDocumentHashDto);
+        // verifyDocumentHash(mocks.verifyDocumentHashDto);
     }, [verifyDocumentHash]);
 
     return {

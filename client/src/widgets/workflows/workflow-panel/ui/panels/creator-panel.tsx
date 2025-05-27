@@ -2,6 +2,7 @@ import { TFullWorkflow, WorkflowStatus } from "@/entities/workflows";
 import { CreateWorkflowButton } from "../create-workflow-button";
 import { StartWorkflowButton } from "../start-workflow-button";
 import { WorkflowProgress } from "../workflow-progress";
+import { WorkflowParticipantsForm } from "@/widgets/workflows/workflow-participants-form";
 
 export function CreatorPanel({ workflow, documentId }: { workflow?: TFullWorkflow; documentId: string }) {
     if (!workflow) {
@@ -16,13 +17,16 @@ export function CreatorPanel({ workflow, documentId }: { workflow?: TFullWorkflo
 
     switch (workflow.status) {
         case WorkflowStatus.DEFAULT:
-            return (
-                <div className="flex flex-col justify-center items-center space-y-4">
-                    <p className="text-center">Маршрут создан. Вы можете его начать.</p>
+            // return (
+            //     <div className="flex flex-col justify-center items-center space-y-4">
+            //         <p className="text-center">Маршрут создан. Вы можете его начать.</p>
 
-                    <StartWorkflowButton workflowId={workflow.id} />
-                </div>
-            );
+            //         <StartWorkflowButton workflowId={workflow.id} />
+            //     </div>
+            // );
+
+            return <WorkflowParticipantsForm documentId={documentId} />;
+
         case WorkflowStatus.STARTED:
             return <WorkflowProgress participants={workflow.participants} />;
         case WorkflowStatus.REJECTED:

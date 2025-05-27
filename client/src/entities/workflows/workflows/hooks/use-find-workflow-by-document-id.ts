@@ -10,7 +10,7 @@ export function useFindWorkflowByDocumentId(documentId: string) {
         queryFn: async () => {
             const token = credentialsManager.jwt.get();
 
-            const response = await axios.get<TFullWorkflow>(queryUrls.workflows.findOneByDocumentId(documentId), {
+            const response = await axios.get<TFullWorkflow>(queryUrls.workflows.findOne.byDocumentId(documentId), {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
 

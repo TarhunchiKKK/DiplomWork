@@ -10,7 +10,6 @@ export function Workflow({ workflow }: TProps) {
                 <CardTitle>{workflow.documentTitle}</CardTitle>
 
                 <CardDescription>
-                    Вас добавили к маршруту согласования документа {workflow.documentTitle}.{" "}
                     <Link href={routes.dashboard.documents.one(workflow.documentId)} className="underline">
                         Перейти
                     </Link>
