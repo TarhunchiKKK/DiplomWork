@@ -3,7 +3,7 @@ import { OnEvent } from "@nestjs/event-emitter";
 import { UsersGrpcService } from "common/grpc";
 import { ParticipantsCreatedEvent } from "./events/participants-created.event";
 import { firstValueFrom } from "rxjs";
-import { NotificationsRmqService, ParticipantAddedRmqEvent, ParticipantDeletedRmqEvent } from "common/rabbitmq";
+import { RmqClient, ParticipantAddedRmqEvent, ParticipantDeletedRmqEvent } from "common/rabbitmq";
 import { ParticipantsDeletedEvent } from "./events/participants-deleted.event";
 
 @Injectable()
@@ -11,7 +11,7 @@ export class WorkflowParticipantsObserver {
     public constructor(
         private readonly usersGrpcService: UsersGrpcService,
 
-        private readonly notificationsRmqService: NotificationsRmqService
+        private readonly rmqClient: RmqClient
     ) {}
 
     @OnEvent(ParticipantsCreatedEvent.PATTERN)
@@ -23,7 +23,7 @@ export class WorkflowParticipantsObserver {
         );
 
         users.users.forEach(user => {
-            this.notificationsRmqService.emit(
+            this.rmqClient.emit(
                 new ParticipantAddedRmqEvent(event.workflowDocumentTitle, { id: user.id, email: user.email })
             );
         });
@@ -38,7 +38,7 @@ export class WorkflowParticipantsObserver {
         );
 
         users.users.forEach(user => {
-            this.notificationsRmqService.emit(
+            this.rmqClient.emit(
                 new ParticipantDeletedRmqEvent(event.workflowDocumentTitle, { id: user.id, email: user.email })
             );
         });

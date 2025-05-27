@@ -4,11 +4,11 @@ import { UsersModule } from "../users/users.module";
 import { InvitationsController } from "./invitations.controller";
 import { InvitationsService } from "./invitations.service";
 import { AuthenticationModule } from "../authentiation/authentiation.module";
-import { UserInvitationEventsObserver } from "./user-invitation-events.observer";
-import { NotificationsRmqModule } from "common/rabbitmq";
+import { UserInvitationEventsObserver } from "./invitations.observer";
+import { RmqModule } from "common/rabbitmq";
 
 @Module({
-    imports: [UserInvitationTokensModule, UsersModule, AuthenticationModule, NotificationsRmqModule],
+    imports: [UserInvitationTokensModule, UsersModule, AuthenticationModule, RmqModule],
     controllers: [InvitationsController],
     providers: [InvitationsService, UserInvitationEventsObserver]
 })

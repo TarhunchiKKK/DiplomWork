@@ -5,7 +5,7 @@ import {
     DocumentCommentCreatedRmqEvent,
     DocumentCommentDeletedRmqEvent,
     DocumentCommentUpdatedRmqEvent,
-    NotificationsRmqService
+    RmqClient
 } from "common/rabbitmq";
 import { OnEvent } from "@nestjs/event-emitter";
 import { CommentCreatedEvent } from "./events/comment-created.event";
@@ -23,7 +23,7 @@ export class DocumentCommentsEventsObserver {
 
         private readonly usersGrpcService: UsersGrpcService,
 
-        private readonly notificationsRmqService: NotificationsRmqService
+        private readonly rmqClient: RmqClient
     ) {}
 
     private async getCommentInfo(commentId: string) {
@@ -48,7 +48,7 @@ export class DocumentCommentsEventsObserver {
     public async handleCommentCreated(event: CommentCreatedEvent) {
         const { document, documentAuthor, commentCreator } = await this.getCommentInfo(event.commentId);
 
-        this.notificationsRmqService.emit(
+        this.rmqClient.emit(
             new DocumentCommentCreatedRmqEvent(
                 { id: documentAuthor.id, email: documentAuthor.email },
                 commentCreator.email,
@@ -61,7 +61,7 @@ export class DocumentCommentsEventsObserver {
     public async handleCommentUpdated(event: CommentUpdatedEvent) {
         const { document, documentAuthor, commentCreator } = await this.getCommentInfo(event.commentId);
 
-        this.notificationsRmqService.emit(
+        this.rmqClient.emit(
             new DocumentCommentUpdatedRmqEvent(
                 { id: documentAuthor.id, email: documentAuthor.email },
                 commentCreator.email,
@@ -74,7 +74,7 @@ export class DocumentCommentsEventsObserver {
     public async handleCommentDeleted(event: CommentDeletedEvent) {
         const { document, documentAuthor, commentCreator } = await this.getCommentInfo(event.commentId);
 
-        this.notificationsRmqService.emit(
+        this.rmqClient.emit(
             new DocumentCommentDeletedRmqEvent(
                 { id: documentAuthor.id, email: documentAuthor.email },
                 commentCreator.email,

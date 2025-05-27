@@ -3,10 +3,10 @@ import { AccountDeactivationController } from "./account-deactivation.controller
 import { AccountDeactivationService } from "./account-deactivation.service";
 import { UsersModule } from "../users/users.module";
 import { AccountDeactivationEventsObserver } from "./account-deactivation-events.observer";
-import { NotificationsRmqModule } from "common/rabbitmq";
+import { RmqModule } from "common/rabbitmq";
 
 @Module({
-    imports: [UsersModule, NotificationsRmqModule],
+    imports: [UsersModule, RmqModule],
     controllers: [AccountDeactivationController],
     providers: [AccountDeactivationService, AccountDeactivationEventsObserver]
 })

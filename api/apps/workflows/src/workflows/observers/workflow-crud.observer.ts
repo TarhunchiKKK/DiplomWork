@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
 import { UsersGrpcService } from "common/grpc";
-import { NotificationsRmqService, WorkflowDeletedRmqEvent } from "common/rabbitmq";
+import { RmqClient, WorkflowDeletedRmqEvent } from "common/rabbitmq";
 import { firstValueFrom } from "rxjs";
 import { WorkflowDeletedEvent } from "../events/workflow-deleted.event";
 
@@ -10,7 +10,7 @@ export class WorkflowCrudObserver {
     public constructor(
         private readonly usersGrpcService: UsersGrpcService,
 
-        private readonly notificationsRmqService: NotificationsRmqService
+        private readonly rmqClient: RmqClient
     ) {}
 
     @OnEvent(WorkflowDeletedEvent.pattern)
@@ -22,9 +22,7 @@ export class WorkflowCrudObserver {
         );
 
         users.users.forEach(user => {
-            this.notificationsRmqService.emit(
-                new WorkflowDeletedRmqEvent(event.documentTitle, { id: user.id, email: user.email })
-            );
+            this.rmqClient.emit(new WorkflowDeletedRmqEvent(event.documentTitle, { id: user.id, email: user.email }));
         });
     }
 }

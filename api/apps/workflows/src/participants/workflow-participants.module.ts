@@ -5,10 +5,10 @@ import { WorkflowParticipantsController } from "./workflow-participants.controll
 import { WorkflowParticipantsService } from "./workflow-participants.service";
 import { WorkflowParticipantsObserver } from "./workflow-participants.observer";
 import { UsersGrpcModule } from "common/grpc";
-import { NotificationsRmqModule } from "common/rabbitmq";
+import { RmqModule } from "common/rabbitmq";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([WorkflowParticipant]), UsersGrpcModule, NotificationsRmqModule],
+    imports: [TypeOrmModule.forFeature([WorkflowParticipant]), UsersGrpcModule, RmqModule],
     controllers: [WorkflowParticipantsController],
     providers: [WorkflowParticipantsService, WorkflowParticipantsObserver],
     exports: [WorkflowParticipantsService]
