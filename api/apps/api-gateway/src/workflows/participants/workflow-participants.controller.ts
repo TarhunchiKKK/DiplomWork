@@ -5,6 +5,7 @@ import {
     Param,
     Patch,
     Put,
+    Req,
     UseFilters,
     UseGuards,
     UsePipes,
@@ -15,6 +16,7 @@ import { AuthenticationGuard, ExtractFromRequest, GatewayExceptionFilter } from 
 import { WorkflowCreatorGuard } from "../middleware/workflow-creator.guard";
 import { UpsertWorkflowParticipantsDto } from "./dto/uspers-workflow-participants.dto";
 import { UpdateApprovalStatusDto } from "./dto/update-approval-status.dto";
+import { TAuthenticatedRequest } from "common/modules";
 
 @Controller("/workflows/participants")
 @UseFilters(GatewayExceptionFilter)
@@ -36,10 +38,10 @@ export class WorkflowParticipantsController {
         });
     }
 
-    @Get("/user/:userId")
-    public async findAllUserWorkflows(@Param("userId") userId: string) {
+    @Get("/user-workflows")
+    public async findAllUserWorkflows(@Req() request: TAuthenticatedRequest) {
         return this.participantsGrpcService.call("findAllUserWorkflows", {
-            id: userId
+            id: request.jwtInfo.id
         });
     }
 

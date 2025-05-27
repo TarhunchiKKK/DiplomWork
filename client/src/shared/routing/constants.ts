@@ -15,7 +15,7 @@ export const routes = {
         },
         workflows: {
             my: "/dashboard/workflows/my",
-            invited: "/dashboard/workflows/invited"
+            participation: "/dashboard/workflows/participation"
         }
     },
     settings: {

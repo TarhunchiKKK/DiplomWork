@@ -76,7 +76,8 @@ export const queryUrls = {
         create: `${environment.apiUrl}/workflows`,
         start: (workflowId: string) => `${environment.apiUrl}/workflows/start/${workflowId}`,
         findAll: {
-            my: `${environment.apiUrl}/workflows/my`
+            my: `${environment.apiUrl}/workflows/my`,
+            byParticipation: `${environment.apiUrl}/workflows/participants/user-workflows`
         },
         findOne: {
             byDocumentId: (documentId: string) => `${environment.apiUrl}/workflows/documents/${documentId}`
@@ -130,7 +131,8 @@ export const queryKeys = {
     workflows: {
         base: ["workflows"],
         findAll: {
-            my: ["workflows", "my"]
+            my: ["workflows", "my"],
+            byParticipation: ["workflows", "invited"]
         },
         findOne: {
             base: ["workflows", "one"],

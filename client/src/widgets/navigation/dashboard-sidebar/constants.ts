@@ -23,7 +23,7 @@ export const workflowsGroup: TGroup = {
         },
         {
             title: "С моим участием",
-            url: routes.dashboard.workflows.invited,
+            url: routes.dashboard.workflows.participation,
             icon: LucideUsers
         }
     ]

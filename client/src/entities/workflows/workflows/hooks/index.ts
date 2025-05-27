@@ -5,3 +5,4 @@ export { useDeleteWorkflow } from "./use-delete-workflow";
 export { useUpdateWorkflowSigner } from "./use-update-signer";
 export { useSignWorkflow } from "./use-sign-workflow";
 export { useMyWorkflows } from "./use-my-workflows";
+export { useWorkflowsByParticipation } from "./use-workflows-by-participation";

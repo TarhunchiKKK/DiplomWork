@@ -1,1 +1,1 @@
-export type { TFindWorkflowsResponse } from "./workflows";
+export type { TFindWorkflowsResponse } from "./responses";
