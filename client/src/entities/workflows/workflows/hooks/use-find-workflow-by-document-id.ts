@@ -15,6 +15,7 @@ export function useFindWorkflowByDocumentId(documentId: string) {
             });
 
             return response.data;
-        }
+        },
+        retry: 1
     });
 }

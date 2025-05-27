@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, CenteredChild, CenteredChildParent } from "@/shared/ui";
+import { Button } from "@/shared/ui";
 import { TProps } from "./types";
 import { useStartWorkflow } from "@/entities/workflows";
 
@@ -12,12 +12,8 @@ export function StartWorkflowButton({ workflowId }: TProps) {
     };
 
     return (
-        <CenteredChildParent>
-            <CenteredChild>
-                <Button className="cursor-pointer" disabled={isPending} onClick={onClick}>
-                    Начать
-                </Button>
-            </CenteredChild>
-        </CenteredChildParent>
+        <Button className="cursor-pointer" disabled={isPending} onClick={onClick}>
+            Начать
+        </Button>
     );
 }

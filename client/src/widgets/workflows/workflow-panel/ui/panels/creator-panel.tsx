@@ -5,7 +5,13 @@ import { WorkflowProgress } from "../workflow-progress";
 
 export function CreatorPanel({ workflow, documentId }: { workflow?: TFullWorkflow; documentId: string }) {
     if (!workflow) {
-        return <CreateWorkflowButton documentId={documentId} />;
+        return (
+            <div className="flex flex-col justify-center items-center space-y-4">
+                <p className="text-center">Маршрут для данного документа не создан</p>
+
+                <CreateWorkflowButton documentId={documentId} />
+            </div>
+        );
     }
 
     switch (workflow.status) {

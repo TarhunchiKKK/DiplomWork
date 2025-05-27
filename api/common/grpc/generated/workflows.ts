@@ -12,7 +12,7 @@ import { IEmptyResponse, IHttpError, IOnlyId } from "./common";
 const protobufPackage = "workflows";
 
 export interface ICreateWorkflowDto {
-  userId: string;
+  creatorId: string;
   documentId: string;
   documentTitle: string;
 }

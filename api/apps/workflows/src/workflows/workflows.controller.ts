@@ -45,6 +45,7 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
     }
 
     public async findOneByDocumentId(dto: IOnlyId) {
+        console.log("find one");
         return await this.workflowsService.findOneByDocumentId(dto.id).then(transformWorkflow);
     }
 

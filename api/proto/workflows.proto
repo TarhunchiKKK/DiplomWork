@@ -25,7 +25,7 @@ service WorkflowsService {
 }
 
 message ICreateWorkflowDto {
-    string userId = 1;
+    string creatorId = 1;
 
     string documentId = 2;
 

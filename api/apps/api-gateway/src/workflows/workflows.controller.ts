@@ -27,12 +27,12 @@ export class WorkflowsController {
     public constructor(private readonly workflowsGrpcService: WorkflowsGrpcService) {}
 
     @Post()
-    @ExtractFromRequest(request => request.params.documentId)
+    @ExtractFromRequest(request => request.body.documentId)
     @UseGuards(DocumentAuthorGuard)
     public create(@Req() request: TAuthenticatedRequest, @Body() dto: CreateWorkflowDto) {
         return this.workflowsGrpcService.call("create", {
             ...dto,
-            userId: request.jwtInfo.id
+            creatorId: request.jwtInfo.id
         });
     }
 

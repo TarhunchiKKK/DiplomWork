@@ -19,13 +19,19 @@ export function CommentsList({ versionId, className }: TProps) {
     const { data: comments } = useDocumentComments(versionId);
 
     return (
-        <ScrollArea className={className}>
-            <div ref={ref} className="space-y-4">
-                {comments?.map(comment => <Comment key={comment.id} comment={comment} />)}
-            </div>
+        <>
+            {comments?.length !== 0 && (
+                <ScrollArea className={className}>
+                    <div ref={ref} className="space-y-4">
+                        {comments?.map(comment => <Comment key={comment.id} comment={comment} />)}
+                    </div>
 
-            <ScrollBar />
-        </ScrollArea>
+                    <ScrollBar />
+                </ScrollArea>
+            )}
+
+            {comments?.length === 0 && <p className="text-center">Комментариев пока нет</p>}
+        </>
     );
 }
 

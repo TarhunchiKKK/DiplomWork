@@ -1,3 +1,5 @@
+"use client";
+
 import { TagsCloudSkeleton } from "@/shared/ui";
 import { TProps } from "./types";
 import { useWorkflowPanel } from "./hooks";
@@ -5,9 +7,9 @@ import { WorkflowRole } from "./enums";
 import { CreatorPanel, ApproverPanel, SignerPanel } from "./ui";
 
 export function WorkflowPanel({ documentId }: TProps) {
-    const { workflow, isLoading, userRole } = useWorkflowPanel(documentId);
+    const { workflow, isWorkflowFetched, userRole } = useWorkflowPanel(documentId);
 
-    if (isLoading) {
+    if (!isWorkflowFetched) {
         return <></>;
     }
 
