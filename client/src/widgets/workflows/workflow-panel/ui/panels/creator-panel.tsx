@@ -7,7 +7,7 @@ export function CreatorPanel({ workflow, documentId }: { workflow?: TFullWorkflo
     if (!workflow) {
         return (
             <div className="flex flex-col justify-center items-center space-y-4">
-                <p className="text-center">Маршрут для данного документа не создан</p>
+                <p className="text-center">Маршрут для данного документа не создан.</p>
 
                 <CreateWorkflowButton documentId={documentId} />
             </div>
@@ -16,7 +16,13 @@ export function CreatorPanel({ workflow, documentId }: { workflow?: TFullWorkflo
 
     switch (workflow.status) {
         case WorkflowStatus.DEFAULT:
-            return <StartWorkflowButton workflowId={workflow.id} />;
+            return (
+                <div className="flex flex-col justify-center items-center space-y-4">
+                    <p className="text-center">Маршрут создан. Вы можете его начать.</p>
+
+                    <StartWorkflowButton workflowId={workflow.id} />
+                </div>
+            );
         case WorkflowStatus.STARTED:
             return <WorkflowProgress participants={workflow.participants} />;
         case WorkflowStatus.REJECTED:

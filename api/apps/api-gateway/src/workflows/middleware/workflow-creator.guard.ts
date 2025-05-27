@@ -33,7 +33,7 @@ export class WorkflowCreatorGuard implements CanActivate {
 
         const userId = request.jwtInfo.id as string;
 
-        if (userId) {
+        if (!userId) {
             throw new UnauthorizedException("Недостаточно прав");
         }
 
@@ -41,7 +41,7 @@ export class WorkflowCreatorGuard implements CanActivate {
 
         const workflowId = extractFromRequest(request) as string | null;
 
-        if (workflowId) {
+        if (!workflowId) {
             throw new NotFoundException("Маршрут не найден");
         }
 
