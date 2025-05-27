@@ -22,7 +22,7 @@ export function useCreateWorkflow() {
             });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeys.workflows.base });
+            queryClient.invalidateQueries({ queryKey: queryKeys.workflows.findAll.my });
         },
         onError: httpErrorHandler
     });

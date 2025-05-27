@@ -18,7 +18,7 @@ export function useUpdateWorkflowSigner() {
             const token = credentialsManager.jwt.get();
 
             await axios.patch(
-                queryUrls.workflows.updateSigner(dto.workflowId),
+                queryUrls.workflows.signing.updateSigner(dto.workflowId),
                 {
                     signerId: dto.signerId
                 },

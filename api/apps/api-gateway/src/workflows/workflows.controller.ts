@@ -79,10 +79,10 @@ export class WorkflowsController {
         });
     }
 
-    @Get("/user/:userId")
-    public async findAllByCreatorId(@Param("userId") userId: string) {
+    @Get("/my")
+    public async findAllByCreatorId(@Req() request: TAuthenticatedRequest) {
         return this.workflowsGrpcService.call("findAllByCreatorId", {
-            id: userId
+            id: request.jwtInfo.id
         });
     }
 }

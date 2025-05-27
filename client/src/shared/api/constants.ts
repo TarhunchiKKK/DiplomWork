@@ -75,11 +75,17 @@ export const queryUrls = {
     workflows: {
         create: `${environment.apiUrl}/workflows`,
         start: (workflowId: string) => `${environment.apiUrl}/workflows/start/${workflowId}`,
-        findOneByDocumentId: (documentId: string) => `${environment.apiUrl}/workflows/documents/${documentId}`,
-        findAllByCreatorId: (creatorId: string) => `${environment.apiUrl}/workflows/user/${creatorId}`,
-        updateSigner: (workflowId: string) => `${environment.apiUrl}/workflows/signer/${workflowId}`,
-        sign: (workflowId: string) => `${environment.apiUrl}/workflows/sign/${workflowId}`,
+        findAll: {
+            my: `${environment.apiUrl}/workflows/my`
+        },
+        findOne: {
+            byDocumentId: (documentId: string) => `${environment.apiUrl}/workflows/documents/${documentId}`
+        },
         delete: (workflowId: string) => `${environment.apiUrl}/workflows/${workflowId}`,
+        signing: {
+            updateSigner: (workflowId: string) => `${environment.apiUrl}/workflows/signer/${workflowId}`,
+            sign: (workflowId: string) => `${environment.apiUrl}/workflows/sign/${workflowId}`
+        },
         participants: {
             upsert: (workflowId: string) => `${environment.apiUrl}/workflows/participants/${workflowId}`,
             uspateStatus: (participantId: string) => `${environment.apiUrl}/workflows/participants/${participantId}`,
@@ -124,7 +130,7 @@ export const queryKeys = {
     workflows: {
         base: ["workflows"],
         findAll: {
-            byCreatorId: (creatorId: string) => ["workflows", "user", creatorId]
+            my: ["workflows", "my"]
         },
         findOne: {
             base: ["workflows", "one"],
