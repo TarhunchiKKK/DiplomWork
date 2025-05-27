@@ -7,7 +7,7 @@ async function bootstrap() {
 
     const configService = app.get(ConfigService);
 
-    await app.listen(configService.getOrThrow<number>("WORKFLOWS_MANAGEMENT_MICROSERVICE_PORT"));
+    await app.listen(configService.getOrThrow<number>("WORKFLOWS_MICROSERVICE_PORT"));
 
     console.info(`Workflows Management Microservice is running on: ${await app.getUrl()}`);
 }

@@ -1,19 +1,10 @@
-import { TFullWorkflow, useFindWorkflowByDocumentId, WorkflowStatus } from "@/entities/workflows";
+import { useFindWorkflowByDocumentId } from "@/entities/workflows";
 import { TProfile, useProfileStore } from "@/features/auth";
 import { useEffect, useState } from "react";
 import { WorkflowRole } from "./enums";
 
-const workflow: TFullWorkflow = {
-    id: "1",
-    creatorId: "1",
-    documentId: "1",
-    documentTitle: "Document",
-    status: WorkflowStatus.DEFAULT,
-    participants: []
-};
-
 export function useWorkflowPanel(documentId: string) {
-    // const { data: workflow, isLoading } = useFindWorkflowByDocumentId(documentId);
+    const { data: workflow, isLoading } = useFindWorkflowByDocumentId(documentId);
 
     const profile = useProfileStore(state => state.profile) as TProfile;
 
@@ -35,7 +26,7 @@ export function useWorkflowPanel(documentId: string) {
 
     return {
         workflow,
-        isLoading: false,
+        isLoading,
         userRole
     };
 }
