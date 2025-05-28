@@ -15,6 +15,7 @@ export function useOneDocument(documentId: string) {
             });
 
             return response.data;
-        }
+        },
+        retry: 0
     });
 }

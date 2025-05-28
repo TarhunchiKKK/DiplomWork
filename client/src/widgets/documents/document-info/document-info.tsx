@@ -1,3 +1,5 @@
+"use client";
+
 import { getDocumentIcon } from "@/shared/helpers";
 import { Card, CardContent, CardFooter, Skeleton } from "@/shared/ui";
 import Image from "next/image";
@@ -14,10 +16,10 @@ import {
     DownloadButtonSkeleton
 } from "./ui";
 import { TProps } from "./types";
-import { useOneDocument } from "@/entities/documents";
+import { useDocumentInfo } from "./hooks";
 
 export function DocumentInfo({ documentId }: TProps) {
-    const { data: document } = useOneDocument(documentId);
+    const { document } = useDocumentInfo(documentId);
 
     return (
         <Card className="min-w-[600px] flex-row! justify-between items-start">

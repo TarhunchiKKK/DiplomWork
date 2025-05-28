@@ -34,5 +34,8 @@ export const routes = {
     passwordRecovery: {
         matcher: "/password-recovery/*",
         reset: "/password-recovery/reset"
+    },
+    static: {
+        forbidden: "/static/forbidden"
     }
 };
