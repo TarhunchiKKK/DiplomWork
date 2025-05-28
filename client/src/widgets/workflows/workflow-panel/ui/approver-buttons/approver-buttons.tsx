@@ -7,9 +7,9 @@ export function ApproverButtons({ documentId }: TProps) {
     const { isPending, onClick } = useApproverButtons(documentId);
 
     return (
-        <div className="w-[400px] space-y-4">
+        <div className="flex flex-col items-center space-y-4">
             <Button
-                className="cursor-pointer w-full"
+                className="cursor-pointer"
                 disabled={isPending}
                 onClick={onClick.bind(null, ApprovalStatus.APPROVED)}
             >
@@ -17,7 +17,7 @@ export function ApproverButtons({ documentId }: TProps) {
             </Button>
 
             <Button
-                className="cursor-pointer w-full"
+                className="cursor-pointer"
                 disabled={isPending}
                 onClick={onClick.bind(null, ApprovalStatus.REJECTED)}
             >

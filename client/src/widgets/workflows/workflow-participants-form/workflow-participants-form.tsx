@@ -11,7 +11,7 @@ export function WorkflowParticipantsForm({ documentId }: TProps) {
     const buttonProps = useSetup(documentId);
 
     return (
-        <div className="h-full flex flex-col justify-between">
+        <div className="h-full flex flex-col justify-between gap-4">
             <div className="space-y-4">
                 <ApproversForm />
 

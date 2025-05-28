@@ -21,8 +21,9 @@ export function useCreateWorkflow() {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
         },
-        onSuccess: () => {
+        onSuccess: (_, variables) => {
             queryClient.invalidateQueries({ queryKey: queryKeys.workflows.findAll.my });
+            queryClient.invalidateQueries({ queryKey: queryKeys.workflows.findOne.byDocumentId(variables.documentId) });
         },
         onError: httpErrorHandler
     });

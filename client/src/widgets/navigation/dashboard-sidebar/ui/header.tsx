@@ -13,11 +13,11 @@ export function Header() {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push(routes.auth.login);
-
-        resetProfile();
+        router.replace(routes.auth.login);
 
         credentialsManager.jwt.remove();
+
+        resetProfile();
     };
 
     return (

@@ -6,7 +6,7 @@ export function useWorkflowProgress(participants: TProps["participants"]) {
     const { data: users } = useOrganizationUsers();
 
     const displayedParticipants = (participants || []).map(participant => {
-        const user = (users || []).find(u => u.id === participant.id);
+        const user = (users || []).find(u => u.id === participant.userId);
 
         return {
             id: participant.id,

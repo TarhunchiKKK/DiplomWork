@@ -32,20 +32,20 @@ export default function DocumentPage() {
                 </div>
             </div>
 
-            <div className="grow-3 max-w-[580px] max-h-screen flex flex-col">
+            <div className="grow-3 max-w-[580px]   max-h-screen flex flex-col">
                 <Tabs defaultValue="1" className="w-full">
                     <TabsList className="grid w-full grid-cols-2">
                         <TabsTrigger value="1">Комментарии</TabsTrigger>
                         <TabsTrigger value="2">Маршрут</TabsTrigger>
                     </TabsList>
-                    <TabsContent value="1" className="h-[90%] rounded-md border p-2 space-y-2">
+                    <TabsContent value="1" className="rounded-md border p-2 space-y-2">
                         <Suspense fallback={<CommentsListSkeleton className={commentsListClassName} />}>
                             {versionId && <CommentsList versionId={versionId} className={commentsListClassName} />}
                         </Suspense>
 
                         {versionId && <CreateCommentForm versionId={versionId} />}
                     </TabsContent>
-                    <TabsContent value="2" className="h-[90%] rounded-md border p-2 space-y-2">
+                    <TabsContent value="2" className="h-max rounded-md border p-2 space-y-2">
                         <WorkflowPanel documentId={documentId} />
                     </TabsContent>
                 </Tabs>

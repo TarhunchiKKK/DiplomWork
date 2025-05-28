@@ -23,12 +23,12 @@ export function ApproverPanel({ workflow, documentId }: { workflow?: TFullWorkfl
                 <div>
                     <WorkflowProgress participants={workflow.participants} />
 
-                    <span>Маршрут отклонен</span>
+                    <span className="text-red-400">Маршрут был отклонен</span>
                 </div>
             );
         case WorkflowStatus.FULLY_APPROVED:
-            return <span>Документ полностью согласован</span>;
+            return <span className="text-green-400">Документ полностью согласован</span>;
         case WorkflowStatus.COMPLETED:
-            return <span>Маршрут завершен</span>;
+            return <span className="text-green-400">Маршрут завершен</span>;
     }
 }

@@ -23,18 +23,18 @@ export function SignerPanel({ workflow }: { workflow?: TFullWorkflow }) {
                 <div className="space-y-4">
                     <WorkflowProgress participants={workflow.participants} />
 
-                    <span>Документ был отклонен</span>
+                    <span className="text-red-400">Документ был отклонен</span>
                 </div>
             );
         case WorkflowStatus.FULLY_APPROVED:
             return (
                 <div className="space-y-4">
-                    <p>Документ утвержден. Вы можете подписать его</p>
+                    <p className="text-green-400">Документ утвержден. Вы можете подписать его</p>
 
                     <SignWorkflowButton workflowId={workflow.id} />
                 </div>
             );
         case WorkflowStatus.COMPLETED:
-            return <span>Маршрут завершен</span>;
+            return <span className="text-green-400">Маршрут завершен</span>;
     }
 }

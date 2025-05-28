@@ -9,7 +9,7 @@ export function useApproverButtons(documentId: string) {
     const { mutate: updateStatus, isPending } = useUpdatePArticipantStatus();
 
     const onClick = (approvalStatus: ApprovalStatus) => {
-        const participantId = workflow!.participants.find(p => p.id === profile.id)?.id as string;
+        const participantId = workflow!.participants.find(p => p.userId === profile.id)?.id as string;
 
         updateStatus({
             id: participantId,

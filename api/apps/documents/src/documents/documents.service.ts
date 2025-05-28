@@ -7,6 +7,7 @@ import { DocumentAccessTokensService } from "common/modules";
 import { FindDocumentsQueryBuilder } from "./utils/find-documents.query-builder";
 import { DocumentVersionsService } from "../versions/document-versions.service";
 import { IgnoreFields } from "common/utils";
+import { TUpdateAccessTokenDto } from "./dto/update-access-token.dto";
 
 @Injectable()
 export class DocumentsService {
@@ -26,8 +27,7 @@ export class DocumentsService {
             isUrgent: dto.isUrgent,
             title: dto.filename,
             accessToken: this.tokensService.create({
-                authorId: dto.authorId,
-                usersIds: []
+                approversIds: []
             })
         });
 
@@ -63,6 +63,18 @@ export class DocumentsService {
         const document = await this.findOneById(documentId);
 
         Object.assign(document, dto);
+
+        await this.documentsRepository.save(document);
+    }
+
+    public async updateAccessToken(documentId: string, dto: TUpdateAccessTokenDto) {
+        const document = await this.findOneById(documentId);
+
+        const tokenInfo = this.tokensService.verify(document.accessToken);
+
+        Object.assign(tokenInfo, dto);
+
+        document.accessToken = this.tokensService.create(tokenInfo);
 
         await this.documentsRepository.save(document);
     }

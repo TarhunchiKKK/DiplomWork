@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApprovalStatus } from "../enums";
 import { credentialsManager } from "@/features/auth";
 import axios from "axios";
-import { HttpHeadersBuilder, queryUrls } from "@/shared/api";
+import { HttpHeadersBuilder, queryKeys, queryUrls } from "@/shared/api";
 import { httpErrorHandler } from "@/shared/validation";
 
 type TDto = {
@@ -12,6 +12,8 @@ type TDto = {
 };
 
 export function useUpdatePArticipantStatus() {
+    const queryClient = useQueryClient();
+
     return useMutation({
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
@@ -25,6 +27,9 @@ export function useUpdatePArticipantStatus() {
                     headers: new HttpHeadersBuilder().setBearerToken(token).build()
                 }
             );
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: queryKeys.workflows.base });
         },
         onError: httpErrorHandler
     });
