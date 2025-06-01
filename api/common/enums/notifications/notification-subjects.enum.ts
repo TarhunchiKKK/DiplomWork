@@ -1,22 +1,22 @@
 export enum NotificationSubject {
     // Users
-    USER_INVITATION = "Приглашение в E-Doc-Hub",
-    PASSWORD_RECOVERY = "Подтверждение сброса пароля",
-    ACCOUNT_ACTIVATION = "Активация аккаунта",
-    ACCOUNT_DEACTIVATION = "Деактивация аккаунта",
+    USER_INVITATION = "USER_INVITATION",
+    PASSWORD_RECOVERY = "PASSWORD_RECOVERY",
+    ACCOUNT_ACTIVATION = "ACCOUNT_ACTIVATION",
+    ACCOUNT_DEACTIVATION = "ACCOUNT_DEACTIVATION",
 
     // Documents
-    COMMENT_CREATED = "Комментарий добавлен",
-    COMMENT_UPDATED = "Комментарий изменен",
-    COMMENT_DELETED = "Комментарий удален",
+    COMMENT_CREATED = "COMMENT_CREATED",
+    COMMENT_UPDATED = "COMMENT_UPDATED",
+    COMMENT_DELETED = "COMMENT_DELETED",
 
     // Workflows
-    WORKFLOW_DELETED = "Маршрут согласования удален",
-    WORKFLOW_COMPLETED = "Маршрут согласования завершен",
+    WORKFLOW_DELETED = "WORKFLOW_DELETED",
+    WORKFLOW_COMPLETED = "WORKFLOW_COMPLETED",
 
-    PARTICIPANT_ADDED = "Добавление к маршруту согласования",
-    PARTICIPANT_DELETED = "Исключение из маршрута согласования",
-    DOCUMENT_APPROVED = "Документ утвержден участником маршрута",
-    DOCUMENT_SIGNED = "Документ подписан участником маршрута",
-    DOCUMENT_REJECTED = "Документ отклонен участником маршрута"
+    PARTICIPANT_ADDED = "PARTICIPANT_ADDED",
+    PARTICIPANT_DELETED = "PARTICIPANT_DELETED",
+    DOCUMENT_APPROVED = "DOCUMENT_APPROVED",
+    DOCUMENT_SIGNED = "DOCUMENT_SIGNED",
+    DOCUMENT_REJECTED = "DOCUMENT_REJECTED"
 }

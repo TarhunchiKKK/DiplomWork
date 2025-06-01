@@ -8,6 +8,6 @@ export class RmqClient {
     public constructor(@Inject(INJECTION_TOKEN) private readonly client: ClientProxy) {}
 
     public emit(event: IRmqEvent) {
-        this.client.emit(event.pattern, event);
+        this.client.emit(event.constructor["PATTERN"], event);
     }
 }

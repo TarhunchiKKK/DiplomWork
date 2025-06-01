@@ -41,20 +41,20 @@ services:
         networks:
             - workflows-network
 
-    # notifications-db:
-    #     container_name: notifications-db
-    #     image: postgres:15.2
-    #     restart: always
-    #     environment:
-    #         - POSTGRES_DB=${NOTIFICATIONS_MICROSERVICE_DB_NAME}
-    #         - POSTGRES_USER=${NOTIFICATIONS_MICROSERVICE_DB_USER}
-    #         - POSTGRES_PASSWORD=${NOTIFICATIONS_MICROSERVICE_DB_PASSWORD}
-    #     ports:
-    #         - ${NOTIFICATIONS_MICROSERVICE_DB_PORT}:5432
-    #     volumes:
-    #         - notifications-postgres_data:/var/lib/postgresql/data
-    #     networks:
-    #         - notifications-network
+    notifications-db:
+        container_name: notifications-db
+        image: postgres:15.2
+        restart: always
+        environment:
+            - POSTGRES_DB=${NOTIFICATIONS_MICROSERVICE_DB_NAME}
+            - POSTGRES_USER=${NOTIFICATIONS_MICROSERVICE_DB_USER}
+            - POSTGRES_PASSWORD=${NOTIFICATIONS_MICROSERVICE_DB_PASSWORD}
+        ports:
+            - ${NOTIFICATIONS_MICROSERVICE_DB_PORT}:5432
+        volumes:
+            - notifications-postgres_data:/var/lib/postgresql/data
+        networks:
+            - notifications-network
 
     users-db:
         container_name: users-db
@@ -72,9 +72,11 @@ services:
             - users-network
 
     rabbitmq:
-        image: rabbitmq
+        image: rabbitmq:3-management
+        container_name: rabbitmq
         ports:
             - ${RABBITMQ_PORT}:5672
+            - 15672:15672
 
 volumes:
     users-postgres_data:

@@ -19,6 +19,8 @@ export class UserInvitationEventsObserver {
     public async handleUsersInvited(event: UsersInvitedEvent) {
         const users = await this.usersService.findAllByIds(event.usersIds);
 
+        console.log(users);
+
         users.forEach(user =>
             this.rmqClient.emit(
                 new UserInvitedRqmEvent(event.adminEmail, user.email, this.invitationTokensService.create(user))

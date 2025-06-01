@@ -6,7 +6,7 @@
     "private": true,
     "license": "MIT",
     "scripts": {
-        "dev": "concurrently \"pnpm start:dev api-gateway\" \"pnpm start:dev users\" \"pnpm start:dev organizations\" \"pnpm start:dev documents\" \"pnpm start:dev workflows\"",
+        "dev": "concurrently \"pnpm start:dev api-gateway\" \"pnpm start:dev users\" \"pnpm start:dev organizations\" \"pnpm start:dev documents\" \"pnpm start:dev workflows\" \"pnpm start:dev notifications\"",
         "start": "nest start",
         "start:dev": "nest start --watch",
         "build": "nest build",

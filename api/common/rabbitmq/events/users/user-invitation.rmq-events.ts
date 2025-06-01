@@ -1,9 +1,7 @@
 import { IRmqEvent } from "../interfaces";
 
 export class UserInvitedRqmEvent implements IRmqEvent {
-    public static PATTERN = "user.invited";
-
-    public pattern = UserInvitedRqmEvent.PATTERN;
+    public static readonly PATTERN = "user.invited";
 
     public constructor(
         public from: string,
