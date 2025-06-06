@@ -8,6 +8,7 @@ import {
 } from "@/widgets/documents-container";
 import { Suspense } from "react";
 import { Metadata } from "next";
+import { EmptyListMessage } from "@/shared/ui";
 
 export const metadata: Metadata = {
     title: "Your Documents",
@@ -25,6 +26,8 @@ export default function MyDocumentsPage() {
 
             <Suspense fallback={<DocumentsContainerSkeleton />}>
                 {documents && <DocumentsContainer documents={documents} />}
+
+                <EmptyListMessage items={documents} message="Вы не создали ни одного документа" />
             </Suspense>
         </div>
     );

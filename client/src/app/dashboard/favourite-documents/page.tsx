@@ -8,6 +8,7 @@ import {
 } from "@/widgets/documents-container";
 import { Suspense } from "react";
 import { Metadata } from "next";
+import { EmptyListMessage } from "@/shared/ui";
 
 export const metadata: Metadata = {
     title: "Favourite Documents",
@@ -25,6 +26,8 @@ export default function FavouriteocumentsPage() {
 
             <Suspense fallback={<DocumentsContainerSkeleton />}>
                 {documents && <DocumentsContainer documents={documents} />}
+
+                <EmptyListMessage items={documents} message="У вас нет избранных документов" />
             </Suspense>
         </div>
     );
