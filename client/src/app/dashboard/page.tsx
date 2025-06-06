@@ -8,6 +8,12 @@ import {
 import { Suspense } from "react";
 import { useCurrentDocuments } from "./hooks";
 import { CreateDocumentButton } from "@/widgets/documents";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Dashboard | Documents",
+    description: "This page will allow you to manage documents."
+};
 
 export default function DashboardPage() {
     const { data: documents } = useCurrentDocuments();

@@ -2,6 +2,12 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, Button } from "@/shared/ui";
 import { useRouter } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Not Found",
+    description: "This page indicates that requested resource not exist."
+};
 
 export default function NotFoundPage() {
     const router = useRouter();

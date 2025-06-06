@@ -2,6 +2,12 @@
 
 import { Button, Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/shared/ui";
 import { useRouter } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Forbidden Resource",
+    description: "This page indicatea that you don't have required perissions."
+};
 
 export default function ForbiddenPage() {
     const router = useRouter();

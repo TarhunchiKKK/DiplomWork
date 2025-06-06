@@ -8,6 +8,12 @@ import { commentsListClassName, versionsListClassName } from "./constants";
 import { useDocumentPage } from "./hooks";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui";
 import { WorkflowPanel } from "@/widgets/workflows";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Single Document",
+    description: "This page allows you to manage document, workflow and comments."
+};
 
 export default function DocumentPage() {
     const { documentId, versionId } = useDocumentPage();

@@ -7,6 +7,12 @@ import {
     DocumentsDisplayTypeTabs
 } from "@/widgets/documents-container";
 import { Suspense } from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Your Documents",
+    description: "On this page you can see your own documents."
+};
 
 export default function MyDocumentsPage() {
     const { data: documents } = useMyDocuments();

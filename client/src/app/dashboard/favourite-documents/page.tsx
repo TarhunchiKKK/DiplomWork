@@ -7,6 +7,12 @@ import {
     DocumentsDisplayTypeTabs
 } from "@/widgets/documents-container";
 import { Suspense } from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Favourite Documents",
+    description: "On this page you can see your favourite documents."
+};
 
 export default function FavouriteocumentsPage() {
     const { data: documents } = useFavouriteDocuments();
