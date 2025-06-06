@@ -8,7 +8,12 @@ import { useUsersInvitation } from "@/entities/users";
 export function InviteUsersForm() {
     const { emailsSet, form, onSubmit } = useInviteUsersForm();
 
-    const { mutate: invite, isPending } = useUsersInvitation();
+    const { mutate: inviteUsers, isPending } = useUsersInvitation();
+
+    const handleInvite = () => {
+        inviteUsers(emailsSet.items);
+        emailsSet.clear();
+    };
 
     return (
         <div>
@@ -37,7 +42,7 @@ export function InviteUsersForm() {
                 className="w-[800px] mt-4 mb-8"
             />
 
-            <Button onClick={() => invite(emailsSet.items)} disabled={isPending}>
+            <Button onClick={handleInvite} disabled={isPending}>
                 Пригласить
             </Button>
         </div>

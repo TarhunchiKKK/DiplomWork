@@ -15,10 +15,16 @@ export function useSet<T>(initialData: T[] = []) {
         setItems([...set]);
     };
 
+    const clear = () => {
+        set.clear();
+        setItems([]);
+    };
+
     return {
         items,
         add,
-        remove
+        remove,
+        clear
     };
 }
 
