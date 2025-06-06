@@ -1,5 +1,3 @@
-"use client";
-
 import { CommentsList, CommentsListSkeleton, CreateCommentForm } from "@/widgets/comments";
 import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/documents";
 import { VersionsListSkeleton, CreateVersionButton, VersionsList } from "@/widgets/versions";
@@ -8,8 +6,16 @@ import { commentsListClassName, versionsListClassName } from "./constants";
 import { useDocumentPage } from "./hooks";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui";
 import { WorkflowPanel } from "@/widgets/workflows";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Single Document",
+    description: "This page allows you to manage document, workflow and comments."
+};
 
 export default function DocumentPage() {
+    "use client";
+
     const { documentId, versionId } = useDocumentPage();
 
     return (

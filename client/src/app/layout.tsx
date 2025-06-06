@@ -10,6 +10,10 @@ import { ThemeProvider } from "@/features/dark-mode";
 export default function RootLayout({ children }: PropsWithChildren) {
     return (
         <html lang="en">
+            <head>
+                <title>E-Doc-Hub</title>
+                <meta name="description" content="Electronic document management system"></meta>
+            </head>
             <body>
                 <QueryClientProvider client={queryClient}>
                     <ThemeProvider>{children}</ThemeProvider>

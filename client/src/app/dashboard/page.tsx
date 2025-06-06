@@ -6,11 +6,20 @@ import {
     DocumentsDisplayTypeTabs
 } from "@/widgets/documents-container";
 import { Suspense } from "react";
-import { useCurrentDocuments } from "./hooks";
 import { CreateDocumentButton } from "@/widgets/documents";
+import { useDocuments } from "@/entities/documents";
+import { useSearchParams } from "next/navigation";
 
 export default function DashboardPage() {
-    const { data: documents } = useCurrentDocuments();
+    const searchParams = useSearchParams();
+
+    const queryParams = {
+        aimId: searchParams.get("aimId") || undefined,
+        typeId: searchParams.get("typeId") || undefined,
+        isUrgent: Boolean(searchParams.get("isUrgent")) || undefined
+    };
+
+    const { data: documents } = useDocuments(queryParams);
 
     return (
         <div className="space-y-4">

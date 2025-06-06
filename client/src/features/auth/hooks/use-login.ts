@@ -20,7 +20,9 @@ export function useLogin(options: TMutationOptions<TAuthResponse> = {}) {
         onSuccess: response => {
             toast.success("Успешный вход");
 
-            options.onSuccess?.(response);
+            if (response) {
+                options.onSuccess?.(response);
+            }
         },
         onError: httpErrorHandler
     });

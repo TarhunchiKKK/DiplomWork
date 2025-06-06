@@ -1,15 +1,15 @@
 "use client";
 
 import { Notification, NotificationSkeleton } from "../notification";
-import { useNotifications } from "@/entities/notifications/hooks";
+import { TProps } from "./types";
 
-export function NotificationsList() {
-    const { data: notifications } = useNotifications();
-
+export function NotificationsList({ notifications }: TProps) {
     return (
-        <div className="space-y-2">
-            {notifications?.map(notification => <Notification key={notification.id} notification={notification} />)}
-        </div>
+        <>
+            <div className="space-y-2">
+                {notifications?.map(notification => <Notification key={notification.id} notification={notification} />)}
+            </div>
+        </>
     );
 }
 

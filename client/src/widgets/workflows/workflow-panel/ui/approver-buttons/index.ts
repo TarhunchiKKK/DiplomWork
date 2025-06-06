@@ -1,1 +1,1 @@
-export { WorkflowApproverPanel } from "./approver-buttons";
+export { ApproverButtons } from "./approver-buttons";

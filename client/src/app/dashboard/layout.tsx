@@ -5,12 +5,12 @@ import { PropsWithChildren } from "react";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
     return (
-        <SidebarProvider defaultOpen={true}>
-            <DashboardSidebar />
+        <RequireAuth>
+            <SidebarProvider defaultOpen={true}>
+                <DashboardSidebar />
 
-            <RequireAuth>
                 <main className="w-full p-4">{children}</main>
-            </RequireAuth>
-        </SidebarProvider>
+            </SidebarProvider>
+        </RequireAuth>
     );
 }

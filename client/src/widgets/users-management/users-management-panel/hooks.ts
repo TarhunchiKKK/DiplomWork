@@ -1,7 +1,10 @@
 import { useOrganizationUsers, useChangeAccountStatus, AccountStatus } from "@/entities/users";
+import { useProfileStore } from "@/features/auth";
 
 export function useUsersManagementPanel() {
     const { data: users } = useOrganizationUsers();
+
+    const profile = useProfileStore(state => state.profile);
 
     const { mutate: changeStatus } = useChangeAccountStatus();
 
@@ -13,5 +16,9 @@ export function useUsersManagementPanel() {
         changeStatus({ userId, status: AccountStatus.DEACTIVATED });
     };
 
-    return { users, activate, deactivate };
+    return {
+        users: users?.filter(user => user.id !== profile?.id),
+        activate,
+        deactivate
+    };
 }

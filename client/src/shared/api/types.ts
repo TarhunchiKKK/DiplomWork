@@ -3,7 +3,7 @@ export type DateFieldsToString<T> = {
 };
 
 export type TMutationOptions<T> = {
-    onSuccess?: (_: T | undefined) => void;
+    onSuccess?: (_: T) => void;
 };
 
 export type TQueryOptions = {

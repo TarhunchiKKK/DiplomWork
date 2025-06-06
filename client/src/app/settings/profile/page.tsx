@@ -5,6 +5,12 @@ import {
     UpdatePasswordLink,
     UpdateProfileForm
 } from "@/widgets/profile-settings";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Settings | Profile",
+    description: "This page will allow you to specify your profile info."
+};
 
 export default function ProfileSettingsPage() {
     return (

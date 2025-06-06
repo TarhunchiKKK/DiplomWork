@@ -53,9 +53,6 @@ export const queryUrls = {
             add: (documentId: string) => `${environment.apiUrl}/favourite/${documentId}`,
             remove: (userId: string) => `${environment.apiUrl}/favourite/${userId}`
         },
-        my: {
-            findAll: `${environment.apiUrl}/documents/my`
-        },
         hash: {
             verify: `${environment.apiUrl}/hashing/verify`
         },
@@ -118,7 +115,6 @@ export const queryKeys = {
         findAll: (queryParams: Record<string, unknown>) => ["documents", queryParams],
         findOne: (documentId: string) => ["documents", documentId],
         favourite: ["favourite-documents"],
-        my: ["my-documents"],
         versions: {
             findAll: (documentId: string) => ["versions", documentId],
             findLast: (documentId: string) => ["versions", "last", documentId],
