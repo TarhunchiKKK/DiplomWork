@@ -6,8 +6,6 @@ export function useUsersManagementPanel() {
 
     const profile = useProfileStore(state => state.profile);
 
-    const filteredUsers = users?.filter(user => user.id !== profile?.id);
-
     const { mutate: changeStatus } = useChangeAccountStatus();
 
     const activate = (userId: string) => {
@@ -18,5 +16,9 @@ export function useUsersManagementPanel() {
         changeStatus({ userId, status: AccountStatus.DEACTIVATED });
     };
 
-    return { users: filteredUsers, activate, deactivate };
+    return {
+        users: users?.filter(user => user.id !== profile?.id),
+        activate,
+        deactivate
+    };
 }
