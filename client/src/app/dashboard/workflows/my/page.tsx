@@ -1,5 +1,3 @@
-"use client";
-
 import { useMyWorkflows } from "@/entities/workflows";
 import { WorkflowsList, WorkflowsListSkeleton } from "@/widgets/workflows";
 import { Suspense } from "react";
@@ -12,6 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default function MyWorkflowsPage() {
+    "use client";
+
     const { data: workflows } = useMyWorkflows();
 
     return (

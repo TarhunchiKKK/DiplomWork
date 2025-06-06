@@ -1,5 +1,3 @@
-"use client";
-
 import { CommentsList, CommentsListSkeleton, CreateCommentForm } from "@/widgets/comments";
 import { DocumentInfo, DocumentInfoSkeleton } from "@/widgets/documents";
 import { VersionsListSkeleton, CreateVersionButton, VersionsList } from "@/widgets/versions";
@@ -16,6 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default function DocumentPage() {
+    "use client";
+
     const { documentId, versionId } = useDocumentPage();
 
     return (

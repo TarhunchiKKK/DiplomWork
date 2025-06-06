@@ -1,4 +1,3 @@
-import { mocks } from "@/dev";
 import { useVerifyDocumentHash } from "@/entities/documents";
 import { useEffect } from "react";
 

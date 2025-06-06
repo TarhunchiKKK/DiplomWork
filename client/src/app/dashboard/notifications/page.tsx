@@ -10,6 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default function NotificationsPage() {
+    "use client";
+
     const { data: notifications } = useNotifications();
 
     return (

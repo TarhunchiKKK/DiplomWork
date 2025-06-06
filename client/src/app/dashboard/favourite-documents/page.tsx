@@ -1,5 +1,3 @@
-"use client";
-
 import { useFavouriteDocuments } from "@/entities/documents";
 import {
     DocumentsContainer,
@@ -16,6 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default function FavouriteocumentsPage() {
+    "use client";
+
     const { data: documents } = useFavouriteDocuments();
 
     return (

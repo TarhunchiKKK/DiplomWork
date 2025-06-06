@@ -15,21 +15,16 @@ import {
     SidebarMenuButton,
     SidebarMenuItem
 } from "@/shared/ui";
-import { Timer, Star, User, ChevronDown, Home } from "lucide-react";
+import { Timer, Star, ChevronDown, Home } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TLink } from "../types";
 
 const staticLinks: TLink[] = [
     {
-        title: "Все",
+        title: "Мои",
         url: routes.dashboard.index,
         icon: Home
-    },
-    {
-        title: "Мои",
-        url: routes.dashboard.documents.my,
-        icon: User
     },
     {
         title: "Избранные",

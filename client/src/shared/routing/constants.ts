@@ -3,7 +3,6 @@ export const routes = {
         index: "/dashboard",
         matcher: "/dashboard/*",
         documents: {
-            my: "/dashboard/my-documents",
             favourite: "/dashboard/favourite-documents",
             urgent: "/dashboard?isUrgent=true",
             withDocumentAim: (documentAimId: string) => `/dashboard?aimId=${documentAimId}`,

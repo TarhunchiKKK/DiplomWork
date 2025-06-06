@@ -2,7 +2,6 @@ import { RequireAdminRole } from "@/features/auth";
 import { Separator } from "@/shared/ui";
 import { InviteUsersForm, UsersManagementPanel, UsersManagementPanelSkeleton } from "@/widgets/users-management";
 import { Suspense } from "react";
-
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

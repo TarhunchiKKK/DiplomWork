@@ -1,5 +1,3 @@
-"use client";
-
 import { Suspense } from "react";
 import { useWorkflowsByParticipation } from "@/entities/workflows";
 import { WorkflowsList, WorkflowsListSkeleton } from "@/widgets/workflows";
@@ -12,6 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default function ParticipationWorkflowsPage() {
+    "use client";
+
     const { data: workflows } = useWorkflowsByParticipation();
 
     return (

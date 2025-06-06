@@ -1,3 +1,5 @@
+"use client";
+
 import { useCurrentDocumentStore, useOneDocument } from "@/entities/documents";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";

@@ -39,12 +39,14 @@ export class DocumentsController {
 
     @Get()
     public findAll(
+        @Req() request: TAuthenticatedRequest,
         @Query("aimId") aimId?: string,
         @Query("typeId") typeId?: string,
         @Query("isUrgent") isUrgent?: string,
         @Query("sortOrder") sortOrder?: string
     ) {
         const dto: IFindDocumentsDto = {
+            authorId: request.jwtInfo.id,
             aimId,
             typeId,
             isUrgent: isUrgent === undefined ? undefined : Boolean(isUrgent),
@@ -52,13 +54,6 @@ export class DocumentsController {
         };
 
         return this.documentsGrpcService.call("findAll", dto);
-    }
-
-    @Get("my")
-    public findMyDocuments(@Req() request: TAuthenticatedRequest) {
-        return this.documentsGrpcService.call("findAll", {
-            authorId: request.jwtInfo.id
-        });
     }
 
     @Get(":documentId")
