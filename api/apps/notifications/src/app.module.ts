@@ -5,6 +5,7 @@ import { UserNotificationsModule } from "./user/user-notifications.module";
 import { DocumentNotificationsModule } from "./document/document-notifications.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Notification } from "./notifications/entities/notification.entity";
+import { RmqModule } from "common/rabbitmq";
 
 @Module({
     imports: [
@@ -25,7 +26,7 @@ import { Notification } from "./notifications/entities/notification.entity";
                 entities: [Notification]
             })
         }),
-
+        RmqModule,
         NotificationsModule,
         UserNotificationsModule,
         DocumentNotificationsModule

@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { UsersService } from "./users.service";
 import { User } from "./entities/user.entity";
 import { JwtTokensModule, PasswordRecoveryTokensModule, UserInvitationTokensModule } from "common/modules";
-import { NotificationsRmqModule } from "common/rabbitmq";
+import { RmqModule } from "common/rabbitmq";
 import { UsersController } from "./users.controller";
 
 @Module({
@@ -12,7 +12,7 @@ import { UsersController } from "./users.controller";
         JwtTokensModule,
         UserInvitationTokensModule,
         PasswordRecoveryTokensModule,
-        NotificationsRmqModule
+        RmqModule
     ],
     controllers: [UsersController],
     providers: [UsersService],

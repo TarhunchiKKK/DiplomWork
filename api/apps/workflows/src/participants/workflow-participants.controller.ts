@@ -20,8 +20,8 @@ import { ApprovalStatus } from "./enums/approval.-status.enum";
 export class WorkflowParticipantsController implements UnwrapGrpcResponse<WorkflowParticipantsServiceController> {
     public constructor(private readonly participantsService: WorkflowParticipantsService) {}
 
-    public async findAllUserWorkflows(dto: IOnlyId) {
-        return await this.participantsService.findAllUserWorkflows(dto.id).then(transformWorkflowsArray);
+    public async findAllUserWorkflows({ id }: IOnlyId) {
+        return await this.participantsService.findAllUserWorkflows(id).then(transformWorkflowsArray);
     }
 
     public async upsertWorkflowParticipants(dto: IUpsertWorkflowParticipantsDto) {

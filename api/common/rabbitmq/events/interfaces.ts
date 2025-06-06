@@ -1,6 +1,4 @@
-export interface IRmqEvent {
-    pattern: string;
-}
+export interface IRmqEvent {}
 
 export interface IReceiverData {
     id: string;

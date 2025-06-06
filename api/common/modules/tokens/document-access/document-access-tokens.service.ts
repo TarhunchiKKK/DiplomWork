@@ -8,8 +8,8 @@ export class DocumentAccessTokensService {
 
     public create(dto: TDocumentAccessTokenInfo) {
         return this.jwtService.sign({
-            authorId: dto.authorId,
-            usersIds: dto.usersIds
+            approversIds: dto.approversIds,
+            signerId: dto.signerId
         });
     }
 

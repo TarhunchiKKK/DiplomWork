@@ -7,7 +7,7 @@ import { ApprovalStatus } from "../../participants/enums/approval.-status.enum";
 import { WorkflowStatus } from "../enums/workflow-status.enum";
 import { WorkflowsService } from "../workflows.service";
 import { UpdateWorkflowDto } from "../dto/update-workflow-dto";
-import { NotificationsRmqService, WorkflowCompletedRmqEvent } from "common/rabbitmq";
+import { RmqClient, WorkflowCompletedRmqEvent } from "common/rabbitmq";
 import { UsersGrpcService } from "common/grpc";
 import { firstValueFrom } from "rxjs";
 import { WorkflowCompletedEvent } from "../events/workflow-completeed.events";
@@ -19,7 +19,7 @@ export class WorkflowStatusObserver {
 
         private readonly participantsService: WorkflowParticipantsService,
 
-        private readonly notificationsRmqService: NotificationsRmqService,
+        private readonly rmqClient: RmqClient,
 
         private readonly usersGrpcService: UsersGrpcService
     ) {}
@@ -67,8 +67,6 @@ export class WorkflowStatusObserver {
             })
         );
 
-        this.notificationsRmqService.emit(
-            new WorkflowCompletedRmqEvent(workflow.documentTitle, { id: user.id, email: user.email })
-        );
+        this.rmqClient.emit(new WorkflowCompletedRmqEvent(workflow.documentTitle, { id: user.id, email: user.email }));
     }
 }

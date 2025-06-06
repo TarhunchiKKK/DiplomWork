@@ -9,14 +9,15 @@ import { useEffect } from "react";
 export function useSetup(documentId: string) {
     const { data: workflow } = useFindWorkflowByDocumentId(documentId);
 
-    const { setApprovers, setSignerId, approvers, signerId } = useParticipantsStore();
+    const { setApprovers, setSignerId, approvers, signerId, setCreatorId } = useParticipantsStore();
 
     useEffect(() => {
         if (workflow) {
-            setApprovers(workflow.participants);
+            setApprovers(workflow.participants || []);
             setSignerId(workflow.signerId ?? null);
+            setCreatorId(workflow.creatorId);
         }
-    }, [workflow, setApprovers, setSignerId]);
+    }, [workflow, setApprovers, setSignerId, setCreatorId]);
 
     const { mutate: upsertParticipants, isPending: areParticipantsPending } = useUpsertWorkflowParticipants();
 

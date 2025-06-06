@@ -3,8 +3,6 @@ import { IReceiverData, IRmqEvent } from "../interfaces";
 export class DocumentCommentCreatedRmqEvent implements IRmqEvent {
     public static PATTERN = "document.comment.created";
 
-    public pattern = DocumentCommentCreatedRmqEvent.PATTERN;
-
     public constructor(
         public documentOwner: IReceiverData,
 
@@ -17,8 +15,6 @@ export class DocumentCommentCreatedRmqEvent implements IRmqEvent {
 export class DocumentCommentUpdatedRmqEvent implements IRmqEvent {
     public static PATTERN = "document.comment.created";
 
-    public pattern = DocumentCommentUpdatedRmqEvent.PATTERN;
-
     public constructor(
         public documentOwner: IReceiverData,
 
@@ -30,8 +26,6 @@ export class DocumentCommentUpdatedRmqEvent implements IRmqEvent {
 
 export class DocumentCommentDeletedRmqEvent implements IRmqEvent {
     public static PATTERN = "document.comment.deleted";
-
-    public pattern = DocumentCommentDeletedRmqEvent.PATTERN;
 
     public constructor(
         public documentOwner: IReceiverData,

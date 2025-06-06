@@ -12,6 +12,8 @@ import {
     DocumentsServiceController
 } from "common/grpc";
 import { transformDocumentsArray, transfromOneDocument } from "./helpers/grpc.helpers";
+import { EventPattern } from "@nestjs/microservices";
+import { ParticipantsUpsertedRmqEvent, SignerUpdatedRmqEvent } from "common/rabbitmq";
 
 @Controller()
 @DocumentsServiceControllerMethods()
@@ -38,5 +40,21 @@ export class DocumentsController implements UnwrapGrpcResponse<DocumentsServiceC
 
     public async findOneFull(dto: IOnlyId) {
         return await this.documentsService.findOneById(dto.id);
+    }
+
+    @EventPattern(ParticipantsUpsertedRmqEvent.PATTERN)
+    public async handleParticipantsUpserted(event: ParticipantsUpsertedRmqEvent) {
+        console.log(event);
+
+        await this.documentsService.updateAccessToken(event.documentId, {
+            approversIds: event.participantsIds
+        });
+    }
+
+    @EventPattern(SignerUpdatedRmqEvent.PATTERN)
+    public async handleSignerUpdated(event: SignerUpdatedRmqEvent) {
+        await this.documentsService.updateAccessToken(event.documentId, {
+            signerId: event.signerId
+        });
     }
 }

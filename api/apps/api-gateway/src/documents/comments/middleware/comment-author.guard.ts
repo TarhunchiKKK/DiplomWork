@@ -1,4 +1,11 @@
-import { CanActivate, ExecutionContext, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import {
+    CanActivate,
+    ExecutionContext,
+    ForbiddenException,
+    Injectable,
+    NotFoundException,
+    UnauthorizedException
+} from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { ExtractFromRequest } from "common/middleware";
 import { DocumentCommentsGrpcService } from "common/grpc";
@@ -22,7 +29,7 @@ export class CommentAuthorGuard implements CanActivate {
         );
 
         if (comment.creatorId !== requestData.userId) {
-            throw new UnauthorizedException("Нет доступа");
+            throw new ForbiddenException("Нет доступа");
         }
 
         return true;

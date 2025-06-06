@@ -6,6 +6,8 @@ import { VersionsListSkeleton, CreateVersionButton, VersionsList } from "@/widge
 import { Suspense } from "react";
 import { commentsListClassName, versionsListClassName } from "./constants";
 import { useDocumentPage } from "./hooks";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui";
+import { WorkflowPanel } from "@/widgets/workflows";
 
 export default function DocumentPage() {
     const { documentId, versionId } = useDocumentPage();
@@ -30,12 +32,23 @@ export default function DocumentPage() {
                 </div>
             </div>
 
-            <div className="grow-3 h-full flex flex-col">
-                <Suspense fallback={<CommentsListSkeleton className={commentsListClassName} />}>
-                    {versionId && <CommentsList versionId={versionId} className={commentsListClassName} />}
-                </Suspense>
+            <div className="grow-3 max-w-[580px]   max-h-screen flex flex-col">
+                <Tabs defaultValue="1" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="1">Комментарии</TabsTrigger>
+                        <TabsTrigger value="2">Маршрут</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="1" className="rounded-md border p-2 space-y-2">
+                        <Suspense fallback={<CommentsListSkeleton className={commentsListClassName} />}>
+                            {versionId && <CommentsList versionId={versionId} className={commentsListClassName} />}
+                        </Suspense>
 
-                {versionId && <CreateCommentForm versionId={versionId} />}
+                        {versionId && <CreateCommentForm versionId={versionId} />}
+                    </TabsContent>
+                    <TabsContent value="2" className="h-max rounded-md border p-2 space-y-2">
+                        <WorkflowPanel documentId={documentId} />
+                    </TabsContent>
+                </Tabs>
             </div>
         </div>
     );

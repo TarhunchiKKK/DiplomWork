@@ -1,10 +1,4 @@
-import {
-    DocumentApprovedRmqEvent,
-    DocumentRejectedRmqEvent,
-    DocumentSignedRmqEvent,
-    IReceiverData,
-    IRmqEvent
-} from "common/rabbitmq";
+import { DocumentApprovedRmqEvent, DocumentRejectedRmqEvent, IReceiverData, IRmqEvent } from "common/rabbitmq";
 import { ApprovalStatus } from "../enums/approval.-status.enum";
 
 export const approvalRmqEventsMap = new Map<
@@ -12,6 +6,5 @@ export const approvalRmqEventsMap = new Map<
     new (_: string, __: IReceiverData, ___: string) => IRmqEvent
 >([
     [ApprovalStatus.APPROVED, DocumentApprovedRmqEvent],
-    [ApprovalStatus.SIGNED, DocumentSignedRmqEvent],
     [ApprovalStatus.REJECTED, DocumentRejectedRmqEvent]
 ]);

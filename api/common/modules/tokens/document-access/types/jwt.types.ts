@@ -1,5 +1,5 @@
 export type TDocumentAccessTokenInfo = {
-    authorId: string;
+    approversIds: string[];
 
-    usersIds: string[];
+    signerId?: string;
 };

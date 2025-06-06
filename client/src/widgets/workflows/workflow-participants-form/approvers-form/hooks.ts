@@ -10,7 +10,7 @@ export function useApproversForm() {
     const [input, setInput] = useState("");
     const [displayUsers, setDisplayUsers] = useState(false);
 
-    const { approvers, signerId, setApprovers } = useParticipantsStore();
+    const { approvers, signerId, creatorId, setApprovers } = useParticipantsStore();
 
     const onSelect = (dto: TParticipantDto) => {
         setInput("");
@@ -19,7 +19,7 @@ export function useApproversForm() {
 
     const availableUsers = (users || [])
         .filter(user => getContent(user)!.toLowerCase().includes(input))
-        .filter(user => user.id !== signerId)
+        .filter(user => user.id !== signerId && user.id !== creatorId)
         .filter(user => !approvers.find(a => a.userId === user.id));
 
     return {

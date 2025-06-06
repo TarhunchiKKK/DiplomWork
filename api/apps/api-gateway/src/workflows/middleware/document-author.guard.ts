@@ -33,7 +33,7 @@ export class DocumentAuthorGuard implements CanActivate {
 
         const userId = request.jwtInfo.id as string;
 
-        if (!request.userId) {
+        if (!userId) {
             throw new UnauthorizedException("Недостаточно прав");
         }
 
@@ -41,7 +41,7 @@ export class DocumentAuthorGuard implements CanActivate {
 
         const documentId = extractFromRequest(request) as string | null;
 
-        if (documentId) {
+        if (!documentId) {
             throw new NotFoundException("Документ не найден");
         }
 

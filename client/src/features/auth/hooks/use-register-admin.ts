@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { queryUrls } from "@/shared/api";
-import { toast } from "sonner";
+import { queryUrls, TMutationOptions } from "@/shared/api";
 import { httpErrorHandler } from "@/shared/validation";
 import { credentialsManager, useProfileStore } from "@/features/auth";
 import { TAuthResponse } from "../types";
@@ -14,7 +13,7 @@ type TDto = {
     password: string;
 };
 
-export function useRegisterAdmin() {
+export function useRegisterAdmin(options: TMutationOptions<TAuthResponse> = {}) {
     const setProfile = useProfileStore(state => state.setProfile);
 
     return useMutation({
@@ -23,11 +22,11 @@ export function useRegisterAdmin() {
             return response.data;
         },
         onSuccess: response => {
-            toast.success("Успешная регистрация");
-
             credentialsManager.jwt.set(response.token);
 
             setProfile(response);
+
+            options.onSuccess?.(response);
         },
         onError: httpErrorHandler
     });

@@ -15,7 +15,7 @@ export const routes = {
         },
         workflows: {
             my: "/dashboard/workflows/my",
-            invited: "/dashboard/workflows/invited"
+            participation: "/dashboard/workflows/participation"
         }
     },
     settings: {
@@ -34,5 +34,8 @@ export const routes = {
     passwordRecovery: {
         matcher: "/password-recovery/*",
         reset: "/password-recovery/reset"
+    },
+    static: {
+        forbidden: "/static/forbidden"
     }
 };

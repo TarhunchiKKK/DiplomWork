@@ -1,4 +1,11 @@
-import { Injectable, CanActivate, ExecutionContext, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import {
+    Injectable,
+    CanActivate,
+    ExecutionContext,
+    NotFoundException,
+    UnauthorizedException,
+    ForbiddenException
+} from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { ExtractFromRequest } from "common/middleware";
 import { DocumentAccessTokensService } from "common/modules";
@@ -43,7 +50,7 @@ export class DocumentOperationGuard implements CanActivate {
         const userId = request.jwtInfo.id as string;
 
         if (!userId) {
-            throw new UnauthorizedException("Недостаточно прав");
+            throw new ForbiddenException("Недостаточно прав");
         }
 
         const extractFromRequest = this.reflector.get(ExtractFromRequest, context.getHandler());
@@ -65,23 +72,25 @@ export class DocumentOperationGuard implements CanActivate {
         const allowOperation = documentPermissions[userRole].includes(operation);
 
         if (!allowOperation) {
-            throw new UnauthorizedException("У вас нет прав на выполнение этого действия");
+            throw new ForbiddenException("У вас нет прав на выполнение этого действия");
         }
     }
 
     private defineUserRole(dto: TCheckPermissionsDto) {
         const tokenInfo = this.tokensService.verify(dto.document.accessToken);
 
+        console.log(tokenInfo);
+
         let userRole: DocumentRole | null = null;
 
         if (dto.document.authorId === dto.userId) {
             userRole = DocumentRole.AUTHOR;
-        } else if (tokenInfo.usersIds.includes(dto.userId)) {
+        } else if (tokenInfo.approversIds.includes(dto.userId)) {
             userRole = DocumentRole.REGULAR;
         }
 
         if (!userRole) {
-            throw new UnauthorizedException("У вас нет прав на выполнение этого действия");
+            throw new ForbiddenException("У вас нет прав на выполнение этого действия");
         }
 
         return userRole;

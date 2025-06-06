@@ -1,4 +1,11 @@
-import { CanActivate, ExecutionContext, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import {
+    CanActivate,
+    ExecutionContext,
+    ForbiddenException,
+    Injectable,
+    NotFoundException,
+    UnauthorizedException
+} from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { DocumentVersionsGrpcService } from "common/grpc";
 import { ExtractFromRequest } from "common/middleware";
@@ -65,7 +72,7 @@ export class VersionOperationGuard implements CanActivate {
         const allowOperation = documentPermissions[userRole].includes(operation);
 
         if (!allowOperation) {
-            throw new UnauthorizedException("У вас нет прав на выполнение этого действия");
+            throw new ForbiddenException("У вас нет прав на выполнение этого действия");
         }
     }
 
@@ -76,12 +83,12 @@ export class VersionOperationGuard implements CanActivate {
 
         if (dto.document.authorId === dto.userId) {
             userRole = DocumentRole.AUTHOR;
-        } else if (tokenInfo.usersIds.includes(dto.userId)) {
+        } else if (tokenInfo.approversIds.includes(dto.userId)) {
             userRole = DocumentRole.REGULAR;
         }
 
         if (!userRole) {
-            throw new UnauthorizedException("У вас нет прав на выполнение этого действия");
+            throw new ForbiddenException("У вас нет прав на выполнение этого действия");
         }
 
         return userRole;

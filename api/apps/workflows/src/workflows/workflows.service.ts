@@ -8,13 +8,20 @@ import { WorkflowStatus } from "./enums/workflow-status.enum";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { WorkflowDeletedEvent } from "./events/workflow-deleted.event";
 import { WorkflowCompletedEvent } from "./events/workflow-completeed.events";
+import { RmqClient, SignerUpdatedRmqEvent } from "common/rabbitmq";
+import { ApprovalStatus } from "../participants/enums/approval.-status.enum";
+import { WorkflowParticipantsService } from "../participants/workflow-participants.service";
 
 @Injectable()
 export class WorkflowsService {
     public constructor(
         @InjectRepository(Workflow) private readonly workflowsRepository: Repository<Workflow>,
 
-        private readonly eventEmitter: EventEmitter2
+        private readonly participantservice: WorkflowParticipantsService,
+
+        private readonly eventEmitter: EventEmitter2,
+
+        private readonly rmqClient: RmqClient
     ) {}
 
     public async create(dto: ICreateWorkflowDto) {
@@ -32,6 +39,16 @@ export class WorkflowsService {
     }
 
     public async start(workflowId: string) {
+        const workflow = await this.findOneById(workflowId);
+
+        if (workflow.participants.length === 0) {
+            throw new BadRequestException("Добавьте участников");
+        } else if (!workflow.signerId) {
+            throw new BadRequestException("Добавьте подписывающего");
+        }
+
+        await this.participantservice.resetAllByWorkflowId(workflowId);
+
         await this.update(workflowId, { status: WorkflowStatus.STARTED });
     }
 
@@ -89,6 +106,8 @@ export class WorkflowsService {
         Object.assign(workflow, dto);
 
         await this.workflowsRepository.save(workflow);
+
+        this.rmqClient.emit(new SignerUpdatedRmqEvent(workflow.documentId, dto.signerId));
     }
 
     public async delete(workflowId: string) {

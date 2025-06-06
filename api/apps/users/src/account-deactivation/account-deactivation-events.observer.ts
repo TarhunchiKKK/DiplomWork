@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { AccountActivatedRmqEvent, AccountDeactivatedRmqEvent, NotificationsRmqService } from "common/rabbitmq";
+import { AccountActivatedRmqEvent, AccountDeactivatedRmqEvent, RmqClient } from "common/rabbitmq";
 import { UsersService } from "../users/users.service";
 import { OnEvent } from "@nestjs/event-emitter";
 import { AccountActivatedEvent } from "./events/account-activated.event";
@@ -10,20 +10,20 @@ export class AccountDeactivationEventsObserver {
     public constructor(
         private readonly usersService: UsersService,
 
-        private readonly notificationsRmqService: NotificationsRmqService
+        private readonly rmqClient: RmqClient
     ) {}
 
     @OnEvent(AccountActivatedEvent.PATTERN)
     public async handleAccountActivated(event: AccountActivatedEvent) {
         const user = await this.usersService.findOneById(event.userId);
 
-        this.notificationsRmqService.emit(new AccountActivatedRmqEvent(user.email));
+        this.rmqClient.emit(new AccountActivatedRmqEvent(user.email));
     }
 
     @OnEvent(AccountDeactivatedEvent.PATTERN)
     public async handleAccountDeactivated(event: AccountDeactivatedEvent) {
         const user = await this.usersService.findOneById(event.userId);
 
-        this.notificationsRmqService.emit(new AccountDeactivatedRmqEvent(user.email));
+        this.rmqClient.emit(new AccountDeactivatedRmqEvent(user.email));
     }
 }

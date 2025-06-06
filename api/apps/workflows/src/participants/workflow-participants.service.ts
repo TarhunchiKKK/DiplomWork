@@ -11,6 +11,7 @@ import { ParticipantsDeletedEvent } from "./events/participants-deleted.event";
 import { ParticipantsCreatedEvent } from "./events/participants-created.event";
 import { ApprovalStatus } from "./enums/approval.-status.enum";
 import { RecalculateWorkflowStatusEvent } from "../workflows/events/recalculate-workflow-status.event";
+import { ParticipantsUpsertedRmqEvent, RmqClient } from "common/rabbitmq";
 
 @Injectable()
 export class WorkflowParticipantsService {
@@ -18,7 +19,9 @@ export class WorkflowParticipantsService {
         @InjectRepository(WorkflowParticipant)
         private readonly participantsRepository: Repository<WorkflowParticipant>,
 
-        private readonly eventEmitter: EventEmitter2
+        private readonly eventEmitter: EventEmitter2,
+
+        private readonly rmqClient: RmqClient
     ) {}
 
     private async createMany(dtos: ICreateParticipantDto[]) {
@@ -71,6 +74,9 @@ export class WorkflowParticipantsService {
         const participants = await this.participantsRepository.find({
             where: {
                 userId: userId
+            },
+            relations: {
+                workflow: true
             }
         });
 
@@ -147,6 +153,15 @@ export class WorkflowParticipantsService {
             ),
             this.deleteMany(remove.map(participant => participant.id))
         ]);
+
+        if (existingParticipants.length !== 0) {
+            this.rmqClient.emit(
+                new ParticipantsUpsertedRmqEvent(
+                    existingParticipants[0].workflow.documentId,
+                    participants.map(p => p.id)
+                )
+            );
+        }
     }
 
     private async deleteMany(ids: string[]) {
@@ -170,5 +185,24 @@ export class WorkflowParticipantsService {
 
             await Promise.all(participants.map(participant => this.participantsRepository.delete(participant)));
         }
+    }
+
+    public async resetAllByWorkflowId(workflowId: string) {
+        const participants = await this.participantsRepository.find({
+            where: {
+                workflow: {
+                    id: workflowId
+                }
+            },
+            relations: {
+                workflow: true
+            }
+        });
+
+        for (const participant of participants) {
+            participant.approvalStatus = ApprovalStatus.DEFAULT;
+        }
+
+        await this.participantsRepository.save(participants);
     }
 }
