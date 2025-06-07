@@ -9,7 +9,6 @@ export class UserInvitationNotificationsController {
 
     @EventPattern(UserInvitedRqmEvent.PATTERN)
     public async handleUserInvited(@Payload() event: UserInvitedRqmEvent) {
-        console.log("event: ", event.to);
         await this.notificationsService.handleUserInvited(event);
     }
 }

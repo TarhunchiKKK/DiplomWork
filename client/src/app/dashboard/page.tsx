@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import { CreateDocumentButton } from "@/widgets/documents";
 import { useDocuments } from "@/entities/documents";
 import { useSearchParams } from "next/navigation";
+import { EmptyListMessage } from "@/shared/ui";
 
 export default function DashboardPage() {
     const searchParams = useSearchParams();
@@ -31,6 +32,8 @@ export default function DashboardPage() {
 
             <Suspense fallback={<DocumentsContainerSkeleton />}>
                 {documents && <DocumentsContainer documents={documents} />}
+
+                <EmptyListMessage items={documents} message="Нет документов" />
             </Suspense>
         </div>
     );

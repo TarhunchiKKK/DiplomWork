@@ -8,14 +8,16 @@ export class GatewayExceptionFilter implements ExceptionFilter {
         console.log("error in GatewayExceptionFilter: ");
         console.log(exception);
 
-        const { message, error, statusCode } = exception.getResponse() as IHttpError;
+        if ("getResponse" in exception) {
+            const { message, error, statusCode } = exception.getResponse() as IHttpError;
 
-        const response = host.switchToHttp().getResponse<Response>();
+            const response = host.switchToHttp().getResponse<Response>();
 
-        response.status(statusCode).json({
-            message: Array.isArray(message) ? message : [message],
-            error,
-            statusCode
-        });
+            response.status(statusCode).json({
+                message: Array.isArray(message) ? message : [message],
+                error,
+                statusCode
+            });
+        }
     }
 }

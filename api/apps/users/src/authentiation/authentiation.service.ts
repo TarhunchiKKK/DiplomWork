@@ -4,8 +4,8 @@ import { AccountStatus, AuthType, Role } from "common/enums";
 import { firstValueFrom } from "rxjs";
 import { JwtTokensService } from "common/modules";
 import { UsersService } from "../users/users.service";
-import * as argon2 from "argon2";
 import { User } from "../users/entities/user.entity";
+import * as argon2 from "argon2";
 
 @Injectable()
 export class AuthenticationService {
