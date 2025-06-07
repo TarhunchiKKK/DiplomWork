@@ -11,7 +11,9 @@ type TDto = {
 
     isUrgent: boolean;
 
-    filename: string;
+    title: string;
+
+    s3Name: string;
 
     hash: string;
 };

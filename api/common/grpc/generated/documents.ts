@@ -13,11 +13,12 @@ const protobufPackage = "documents";
 
 export interface ICreateDocumentDto {
   authorId: string;
-  filename: string;
+  title: string;
   typeId: string;
   aimId: string;
   isUrgent: boolean;
   hash: string;
+  s3Name: string;
 }
 
 export interface ICreateDocumentResponseData {
@@ -107,13 +108,13 @@ export interface IRemoveFromFavouriteDto {
 
 export interface ICreateDocumentVersionDto {
   documentId: string;
-  filename: string;
+  s3Name: string;
   description?: string | undefined;
   hash: string;
 }
 
 export interface ICreateDocumentVersionResponseData {
-  url: string;
+  s3Name: string;
 }
 
 export interface ICreateDocumentVersionResponse {
@@ -124,7 +125,7 @@ export interface ICreateDocumentVersionResponse {
 export interface IVersion {
   id: string;
   description?: string | undefined;
-  url: string;
+  s3Name: string;
   createdAt: string;
 }
 

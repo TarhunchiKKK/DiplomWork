@@ -5,7 +5,7 @@ import { IgnoreFields } from "common/utils";
 export class CreateDocumentDto implements IgnoreFields<ICreateDocumentDto, "authorId"> {
     @IsNotEmpty({ message: "Название документа не указано" })
     @IsString({ message: "Название документа должно быть строкой" })
-    public filename: string;
+    public title: string;
 
     @IsNotEmpty({ message: "Тип документа не указан" })
     @IsString({ message: "Тип документа должен быть строкой" })
@@ -22,4 +22,8 @@ export class CreateDocumentDto implements IgnoreFields<ICreateDocumentDto, "auth
     @IsNotEmpty({ message: "Хеш документа не указан" })
     @IsString({ message: "Хеш документа должен быть строкой " })
     public hash: string;
+
+    @IsNotEmpty({ message: "Адрес файла не указан" })
+    @IsString({ message: "Адрес файла должен быть строкой" })
+    s3Name: string;
 }

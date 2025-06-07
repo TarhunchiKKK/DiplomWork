@@ -11,7 +11,7 @@ export class DocumentVersion {
     public description?: string;
 
     @Column()
-    public url: string;
+    public s3Name: string;
 
     @Column()
     public hash: string;

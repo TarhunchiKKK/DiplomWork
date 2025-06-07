@@ -3,7 +3,7 @@ import { AppModule } from "./app.module";
 import { ConfigService } from "@nestjs/config";
 import { DOCUMENTS_PACKAGE_NAME } from "common/grpc";
 import { MicroserviceOptions } from "@nestjs/microservices";
-import { getGrpcConfig } from "common/config";
+import { getGrpcConfig, getRabbitMqConfig } from "common/config";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -11,6 +11,8 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
 
     app.connectMicroservice<MicroserviceOptions>(getGrpcConfig(configService, DOCUMENTS_PACKAGE_NAME));
+
+    app.connectMicroservice<MicroserviceOptions>(getRabbitMqConfig(configService));
 
     await app.startAllMicroservices();
 

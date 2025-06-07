@@ -11,7 +11,7 @@ export const transfromVrsionsArray = (versions: DocumentVersion[]) => {
     return {
         versions: versions.map(version => ({
             id: version.id,
-            url: version.url,
+            s3Name: version.s3Name,
             description: version.description,
             createdAt: version.createdAt.toISOString()
         }))

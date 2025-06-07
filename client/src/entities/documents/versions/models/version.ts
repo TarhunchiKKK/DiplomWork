@@ -3,7 +3,7 @@ export type TVersion = {
 
     description?: string;
 
-    url: string;
+    s3Name: string;
 
     createdAt: Date;
 };
