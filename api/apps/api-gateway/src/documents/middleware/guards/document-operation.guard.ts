@@ -79,8 +79,6 @@ export class DocumentOperationGuard implements CanActivate {
     private defineUserRole(dto: TCheckPermissionsDto) {
         const tokenInfo = this.tokensService.verify(dto.document.accessToken);
 
-        console.log(tokenInfo);
-
         let userRole: DocumentRole | null = null;
 
         if (dto.document.authorId === dto.userId) {

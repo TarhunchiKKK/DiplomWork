@@ -27,7 +27,7 @@ export function useCreateVersionButton(documentId: string) {
         create({
             documentId: document!.id,
             description: data.description || undefined,
-            filename: data.files[0].name,
+            s3Name: data.files[0].name,
             hash: mocks.hash
         });
 

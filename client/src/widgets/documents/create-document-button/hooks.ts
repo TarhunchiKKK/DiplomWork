@@ -20,8 +20,9 @@ export function useCreateDocumentButton() {
 
         createDocument({
             ...data,
-            filename: data.files[0].name,
-            hash: "hash"
+            title: data.files[0].name,
+            hash: "hash",
+            s3Name: "s3-name"
         });
     });
 

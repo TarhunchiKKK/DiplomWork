@@ -7,7 +7,7 @@ import axios from "axios";
 type TDto = {
     documentId: string;
 
-    filename: string;
+    s3Name: string;
 
     description?: string;
 

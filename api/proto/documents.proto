@@ -21,7 +21,7 @@ service DocumentsService {
 message ICreateDocumentDto {
     string authorId = 1;
 
-    string filename = 2;
+    string title = 2;
 
     string typeId = 3;
 
@@ -30,6 +30,8 @@ message ICreateDocumentDto {
     bool isUrgent = 5;
 
     string hash = 6;
+
+    string s3Name = 7;
 }
 
 message ICreateDocumentResponseData {
@@ -188,7 +190,7 @@ service DocumentVersionsService {
 message ICreateDocumentVersionDto {
     string documentId = 1;
 
-    string filename = 2;
+    string s3Name = 2;
 
     optional string description = 3;
 
@@ -196,7 +198,7 @@ message ICreateDocumentVersionDto {
 }
 
 message ICreateDocumentVersionResponseData {
-    string url = 1;
+    string s3Name = 1;
 }
 
 message ICreateDocumentVersionResponse {
@@ -212,7 +214,7 @@ message IVersion {
 
     optional string description = 2;
 
-    string url = 3;
+    string s3Name = 3;
 
     string createdAt = 4;
 }

@@ -1,8 +1,7 @@
-import { NotificationsList, NotificationsListSkeleton } from "@/widgets/notifications";
-import { useNotifications } from "@/entities/notifications";
+import { NotificationsListSkeleton } from "@/widgets/notifications";
 import { Suspense } from "react";
 import { Metadata } from "next";
-import { EmptyListMessage } from "@/shared/ui";
+import { PageContent } from "./content";
 
 export const metadata: Metadata = {
     title: "Notifications",
@@ -10,15 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function NotificationsPage() {
-    "use client";
-
-    const { data: notifications } = useNotifications();
-
     return (
         <Suspense fallback={<NotificationsListSkeleton />}>
-            {notifications && <NotificationsList notifications={notifications} />}
-
-            <EmptyListMessage items={notifications} message="Уведомлений нет" />
+            <PageContent />
         </Suspense>
     );
 }

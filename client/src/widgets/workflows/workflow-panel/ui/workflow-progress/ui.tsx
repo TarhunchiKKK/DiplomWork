@@ -9,8 +9,6 @@ const classNamesMap: Record<ApprovalStatus, string> = {
 };
 
 export const renderParticipant = (data: TItem) => {
-    console.log(data);
-
     return (
         <Tag key={data.id} tooltip={null}>
             <Button variant="outline" className={classNamesMap[data.status]}>

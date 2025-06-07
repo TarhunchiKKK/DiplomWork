@@ -3,11 +3,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DocumentVersion } from "./entities/document-version.entity";
 import { Repository } from "typeorm";
 import { ICreateDocumentVersionDto } from "common/grpc";
-import { generateS3Filename } from "./helpers/s3.helpers";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { VersionCreatedEvent } from "./events/version-created.evnet";
 import { UpdateDocumentDto } from "./dto/update-version.dto";
-import { splitFilename } from "common/utils";
 
 @Injectable()
 export class DocumentVersionsService {
@@ -17,10 +15,8 @@ export class DocumentVersionsService {
     ) {}
 
     public async create(dto: ICreateDocumentVersionDto) {
-        const [, fileExtension] = splitFilename(dto.filename);
-
         const version = await this.versionsRepository.save({
-            url: generateS3Filename(fileExtension),
+            s3Name: dto.s3Name,
             description: dto.description,
             hash: dto.hash,
             document: {

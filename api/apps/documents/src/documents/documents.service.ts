@@ -25,7 +25,7 @@ export class DocumentsService {
             typeId: dto.typeId,
             authorId: dto.authorId,
             isUrgent: dto.isUrgent,
-            title: dto.filename,
+            title: dto.title,
             accessToken: this.tokensService.create({
                 approversIds: []
             })
@@ -33,8 +33,9 @@ export class DocumentsService {
 
         this.versionsService.create({
             documentId: document.id,
-            filename: dto.filename,
-            hash: dto.hash
+            s3Name: dto.s3Name,
+            hash: dto.hash,
+            description: "Начальная версия"
         });
 
         return document;

@@ -3,6 +3,7 @@ import { UsersService } from "../users/users.service";
 import { PasswordRecoveryTokensService } from "common/modules";
 import { IUpdatePasswordDto } from "common/grpc";
 import { RmqClient, PasswordResetedRmqEvent } from "common/rabbitmq";
+import * as argon2 from "argon2";
 
 @Injectable()
 export class PasswordRecoveryService {
@@ -34,7 +35,7 @@ export class PasswordRecoveryService {
         const { id } = this.tokensService.verify(dto.token);
 
         await this.usersService.update(id, {
-            password: dto.password
+            password: await argon2.hash(dto.password)
         });
     }
 }
