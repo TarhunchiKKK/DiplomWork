@@ -54,7 +54,7 @@ export const queryUrls = {
             remove: (userId: string) => `${environment.apiUrl}/favourite/${userId}`
         },
         hash: {
-            verify: `${environment.apiUrl}/hashing/verify`
+            verify: (versionId: string) => `${environment.apiUrl}/hashing/verify/${versionId}`
         },
         versions: {
             findAll: (documentId: string) => `${environment.apiUrl}/versions/all/${documentId}`,

@@ -11,6 +11,7 @@ import { UpdateDocumentDto } from "./dto/update-version.dto";
 export class DocumentVersionsService {
     public constructor(
         @InjectRepository(DocumentVersion) private readonly versionsRepository: Repository<DocumentVersion>,
+
         private readonly eventEmitter: EventEmitter2
     ) {}
 

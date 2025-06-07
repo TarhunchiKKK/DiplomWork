@@ -5,9 +5,9 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
 type TDto = {
-    hash: string;
+    versionId: string;
 
-    sign: string;
+    hash: string;
 };
 
 type TResponse = {
@@ -19,7 +19,9 @@ export function useVerifyDocumentHash() {
         mutationFn: async (dto: TDto) => {
             const token = credentialsManager.jwt.get();
 
-            const response = await axios.post<TResponse>(queryUrls.documents.hash.verify, dto, {
+            const { versionId, ...data } = dto;
+
+            const response = await axios.post<TResponse>(queryUrls.documents.hash.verify(versionId), data, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
 

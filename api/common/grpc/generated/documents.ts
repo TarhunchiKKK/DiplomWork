@@ -151,12 +151,11 @@ export interface IUpdateDocumentVersionDto {
 export interface IUpdateDocumentHashDto {
   versionId: string;
   hash: string;
-  sign: string;
 }
 
 export interface IVerifyDocumentHashDto {
+  versionId: string;
   hash: string;
-  sign: string;
 }
 
 export interface IVerifyDocumentHashResponseData {
