@@ -13,7 +13,7 @@ service WorkflowsService {
 
     rpc Start (common.IOnlyId) returns (common.IEmptyResponse) {}
 
-    rpc Sign (common.IOnlyId) returns (common.IEmptyResponse) {}
+    rpc Sign (ISignWorkflowDto) returns (common.IEmptyResponse) {}
 
     rpc FindAllByCreatorId (common.IOnlyId) returns (IFindWorkflowsResponse) {}
 
@@ -36,6 +36,12 @@ message IUpdateSignerDto {
     string workflowId = 1;
 
     string signerId = 2;
+}
+
+message ISignWorkflowDto {
+    string documentId = 1;
+
+    string signedDocumentS3Name = 2;
 }
 
 message IWorkflowResponseData {
@@ -70,6 +76,8 @@ message IFullWorkflowResponse {
     optional string signerId = 7;
 
     repeated IParticipant participants = 8;
+
+    optional string signedDocumentS3Name = 9;
 }
 
 message ICreateWorkflowResponse {

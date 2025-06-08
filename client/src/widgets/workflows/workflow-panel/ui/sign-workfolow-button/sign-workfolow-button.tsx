@@ -1,18 +1,30 @@
-import { Button, CenteredChild, CenteredChildParent } from "@/shared/ui";
+import { Button, CenteredChild, CenteredChildParent, Form, FormField, FormItem, FormLabel, Input } from "@/shared/ui";
 import { TProps } from "./types";
-import { useSignWorkflow } from "@/entities/workflows";
+import { useSignWorkflowButton } from "./hooks";
 
 export function SignWorkflowButton({ documentId }: TProps) {
-    const { mutate: signWorkflow, isPending } = useSignWorkflow();
-
-    const onClick = () => {
-        signWorkflow(documentId);
-    };
+    const { form, onSubmit, isPending } = useSignWorkflowButton(documentId);
 
     return (
         <CenteredChildParent>
             <CenteredChild>
-                <Button className="cursor-pointer" disabled={isPending} onClick={onClick}>
+                <Form {...form}>
+                    <form onSubmit={onSubmit} className="space-y-4">
+                        <FormField
+                            key="files"
+                            name="files"
+                            control={form.control}
+                            render={() => (
+                                <FormItem>
+                                    <FormLabel>Подписанный документ</FormLabel>
+
+                                    <Input {...form.register("files")} type="text" />
+                                </FormItem>
+                            )}
+                        />
+                    </form>
+                </Form>
+                <Button type="submit" className="cursor-pointer" disabled={isPending}>
                     Подписать
                 </Button>
             </CenteredChild>

@@ -1,16 +1,31 @@
-import { useVerifyDocumentHash } from "@/entities/documents";
-import { useEffect } from "react";
+import { useCurrentDocumentStore, useOneDocumentVersion } from "@/entities/documents";
+import { DocumentsS3Service } from "@/shared/s3";
+import { toast } from "sonner";
 
 export function useDownloadButton() {
-    const { mutate: verifyDocumentHash, isPending, isSuccess, isError } = useVerifyDocumentHash();
+    const versionId = useCurrentDocumentStore(state => state.versionId) as string;
 
-    useEffect(() => {
-        // verifyDocumentHash(mocks.verifyDocumentHashDto);
-    }, [verifyDocumentHash]);
+    const { data: version, isLoading } = useOneDocumentVersion(versionId);
+
+    const handleClick = async () => {
+        if (version) {
+            const fileData = await DocumentsS3Service.download(version.s3Name);
+
+            if (!fileData) {
+                toast.error("Ошибка получения файла");
+                return;
+            }
+
+            const blob = new Blob([new Uint8Array(fileData)], { type: "application/octet-stream" });
+
+            const url = URL.createObjectURL(blob);
+
+            window.open(url, "_blank")?.focus();
+        }
+    };
 
     return {
-        isPending,
-        isSuccess,
-        isError
+        onClick: handleClick,
+        disabled: isLoading
     };
 }

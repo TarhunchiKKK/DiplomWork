@@ -22,6 +22,11 @@ export interface IUpdateSignerDto {
   signerId: string;
 }
 
+export interface ISignWorkflowDto {
+  documentId: string;
+  signedDocumentS3Name: string;
+}
+
 export interface IWorkflowResponseData {
   id: string;
   documentTitle: string;
@@ -41,6 +46,7 @@ export interface IFullWorkflowResponse {
   completedAt?: string | undefined;
   signerId?: string | undefined;
   participants: IParticipant[];
+  signedDocumentS3Name?: string | undefined;
 }
 
 export interface ICreateWorkflowResponse {
@@ -92,7 +98,7 @@ export interface WorkflowsServiceClient {
 
   start(request: IOnlyId): Observable<IEmptyResponse>;
 
-  sign(request: IOnlyId): Observable<IEmptyResponse>;
+  sign(request: ISignWorkflowDto): Observable<IEmptyResponse>;
 
   findAllByCreatorId(request: IOnlyId): Observable<IFindWorkflowsResponse>;
 
@@ -112,7 +118,7 @@ export interface WorkflowsServiceController {
 
   start(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
-  sign(request: IOnlyId): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
+  sign(request: ISignWorkflowDto): Promise<IEmptyResponse> | Observable<IEmptyResponse> | IEmptyResponse;
 
   findAllByCreatorId(
     request: IOnlyId,

@@ -19,6 +19,7 @@ import { DocumentAuthorGuard } from "./middleware/document-author.guard";
 import { WorkflowCreatorGuard } from "./middleware/workflow-creator.guard";
 import { CreateWorkflowDto } from "./dto/create-workflow.dto";
 import { UpdateSignerDto } from "./dto/update-signer.dto";
+import { SignWorkflowDto } from "./dto/sign-workflow.dto";
 
 @Controller("/workflows")
 @UseFilters(GatewayExceptionFilter)
@@ -46,9 +47,11 @@ export class WorkflowsController {
     }
 
     @Patch("/sign/:documentId")
-    public sign(@Param("documentId") documentId: string) {
+    @UsePipes(ValidationPipe)
+    public sign(@Param("documentId") documentId: string, @Body() dto: SignWorkflowDto) {
         return this.workflowsGrpcService.call("sign", {
-            id: documentId
+            documentId,
+            ...dto
         });
     }
 

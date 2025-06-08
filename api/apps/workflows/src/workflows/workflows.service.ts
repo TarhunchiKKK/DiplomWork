@@ -55,10 +55,14 @@ export class WorkflowsService {
         await this.update(workflow.id, { status: WorkflowStatus.STARTED });
     }
 
-    public async sign(documentId: string) {
+    public async sign(documentId: string, signedDocumentS3Name: string) {
         const workflow = await this.findOneByDocumentId(documentId);
 
-        await this.update(workflow.id, { status: WorkflowStatus.COMPLETED, completedAt: new Date() });
+        await this.update(workflow.id, {
+            status: WorkflowStatus.COMPLETED,
+            completedAt: new Date(),
+            signedDocumentS3Name
+        });
 
         this.eventEmitter.emit(WorkflowCompletedEvent.pattern, new WorkflowCompletedEvent(workflow.id));
     }

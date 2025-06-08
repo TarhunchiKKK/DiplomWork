@@ -10,6 +10,9 @@ export class Workflow {
     @Column({ type: "enum", enum: WorkflowStatus, default: WorkflowStatus.DEFAULT })
     public status: WorkflowStatus;
 
+    @Column({ nullable: true, default: null })
+    public signedDocumentS3Name: string;
+
     @Column()
     public creatorId: string;
 
