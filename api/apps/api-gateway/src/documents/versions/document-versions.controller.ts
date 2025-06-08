@@ -12,7 +12,7 @@ import {
 } from "@nestjs/common";
 import { AuthenticationGuard, ExtractFromRequest, GatewayExceptionFilter } from "common/middleware";
 import { CreateDocumentVersionDto } from "./dto/create-document-version.dto";
-import { DocumentVersionsGrpcService } from "common/grpc";
+import { DocumentVersionsGrpcService, WorkflowsGrpcService } from "common/grpc";
 import { ProvideOperation } from "../middleware/decorators/provide-operation.decorator";
 import { DocumentOperation } from "../middleware/enums/document-operation.enum";
 import { VersionOperationGuard } from "../middleware/guards/version-operation.guard";
@@ -23,7 +23,11 @@ import { DocumentOperationGuard } from "../middleware/guards/document-operation.
 @UseFilters(GatewayExceptionFilter)
 @UseGuards(AuthenticationGuard)
 export class DocumentVersionsController {
-    public constructor(private readonly documentVersionsGrpcService: DocumentVersionsGrpcService) {}
+    public constructor(
+        private readonly documentVersionsGrpcService: DocumentVersionsGrpcService,
+
+        private readonly workflowsGrpcService: WorkflowsGrpcService
+    ) {}
 
     @Post()
     @UsePipes(ValidationPipe)
@@ -31,7 +35,11 @@ export class DocumentVersionsController {
     @ExtractFromRequest(request => request.body.documentId)
     @UseGuards(DocumentOperationGuard)
     public create(@Body() dto: CreateDocumentVersionDto) {
-        return this.documentVersionsGrpcService.call("create", dto);
+        return this.documentVersionsGrpcService.call("create", dto).subscribe(() => {
+            this.workflowsGrpcService.call("start", {
+                id: dto.documentId
+            });
+        });
     }
 
     @Get("/all/:documentId")

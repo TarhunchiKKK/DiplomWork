@@ -40,6 +40,10 @@ export class WorkflowsService {
     public async start(documentId: string) {
         const workflow = await this.findOneByDocumentId(documentId);
 
+        if (!workflow) {
+            throw new BadRequestException("Маршрут еще не создан");
+        }
+
         if (workflow.participants.length === 0) {
             throw new BadRequestException("Добавьте участников");
         } else if (!workflow.signerId) {
