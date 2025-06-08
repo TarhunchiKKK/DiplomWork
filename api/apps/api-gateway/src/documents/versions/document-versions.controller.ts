@@ -18,6 +18,7 @@ import { DocumentOperation } from "../middleware/enums/document-operation.enum";
 import { VersionOperationGuard } from "../middleware/guards/version-operation.guard";
 import { UpdateDocumentVersionDto } from "./dto/update-document-version.dto";
 import { DocumentOperationGuard } from "../middleware/guards/document-operation.guard";
+import { firstValueFrom } from "rxjs";
 
 @Controller("/versions")
 @UseFilters(GatewayExceptionFilter)
@@ -35,11 +36,15 @@ export class DocumentVersionsController {
     @ExtractFromRequest(request => request.body.documentId)
     @UseGuards(DocumentOperationGuard)
     public create(@Body() dto: CreateDocumentVersionDto) {
-        return this.documentVersionsGrpcService.call("create", dto).subscribe(() => {
-            this.workflowsGrpcService.call("start", {
-                id: dto.documentId
-            });
-        });
+        return Promise.allSettled([
+            firstValueFrom(this.documentVersionsGrpcService.call("create", dto)),
+
+            firstValueFrom(
+                this.workflowsGrpcService.call("start", {
+                    id: dto.documentId
+                })
+            )
+        ]);
     }
 
     @Get("/all/:documentId")

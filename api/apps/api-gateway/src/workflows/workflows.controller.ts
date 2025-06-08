@@ -37,12 +37,12 @@ export class WorkflowsController {
         });
     }
 
-    @Post("/start/:documentId")
-    @ExtractFromRequest(request => request.params.workflowId)
+    @Post("/start")
+    @ExtractFromRequest(request => request.body.workflowId)
     @UseGuards(WorkflowCreatorGuard)
-    public start(@Param("documentId") documentId: string) {
+    public start(@Body() dto: { documentId: string; workflowId: string }) {
         return this.workflowsGrpcService.call("start", {
-            id: documentId
+            id: dto.documentId
         });
     }
 

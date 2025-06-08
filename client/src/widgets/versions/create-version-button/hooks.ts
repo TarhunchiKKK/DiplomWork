@@ -1,4 +1,4 @@
-import { TProfile, useProfileStore } from "@/features/auth";
+import { useProfileStore } from "@/features/auth";
 import { useForm } from "react-hook-form";
 import { TFormState } from "./types";
 import { useCreateDocumentVersion, useOneDocument } from "@/entities/documents";
@@ -18,7 +18,7 @@ export function useCreateVersionButton(documentId: string) {
 
     const { data: document } = useOneDocument(documentId);
 
-    const profile = useProfileStore(state => state.profile) as TProfile;
+    const profile = useProfileStore(state => state.profile);
 
     const { mutate: create, isPending: isVersionCreatingPending } = useCreateDocumentVersion();
 
@@ -43,7 +43,7 @@ export function useCreateVersionButton(documentId: string) {
     });
 
     return {
-        display: profile.id === document?.authorId,
+        display: profile?.id === document?.authorId,
         form,
         onSubmit,
         isPending: isHashingPending || isVersionCreatingPending

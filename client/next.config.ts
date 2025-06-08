@@ -25,7 +25,8 @@ const nextConfig: NextConfig = {
         S3_ACCESS_KEY_ID: process.env.S3_ACCESS_KEY_ID!,
         S3_SECRET_ACCESS_KEY: process.env.S3_SECRET_ACCESS_KEY!,
         DOCUMENTS_S3_BUCKET_NAME: process.env.DOCUMENTS_S3_BUCKET_NAME!
-    }
+    },
+    devIndicators: false
 };
 
 export default nextConfig;

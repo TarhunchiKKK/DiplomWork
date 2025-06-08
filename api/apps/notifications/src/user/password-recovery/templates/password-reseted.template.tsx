@@ -9,7 +9,7 @@ type TProps = {
 };
 
 export function PasswordResetedTemplate({ domain, token }: TProps) {
-    const verificationLink = `${domain}/auth/new-verification?token=${token}`;
+    const verificationLink = `${domain}/password-recovery/update/${token}`;
 
     return (
         <Html>
@@ -25,14 +25,14 @@ export function PasswordResetedTemplate({ domain, token }: TProps) {
 
                     <Section className="text-center mb-8">
                         <Heading className="text-3xl text-black font-bold">
-                            Измменить пароль можно по ссылке ниже:
+                            Изменить пароль можно по ссылке ниже:
                         </Heading>
 
                         <Link
                             href={verificationLink}
                             className="inline-flex justify-center items-center rounded-full text-sm font-medium text-white bg-[#18B9AE] px-5 py-2"
                         >
-                            Присоединиться
+                            Изменить пароль
                         </Link>
                     </Section>
 

@@ -1,10 +1,13 @@
 import { formatFullDate } from "@/shared/helpers";
 import { Card, CardDescription, CardHeader, CardTitle, Skeleton } from "@/shared/ui";
 import { TItemProps } from "./types";
+import { useCurrentDocumentStore } from "@/entities/documents";
 
 export function ListItem({ version, onClick }: TItemProps) {
+    const currentVersionId = useCurrentDocumentStore(state => state.versionId);
+
     return (
-        <Card>
+        <Card className={`${currentVersionId === version.id ? "bg-accent" : ""} `}>
             <CardHeader
                 className="flex justify-start items-center gap-4 cursor-pointer"
                 onClick={onClick.bind(null, version.id)}

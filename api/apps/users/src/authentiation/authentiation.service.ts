@@ -17,7 +17,7 @@ export class AuthenticationService {
         private readonly tokensService: JwtTokensService
     ) {}
 
-    private createJwtFromUser(user: User) {
+    public createJwtFromUser(user: User) {
         return this.tokensService.create({
             id: user.id,
             username: user.username,

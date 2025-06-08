@@ -21,6 +21,8 @@ export class WorkflowParticipantsController implements UnwrapGrpcResponse<Workfl
     public constructor(private readonly participantsService: WorkflowParticipantsService) {}
 
     public async findAllUserWorkflows({ id }: IOnlyId) {
+        console.log(id);
+
         return await this.participantsService.findAllUserWorkflows(id).then(transformWorkflowsArray);
     }
 

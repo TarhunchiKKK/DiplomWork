@@ -4,11 +4,11 @@ import { Button } from "@/shared/ui";
 import { TProps } from "./types";
 import { useStartWorkflow } from "@/entities/workflows";
 
-export function StartWorkflowButton({ documentId }: TProps) {
+export function StartWorkflowButton({ documentId, workflowId }: TProps) {
     const { mutate: startWorkflow, isPending } = useStartWorkflow();
 
     const onClick = () => {
-        startWorkflow(documentId);
+        startWorkflow({ documentId, workflowId });
     };
 
     return (

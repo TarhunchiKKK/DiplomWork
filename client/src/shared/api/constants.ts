@@ -71,7 +71,9 @@ export const queryUrls = {
     },
     workflows: {
         create: `${environment.apiUrl}/workflows`,
-        start: (workflowId: string) => `${environment.apiUrl}/workflows/start/${workflowId}`,
+        // start: (documentId: string, workflowId: string) =>
+        //     `${environment.apiUrl}/workflows/start/${documentId}/${workflowId}`,
+        start: `${environment.apiUrl}/workflows/start`,
         findAll: {
             my: `${environment.apiUrl}/workflows/my`,
             byParticipation: `${environment.apiUrl}/workflows/participants/user-workflows`

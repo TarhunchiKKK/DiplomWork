@@ -72,9 +72,16 @@ export class WorkflowParticipantsService {
 
     public async findAllUserWorkflows(userId: string) {
         const participants = await this.participantsRepository.find({
-            where: {
-                userId: userId
-            },
+            where: [
+                {
+                    userId: userId
+                },
+                {
+                    workflow: {
+                        signerId: userId
+                    }
+                }
+            ],
             relations: {
                 workflow: true
             }

@@ -4,7 +4,7 @@ import { WorkflowProgress } from "../workflow-progress";
 
 export function ApproverPanel({ workflow, documentId }: { workflow?: TFullWorkflow; documentId: string }) {
     if (!workflow) {
-        return <span>Маршрут еще не создан</span>;
+        return <p className="text-center">Маршрут еще не создан</p>;
     }
 
     switch (workflow.status) {
@@ -23,12 +23,12 @@ export function ApproverPanel({ workflow, documentId }: { workflow?: TFullWorkfl
                 <div>
                     <WorkflowProgress participants={workflow.participants} />
 
-                    <span className="text-red-400">Маршрут был отклонен</span>
+                    <p className="text-red-400 text-center">Маршрут был отклонен</p>
                 </div>
             );
         case WorkflowStatus.FULLY_APPROVED:
-            return <span className="text-green-400">Документ полностью согласован</span>;
+            return <p className="text-green-400 text-center">Документ полностью согласован</p>;
         case WorkflowStatus.COMPLETED:
-            return <span className="text-green-400">Маршрут завершен</span>;
+            return <p className="text-green-400 text-center">Маршрут завершен</p>;
     }
 }
