@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
         STALE_TIME_MINUTES: process.env.STALE_TIME_MINUTES!,
         GC_TIME_MINUTES: process.env.GC_TIME_MINUTES!,
 
+        // Recaptcha
+        RECAPTCHA_KEY: process.env.RECAPTCHA_KEY!,
+
         // Crptography
         SYMMETRIC_ENCRYPTION_KEY: process.env.SYMMETRIC_ENCRYPTION_KEY!,
         SYMMETRIC_ENCRYPTION_IV: process.env.SYMMETRIC_ENCRYPTION_IV!,

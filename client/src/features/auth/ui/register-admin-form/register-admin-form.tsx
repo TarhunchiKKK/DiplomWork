@@ -4,9 +4,10 @@ import { formFields } from "./constants";
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, FormWrapper } from "@/shared/ui";
 import { routes } from "@/shared/routing";
 import { useRegisterAdminForm } from "./hooks";
+import { Captcha } from "../recaptcha";
 
 export function RegisterAdminForm() {
-    const { form, onSubmit, isPending } = useRegisterAdminForm();
+    const { form, onSubmit, isPending, setRecaptchaValue } = useRegisterAdminForm();
 
     return (
         <FormWrapper
@@ -33,6 +34,8 @@ export function RegisterAdminForm() {
                             )}
                         ></FormField>
                     ))}
+
+                    <Captcha onChange={setRecaptchaValue} />
 
                     <Button type="submit" disabled={isPending} className="w-full">
                         Зарегистрироваться

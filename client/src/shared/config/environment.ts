@@ -12,6 +12,9 @@ export const environment = {
     symmetricEncryptionIv: process.env.SYMMETRIC_ENCRYPTION_IV!,
     hashingKey: process.env.HASHING_KEY!,
 
+    // Recaptcha
+    recaptchaKey: process.env.RECAPTCHA_KEY!,
+
     // S3
     s3Endpoint: process.env.S3_ENDPOINT!,
     s3Region: process.env.S3_REGION!,

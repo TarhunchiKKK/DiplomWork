@@ -4,9 +4,10 @@ import { formFields } from "./constants";
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, FormWrapper } from "@/shared/ui";
 import { useConfirmInvitationForm } from "./hooks";
 import { TProps } from "./types";
+import { Captcha } from "../recaptcha";
 
 export function ConfirmInvitationForm({ invitationToken }: TProps) {
-    const { form, onSubmit, isPending } = useConfirmInvitationForm(invitationToken);
+    const { form, onSubmit, isPending, setRecaptchaValue } = useConfirmInvitationForm(invitationToken);
 
     return (
         <FormWrapper heading="Приглашение" description="Чтобы окончить регистрацию введите необходимые данные">
@@ -28,6 +29,8 @@ export function ConfirmInvitationForm({ invitationToken }: TProps) {
                             )}
                         />
                     ))}
+
+                    <Captcha onChange={setRecaptchaValue} />
 
                     <Button type="submit" disabled={isPending} className="w-full">
                         Зарегистрироваться

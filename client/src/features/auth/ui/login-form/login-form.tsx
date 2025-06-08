@@ -5,9 +5,10 @@ import { formFields } from "./constants";
 import { useLoginForm } from "./hooks";
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, Input, FormWrapper } from "@/shared/ui";
 import { routes } from "@/shared/routing";
+import { Captcha } from "../recaptcha";
 
 export function LoginForm(props: TProps) {
-    const { form, onSubmit, isPending } = useLoginForm(props);
+    const { form, onSubmit, isPending, setRecaptchaValue } = useLoginForm(props);
 
     return (
         <FormWrapper
@@ -34,6 +35,8 @@ export function LoginForm(props: TProps) {
                             )}
                         />
                     ))}
+
+                    <Captcha onChange={setRecaptchaValue} />
 
                     <Button type="submit" disabled={isPending} className="w-full">
                         Войти
