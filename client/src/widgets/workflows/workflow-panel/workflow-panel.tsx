@@ -19,7 +19,7 @@ export function WorkflowPanel({ documentId }: TProps) {
         case WorkflowRole.APPROVER:
             return <ApproverPanel workflow={workflow} documentId={documentId} />;
         case WorkflowRole.SIGNER:
-            return <SignerPanel workflow={workflow} />;
+            return <SignerPanel workflow={workflow} documentId={documentId} />;
     }
 }
 

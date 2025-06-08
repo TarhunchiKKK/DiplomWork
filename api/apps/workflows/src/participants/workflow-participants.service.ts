@@ -4,7 +4,7 @@ import { WorkflowParticipant } from "./entities/workflow-participant.entity";
 import { In, Repository } from "typeorm";
 import { ICreateParticipantDto } from "./dto/create-participant.dto";
 import { IUpdateParticipantDto } from "./dto/update-participant.dto";
-import { IUpsertWorkflowParticipantDto, IUpsertWorkflowParticipantsDto } from "common/grpc";
+import { IUpsertWorkflowParticipantsDto } from "common/grpc";
 import { diffParticipants } from "./helpers/upserting.helpers";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { ParticipantsDeletedEvent } from "./events/participants-deleted.event";

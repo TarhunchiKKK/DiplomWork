@@ -33,7 +33,7 @@ message ICreateWorkflowDto {
 }
 
 message IUpdateSignerDto {
-    string id = 1;
+    string workflowId = 1;
 
     string signerId = 2;
 }

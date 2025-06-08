@@ -9,7 +9,6 @@ import { EventEmitter2 } from "@nestjs/event-emitter";
 import { WorkflowDeletedEvent } from "./events/workflow-deleted.event";
 import { WorkflowCompletedEvent } from "./events/workflow-completeed.events";
 import { RmqClient, SignerUpdatedRmqEvent } from "common/rabbitmq";
-import { ApprovalStatus } from "../participants/enums/approval.-status.enum";
 import { WorkflowParticipantsService } from "../participants/workflow-participants.service";
 
 @Injectable()
@@ -38,8 +37,8 @@ export class WorkflowsService {
         return this.workflowsRepository.save(dto);
     }
 
-    public async start(workflowId: string) {
-        const workflow = await this.findOneById(workflowId);
+    public async start(documentId: string) {
+        const workflow = await this.findOneByDocumentId(documentId);
 
         if (workflow.participants.length === 0) {
             throw new BadRequestException("Добавьте участников");
@@ -47,15 +46,17 @@ export class WorkflowsService {
             throw new BadRequestException("Добавьте подписывающего");
         }
 
-        await this.participantservice.resetAllByWorkflowId(workflowId);
+        await this.participantservice.resetAllByWorkflowId(workflow.id);
 
-        await this.update(workflowId, { status: WorkflowStatus.STARTED });
+        await this.update(workflow.id, { status: WorkflowStatus.STARTED });
     }
 
-    public async sign(workflowId: string) {
-        await this.update(workflowId, { status: WorkflowStatus.COMPLETED, completedAt: new Date() });
+    public async sign(documentId: string) {
+        const workflow = await this.findOneByDocumentId(documentId);
 
-        this.eventEmitter.emit(WorkflowCompletedEvent.pattern, new WorkflowCompletedEvent(workflowId));
+        await this.update(workflow.id, { status: WorkflowStatus.COMPLETED, completedAt: new Date() });
+
+        this.eventEmitter.emit(WorkflowCompletedEvent.pattern, new WorkflowCompletedEvent(workflow.id));
     }
 
     public async findAllByCreatorId(creatorId: string) {

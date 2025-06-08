@@ -36,19 +36,19 @@ export class WorkflowsController {
         });
     }
 
-    @Post("/start/:workflowId")
+    @Post("/start/:documentId")
     @ExtractFromRequest(request => request.params.workflowId)
     @UseGuards(WorkflowCreatorGuard)
-    public start(@Param("workflowId") workflowId: string) {
+    public start(@Param("documentId") documentId: string) {
         return this.workflowsGrpcService.call("start", {
-            id: workflowId
+            id: documentId
         });
     }
 
-    @Patch("/sign/:workflowId")
-    public sign(@Param("workflowId") workflowId: string) {
+    @Patch("/sign/:documentId")
+    public sign(@Param("documentId") documentId: string) {
         return this.workflowsGrpcService.call("sign", {
-            id: workflowId
+            id: documentId
         });
     }
 
@@ -59,7 +59,7 @@ export class WorkflowsController {
     public updateSigner(@Param("workflowId") workflowId: string, @Body() dto: UpdateSignerDto) {
         return this.workflowsGrpcService.call("updateSigner", {
             ...dto,
-            id: workflowId
+            workflowId
         });
     }
 

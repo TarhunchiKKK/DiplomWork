@@ -8,10 +8,10 @@ export function useStartWorkflow() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async (workflowId: string) => {
+        mutationFn: async (documentId: string) => {
             const token = credentialsManager.jwt.get();
 
-            await axios.post(queryUrls.workflows.start(workflowId), undefined, {
+            await axios.post(queryUrls.workflows.start(documentId), undefined, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
         },

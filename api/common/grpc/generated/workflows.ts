@@ -18,7 +18,7 @@ export interface ICreateWorkflowDto {
 }
 
 export interface IUpdateSignerDto {
-  id: string;
+  workflowId: string;
   signerId: string;
 }
 

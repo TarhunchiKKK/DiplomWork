@@ -2,7 +2,7 @@ import { TFullWorkflow, WorkflowStatus } from "@/entities/workflows";
 import { SignWorkflowButton } from "../sign-workfolow-button";
 import { WorkflowProgress } from "../workflow-progress";
 
-export function SignerPanel({ workflow }: { workflow?: TFullWorkflow }) {
+export function SignerPanel({ workflow, documentId }: { workflow?: TFullWorkflow; documentId: string }) {
     if (!workflow) {
         return <span>Маршрут еще не создан</span>;
     }
@@ -31,7 +31,7 @@ export function SignerPanel({ workflow }: { workflow?: TFullWorkflow }) {
                 <div className="space-y-4">
                     <p className="text-green-400">Документ утвержден. Вы можете подписать его</p>
 
-                    <SignWorkflowButton workflowId={workflow.id} />
+                    <SignWorkflowButton documentId={documentId} />
                 </div>
             );
         case WorkflowStatus.COMPLETED:

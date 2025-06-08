@@ -24,11 +24,11 @@ export class WorkflowParticipantsController implements UnwrapGrpcResponse<Workfl
         return await this.participantsService.findAllUserWorkflows(id).then(transformWorkflowsArray);
     }
 
-    public async upsertWorkflowParticipants(dto: IUpsertWorkflowParticipantsDto) {
-        await this.participantsService.upsertWorkflowParticipants(dto.workflowId, dto.participants);
+    public async upsertWorkflowParticipants({ workflowId, participants }: IUpsertWorkflowParticipantsDto) {
+        await this.participantsService.upsertWorkflowParticipants(workflowId, participants);
     }
 
-    public async updateApprovalStatus(dto: IUpdateApprovalStatusDto) {
-        await this.participantsService.updateApprovalStatus(dto.id, dto.approvalStatus as ApprovalStatus);
+    public async updateApprovalStatus({ id, approvalStatus }: IUpdateApprovalStatusDto) {
+        await this.participantsService.updateApprovalStatus(id, approvalStatus as ApprovalStatus);
     }
 }

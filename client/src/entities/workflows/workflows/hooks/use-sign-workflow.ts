@@ -8,10 +8,10 @@ export function useSignWorkflow() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async (workflowId: string) => {
+        mutationFn: async (documentId: string) => {
             const token = credentialsManager.jwt.get();
 
-            await axios.patch(queryUrls.workflows.signing.sign(workflowId), null, {
+            await axios.patch(queryUrls.workflows.signing.sign(documentId), null, {
                 headers: new HttpHeadersBuilder().setBearerToken(token).build()
             });
         },

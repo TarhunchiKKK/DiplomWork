@@ -38,7 +38,7 @@ export function CreatorPanel({ workflow, documentId }: { workflow?: TFullWorkflo
                         <>
                             <p className="text-center">Маршрут создан. Вы можете его начать.</p>
 
-                            <StartWorkflowButton workflowId={workflow.id} />
+                            <StartWorkflowButton documentId={documentId} />
 
                             <p className={settingsLabelClassName} onClick={setIsSettingsPanel.bind(null, true)}>
                                 Выбрать участников
@@ -90,7 +90,7 @@ export function CreatorPanel({ workflow, documentId }: { workflow?: TFullWorkflo
 
                             <span className="text-red-400">Маршрут был отклонен</span>
 
-                            <StartWorkflowButton workflowId={workflow.id} />
+                            <StartWorkflowButton documentId={documentId} />
 
                             <p className={settingsLabelClassName} onClick={setIsSettingsPanel.bind(null, true)}>
                                 Выбрать участников
