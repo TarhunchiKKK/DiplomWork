@@ -1,3 +1,5 @@
+"use client";
+
 import { RequireAuth } from "@/features/auth";
 import { SidebarProvider } from "@/shared/ui";
 import { DashboardSidebar } from "@/widgets/navigation";

@@ -5,7 +5,7 @@ import {
     useRemoveFromFavourites,
     useUpdateDocument
 } from "@/entities/documents";
-import { TProfile, useProfileStore } from "@/features/auth";
+import { useProfileStore } from "@/features/auth";
 import { Star, StarOff, Timer, TimerOff } from "lucide-react";
 
 export function useStartButton(documentId: string) {
@@ -38,7 +38,7 @@ export function useStartButton(documentId: string) {
 export function useUrgencyButton(documentId: string) {
     const { data: document } = useOneDocument(documentId);
 
-    const profile = useProfileStore(state => state.profile) as TProfile;
+    const profile = useProfileStore(state => state.profile);
 
     const { mutate: update, isPending } = useUpdateDocument();
 
@@ -57,7 +57,7 @@ export function useUrgencyButton(documentId: string) {
             disabled: isPending,
             title: document?.isUrgent ? "Пометить как несрочный" : "Пометить как срочный"
         },
-        display: profile.id === document?.authorId,
+        display: profile?.id === document?.authorId,
         icon: document?.isUrgent ? Timer : TimerOff
     };
 }

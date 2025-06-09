@@ -28,6 +28,7 @@ export function useCreateDocumentVersion() {
         onSuccess: (_, dto) => {
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.versions.findAll(dto.documentId) });
             queryClient.invalidateQueries({ queryKey: queryKeys.documents.versions.findLast(dto.documentId) });
+            queryClient.invalidateQueries({ queryKey: queryKeys.workflows.findOne.byDocumentId(dto.documentId) });
         },
         onError: httpErrorHandler
     });

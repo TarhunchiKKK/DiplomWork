@@ -257,14 +257,12 @@ message IUpdateDocumentHashDto {
     string versionId = 1;
 
     string hash = 2;
-
-    string sign = 3;
 }
 
 message IVerifyDocumentHashDto {
-    string hash = 1;
-
-    string sign = 2;
+    string versionId = 1;
+    
+    string hash = 2;
 }
 
 message IVerifyDocumentHashResponseData {

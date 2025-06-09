@@ -83,6 +83,9 @@ export class TotpAuthenticationService {
             pin: dto.pin
         });
 
-        return this.authenticationService.createAuthResponse(user);
+        return {
+            ...this.authenticationService.createAuthResponse(user),
+            token: this.authenticationService.createJwtFromUser(user)
+        };
     }
 }

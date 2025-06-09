@@ -19,9 +19,12 @@ export class DocumentHashingController {
         });
     }
 
-    @Post("/verify")
+    @Post("/verify/:versionId")
     @UsePipes(ValidationPipe)
-    public verify(@Body() dto: VerifyDocumentHashDto) {
-        return this.hashingGrpcService.call("verify", dto);
+    public verify(@Param("versionId") versionId: string, @Body() dto: VerifyDocumentHashDto) {
+        return this.hashingGrpcService.call("verify", {
+            versionId: versionId,
+            ...dto
+        });
     }
 }

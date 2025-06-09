@@ -22,8 +22,8 @@ export class DocumentHashingController implements UnwrapGrpcResponse<DocumentHas
         await this.hashingService.update(dto);
     }
 
-    public verify(dto: IVerifyDocumentHashDto) {
-        const isValid = this.hashingService.verify(dto);
+    public async verify(dto: IVerifyDocumentHashDto) {
+        const isValid = await this.hashingService.verify(dto);
         return transfromVerifyResponse(isValid);
     }
 }

@@ -3,6 +3,7 @@ import {
     GrpcExceptionFilter,
     ICreateWorkflowDto,
     IOnlyId,
+    ISignWorkflowDto,
     IUpdateSignerDto,
     UnwrapGrpcResponse,
     WorkflowsServiceController,
@@ -23,32 +24,31 @@ export class WorkflowsController implements UnwrapGrpcResponse<WorkflowsServiceC
         return await this.workflowsService.create(dto).then(transformWorkflow);
     }
 
-    public async updateSigner(dto: IUpdateSignerDto) {
-        const { id, ...data } = dto;
-        await this.workflowsService.update(id, data);
+    public async updateSigner({ workflowId, ...dto }: IUpdateSignerDto) {
+        await this.workflowsService.update(workflowId, dto);
     }
 
-    public async start(dto: IOnlyId) {
-        await this.workflowsService.start(dto.id);
+    public async start({ id }: IOnlyId) {
+        await this.workflowsService.start(id);
     }
 
-    public async sign(dto: IOnlyId) {
-        await this.workflowsService.sign(dto.id);
+    public async sign({ documentId, signedDocumentS3Name }: ISignWorkflowDto) {
+        await this.workflowsService.sign(documentId, signedDocumentS3Name);
     }
 
-    public async findAllByCreatorId(dto: IOnlyId) {
-        return await this.workflowsService.findAllByCreatorId(dto.id).then(transformWorkflowsArray);
+    public async findAllByCreatorId({ id }: IOnlyId) {
+        return await this.workflowsService.findAllByCreatorId(id).then(transformWorkflowsArray);
     }
 
-    public async findOneById(dto: IOnlyId) {
-        return await this.workflowsService.findOneById(dto.id).then(transformWorkflow);
+    public async findOneById({ id }: IOnlyId) {
+        return await this.workflowsService.findOneById(id).then(transformWorkflow);
     }
 
-    public async findOneByDocumentId(dto: IOnlyId) {
-        return await this.workflowsService.findOneByDocumentId(dto.id).then(transformWorkflow);
+    public async findOneByDocumentId({ id }: IOnlyId) {
+        return await this.workflowsService.findOneByDocumentId(id).then(transformWorkflow);
     }
 
-    public async delete(dto: IOnlyId) {
-        await this.workflowsService.delete(dto.id);
+    public async delete({ id }: IOnlyId) {
+        await this.workflowsService.delete(id);
     }
 }

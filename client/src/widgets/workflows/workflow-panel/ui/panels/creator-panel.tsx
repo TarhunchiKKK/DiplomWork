@@ -4,6 +4,7 @@ import { StartWorkflowButton } from "../start-workflow-button";
 import { WorkflowProgress } from "../workflow-progress";
 import { WorkflowParticipantsForm } from "@/widgets/workflows/workflow-participants-form";
 import { useState } from "react";
+import { DownloadSignedDocumentButton } from "../download-signed-document-button";
 
 const settingsLabelClassName = "underline text-sm cursor-pointer";
 
@@ -38,7 +39,7 @@ export function CreatorPanel({ workflow, documentId }: { workflow?: TFullWorkflo
                         <>
                             <p className="text-center">Маршрут создан. Вы можете его начать.</p>
 
-                            <StartWorkflowButton workflowId={workflow.id} />
+                            <StartWorkflowButton documentId={documentId} workflowId={workflow.id} />
 
                             <p className={settingsLabelClassName} onClick={setIsSettingsPanel.bind(null, true)}>
                                 Выбрать участников
@@ -88,9 +89,9 @@ export function CreatorPanel({ workflow, documentId }: { workflow?: TFullWorkflo
                         <>
                             <WorkflowProgress participants={workflow.participants} />
 
-                            <span className="text-red-400">Маршрут был отклонен</span>
+                            <p className="text-red-400 text-center">Маршрут был отклонен</p>
 
-                            <StartWorkflowButton workflowId={workflow.id} />
+                            <StartWorkflowButton documentId={documentId} workflowId={workflow.id} />
 
                             <p className={settingsLabelClassName} onClick={setIsSettingsPanel.bind(null, true)}>
                                 Выбрать участников
@@ -104,10 +105,16 @@ export function CreatorPanel({ workflow, documentId }: { workflow?: TFullWorkflo
                 <div className="space-y-4">
                     <WorkflowProgress participants={workflow.participants} />
 
-                    <span className="text-green-400">Документ полностью утвержден, но еще не подписан</span>
+                    <p className="text-green-400 text-center">Документ полностью утвержден, но еще не подписан</p>
                 </div>
             );
         case WorkflowStatus.COMPLETED:
-            return <span className="text-green-400">Документ согласован и подписан</span>;
+            return (
+                <div className="space-y-4 flex flex-col items-center">
+                    <p className="text-green-400 text-center">Документ согласован и подписан</p>
+
+                    <DownloadSignedDocumentButton url="url" />
+                </div>
+            );
     }
 }

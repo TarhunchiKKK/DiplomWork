@@ -54,7 +54,7 @@ export const queryUrls = {
             remove: (userId: string) => `${environment.apiUrl}/favourite/${userId}`
         },
         hash: {
-            verify: `${environment.apiUrl}/hashing/verify`
+            verify: (versionId: string) => `${environment.apiUrl}/hashing/verify/${versionId}`
         },
         versions: {
             findAll: (documentId: string) => `${environment.apiUrl}/versions/all/${documentId}`,
@@ -71,7 +71,9 @@ export const queryUrls = {
     },
     workflows: {
         create: `${environment.apiUrl}/workflows`,
-        start: (workflowId: string) => `${environment.apiUrl}/workflows/start/${workflowId}`,
+        // start: (documentId: string, workflowId: string) =>
+        //     `${environment.apiUrl}/workflows/start/${documentId}/${workflowId}`,
+        start: `${environment.apiUrl}/workflows/start`,
         findAll: {
             my: `${environment.apiUrl}/workflows/my`,
             byParticipation: `${environment.apiUrl}/workflows/participants/user-workflows`

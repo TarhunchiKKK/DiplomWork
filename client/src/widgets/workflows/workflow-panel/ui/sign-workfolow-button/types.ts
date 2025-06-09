@@ -1,3 +1,7 @@
 export type TProps = {
-    workflowId: string;
+    documentId: string;
+};
+
+export type TFormState = {
+    files: FileList;
 };

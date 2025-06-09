@@ -1,4 +1,4 @@
-import { TProfile, useDisableTotp, useProfileStore } from "@/features/auth";
+import { useDisableTotp, useProfileStore } from "@/features/auth";
 import { dropdownOptions } from "./constants";
 import { useState } from "react";
 import { AuthType } from "@/entities/users";
@@ -28,9 +28,9 @@ export function useUpdateAuthType() {
 }
 
 export function useUpdateAuthTypeForm() {
-    const profile = useProfileStore(state => state.profile) as TProfile;
+    const profile = useProfileStore(state => state.profile);
 
-    const [authType, setAuthType] = useState(profile.authType);
+    const [authType, setAuthType] = useState(profile?.authType || AuthType.BASIC);
 
     const buttonLabel = dropdownOptions.find(option => option.value === authType)?.label as string;
 

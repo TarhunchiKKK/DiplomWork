@@ -1,5 +1,5 @@
 import { useFindWorkflowByDocumentId } from "@/entities/workflows";
-import { TProfile, useProfileStore } from "@/features/auth";
+import { useProfileStore } from "@/features/auth";
 import { useEffect, useState } from "react";
 import { WorkflowRole } from "./enums";
 import { useOneDocument } from "@/entities/documents";
@@ -9,7 +9,7 @@ export function useWorkflowPanel(documentId: string) {
 
     const { data: workflow, isFetched: isWorkflowFetched } = useFindWorkflowByDocumentId(documentId);
 
-    const profile = useProfileStore(state => state.profile) as TProfile;
+    const profile = useProfileStore(state => state.profile);
 
     const [userRole, setUserRole] = useState<WorkflowRole | null>(null);
 
@@ -23,7 +23,7 @@ export function useWorkflowPanel(documentId: string) {
                 return;
             }
 
-            if (document.authorId === profile.id) {
+            if (document.authorId === profile?.id) {
                 setUserRole(WorkflowRole.CREATOR);
             } else {
                 setUserRole(WorkflowRole.APPROVER);
@@ -32,9 +32,9 @@ export function useWorkflowPanel(documentId: string) {
             return;
         }
 
-        if (workflow.creatorId === profile.id) {
+        if (workflow.creatorId === profile?.id) {
             setUserRole(WorkflowRole.CREATOR);
-        } else if (workflow.signerId === profile.id) {
+        } else if (workflow.signerId === profile?.id) {
             setUserRole(WorkflowRole.SIGNER);
         } else {
             setUserRole(WorkflowRole.APPROVER);

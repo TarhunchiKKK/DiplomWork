@@ -12,13 +12,13 @@ export class DocumentHashingService {
     ) {}
 
     public async update(dto: IUpdateDocumentHashDto) {
-        this.verify(dto);
-
         await this.versionsService.update(dto.versionId, { hash: dto.hash });
     }
 
-    public verify(dto: IVerifyDocumentHashDto) {
-        const isValid = this.hmacService.verify(dto.hash, dto.sign);
+    public async verify(dto: IVerifyDocumentHashDto) {
+        const version = await this.versionsService.findOneById(dto.versionId);
+
+        const isValid = version.hash === dto.hash;
 
         if (!isValid) {
             throw new BadRequestException("Документ был изменен.");

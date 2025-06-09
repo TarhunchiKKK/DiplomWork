@@ -8,4 +8,6 @@ export class UpdateWorkflowDto {
     public completedAt?: Date;
 
     public signerId?: string;
+
+    public signedDocumentS3Name?: string;
 }
